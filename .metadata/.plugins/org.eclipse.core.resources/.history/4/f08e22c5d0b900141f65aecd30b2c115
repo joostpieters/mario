@@ -1,16 +1,16 @@
 /**
  * 
- * @author Pieter Van den Berghe, Ward Romanus
+ * @author Pieter
  *	DEFENSIEF UITWERKEN
  */
 public class Mazub {
 	
 	public int x_pos = 0;
 	public int y_pos = 0;
-	public static int MIN_X_VALUE = 0;
-	public static int MAX_X_VALUE = 1023;
-	public static int MIN_Y_VALUE = 0;
-	public static int MAX_Y_VALUE = 767;
+	public static int minXValue = 0;
+	public static int maxXValue = 1023;
+	public static int minYValue = 0;
+	public static int maxYValue = 767;
 	
 	/**
 	 * NOMINAAL uitwerken
