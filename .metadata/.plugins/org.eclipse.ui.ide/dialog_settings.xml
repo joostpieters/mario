@@ -8,7 +8,17 @@
 			<item value=""/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="C:\Users\Pieter\Downloads\Rational(1).JAR"/>
+			<item value="C:\Users\Pieter\Downloads\OilTank.JAR"/>
+			<item value="C:\Users\Pieter\Downloads\DigitalClock(2).JAR"/>
 			<item value="C:\Users\Pieter\Documents\mario\jumpingalien-part1.jar"/>
 		</list>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item value="525" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="580" key="DIALOG_HEIGHT"/>
+		<item value="250" key="DIALOG_X_ORIGIN"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
