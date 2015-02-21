@@ -7,10 +7,10 @@ public class Mazub {
 	
 	public int x_pos = 0;
 	public int y_pos = 0;
-	public static int minXValue = 0;
-	public static int maxXValue = 1023;
-	public static int minYValue = 0;
-	public static int maxYValue = 767;
+	public minXValue = 0;
+	public maxXValue = 1023;
+	public minYValue = 0;
+	public maxYValue = 767;
 	
 	/**
 	 * NOMINAAL uitwerken
