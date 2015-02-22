@@ -31,7 +31,7 @@ public class Mazub {
 		this.x_dim = x_dim;
 		this.y_dim = y_dim;
 		this.initStartSpeed = initStartSpeed;
-		this.maxSpeed = maxSpeed;
+		this.maxSpeed = maxSpeed;		
 	}
 	
 	
@@ -48,8 +48,6 @@ public class Mazub {
 	public int new_y_pos;	
 	public boolean duck = true;
 	public int acc; // acceleration
-	public int YSpeed;
-	public int YAcc;
 	public static int MIN_X_VALUE = 0;
 	public static int MAX_X_VALUE = 1023;
 	public static int MIN_Y_VALUE = 0;
@@ -57,9 +55,7 @@ public class Mazub {
 	public static int START_SPEED = getInitStartSpeed(); 
 	public static int MAX_SPEED = 3;
 	public static int MAX_SPEED_DUCK = 1;
-	public static int JUMP_SPEED = 8;
-	public static int FALL_ACC = -10;
-		
+	
 	
 	public int getXPos() {
 		return x_pos;
@@ -132,54 +128,33 @@ public class Mazub {
 	 */
 	public void advanceTime() {
 		newSpeed = speed + acc*deltaT;
-		if (newSpeed < maxSpeed) {
-			speed = newSpeed;			
+		if (newSpeed >= maxSpeed) {
+			new_x_pos = this.getXPos() + speed*deltaT;			
 		}
 		else {			
-			acc = 0;
-			speed = maxSpeed;
+			if (newSpeed>maxSpeed) {
+				speed = maxSpeed;
+				acc = 0;
 			}
-		new_x_pos = this.getXPos() + speed*deltaT;
-		
-		YSpeed = YSpeed + YAcc*deltaT;
-		if (y_pos == 0) {
-			endFall();
+			else {
+				speed = newSpeed;
+			}
+			new_x_pos = this.getXPos() + speed*deltaT;
 		}
-		else {
-			new_y_pos = this.getYPos() + YSpeed*deltaT;
-		}
-		
-		x_pos = new_x_pos;
-		y_pos = new_y_pos;
 	}
 	
 	/**
 	 * TOTAAL uitwerken
 	 */
 	public void startJump() {
-		YSpeed = JUMP_SPEED;
+		
 	}
 	
 	/**
 	 * TOTAAL uitwerken
 	 */
 	public void endJump() {
-		if (YSpeed > 0) {
-			YSpeed = 0;
-		}
-		if (y_pos != 0) {
-			fall();
-		}
-	}
-	
-	/**
-	 * TOTAAL uitwerken
-	 */
-	public void fall() {
-		YAcc = FALL_ACC;
-	}
-	public void endFall() {
-		YAcc = 0;
+		
 	}
 	
 	public boolean isDucked(){
