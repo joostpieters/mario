@@ -20,34 +20,16 @@ public class Mazub {
 	 * Number of pixels from the x dimension of the new Mazub
 	 * @param y_dim
 	 * Number of pixels from the y dimension of the new Mazub
-	 * @post the mazub is created at (x_pos,y_pos)
-	 * 			| new.getXPos() == x_pos
-	 * 			| new.getYPos() == y_pos
-	 * 			| new.getXDim() == x_dim
-	 * 			| new.getYDim() == y_dim
-	 * 			 
+	 * @post
 	 * 
 	 * DEFENSIEF uitwerken (denk ik)
 	 */
-	public Mazub(int x_pos, int y_pos, int[] dimension)
-			throws IllegalPositionException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos);
+	public Mazub(int x_pos, int y_pos, int x_dim, int y_dim, int initStartSpeed,
+			int maxSpeed){
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
-		this.dimension = dimension;
-		// this.initStartSpeed = initStartSpeed;
-		// this.maxSpeed = maxSpeed;
-	}
-	
-	public Mazub(int x_pos, int y_pos, int[] dimension,
-			int initStartSpeed,int maxSpeed)
-			throws IllegalPositionException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos);
-		this.x_pos = x_pos;
-		this.y_pos = y_pos;
-		this.dimension = dimension;
+		this.x_dim = x_dim;
+		this.y_dim = y_dim;
 		this.initStartSpeed = initStartSpeed;
 		this.maxSpeed = maxSpeed;
 	}
@@ -56,9 +38,8 @@ public class Mazub {
 	public int x_pos = 0;
 	public int y_pos = 0;
 	public int x_dim = 6; //not sure or this should be declared here
-	public int y_dim = 11;//not sure or this should be declared here
-	public int[] dimension;
-	public int initStartSpeed; 
+	public int y_dim = 11; //not sure or this should be declared here
+	public static int initStartSpeed; 
 	public int maxSpeed; 
 	public int speed;
 	public int newSpeed;
@@ -73,7 +54,7 @@ public class Mazub {
 	public static int MAX_X_VALUE = 1023;
 	public static int MIN_Y_VALUE = 0;
 	public static int MAX_Y_VALUE = 767;
-	public int START_SPEED = getInitStartSpeed(); 
+	public static int START_SPEED = getInitStartSpeed(); 
 	public static int MAX_SPEED = 3;
 	public static int MAX_SPEED_DUCK = 1;
 	public static int JUMP_SPEED = 8;
@@ -86,10 +67,13 @@ public class Mazub {
 	public int getYPos() {
 		return y_pos;
 	}
-	public int[] getDimension() {
-		return dimension;
+	public int getXDim() {
+		return x_dim;
 	}
-	public int getInitStartSpeed() {
+	public int getYDim() {
+		return y_dim;
+	}
+	public static int getInitStartSpeed() {
 		return initStartSpeed;
 	}
 	public int getMaxSpeed() {
@@ -105,9 +89,9 @@ public class Mazub {
 	 *			| return (x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE) 
 	 */
-	public static boolean isValidPosition(int x_pos, int y_pos) {
-		return (x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-				 && y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE);
+	public boolean isValidPosition() {
+		return (getXPos() >= MIN_X_VALUE && getXPos() <= MAX_X_VALUE
+				 && getYPos() >= MIN_Y_VALUE && getYPos() <= MAX_Y_VALUE);
 	}
 	
 	
@@ -122,7 +106,7 @@ public class Mazub {
 	 * @post Mazub moved with a certain speed and acceleration
 	 */
 	public void startMove() {
-		assert isValidPosition(getXPos(),getYPos());
+		assert isValidPosition();
 		speed = START_SPEED; 
 		if (this.isDucked() == false) {
 			acc = (int) 0.9;
@@ -223,9 +207,5 @@ public class Mazub {
 	 */
 	public void getCurrentSprite() {
 		
-	}
-
-	public void setInitStartSpeed(int initStartSpeed) {
-		this.initStartSpeed = initStartSpeed;
 	}
 }
