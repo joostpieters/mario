@@ -1,0 +1,5 @@
+constructor mazub: meerdere exceptions throwen: position en dimension
+
+Serialnumber bij exception classes
+
+2de exception Dimension thrower

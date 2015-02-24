@@ -37,7 +37,7 @@ public class Mazub {
 			throws IllegalPositionException, IllegalDimensionException {
 				if(!isValidPosition(x_pos,y_pos))
 					throw new IllegalPositionException(x_pos,y_pos);
-				if (!isValidDimension(dimension))
+				if (!isValidDimensionException(dimension))
 					throw new IllegalDimensionException(dimension);
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
@@ -67,17 +67,15 @@ public class Mazub {
 	public int[] dimension;
 	public int initStartSpeed; 
 	public int maxSpeed; 
-	public double speed;
-	public double newSpeed;
-	public double deltaT;
-	public double new_x_pos;
-	public double new_y_pos;
-	public double x_difference;
-	public double y_difference;
+	public float speed;
+	public int newSpeed;
+	public int deltaT;
+	public int new_x_pos;
+	public int new_y_pos;	
 	public boolean duck = true;
-	public double acc; // acceleration
-	public double YSpeed;
-	public double YAcc;
+	public float acc; // acceleration
+	public int YSpeed;
+	public int YAcc;
 	public static int MIN_X_VALUE = 0;
 	public static int MAX_X_VALUE = 1023;
 	public static int MIN_Y_VALUE = 0;
@@ -175,7 +173,7 @@ public class Mazub {
 	 * 
 	 * NOMINAAL uitwerken
 	 * 
-	 * KLAAR
+	 * KLAAR WARD HOUDT VAN MARIE PIJPEN
 	 */
 	public void endMove(int x_pos, int y_pos) {
 		speed = 0;
@@ -183,40 +181,32 @@ public class Mazub {
 	}
 	
 	/**
-	 * 
-	 * 
-	 * 
 	 * DEFENSIEF uitwerken
 	 */
 	public void advanceTime() {
 		newSpeed = speed + acc*deltaT;
 		if (newSpeed < maxSpeed) {
-			speed = (float) newSpeed;
+			speed = newSpeed;			
 		}
 		else {			
 			acc = 0;
 			speed = maxSpeed;
 			}
-		new_x_pos = (double) this.getXPos() + speed*100*deltaT + x_difference;
+		new_x_pos = this.getXPos() + speed*100*deltaT;
 		
 		YSpeed = YSpeed + YAcc*deltaT;
 		if (y_pos == 0) {
 			endFall();
 		}
 		else {
-			new_y_pos = (double) this.getYPos() + YSpeed*100*deltaT + y_difference;
+			new_y_pos = this.getYPos() + YSpeed*100*deltaT;
 		}
-				
-		x_pos = (int) Math.floor(new_x_pos);
-		y_pos = (int) Math.floor(new_y_pos);
-		x_difference = new_x_pos - x_pos;
-		y_difference = new_y_pos - y_pos;
+		
+		x_pos = new_x_pos;
+		y_pos = new_y_pos;
 	}
 	
 	/**
-	 * 
-	 * 
-	 * 
 	 * TOTAAL uitwerken
 	 */
 	public void startJump() {
