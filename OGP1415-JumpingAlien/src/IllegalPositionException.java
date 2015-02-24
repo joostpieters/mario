@@ -8,10 +8,18 @@
  * 
  *
  */
-public class IllegalPositionException extends Exception {
-
-		private int x_pos;
-		private int y_pos;
+public class IllegalPositionException extends Exception {		
+	
+		/**
+		 * Variable registering the x-position evolved in this illegal 
+		 * position exception.
+		 */
+		private final int x_pos;
+		/**
+		 * Variable registering the y-position evolved in this illegal 
+		 * position exception.
+		 */
+		private final int y_pos;
 
 		/**
 		 * initialize this new illegal position exception with a given position
