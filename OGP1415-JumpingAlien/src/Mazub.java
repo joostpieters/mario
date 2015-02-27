@@ -62,8 +62,12 @@ public class Mazub {
 	 */
 	public int x_pos = 0;
 	public int y_pos = 0;
-	public int x_dim = 6; //not sure or this should be declared here
-	public int y_dim = 11;//not sure or this should be declared here
+	public int x_dim;
+	public int y_dim;
+	public int x_dim_not_ducked = 6;
+	public int y_dim_not_ducked = 11;
+	public int x_dim_ducked = 4; // nog aanpassen, random waarde
+	public int y_dim_ducked = 6; // nog aanpassen, random waarde
 	public int[] dimension;
 	public int initStartSpeed; 
 	public int maxSpeed; 
@@ -74,7 +78,7 @@ public class Mazub {
 	public double new_y_pos;
 	public double x_difference;
 	public double y_difference;
-	public boolean duck = true;
+	public boolean duck = false;
 	public double acc; // acceleration
 	public double YSpeed;
 	public double YAcc;
@@ -132,8 +136,7 @@ public class Mazub {
 	 */
 	public static boolean isValidDimension(int[] dimension) {
 		return (dimension[0] > 0) && (dimension[1] > 0);
-	}
-	
+	}	
 	
 	/**
 	 * 
@@ -254,14 +257,15 @@ public class Mazub {
 	 */
 	
 	public void startDuck() {
-		
+		duck = true ;
 	}
+		
 	
 	/**
 	 * DEFENSIEF uitwerken
 	 */
 	public void endDuck() {	
-		
+		duck = false;
 	}
 	
 	/**
@@ -269,7 +273,14 @@ public class Mazub {
 	 * GEEN formele documentatie nodig
 	 */
 	public void getCurrentSprite() {
-		
+		if ( ! isDucked()) {
+			x_dim = x_dim_not_ducked;
+			y_dim = y_dim_not_ducked;			
+		}
+		else {
+			x_dim = x_dim_ducked;
+			y_dim = y_dim_ducked;
+		}
 	}
 
 	public void setInitStartSpeed(int initStartSpeed) {

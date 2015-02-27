@@ -1,0 +1,23 @@
+package les_4;
+/**
+ * 
+ * @author Pieter
+ *
+ */
+public class Person {
+	
+	public Person(Gender gender) {
+		
+	}
+	
+	@basic @immutable
+	public stream getGender() {
+		return this.gender;
+	}
+	
+	public boolean isValidGender(Gender gender) {
+		
+	}
+	private final Gender gender;
+	
+}

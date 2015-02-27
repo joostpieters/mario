@@ -1,0 +1,74 @@
+package les_4;
+/**
+ * 
+ * @invar ...
+ * 			| isValidGender(getGender())
+ * @invar ...
+ * 			| canHaveAsSpouse(getSpouse())
+ * 
+ * @author Pieter
+ *
+ */
+public class Person {
+	
+	public Person(Gender gender) throws IllegalArgumentException {
+		if (!isValidGender())
+			throw new IllegalArgumentException();
+	}
+	
+	@basic @immutable
+	public stream getGender() {
+		return this.gender;
+	}
+	
+	public boolean isValidGender(Gender gender) {
+		return (gender==Gender.MALE) || (gender == Gender.FEMALE); 
+	}
+	public boolean isValidSpouse(Person person) {
+		return (person == null) || (this.getGender() != person.getGender());
+	}
+	public boolean isMarried() {
+		return (this.getSpouse() == null);
+	}
+	/**
+	 * 
+	 * @param person
+	 * @post ...
+	 * 			| (new this).getSpouse() == person
+	 * @post ...
+	 * 			| (new person).getSpouse() == this 
+	 * @throws NullPointerException
+	 * 			...
+	 * 			| person == null
+	 * @throws IllegalArgumentException
+	 * 			...
+	 * 			| ! isValidSpouse(person)
+	 * @throws IllegalStatementException
+	 * 			...
+	 * 			| this.isMarries() || person.isMarried()
+	 */
+	public void marry(Person person) throws IllegalArgumentException, IllegalStatementException {
+		if (person == null)
+			throw new NullPointerException();
+		if ( ! isValidSpouse(person)) 
+			throw new IllegalArgumentException();
+		if (this.isMarried() || person.isMarried())
+			throw new IllegalStatementException();
+		this.setSpouse(person);
+		person.setSpouse(this);
+	}
+	public void setSpouse(Person person) {
+		assert isValidSpouse(person);
+		this.spouse = person;
+	}
+	private final Gender gender;
+	private Person Spouse spouse;
+	
+	public Person getSpouse() {
+		return this.spouse;
+	}
+	
+	public boolean isValidSpouse(Person person) {
+		
+	}
+}
