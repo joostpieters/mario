@@ -60,142 +60,36 @@ public class Mazub {
 	/**	
 	 * commentaar toevoegen
 	 */
-	/**
-	 *  the horizontal position of mazub
-	 */
 	public int x_pos = 0;
-	/**
-	 * the vertical position of mazub
-	 */
 	public int y_pos = 0;
-	/**
-	 * the width/hozizontal size of mazub
-	 */
 	public int x_dim;
-	/**
-	 * the height/vertical size of mazub
-	 */
 	public int y_dim;
-	/**
-	 * the width of mazub when he's not ducked
-	 */
 	public int x_dim_not_ducked = 6;
-	/**
-	 * the height of mazub when he's not ducked
-	 */
 	public int y_dim_not_ducked = 11;
-	/**
-	 * the width of mazub when he's ducked
-	 */
 	public int x_dim_ducked = 4; // nog aanpassen, random waarde
-	/**
-	 * the height of mazub when he's ducked
-	 */
 	public int y_dim_ducked = 6; // nog aanpassen, random waarde
-	/**
-	 * the dimensions of mazub, the set consists of the x_dim
-	 * and the y_dim.
-	 */
 	public int[] dimension;
-	/**
-	 * the starting speed when startMove is initiated
-	 */
-	public int initStartSpeed;
-	/**
-	 * the maximum horizontal speed the mazub can reach
-	 */
+	public int initStartSpeed; 
 	public int maxSpeed; 
-	/**
-	 * the speed of mazub
-	 */
 	public double speed;
-	/**
-	 * the speed at time = time + detltaT (for example when 
-	 * mazub is accelerating) 
-	 */
 	public double newSpeed;
-	/**
-	 * a small time interval, for example the new_speed after 
-	 * deltaT seconds is given by speed + deltaT*acc 
-	 * (acc =  acceleration)
-	 */
 	public double deltaT;
-	/**
-	 * the x position (horizontal position) after deltaT seconds
-	 */
 	public double new_x_pos;
-	/**
-	 * the y position (vertical position) after deltaT seconds
-	 */
 	public double new_y_pos;
-	/**
-	 * the difference between the new x_position (new_x_pos) and
-	 * the previous x_pos (x_pos)
-	 */
 	public double x_difference;
-	/**
-	 * the difference between the new y_position (new_y_pos) and
-	 * the previous y_pos (y_pos)
-	 */
 	public double y_difference;
-	/**
-	 * a boolean saying if the mazub is ducked
-	 */
 	public boolean duck = false;
-	/**
-	 * the horizontal acceleration of mazub
-	 */
-	public double acc;
-	/**
-	 * the speed of mazub in the vertical direction
-	 */
+	public double acc; // acceleration
 	public double YSpeed;
-	/**
-	 * the acceleration of mazub in the vertical direction
-	 */
 	public double YAcc;
-	/**
-	 * the next 4 int's are the ultimate static values for the borders
-	 * of the gamescreen and thus for (x_pos,y_pos)
-	 */
-	/**
-	 * the minimal value for x_pos
-	 */
 	public static int MIN_X_VALUE = 0;
-	/**
-	 * the maximal value for x_pos
-	 */
 	public static int MAX_X_VALUE = 1023;
-	/**
-	 * the minimal value for y_pos
-	 */
 	public static int MIN_Y_VALUE = 0;
-	/**
-	 * the maximal value for y_pos
-	 */
 	public static int MAX_Y_VALUE = 767;
-	/**
-	 * the static int giving the starting speed of mazub
-	 * when startMove() is initiated
-	 */
-	public static int START_SPEED = 1;
-	/**
-	 * the maximal horizontal speed mazub can reach
-	 */
+	public int START_SPEED = getInitStartSpeed(); 
 	public static int MAX_SPEED = 3;
-	/**
-	 * the maximal horizontal speed mazub can reach
-	 * when mazub is ducked
-	 */
 	public static int MAX_SPEED_DUCK = 1;
-	/**
-	 * the vertical speed at which mazub moves when 
-	 * startJump() is initiated
-	 */
 	public static int JUMP_SPEED = 8;
-	/**
-	 * the vertical acceleration at which mazub falls
-	 */
 	public static int FALL_ACC = -10;
 		
 	
