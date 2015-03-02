@@ -12,6 +12,8 @@
 public class Mazub {
 	
 	/**
+	 * Initialize this new Mazub with given x and y positions and given dimensions.
+	 * 
 	 * @param x_pos
 	 * The x position in the field for the new Mazub
 	 * @param y_pos
@@ -45,6 +47,7 @@ public class Mazub {
 	}
 	
 	
+	
 	public Mazub(int x_pos, int y_pos, int[] dimension,
 			int initStartSpeed,int maxSpeed)
 			throws IllegalPositionException {
@@ -69,7 +72,11 @@ public class Mazub {
 	 */
 	public int y_pos = 0;
 	/**
-	 * the width/hozizontal size of mazub
+	 * the orientation of Mazub
+	 */
+	public String orientation  = "RIGHT";
+	/**
+	 * the width/horizontal size of mazub
 	 */
 	public int x_dim;
 	/**
@@ -198,26 +205,83 @@ public class Mazub {
 	 */
 	public static int FALL_ACC = -10;
 		
-	
+	/**
+	 * Returns the x position
+	 * 
+	 * @return the x position
+	 */
 	public int getXPos() {
 		return x_pos;
 	}
+	
+	/**
+	 * Returns the y position
+	 * 
+	 * @return the y position
+	 */
 	public int getYPos() {
 		return y_pos;
 	}
+	
+	
+	/**
+	 * Returns the orientation of Mazub
+	 * @return the orientation
+	 */
+	public String getOrientation() {
+		return orientation;
+	}
+
+	/**
+	 * Returns the dimensions
+	 * 
+	 * @return the dimensions
+	 */
 	public int[] getDimension() {
 		return dimension;
 	}
+	/**
+	 * Returns the horizontal speed
+	 * 
+	 * @return the horizontal speed
+	 */
+	public double getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * Returns the horizontal acceleration
+	 * 
+	 * @return the horizontal acceleration 
+	 */
+	public double getAcc() {
+		return acc;
+	}
+
+
+	/**
+	 * Returns the initial start speed
+	 * 
+	 * @return the initial start speed
+	 */
 	public int getInitStartSpeed() {
 		return initStartSpeed;
 	}
+	
+	/**
+	 * Returns the maximum speed
+	 * 
+	 * @return the maximum speed
+	 */
 	public int getMaxSpeed() {
 		return maxSpeed;
 	}
 	
 	
 	/**
-	 * 	
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any Mazub.
+	 * 
 	 * @param x_pos 
 	 * 			the horizontal position of Mazub
 	 * @param y_pos
@@ -234,7 +298,9 @@ public class Mazub {
 	}
 	
 	/**
-	 * 	
+	 * 	Checks whether the given dimensions are valid dimensions for 
+	 *  any Mazub.
+	 * 
 	 * @param dimension
 	 * 			the dimension of Mazub
 	 * @return 	True if both dimensions are positive
@@ -245,6 +311,7 @@ public class Mazub {
 	}	
 	
 	/**
+	 * Method to make the Mazub start moving
 	 * 
 	 * @param x_pos 
 	 * 			the horizontal position of Mazub
@@ -273,6 +340,8 @@ public class Mazub {
 	}
 	
 	/**
+	 * Method to end the move of a Mazub
+	 * 
 	 * @param x_pos 
 	 * 			the horizontal position of Mazub
 	 * @param y_pos
@@ -323,17 +392,15 @@ public class Mazub {
 	}
 	
 	/**
-	 * 
-	 * 
-	 * 
-	 * TOTAAL uitwerken
+	 *  
+	 * DEFENSIEF uitwerken
 	 */
 	public void startJump() {
 		YSpeed = JUMP_SPEED;
 	}
 	
 	/**
-	 * TOTAAL uitwerken
+	 * DEFENSIEF uitwerken
 	 */
 	public void endJump() {
 		if (YSpeed > 0) {
@@ -348,10 +415,19 @@ public class Mazub {
 	 * TOTAAL uitwerken
 	 */
 	public void fall() {
-		YAcc = FALL_ACC;
+		if (y_pos >0) {
+			YAcc = FALL_ACC;
+		}
 	}
+	
+	/**DEZE samenvoegen met de vorige?
+	 * 
+	 * TOTAAL uitwerekn
+	 */
 	public void endFall() {
-		YAcc = 0;
+		if (y_pos == 0) {
+			YAcc = 0;
+		}
 	}
 	
 	public boolean isDucked(){
