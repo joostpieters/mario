@@ -29,11 +29,10 @@ public class Mazub {
 	 * 			| new.getYDim() == y_dim
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
-	 * 			| !isValidPosition(x_pos,y_pos)			 
-	 * 
-	 * DEFENSIEF uitwerken
-	 * 
-	 * 
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws	IllegalDimensionException
+	 * 			The given dimension is not valid for Mazub
+	 * 			| !isValidDimension(dimension)	
 	 */
 	public Mazub(int x_pos, int y_pos, int[] dimension)
 			throws IllegalPositionException, IllegalDimensionException {
@@ -44,15 +43,44 @@ public class Mazub {
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
 		this.dimension = dimension;
-	}
+	}	
 	
-	
-	
+	/**
+	 * Initialize this new Mazub with given x and y positions and given dimensions.
+	 * 
+	 * @param x_pos
+	 * The x position in the field for the new Mazub
+	 * @param y_pos
+	 * The y position in the field for the new Mazub
+	 * @param x_dim
+	 * Number of pixels from the x dimension of the new Mazub
+	 * @param y_dim
+	 * Number of pixels from the y dimension of the new Mazub
+	 * @post the mazub is created at (x_pos,y_pos)
+	 * 			| new.getXPos() == x_pos
+	 * 			| new.getYPos() == y_pos
+	 * 			| new.getXDim() == x_dim
+	 * 			| new.getYDim() == y_dim
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for Mazub
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws	IllegalDimensionException
+	 * 			The given dimension is not valid for Mazub
+	 * 			| !isValidDimension(dimension)		 
+	 * 
+	 * The initial velocity will never be changed below 1 m/s so
+	 * we don't need an IllegalInitStartSpeedException or a
+	 * IllegalMaxSpeedException. 
+	 * 
+	 */	
 	public Mazub(int x_pos, int y_pos, int[] dimension,
 			int initStartSpeed,int maxSpeed)
-			throws IllegalPositionException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos);
+		throws IllegalPositionException, IllegalDimensionException {
+			if (!isValidPosition(x_pos,y_pos))
+				throw new IllegalPositionException(x_pos,y_pos);
+			if (! isValidDimension(dimension))
+				throw new IllegalDimensionException(dimension);
+			
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
 		this.dimension = dimension;
@@ -74,7 +102,7 @@ public class Mazub {
 	/**
 	 * the orientation of Mazub
 	 */
-	public String orientation  = "RIGHT";
+	public String orientation  = "right";
 	/**
 	 * the width/horizontal size of mazub
 	 */
@@ -117,15 +145,20 @@ public class Mazub {
 	 */
 	public double speed;
 	/**
-	 * the speed at time = time + detltaT (for example when 
-	 * mazub is accelerating) 
+	 * the horizontal speed at time = time + detltaT 
+	 * (for example when mazub is accelerating) 
 	 */
 	public double newSpeed;
+	/**
+	 * the vertical speed at time = time + detltaT 
+	 * (for example when mazub is accelerating) 
+	 */
+	public double newYSpeed;
 	/**
 	 * a small time interval, for example the new_speed after 
 	 * deltaT seconds is given by speed + deltaT*acc 
 	 * (acc =  acceleration)
-	 */
+	 */	
 	public double deltaT;
 	/**
 	 * the x position (horizontal position) after deltaT seconds
@@ -368,21 +401,31 @@ public class Mazub {
 	 */
 	public void advanceTime() {
 		newSpeed = speed + acc*deltaT;
+		
+		if(orientation ==  "right"){
+			new_x_pos = (double) this.getXPos() + speed*100*deltaT
+					+ 0.5 * acc * 100 * Math.pow(deltaT,2) + x_difference;
+		}
+		else {
+			new_x_pos = (double) this.getXPos() - speed*100*deltaT
+					- 0.5 * acc * 100 * Math.pow(deltaT,2) + x_difference;
+		}
+		
+		newYSpeed = YSpeed + YAcc*deltaT;
+		if (y_pos == 0) {
+			endFall();
+		}
+		else {
+			new_y_pos = (double) this.getYPos()
+					+ YSpeed*100*deltaT + 0.5 * YAcc * 100 * Math.pow(deltaT,2) + y_difference;
+		}
+		
 		if (newSpeed < maxSpeed) {
 			speed = (float) newSpeed;
 		}
 		else {			
 			acc = 0;
 			speed = maxSpeed;
-			}
-		new_x_pos = (double) this.getXPos() + speed*100*deltaT + x_difference;
-		
-		YSpeed = YSpeed + YAcc*deltaT;
-		if (y_pos == 0) {
-			endFall();
-		}
-		else {
-			new_y_pos = (double) this.getYPos() + YSpeed*100*deltaT + y_difference;
 		}
 				
 		x_pos = (int) Math.floor(new_x_pos);
@@ -406,30 +449,63 @@ public class Mazub {
 		if (YSpeed > 0) {
 			YSpeed = 0;
 		}
-		if (y_pos != 0) {
+		if (y_pos > 0) {
 			fall();
 		}
 	}
 	
 	/**
-	 * TOTAAL uitwerken
+	 * Makes mazub fall if he is not on the standing on the ground
+	 * 
+	 * @post 	mazub accelerates to the ground with an acceleration
+	 * 			of 10 m/s² if was above the ground and he would not fall 
+	 * 			below the ground. If he would end below the ground, he ends
+	 * 			on the ground and his fall ends.
+	 * 		| 	if ((y_pos >0) && (new_y_pos >= 0))
+	 * 		|		then YAcc = FALL_ACC
+	 * 		| 	else if (y_pos > 0) 
+	 * 		|		then y_pos = 0 
+	 * 		|			endFall()
 	 */
 	public void fall() {
-		if (y_pos >0) {
+		new_y_pos = (double) this.getYPos() + YSpeed*100*deltaT
+				+ 0.5 * FALL_ACC * 100 * Math.pow(deltaT,2) + y_difference;
+		if ((y_pos >0) && (new_y_pos >= 0)) {
 			YAcc = FALL_ACC;
 		}
-	}
-	
-	/**DEZE samenvoegen met de vorige?
-	 * 
-	 * TOTAAL uitwerekn
-	 */
-	public void endFall() {
-		if (y_pos == 0) {
-			YAcc = 0;
+		else if (y_pos > 0) {
+			y_pos = 0;
+			endFall();
 		}
 	}
 	
+	/**
+	 * Mazub fall ends
+	 * 
+	 * @post	the acceleration of Mazub is set to 0
+	 * 		|	YAcc = 0
+	 * 
+	 * 
+	 */
+	public void endFall() {
+		YAcc = 0;
+	}
+	
+	/**
+	 * Returns the boolean duck, if mazub is ducked, true is returned,
+	 * otherwise false
+	 * 
+	 * @return (duck)
+	 *     __
+        .'  `.
+        |a_a  |
+        \<_)__/    ,
+         /   `-...-'\
+        |    -~',   /
+     ~`~\   '.-`  .' ~~^-~
+     ~~` `-.~-..~` ~~`  ~`
+     '~~ ~~`-  ^-~~`~ ^
+	 */
 	public boolean isDucked(){
 		return (duck);
 	}
@@ -440,6 +516,7 @@ public class Mazub {
 	
 	public void startDuck() {
 		duck = true ;
+		maxSpeed = MAX_SPEED_DUCK;
 	}
 		
 	
@@ -448,13 +525,15 @@ public class Mazub {
 	 */
 	public void endDuck() {	
 		duck = false;
+		maxSpeed = MAX_SPEED;
 	}
 	
 	/**
 	 * NOMINAAL uitwerken
 	 * GEEN formele documentatie nodig
 	 */
-	public void getCurrentSprite() {
+	public void getCurrentSprite(int[] images) {
+		if (XSpeed==0) && (! isDucked()) && 
 		if ( ! isDucked()) {
 			x_dim = x_dim_not_ducked;
 			y_dim = y_dim_not_ducked;			
