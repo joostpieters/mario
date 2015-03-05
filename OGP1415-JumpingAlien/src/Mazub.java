@@ -1,3 +1,5 @@
+import jumpingalien.util.Sprite;
+
 /**
  * A class that describes the movement of the rectangular player
  * character Mazub in a game world. 
@@ -583,48 +585,38 @@ public class Mazub {
 	 * NOMINAAL uitwerken
 	 * GEEN formele documentatie nodig
 	 */
-	public image getCurrentSprite(int[] images) {
-		m = (images.length-8)/2;
+	public Sprite getCurrentSprite(Sprite[] sprites) {
+		m = (sprites.length-8)/2;
 		if ((speed==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
-			return images[0];
+			return sprites[0];
 		}
 		else if ((speed==0) && (time_since_endMove > NOT_MOVING_TIME)){
-			return images[1];
+			return sprites[1];
 		}
 		else if ((speed==0) && (!isDucked()) && (getOrientation() == "right" )){
-			return images[2];
+			return sprites[2];
 		}		
 		else if ((speed==0) && (!isDucked())){
-			return images[3];
+			return sprites[3];
 		}
 		else if ((speed > 0) && (getOrientation() == "right" ) && (YSpeed > 0) && 
 				(!isDucked())){
-			return images[4];
+			return sprites[4];
 		}
 		else if ((speed > 0) && (YSpeed > 0) && (!isDucked())){
-			return images[5];
+			return sprites[5];
 		}
 		else if ((getOrientation() == "right") && (isDucked())){
-			return images[6];
+			return sprites[6];
 		}
 		else if (isDucked()){
-			return images[7];
+			return sprites[7];
 		}
 		else if (getOrientation() == "right"){
-			return images[8 + i];
+			return sprites[8 + i];
 		}
 		else {
-			return images[9+ m + i]; 
-		}
-		
-		
-		if ( ! isDucked()) {
-			x_dim = x_dim_not_ducked;
-			y_dim = y_dim_not_ducked;			
-		}
-		else {
-			x_dim = x_dim_ducked;
-			y_dim = y_dim_ducked;
+			return sprites[9+ m + i]; 
 		}
 	}
 
