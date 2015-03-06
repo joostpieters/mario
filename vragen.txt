@@ -11,3 +11,5 @@ Hoe defensief uitwerken van advanceTime? (try/catch)
 verschil tussen @effect en @post
 
 Wat is de declaratie van getCurrentSprite, want die returned an image.
+
+Bij facade klasse: hoe juiste mazub class importeren?

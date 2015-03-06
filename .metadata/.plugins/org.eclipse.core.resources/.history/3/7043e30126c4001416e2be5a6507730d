@@ -325,7 +325,7 @@ public class Mazub {
 	}
 	
 	public int[] getVelocity(){
-		return new int[] {double speed,double YSpeed};
+		return new int[] {this.getSpeed(),this.getYSpeed()};
 	}
 
 	/**
@@ -353,7 +353,7 @@ public class Mazub {
 	 * 			| {Acc,YAcc}
 	 */
 	public int[] getAcceleration(){
-		return new int[] {acc,YAcc};
+		return new int[] {this.getAcc(),this.getYAcc()};
 	}
 	
 	/**
@@ -683,10 +683,19 @@ public class Mazub {
 			return sprites[7];
 		}
 		else if (getOrientation() == "right"){
-			return sprites[8 + i];
+<<<<<<< HEAD
+			return images[8 + i];
 		}
 		else {
-			return sprites[9+ m + i]; 
+			return images[9+ m + i]; 
+		}
+				
+		if ( ! isDucked()) {
+			x_dim = x_dim_not_ducked;
+			y_dim = y_dim_not_ducked;			
+=======
+			return sprites[8 + i];
+>>>>>>> 7751a9936641e86b86b0fa2a8161c893609fa730
 		}
 		else {
 			return sprites[9+ m + i]; 

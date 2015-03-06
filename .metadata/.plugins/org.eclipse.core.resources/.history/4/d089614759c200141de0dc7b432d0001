@@ -1,5 +1,3 @@
-import jumpingalien.util.Sprite;
-
 /**
  * A class that describes the movement of the rectangular player
  * character Mazub in a game world. 
@@ -280,14 +278,6 @@ public class Mazub {
 		return y_pos;
 	}
 	
-	/**
-	 * 
-	 * @return an array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given alien's bottom left pixel in the world.	
-	 */
-	public int[] getLocation() {
-		return new int[]{this.getXPos(),this.getYPos()};
-	}	
 	
 	/**
 	 * Returns the orientation of Mazub
@@ -309,64 +299,20 @@ public class Mazub {
 	 * Returns the horizontal speed
 	 * 
 	 * @return the horizontal speed
-	 * 			| speed
 	 */
 	public double getSpeed() {
 		return speed;
-	}
-	
-	/**
-	 * 
-	 * @return the vertical speed of mazub
-	 * 			| YSpeed
-	 */
-	public double getYSpeed() {
-		return YSpeed;
-	}
-	
-	public int[] getVelocity(){
-		return new int[] {double speed,double YSpeed};
 	}
 
 	/**
 	 * Returns the horizontal acceleration
 	 * 
 	 * @return the horizontal acceleration 
-	 * 			| Acc
 	 */
 	public double getAcc() {
 		return acc;
 	}
-	/**
-	 * 
-	 * @return the vertical acceleration of mazub
-	 * 			| YAcc
-	 */
-	public double getYAcc() {
-		return YAcc;
-	}
-	
-	/**
-	 * 
-	 * @return an array consisting of the horizontal and 
-	 * vertical acceleration.
-	 * 			| {Acc,YAcc}
-	 */
-	public int[] getAcceleration(){
-		return new int[] {acc,YAcc};
-	}
-	
-	/**
-	 * 
-	 * MOGEN DE GEWONE VARIABELEN IN DE ARRAY OF MOETEN
-	 * WE DAARVOOR GETTERS AANMAKEN????
-	 * 
-	 * 
-	 * @return an array consisting of the width and height of mazub
-	 */
-	public int[] getSize() {
-		return new int[] {x_dim,y_dim};
-	}
+
 
 	/**
 	 * Returns the initial start speed
@@ -457,25 +403,6 @@ public class Mazub {
 	}
 	
 	/**
-	 * Mazub starts moving to the right
-	 * @post 	| startMove()
-	 * 			| orientation = right
-	 */
-	public void startMoveRight(){
-		startMove();
-		orientation = "right";
-	}
-	/**
-	 * Mazub starts moving to the left
-	 * @post 	| startMove()
-	 * 			| orientation = left
-	 */
-	public void startMoveLeft(){
-		startMove();
-		orientation = "left";
-	}
-	
-	/**
 	 * Method to end the move of a Mazub
 	 * 
 	 * @param x_pos 
@@ -554,7 +481,8 @@ public class Mazub {
 					i = 0;
 				}
 			}
-		}		
+		}
+		
 	}
 	
 	/**
@@ -630,7 +558,7 @@ public class Mazub {
      '~~ ~~`-  ^-~~`~ ^
 	 */
 	public boolean isDucked(){
-		return (this.duck);
+		return (duck);
 	}
 	
 	/**
@@ -655,49 +583,52 @@ public class Mazub {
 	 * NOMINAAL uitwerken
 	 * GEEN formele documentatie nodig
 	 */
-	public Sprite getCurrentSprite(Sprite[] sprites) {
-		m = (sprites.length-8)/2;
+	public image getCurrentSprite(int[] images) {
+		m = (images.length-8)/2;
 		if ((speed==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
-			return sprites[0];
+			return images[0];
 		}
 		else if ((speed==0) && (time_since_endMove > NOT_MOVING_TIME)){
-			return sprites[1];
+			return images[1];
 		}
 		else if ((speed==0) && (!isDucked()) && (getOrientation() == "right" )){
-			return sprites[2];
+			return images[2];
 		}		
 		else if ((speed==0) && (!isDucked())){
-			return sprites[3];
+			return images[3];
 		}
 		else if ((speed > 0) && (getOrientation() == "right" ) && (YSpeed > 0) && 
 				(!isDucked())){
-			return sprites[4];
+			return images[4];
 		}
 		else if ((speed > 0) && (YSpeed > 0) && (!isDucked())){
-			return sprites[5];
+			return images[5];
 		}
 		else if ((getOrientation() == "right") && (isDucked())){
-			return sprites[6];
+			return images[6];
 		}
 		else if (isDucked()){
-			return sprites[7];
+			return images[7];
 		}
 		else if (getOrientation() == "right"){
-			return sprites[8 + i];
+			return images[8 + i];
 		}
 		else {
-			return sprites[9+ m + i]; 
+			return images[9+ m + i]; 
+		}
+		
+		
+		if ( ! isDucked()) {
+			x_dim = x_dim_not_ducked;
+			y_dim = y_dim_not_ducked;			
 		}
 		else {
-			return sprites[9+ m + i]; 
+			x_dim = x_dim_ducked;
+			y_dim = y_dim_ducked;
 		}
 	}
 
 	public void setInitStartSpeed(int initStartSpeed) {
 		this.initStartSpeed = initStartSpeed;
 	}
-	
-		
 }
-		
-	
