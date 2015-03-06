@@ -278,14 +278,6 @@ public class Mazub {
 		return y_pos;
 	}
 	
-	/**
-	 * 
-	 * @return an array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given alien's bottom left pixel in the world.	
-	 */
-	public int[] getLocation() {
-		return new int[]{this.getXPos(),this.getYPos()};
-	}	
 	
 	/**
 	 * Returns the orientation of Mazub
@@ -307,64 +299,20 @@ public class Mazub {
 	 * Returns the horizontal speed
 	 * 
 	 * @return the horizontal speed
-	 * 			| speed
 	 */
 	public double getSpeed() {
 		return speed;
-	}
-	
-	/**
-	 * 
-	 * @return the vertical speed of mazub
-	 * 			| YSpeed
-	 */
-	public double getYSpeed() {
-		return YSpeed;
-	}
-	
-	public int[] getVelocity(){
-		return new int[] {this.getSpeed(),this.getYSpeed()};
 	}
 
 	/**
 	 * Returns the horizontal acceleration
 	 * 
 	 * @return the horizontal acceleration 
-	 * 			| Acc
 	 */
 	public double getAcc() {
 		return acc;
 	}
-	/**
-	 * 
-	 * @return the vertical acceleration of mazub
-	 * 			| YAcc
-	 */
-	public double getYAcc() {
-		return YAcc;
-	}
-	
-	/**
-	 * 
-	 * @return an array consisting of the horizontal and 
-	 * vertical acceleration.
-	 * 			| {Acc,YAcc}
-	 */
-	public int[] getAcceleration(){
-		return new int[] {this.getAcc(),this.getYAcc()};
-	}
-	
-	/**
-	 * 
-	 * MOGEN DE GEWONE VARIABELEN IN DE ARRAY OF MOETEN
-	 * WE DAARVOOR GETTERS AANMAKEN????
-	 * 
-	 * 
-	 * @return an array consisting of the width and height of mazub
-	 */
-	public int[] getSize() {
-		return new int[] {x_dim,y_dim};
-	}
+
 
 	/**
 	 * Returns the initial start speed
@@ -455,25 +403,6 @@ public class Mazub {
 	}
 	
 	/**
-	 * Mazub starts moving to the right
-	 * @post 	| startMove()
-	 * 			| orientation = right
-	 */
-	public void startMoveRight(){
-		startMove();
-		orientation = "right";
-	}
-	/**
-	 * Mazub starts moving to the left
-	 * @post 	| startMove()
-	 * 			| orientation = left
-	 */
-	public void startMoveLeft(){
-		startMove();
-		orientation = "left";
-	}
-	
-	/**
 	 * Method to end the move of a Mazub
 	 * 
 	 * @param x_pos 
@@ -552,7 +481,8 @@ public class Mazub {
 					i = 0;
 				}
 			}
-		}		
+		}
+		
 	}
 	
 	/**
@@ -628,7 +558,7 @@ public class Mazub {
      '~~ ~~`-  ^-~~`~ ^
 	 */
 	public boolean isDucked(){
-		return (this.duck);
+		return (duck);
 	}
 	
 	/**
@@ -686,7 +616,8 @@ public class Mazub {
 		else {
 			return images[9+ m + i]; 
 		}
-				
+		
+		
 		if ( ! isDucked()) {
 			x_dim = x_dim_not_ducked;
 			y_dim = y_dim_not_ducked;			
@@ -700,8 +631,4 @@ public class Mazub {
 	public void setInitStartSpeed(int initStartSpeed) {
 		this.initStartSpeed = initStartSpeed;
 	}
-	
-		
 }
-		
-	
