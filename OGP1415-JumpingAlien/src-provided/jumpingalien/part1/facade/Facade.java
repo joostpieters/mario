@@ -1,6 +1,7 @@
 package jumpingalien.part1.facade;
 
 
+
 import jumpingalien.model.Mazub;
 import jumpingalien.util.Sprite;
 
@@ -9,8 +10,7 @@ public class Facade implements IFacade {
 
 	
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
-		alien = Mazub(pixelLeftX,pixelBottomY,sprites);
-		// zoiets ofzo?
+		return createMazub(pixelLeftX, pixelBottomY,sprites);
 	}
 
 	

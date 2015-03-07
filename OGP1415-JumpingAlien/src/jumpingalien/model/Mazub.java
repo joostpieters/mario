@@ -95,6 +95,10 @@ public class Mazub {
 		this.maxSpeed = maxSpeed;
 	}
 	
+	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) throws IllegalPositionException, IllegalDimensionException {
+		return new Mazub(pixelLeftX, pixelBottomY,sprites);
+	}
+	
 	/**	
 	 * commentaar toevoegen
 	 */
@@ -705,5 +709,6 @@ public class Mazub {
 	
 		
 }
+
 		
 	
