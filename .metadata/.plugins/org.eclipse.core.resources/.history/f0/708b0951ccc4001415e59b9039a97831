@@ -8,9 +8,8 @@ import jumpingalien.util.Sprite;
 public class Facade implements IFacade {
 
 	
-	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
-		alien = Mazub(pixelLeftX,pixelBottomY,sprites);
-		// zoiets ofzo?
+	public createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
+		//Geen idee wat hier moet
 	}
 
 	
