@@ -686,7 +686,7 @@ public class Mazub {
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
-		if ((this.getSpeed()==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
+		if ((speed==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
 			return sprites[0];
 		}
 		else if ((speed==0) && (time_since_endMove > NOT_MOVING_TIME)){
