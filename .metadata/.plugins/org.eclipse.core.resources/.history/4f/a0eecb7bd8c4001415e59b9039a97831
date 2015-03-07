@@ -505,7 +505,6 @@ public class Mazub {
 	 *Dat klopt hier niet
 	 */
 	public void endMove() {
-		assert (speed>=0);
 		speed = 0;
 		acc = 0;
 		time_since_endMove = 0;
@@ -664,7 +663,6 @@ public class Mazub {
 	 * GEEN formele documentatie nodig
 	 */
 	public Sprite getCurrentSprite() {
-		assert ((sprites.length >= 8) && (sprites.length % 2 == 0));
 		m = (sprites.length-8)/2;
 		if ((speed==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
 			return sprites[0];

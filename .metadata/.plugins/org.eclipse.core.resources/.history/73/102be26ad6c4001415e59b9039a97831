@@ -26,7 +26,7 @@ public class Mazub {
 	 * Number of pixels from the x dimension of the new Mazub
 	 * @param y_dim
 	 * Number of pixels from the y dimension of the new Mazub
-	 * @effect the mazub is created at (x_pos,y_pos)
+	 * @post the mazub is created at (x_pos,y_pos)
 	 * 			| new.getXPos() == x_pos
 	 * 			| new.getYPos() == y_pos
 	 * 			| new.getXDim() == x_dim
@@ -143,7 +143,7 @@ public class Mazub {
 	 * the dimensions of mazub, the set consists of the x_dim
 	 * and the y_dim.
 	 */
-	public int[] dimension = {this.getXDim(),this.getYDim()};
+	public int[] dimension;
 	/**
 	 * the starting speed when startMove is initiated
 	 */
@@ -306,14 +306,7 @@ public class Mazub {
 	public String getOrientation() {
 		return orientation;
 	}
-	
-	public int getXDim() {
-		return x_dim;
-	}
-	public int getYDim() {
-		return y_dim;
-	}
-	
+
 	/**
 	 * Returns the dimensions
 	 * 
@@ -401,7 +394,8 @@ public class Mazub {
 	 */
 	public int getMaxSpeed() {
 		return maxSpeed;
-	}	
+	}
+	
 	
 	/**
 	 * 	Checks whether the given positions are valid positions for 
@@ -456,7 +450,7 @@ public class Mazub {
 	 * 
 	 * NOMINAAL uitwerken
 	 * 
-	 * KLAAR
+	 * KLAAR PIEMELS
 	 */
 	public void startMove() {
 		assert isValidPosition(getXPos(),getYPos());
@@ -505,14 +499,15 @@ public class Mazub {
 	 *Dat klopt hier niet
 	 */
 	public void endMove() {
-		assert (speed>=0);
 		speed = 0;
 		acc = 0;
 		time_since_endMove = 0;
 	}
 	
 	/**
-	 *  
+	 * 
+	 * 
+	 * 
 	 * DEFENSIEF uitwerken
 	 */
 	public void advanceTime(double deltaT) {
@@ -664,7 +659,6 @@ public class Mazub {
 	 * GEEN formele documentatie nodig
 	 */
 	public Sprite getCurrentSprite() {
-		assert ((sprites.length >= 8) && (sprites.length % 2 == 0));
 		m = (sprites.length-8)/2;
 		if ((speed==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
 			return sprites[0];
