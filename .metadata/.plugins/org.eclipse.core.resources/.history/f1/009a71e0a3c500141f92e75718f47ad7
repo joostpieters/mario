@@ -101,6 +101,10 @@ public class Mazub {
 		return new Mazub(pixelLeftX, pixelBottomY,sprites);
 	}
 	
+	/**	
+	 * commentaar toevoegen
+	 */
+	
 	/**
 	 *  the horizontal position of mazub
 	 */
@@ -256,10 +260,6 @@ public class Mazub {
 	 * last time
 	 */
 	public double time_since_endMove;
-	/**
-	 * the time passed after startMove was invoced for the
-	 * last time
-	 */
 	public double time_since_startMove;
 	/**
 	 * the time that mazub should not move before sprite 0 is displayed
@@ -311,7 +311,6 @@ public class Mazub {
 	 * Returns the orientation of Mazub
 	 * @return orientation
 	 */
-	@Basic
 	public String getOrientation() {
 		return orientation;
 	}
