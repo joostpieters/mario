@@ -548,20 +548,6 @@ public class Mazub {
 	}
 	
 	/**
-	 * ends the mazub's movement to the left
-	 */
-	public void endMoveLeft() {
-		endMove();
-	}
-	
-	/**
-	 * ends the mazub's movement to the right
-	 */
-	public void endMoveRight() {
-		endMove();
-	}
-	
-	/**
 	 *  
 	 * DEFENSIEF uitwerken
 	 */

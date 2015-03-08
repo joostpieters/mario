@@ -553,7 +553,6 @@ public class Mazub {
 	public void endMoveLeft() {
 		endMove();
 	}
-	
 	/**
 	 * ends the mazub's movement to the right
 	 */
