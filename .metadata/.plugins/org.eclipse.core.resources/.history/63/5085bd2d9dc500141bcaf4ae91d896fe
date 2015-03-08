@@ -1,6 +1,5 @@
 package jumpingalien.model;
 import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Immutable;
 import jumpingalien.util.Sprite;
 
 /**
@@ -348,7 +347,6 @@ public class Mazub {
 	 * @return the horizontal speed
 	 * 			| speed
 	 */
-	@Basic
 	public double getSpeed() {
 		return speed;
 	}
@@ -358,7 +356,6 @@ public class Mazub {
 	 * @return the vertical speed of mazub
 	 * 			| YSpeed
 	 */
-	@Basic
 	public double getYSpeed() {
 		return YSpeed;
 	}
@@ -373,7 +370,6 @@ public class Mazub {
 	 * @return the horizontal acceleration 
 	 * 			| Acc
 	 */
-	@Basic
 	public double getAcc() {
 		return acc;
 	}
@@ -382,7 +378,6 @@ public class Mazub {
 	 * @return the vertical acceleration of mazub
 	 * 			| YAcc
 	 */
-	@Basic
 	public double getYAcc() {
 		return YAcc;
 	}
@@ -414,7 +409,6 @@ public class Mazub {
 	 * 
 	 * @return the initial start speed
 	 */
-	@Immutable
 	public int getInitStartSpeed() {
 		return initStartSpeed;
 	}
@@ -424,7 +418,6 @@ public class Mazub {
 	 * 
 	 * @return the maximum speed
 	 */
-	@Immutable
 	public int getMaxSpeed() {
 		return maxSpeed;
 	}	
