@@ -1,0 +1,11 @@
+1426001362681	Copy method
+1426004737266	Rename field 'speed'
+1426004766712	Rename field 'XSpeed'
+1426004790190	Rename field 'deltaT'
+1426004811987	Rename field 'acc'
+1426004820240	Rename field 'YSpeed'
+1426004831142	Rename field 'YAcc'
+1426004899886	Rename method 'getSpeed'
+1426004933787	Rename method 'getAcc'
+1426006137524	Rename local variable 'deltaT'
+1426007786413	Rename method 'setSpeed'

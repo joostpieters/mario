@@ -42,15 +42,15 @@ public class Mazub {
 	 * 
 	 * COMMENTAAR MOET AANGEPAST WORDEN
 	 */
-	public Mazub(int x_pos, int y_pos, Sprite[] sprites)
-			throws IllegalPositionException, IllegalDimensionException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos);
-				if (!isValidDimension(dimension))
-					throw new IllegalDimensionException(dimension);
+	public Mazub(int x_pos, int y_pos, Sprite[] sprites){
+//			throws IllegalPositionException, IllegalDimensionException {
+//				if(!isValidPosition())
+//					throw new IllegalPositionException(x_pos,y_pos);
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
 		this.sprites = sprites;
+		this.setInitStartSpeed(START_SPEED);
+		this.setMaxSpeed(MAX_SPEED);
 	}	
 	
 	/**
@@ -83,12 +83,10 @@ public class Mazub {
 	 * COMMENTAAR MOET AANGEPAST WORDEN
 	 */	
 	public Mazub(int x_pos, int y_pos, Sprite[] sprites,
-			int initStartSpeed,int maxSpeed)
-		throws IllegalPositionException, IllegalDimensionException {
-			if (!isValidPosition(x_pos,y_pos))
-				throw new IllegalPositionException(x_pos,y_pos);
-			if (! isValidDimension(dimension))
-				throw new IllegalDimensionException(dimension);
+			int initStartSpeed,int maxSpeed){
+//		throws IllegalPositionException, IllegalDimensionException {
+//			if (!isValidPosition())
+//				throw new IllegalPositionException(x_pos,y_pos);
 			
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
@@ -97,9 +95,9 @@ public class Mazub {
 		this.maxSpeed = maxSpeed;
 	}
 	
-	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) throws IllegalPositionException, IllegalDimensionException {
-		return new Mazub(pixelLeftX, pixelBottomY,sprites);
-	}
+//	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) throws IllegalPositionException, IllegalDimensionException  {
+//		return new Mazub(pixelLeftX, pixelBottomY,sprites);
+//	 }
 	
 	/**
 	 *  the horizontal position of mazub
@@ -157,7 +155,7 @@ public class Mazub {
 	/**
 	 * the speed of mazub
 	 */
-	public double speed;
+	public double xSpeed;
 	/**
 	 * the horizontal speed at time = time + detltaT 
 	 * (for example when mazub is accelerating) 
@@ -173,7 +171,7 @@ public class Mazub {
 	 * deltaT seconds is given by speed + deltaT*acc 
 	 * (acc =  acceleration)
 	 */	
-	public double deltaT;
+	public double dt;
 	/**
 	 * the x position (horizontal position) after deltaT seconds
 	 */
@@ -199,15 +197,15 @@ public class Mazub {
 	/**
 	 * the horizontal acceleration of mazub
 	 */
-	public double acc;
+	public double xAcc;
 	/**
 	 * the speed of mazub in the vertical direction
 	 */
-	public double YSpeed;
+	public double ySpeed;
 	/**
 	 * the acceleration of mazub in the vertical direction
 	 */
-	public double YAcc;
+	public double yAcc;
 	/**
 	 * the next 4 int's are the ultimate static values for the borders
 	 * of the gamescreen and thus for (x_pos,y_pos)
@@ -268,7 +266,7 @@ public class Mazub {
 	/**
 	 * the time every image is displayed when mazub is running
 	 */
-	public static double TIME_DIFFERENT_IMAGE = 0.75;
+	public static double TIME_DIFFERENT_IMAGE = 0.075;
 	/**
 	 * the amount of running images with a certain orientation
 	 */
@@ -350,8 +348,8 @@ public class Mazub {
 	 * 			| speed
 	 */
 	@Basic
-	public double getSpeed() {
-		return speed;
+	public double getXSpeed() {
+		return xSpeed;
 	}
 	
 	/**
@@ -361,11 +359,11 @@ public class Mazub {
 	 */
 	@Basic
 	public double getYSpeed() {
-		return YSpeed;
+		return ySpeed;
 	}
 	
 	public double[] getVelocity(){
-		return new double[] {speed,YSpeed};
+		return new double[] {xSpeed,ySpeed};
 	}
 
 	/**
@@ -375,8 +373,8 @@ public class Mazub {
 	 * 			| Acc
 	 */
 	@Basic
-	public double getAcc() {
-		return acc;
+	public double getXAcc() {
+		return xAcc;
 	}
 	/**
 	 * 
@@ -385,7 +383,7 @@ public class Mazub {
 	 */
 	@Basic
 	public double getYAcc() {
-		return YAcc;
+		return yAcc;
 	}
 	
 	/**
@@ -395,7 +393,7 @@ public class Mazub {
 	 * 			| {Acc,YAcc}
 	 */
 	public double[] getAcceleration(){
-		return new double[] {this.getAcc(),this.getYAcc()};
+		return new double[] {this.getXAcc(),this.getYAcc()};
 	}
 	
 	/**
@@ -431,6 +429,41 @@ public class Mazub {
 	}	
 	
 	/**
+	 * @return the time_since_endMove
+	 */
+	public double getTime_since_endMove() {
+		return time_since_endMove;
+	}
+
+	/**
+	 * @param time_since_endMove the time_since_endMove to set
+	 */
+	public void setTime_since_endMove(double time_since_endMove) {
+		this.time_since_endMove = time_since_endMove;
+	}
+
+	/**
+	 * @return the time_since_startMove
+	 */
+	public double getTime_since_startMove() {
+		return time_since_startMove;
+	}
+
+	/**
+	 * @param time_since_startMove the time_since_startMove to set
+	 */
+	public void setTime_since_startMove(double time_since_startMove) {
+		this.time_since_startMove = time_since_startMove;
+	}
+
+	/**
+	 * @param ySpeed the ySpeed to set
+	 */
+	public void setySpeed(double ySpeed) {
+		this.ySpeed = ySpeed;
+	}
+
+	/**
 	 * 	Checks whether the given positions are valid positions for 
 	 *  any Mazub.
 	 * 
@@ -444,33 +477,63 @@ public class Mazub {
 	 *			| return (x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE) 
 	 */
-	public static boolean isValidPosition(int x_pos, int y_pos) {
-		return (x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-				 && y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE);
+	public boolean isValidPosition() {
+		return (this.getXPos() >= MIN_X_VALUE && this.getXPos() <= MAX_X_VALUE
+				 && this.getYPos() >= MIN_Y_VALUE && this.getYPos() <= MAX_Y_VALUE);
 	}
+
 	
-	/**
-	 * 	Checks whether the given dimensions are valid dimensions for 
-	 *  any Mazub.
-	 * 
-	 * @param dimension
-	 * 			the dimension of Mazub
-	 * @return 	True if both dimensions are positive
-	 *			| return (dimension[0] > 0) && (dimension[1] > 0)
-	 */
-	public static boolean isValidDimension(int[] dimension) {
-		return (dimension[0] > 0) && (dimension[1] > 0);
-	}	
+//	/**
+//	 * 	Checks whether the given dimensions are valid dimensions for 
+//	 *  any Mazub.
+//	 * 
+//	 * @param dimension
+//	 * 			the dimension of Mazub
+//	 * @return 	True if both dimensions are positive
+//	 *			| return (dimension[0] > 0) && (dimension[1] > 0)
+//	 */
+//	public static boolean isValidDimension(int[] dimension) {
+//		return (dimension[0] > 0) && (dimension[1] > 0);
+//	}	
 	
 	/**
 	 * sets the speed of mazub to a new value speed
 	 * @param speed
 	 * 			the new speed of mazub
 	 */
-	public void setSpeed(double speed) {
-		this.speed = speed;
+	
+	public void setInitStartSpeed(double initstartspeed) {
+		this.initStartSpeed = (int) initstartspeed;
 	}
 	
+	public void setXSpeed(double s){
+		this.xSpeed = s;
+	}
+	
+	public void setMaxSpeed(int maxspeed) {
+		this.maxSpeed = maxspeed;
+	}
+	
+	public void setxAcc(double xAcc) {
+		this.xAcc = xAcc;
+	}
+	
+	public void setXPos(double x) {
+		this.x_pos = (int) Math.floor(x);
+	}
+	
+	public void setYPos(double y) {
+		this.y_pos = (int) Math.floor(y);
+	}
+	
+	public void setXDifference(double x_difference) {
+		this.x_difference = x_difference;
+	}
+	
+	public void setYDifference(double y_difference) {
+		this.y_difference = y_difference;
+	}
+
 	/**
 	 * Method to make the Mazub start moving
 	 * 
@@ -495,14 +558,14 @@ public class Mazub {
 	 * KLAAR
 	 */
 	public void startMove() {
-		assert isValidPosition(getXPos(),getYPos());
-		this.setSpeed(START_SPEED); 
+		assert isValidPosition();
+		this.setXSpeed(START_SPEED); 
 		if (this.isDucked() == false) {
-			acc = (float) 0.9;
+			xAcc = (float) 0.9;
 			maxSpeed = getMaxSpeed();
 		}
 		else {
-			acc = 0;
+			xAcc = 0;
 			maxSpeed = MAX_SPEED_DUCK;
 		}
 		time_since_startMove = 0;
@@ -541,10 +604,10 @@ public class Mazub {
 	 *Dat klopt hier niet
 	 */
 	public void endMove() {
-		assert (speed>=0);
-		this.setSpeed(0);
-		acc = 0;
-		time_since_endMove = 0;
+		assert (xSpeed>=0);
+		this.setXSpeed(0);
+		this.setxAcc(0);
+		setTime_since_endMove(0);
 	}
 	
 	/**
@@ -561,51 +624,36 @@ public class Mazub {
 		endMove();
 	}
 	
-	/**
-	 *  
-	 * DEFENSIEF uitwerken
-	 */
-	public void advanceTime(double deltaT) {
-		newSpeed = this.getSpeed() + acc*deltaT;
-		
-		if(orientation ==  "right"){
-			new_x_pos = (double) this.getXPos() + this.getSpeed()*100*deltaT
-					+ 0.5 * acc * 100 * Math.pow(deltaT,2) + x_difference;
-		}
-		else {
-			new_x_pos = (double) this.getXPos() - this.getSpeed()*100*deltaT
-					- 0.5 * acc * 100 * Math.pow(deltaT,2) + x_difference;
+	public void advance_x(double dt) {
+		if (this.getXSpeed() >= this.getMaxSpeed()){
+			this.setXSpeed(this.getMaxSpeed());
+			this.setxAcc(0);
 		}
 		
-		newYSpeed = YSpeed + YAcc*deltaT;
-		if (y_pos == 0) {
-			endFall();
+		if (this.getOrientation() == "right") {
+			new_x_pos = (double) this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * xAcc * 100 * Math.pow(dt,2) + x_difference;
+			
+			
 		}
-		else {
-			new_y_pos = (double) this.getYPos()
-					+ YSpeed*100*deltaT + 0.5 * YAcc * 100 * Math.pow(deltaT,2) + y_difference;
+		else if (this.getOrientation() == "left") {
+			new_x_pos = (double) this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * xAcc * 100 * Math.pow(dt,2) + x_difference;
 		}
 		
-		if (newSpeed < maxSpeed) {
-			this.setSpeed(newSpeed);
-		}
-		else {			
-			acc = 0;
-			this.setSpeed(maxSpeed);
-		}
-				
-		x_pos = (int) Math.floor(new_x_pos);
-		y_pos = (int) Math.floor(new_y_pos);
-		x_difference = new_x_pos - x_pos;
-		y_difference = new_y_pos - y_pos;
+		this.setXSpeed(this.getXSpeed() + dt * xAcc);		
 		
-		if (this.getSpeed() == 0) {
-			time_since_endMove += deltaT;
+		setXPos(new_x_pos);
+		setXDifference(new_x_pos - x_pos);
+		
+		if (this.getXSpeed() == 0) {
+			time_since_endMove += dt;
 		}
-		if (this.getSpeed() > 0) {
-			time_since_startMove += deltaT;
+		if (this.getXSpeed() > 0) {
+			time_since_startMove += dt;
 			if (time_since_startMove > TIME_DIFFERENT_IMAGE) {
-				if (i < m) {
+				time_since_startMove = 0;
+				if (i < m-1) {
 					i += 1;
 				}
 				else {
@@ -619,16 +667,41 @@ public class Mazub {
 	 *  
 	 * DEFENSIEF uitwerken
 	 */
+	public void advanceTime(double dt) {		
+		
+		advance_x(dt);	
+		
+//		newSpeed = this.getXSpeed() + xAcc*dt;
+		
+		newYSpeed = ySpeed + yAcc*dt;
+		if (y_pos == 0) {
+			endFall();
+		}
+		else {
+			new_y_pos = (double) this.getYPos()
+					+ ySpeed*100*dt + 0.5 * yAcc * 100 * Math.pow(dt,2) + y_difference;
+		}
+		
+		y_pos = (int) Math.floor(new_y_pos);
+		y_difference = new_y_pos - y_pos;
+		
+		
+	}
+	
+	/**
+	 *  
+	 * DEFENSIEF uitwerken
+	 */
 	public void startJump() {
-		YSpeed = JUMP_SPEED;
+		setySpeed(JUMP_SPEED);
 	}
 	
 	/**
 	 * DEFENSIEF uitwerken
 	 */
 	public void endJump() {
-		if (YSpeed > 0) {
-			YSpeed = 0;
+		if (ySpeed > 0) {
+			ySpeed = 0;
 		}
 		if (y_pos > 0) {
 			fall();
@@ -649,17 +722,16 @@ public class Mazub {
 	 * 		|			endFall()
 	 */
 	public void fall() {
-		new_y_pos = (double) this.getYPos() + YSpeed*100*deltaT
-				+ 0.5 * FALL_ACC * 100 * Math.pow(deltaT,2) + y_difference;
+		new_y_pos = (double) this.getYPos() + ySpeed*100*dt
+				+ 0.5 * FALL_ACC * 100 * Math.pow(dt,2) + y_difference;
 		if ((y_pos >0) && (new_y_pos >= 0)) {
-			YAcc = FALL_ACC;
+			yAcc = FALL_ACC;
 		}
 		else if (y_pos > 0) {
 			y_pos = 0;
 			endFall();
 		}
-	}
-	
+	} 
 	/**
 	 * Mazub fall ends
 	 * 
@@ -669,7 +741,7 @@ public class Mazub {
 	 * 
 	 */
 	public void endFall() {
-		YAcc = 0;
+		yAcc = 0;
 	}
 	
 	/**
@@ -720,23 +792,23 @@ public class Mazub {
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
-		if ((this.getSpeed()==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
+		if ((this.getXSpeed()==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
 			return sprites[0];
 		}
-		else if ((speed==0) && (time_since_endMove > NOT_MOVING_TIME)){
+		else if ((xSpeed==0) && (time_since_endMove > NOT_MOVING_TIME)){
 			return sprites[1];
 		}
-		else if ((speed==0) && (!isDucked()) && (getOrientation() == "right" )){
+		else if ((xSpeed==0) && (!isDucked()) && (getOrientation() == "right" )){
 			return sprites[2];
 		}		
-		else if ((speed==0) && (!isDucked())){
+		else if ((xSpeed==0) && (!isDucked())){
 			return sprites[3];
 		}
-		else if ((speed > 0) && (getOrientation() == "right" ) && (YSpeed > 0) && 
+		else if ((xSpeed > 0) && (getOrientation() == "right" ) && (ySpeed > 0) && 
 				(!isDucked())){
 			return sprites[4];
 		}
-		else if ((speed > 0) && (YSpeed > 0) && (!isDucked())){
+		else if ((xSpeed > 0) && (ySpeed > 0) && (!isDucked())){
 			return sprites[5];
 		}
 		else if ((getOrientation() == "right") && (isDucked())){
@@ -749,7 +821,7 @@ public class Mazub {
 			return sprites[8 + i];
 		}
 		else {
-			return sprites[9+ m + i]; 
+			return sprites[8 + m + i]; 
 		}
 	}
 

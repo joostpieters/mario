@@ -1,17 +1,25 @@
 package jumpingalien.part1.facade;
 
 
-
+import jumpingalien.util.ModelException;
 import jumpingalien.model.Mazub;
 import jumpingalien.util.Sprite;
 
 
 public class Facade implements IFacade {
 	
-	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
-		return createMazub(pixelLeftX, pixelBottomY,sprites);
+	
+	//throws ModelException {
+	//	if (( ! isValidPosition(pixelLeftX, pixelBottomY))  || (! isValidSprite(sprites)))
+	//	throw new ModelException(null, IllegalPositionException(pixelLeftX,pixelBottomY));
+	
+	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
+//	throws ModelException {
+//		if (  )
+//			throw new ModelException("error");
+	return new Mazub(pixelLeftX, pixelBottomY,sprites);
 	}
-
+		
 	
 	public int[] getLocation(Mazub alien) {
 		return alien.getLocation();
@@ -55,7 +63,7 @@ public class Facade implements IFacade {
 
 	 
 	public void endMoveLeft(Mazub alien) {
-		alien.endMove();
+		alien.endMoveLeft();
 	}
 
 	 
@@ -65,7 +73,7 @@ public class Facade implements IFacade {
 
 	 
 	public void endMoveRight(Mazub alien) {
-		alien.endMove();		
+		alien.endMoveRight();		
 	}
 
 	 
@@ -81,6 +89,14 @@ public class Facade implements IFacade {
 	 
 	public void advanceTime(Mazub alien, double dt) {
 		alien.advanceTime(dt);
+	}
+
+	public boolean isValidPosition(Mazub alien) {
+		return alien.isValidPosition();
+	}
+	
+	public boolean isValidSprite(Sprite[] sprites) {
+		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
 	}
 
 }

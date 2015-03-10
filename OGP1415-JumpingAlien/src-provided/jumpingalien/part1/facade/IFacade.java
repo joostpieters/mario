@@ -215,4 +215,9 @@ public interface IFacade {
 	 *            alien's time.
 	 */
 	void advanceTime(Mazub alien, double dt);
+	
+//	boolean isValidPosition(Mazub alien);
+//	boolean isValidSprite(Sprite[] sprites);
+	
 }
+
