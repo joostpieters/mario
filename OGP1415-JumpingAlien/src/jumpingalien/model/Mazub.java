@@ -708,6 +708,8 @@ public class Mazub {
 	public void endFall() {
 		this.setyAcc(0);
 		this.setySpeed(0);
+		this.endFalling();
+		
 	}
 	
 	public void advance_x(double dt) {
@@ -724,7 +726,7 @@ public class Mazub {
 		}
 		else if (this.getOrientation() == "left") {
 			new_x_pos = (double) this.getXPos() - this.getXSpeed()*100*dt
-					- 0.5 * xAcc * 100 * Math.pow(dt,2) - x_difference;
+					- 0.5 * xAcc * 100 * Math.pow(dt,2) + x_difference;
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
