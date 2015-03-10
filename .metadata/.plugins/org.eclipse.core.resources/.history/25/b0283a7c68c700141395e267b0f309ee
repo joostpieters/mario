@@ -767,7 +767,8 @@ public class Mazub {
 		}
 		
 		setYPos(new_y_pos);
-		setYDifference(new_y_pos - y_pos);		
+		setYDifference(new_y_pos - y_pos);	
+		
 		
 	}
 	
