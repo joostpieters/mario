@@ -682,7 +682,6 @@ public class Mazub {
 	 * 		|			endFall()
 	 */
 	public void fall() {
-		this.setFalling();
 		if (this.getYPos() > 0){
 			this.setyAcc(FALL_ACC);
 			this.setFalling();
@@ -706,8 +705,7 @@ public class Mazub {
 	 * 
 	 */
 	public void endFall() {
-		this.setyAcc(0);
-		this.setySpeed(0);
+		yAcc = 0;
 	}
 	
 	public void advance_x(double dt) {

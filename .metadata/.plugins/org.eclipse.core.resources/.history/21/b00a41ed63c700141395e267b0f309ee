@@ -706,8 +706,7 @@ public class Mazub {
 	 * 
 	 */
 	public void endFall() {
-		this.setyAcc(0);
-		this.setySpeed(0);
+		yAcc = 0;
 	}
 	
 	public void advance_x(double dt) {
