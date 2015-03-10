@@ -248,7 +248,7 @@ public class Mazub {
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
-	public static int FALL_ACC = 10;
+	public static int FALL_ACC = -10;
 	/**
 	 * the time passed after endMove was invoced for the
 	 * last time
@@ -275,17 +275,6 @@ public class Mazub {
 	 * the variable to go over the array of possible images
 	 */
 	public int i;
-	public boolean falling = false;
-	
-	public boolean isFalling() {
-		return falling;
-	}
-	public void setFalling() {
-		this.falling = true;
-	}
-	public void endFalling() {
-		this.falling = false;
-	}
 		
 	/**
 	 * Returns the x position
@@ -639,63 +628,6 @@ public class Mazub {
 		endMove();
 	}
 	
-	/**
-	 *  
-	 * DEFENSIEF uitwerken
-	 */
-	public void startJump() {
-		setySpeed(JUMP_SPEED);
-	}
-	
-	/**
-	 * DEFENSIEF uitwerken
-	 */
-	public void endJump() {
-		if (this.getYSpeed() > 0) {
-			this.setySpeed(0);
-		}
-		if (this.getYPos() > 0) {
-			fall();
-		}
-	}
-	
-	/**
-	 * Makes mazub fall if he is not on the standing on the ground
-	 * 
-	 * @post 	mazub accelerates to the ground with an acceleration
-	 * 			of 10 m/s² if was above the ground and he would not fall 
-	 * 			below the ground. If he would end below the ground, he ends
-	 * 			on the ground and his fall ends.
-	 * 		| 	if ((y_pos >0) && (new_y_pos >= 0))
-	 * 		|		then YAcc = FALL_ACC
-	 * 		| 	else if (y_pos > 0) 
-	 * 		|		then y_pos = 0 
-	 * 		|			endFall()
-	 */
-	public void fall() {
-		this.setyAcc(FALL_ACC);
-//		new_y_pos = (double) this.getYPos() + ySpeed*100*dt
-//				+ 0.5 * FALL_ACC * 100 * Math.pow(dt,2) + y_difference;
-//		if ((y_pos >0) && (new_y_pos >= 0)) {
-//			yAcc = FALL_ACC;
-//		}
-//		else if (y_pos > 0) {
-//			y_pos = 0;
-//			endFall();
-//		}
-	} 
-	/**
-	 * Mazub fall ends
-	 * 
-	 * @post	the acceleration of Mazub is set to 0
-	 * 		|	YAcc = 0
-	 * 
-	 * 
-	 */
-	public void endFall() {
-		yAcc = 0;
-	}
-	
 	public void advance_x(double dt) {
 		if (this.getXSpeed() >= this.getMaxSpeed()){
 			this.setXSpeed(this.getMaxSpeed());
@@ -736,19 +668,14 @@ public class Mazub {
 	}
 	
 	public void advance_y(double dt){
-		if ((this.getYSpeed() > 0) && (! isFalling())) {
+		if (this.getYSpeed() >= 0) {
 			new_y_pos = (double) this.getYPos()
 					+ ySpeed*100*dt + 0.5 * yAcc * 100 * Math.pow(dt,2) + y_difference;
-		}
-		else if ((this.getYAcc() > 0)) {
-			new_y_pos = (double) this.getYPos()
-					- ySpeed*100*dt - 0.5 * yAcc * 100 * Math.pow(dt,2) - y_difference;
 		}
 		this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
 		
 		setYPos(new_y_pos);
-		setYDifference(new_y_pos - y_pos);		
-		
+		setYDifference(new_y_pos - y_pos);
 		
 		if (this.getYSpeed() == 0) {
 			this.setyAcc(-10);
@@ -780,7 +707,64 @@ public class Mazub {
 //		y_difference = new_y_pos - y_pos;
 		
 		
-	}	
+	}
+	
+	/**
+	 *  
+	 * DEFENSIEF uitwerken
+	 */
+	public void startJump() {
+		setySpeed(JUMP_SPEED);
+	}
+	
+	/**
+	 * DEFENSIEF uitwerken
+	 */
+	public void endJump() {
+		if (ySpeed > 0) {
+			ySpeed = 0;
+		}
+		if (y_pos > 0) {
+			fall();
+		}
+	}
+	
+	/**
+	 * Makes mazub fall if he is not on the standing on the ground
+	 * 
+	 * @post 	mazub accelerates to the ground with an acceleration
+	 * 			of 10 m/s² if was above the ground and he would not fall 
+	 * 			below the ground. If he would end below the ground, he ends
+	 * 			on the ground and his fall ends.
+	 * 		| 	if ((y_pos >0) && (new_y_pos >= 0))
+	 * 		|		then YAcc = FALL_ACC
+	 * 		| 	else if (y_pos > 0) 
+	 * 		|		then y_pos = 0 
+	 * 		|			endFall()
+	 */
+	public void fall() {
+		this.setyAcc(FALL_ACC);
+//		new_y_pos = (double) this.getYPos() + ySpeed*100*dt
+//				+ 0.5 * FALL_ACC * 100 * Math.pow(dt,2) + y_difference;
+//		if ((y_pos >0) && (new_y_pos >= 0)) {
+//			yAcc = FALL_ACC;
+//		}
+//		else if (y_pos > 0) {
+//			y_pos = 0;
+//			endFall();
+//		}
+	} 
+	/**
+	 * Mazub fall ends
+	 * 
+	 * @post	the acceleration of Mazub is set to 0
+	 * 		|	YAcc = 0
+	 * 
+	 * 
+	 */
+	public void endFall() {
+		yAcc = 0;
+	}
 	
 	/**
 	 * Returns the boolean duck, if mazub is ducked, true is returned,

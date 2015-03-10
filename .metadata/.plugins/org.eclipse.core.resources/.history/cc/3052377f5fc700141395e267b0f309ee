@@ -740,7 +740,7 @@ public class Mazub {
 			new_y_pos = (double) this.getYPos()
 					+ ySpeed*100*dt + 0.5 * yAcc * 100 * Math.pow(dt,2) + y_difference;
 		}
-		else if ((this.getYAcc() > 0)) {
+		else if ((this.getYAcc() > 0) {
 			new_y_pos = (double) this.getYPos()
 					- ySpeed*100*dt - 0.5 * yAcc * 100 * Math.pow(dt,2) - y_difference;
 		}
