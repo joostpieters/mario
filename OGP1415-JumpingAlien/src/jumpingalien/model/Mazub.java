@@ -274,7 +274,8 @@ public class Mazub {
 	/**
 	 * the variable to go over the array of possible images
 	 */
-	public int i;
+	public int i = 0;
+	
 	public boolean falling = false;
 	
 	public boolean isFalling() {
@@ -296,6 +297,11 @@ public class Mazub {
 	public int getXPos() {
 		return x_pos;
 	}
+	
+	public double getXDifference() {
+		return x_difference;
+	}
+	
 	public double getNewXPos() {
 		return new_x_pos;
 	}
@@ -308,6 +314,9 @@ public class Mazub {
 	@Basic
 	public int getYPos() {
 		return y_pos;
+	}
+	public double getYDifference() {
+		return y_difference;
 	}
 	public double getNewYPos() {
 		return new_y_pos;
@@ -720,13 +729,13 @@ public class Mazub {
 		
 		if (this.getOrientation() == "right") {
 			new_x_pos = (double) this.getXPos() + this.getXSpeed()*100*dt
-					+ 0.5 * xAcc * 100 * Math.pow(dt,2) + x_difference;
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
 			
 			
 		}
 		else if (this.getOrientation() == "left") {
 			new_x_pos = (double) this.getXPos() - this.getXSpeed()*100*dt
-					- 0.5 * xAcc * 100 * Math.pow(dt,2) + x_difference;
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
@@ -738,9 +747,9 @@ public class Mazub {
 			time_since_endMove += dt;
 		}
 		if (this.getXSpeed() > 0) {
-			time_since_startMove += dt;
-			if (time_since_startMove > TIME_DIFFERENT_IMAGE) {
-				time_since_startMove = 0;
+			this.setTime_since_startMove(this.getTime_since_startMove() +dt);
+			if (this.getTime_since_startMove() > TIME_DIFFERENT_IMAGE) {
+				this.setTime_since_startMove(0);
 				if (i < m-1) {
 					i += 1;
 				}
@@ -754,11 +763,11 @@ public class Mazub {
 	public void advance_y(double dt){
 		if ((this.getYSpeed() > 0) && (! isFalling())) {
 			new_y_pos = (double) this.getYPos()
-					+ ySpeed*100*dt + 0.5 * yAcc * 100 * Math.pow(dt,2) + y_difference;
+					+ this.getYSpeed()*100*dt + 0.5 * this.getYAcc() * 100 * Math.pow(dt,2) + this.getYDifference();
 		}
 		else if ((this.getYAcc() > 0) && (isFalling())) {
 			new_y_pos = (double) this.getYPos()
-					- ySpeed*100*dt - 0.5 * yAcc * 100 * Math.pow(dt,2) - y_difference;
+					- this.getYSpeed()*100*dt - 0.5 * this.getYAcc() * 100 * Math.pow(dt,2) + this.getYDifference();
 		}
 		this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
 		
@@ -878,6 +887,7 @@ public class Mazub {
 		else {
 			return sprites[8 + m + i]; 
 		}
+		
 	}
 
 	public void setInitStartSpeed(int initStartSpeed) {
