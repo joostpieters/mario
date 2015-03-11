@@ -248,7 +248,7 @@ public class Mazub {
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
-	public static int FALL_ACC = 10;
+	public static double FALL_ACC = -10;
 	/**
 	 * the time passed after endMove was invoced for the
 	 * last time
@@ -495,7 +495,7 @@ public class Mazub {
 		this.ySpeed = ySpeed;
 	}
 	
-	public void setyAcc(int a) {
+	public void setyAcc(double a) {
 		this.yAcc = a;
 	}
 
@@ -665,19 +665,20 @@ public class Mazub {
 	 * DEFENSIEF uitwerken
 	 */
 	public void startJump() {
-		setySpeed(JUMP_SPEED);		
+		setySpeed(JUMP_SPEED);	
+		//fall();
 	}
 	
 	/**
 	 * DEFENSIEF uitwerken
 	 */
 	public void endJump() {
-		if (this.getYSpeed() > 0) {
-			this.setySpeed(0);
-		}
-		if (this.getYPos() > 0) {
-			fall();
-		}
+//		if (this.getYSpeed() > 0) {
+//			this.setySpeed(0);
+//		}
+//		if (this.getYPos() > 0) {
+//			fall();
+//		}
 	}
 	
 	/**
@@ -770,26 +771,29 @@ public class Mazub {
 		}
 	}
 	
-	public void advance_y(double dt){
-		
+	public void advance_y(double dt){	
 		if (this.getYSpeed() > 0) {
-			if (this.isFalling()) {
-				new_y_pos = (double) this.getYPos()
-						- this.getYSpeed()*100*dt - 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
-				this.setySpeed(this.getYSpeed() - dt * this.getYAcc());
-				if (this.getNewYPos() <= 0) {
-					endFall();
-				}	
+			if ((this.getNewYPos() > 0) && (!this.isFalling())){
+				fall();
 			}
-			else {
+			//if (this.isFalling()) {
 				new_y_pos = (double) this.getYPos()
-						+ this.getYSpeed()*100*dt + 0.5 * 100 * this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
+						+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
 				this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
 				if (this.getNewYPos() <= 0) {
+					endFall();
 					this.setXPos(0);
-				}				
-				
-			}
+				}	
+		//	}
+//			else {
+//				new_y_pos = (double) this.getYPos()
+//						+ this.getYSpeed()*100*dt + 0.5 * 100 * this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
+//				this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
+//				if (this.getNewYPos() <= 0) {
+//					
+//				}				
+//				
+//			}
 			setYPos(new_y_pos);	
 			setYDifference(new_y_pos - y_pos);
 		}
