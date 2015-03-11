@@ -63,10 +63,9 @@ public class PartialFacadeTest {
 		facade.startMoveRight(alien);
 
 		facade.advanceTime(alien, 0.005);
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < m; i++) {
 			facade.advanceTime(alien, 0.075);
 		}
-		assertEquals(sprites[8+1], facade.getCurrentSprite(alien));
 
 		assertEquals(sprites[8+m], facade.getCurrentSprite(alien));
 	}
