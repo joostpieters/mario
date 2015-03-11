@@ -665,20 +665,18 @@ public class Mazub {
 	 * DEFENSIEF uitwerken
 	 */
 	public void startJump() {
-		setySpeed(JUMP_SPEED);	
-		//fall();
+		if (this.getYPos() == 0) {
+			setySpeed(JUMP_SPEED);	
+		}
 	}
 	
 	/**
 	 * DEFENSIEF uitwerken
 	 */
 	public void endJump() {
-//		if (this.getYSpeed() > 0) {
-//			this.setySpeed(0);
-//		}
-//		if (this.getYPos() > 0) {
-//			fall();
-//		}
+		if (this.getYSpeed() > 0) {
+			this.setySpeed(0);
+		}
 	}
 	
 	/**
@@ -757,10 +755,10 @@ public class Mazub {
 		if (this.getXSpeed() == 0) {
 			time_since_endMove += dt;
 		}
-		if (this.getXSpeed() > 0) {
-			this.setTime_since_startMove(this.getTime_since_startMove() +dt);
+		else if (this.getXSpeed() > 0) {
+			this.setTime_since_startMove(this.getTime_since_startMove() + dt);
 			if (this.getTime_since_startMove() > TIME_DIFFERENT_IMAGE) {
-				this.setTime_since_startMove(0);
+				this.setTime_since_startMove(this.getTime_since_startMove() - TIME_DIFFERENT_IMAGE);
 				if (i < m-1) {
 					i += 1;
 				}
@@ -772,19 +770,18 @@ public class Mazub {
 	}
 	
 	public void advance_y(double dt){	
-		if (this.getYSpeed() > 0) {
-			if ((this.getNewYPos() > 0) && (!this.isFalling())){
-				fall();
-			}
-			//if (this.isFalling()) {
-				new_y_pos = (double) this.getYPos()
-						+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
-				this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
-				if (this.getNewYPos() <= 0) {
-					endFall();
-					this.setXPos(0);
-				}	
-		//	}
+		if ((this.getYPos() > 0) && (!this.isFalling())){
+			fall();
+		}
+
+		new_y_pos = (double) this.getYPos()
+				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
+		this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
+		if (this.getNewYPos() <= 0) {
+			endFall();
+			this.setNewYPos(0);
+		}	
+	//	}
 //			else {
 //				new_y_pos = (double) this.getYPos()
 //						+ this.getYSpeed()*100*dt + 0.5 * 100 * this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
@@ -794,9 +791,9 @@ public class Mazub {
 //				}				
 //				
 //			}
-			setYPos(new_y_pos);	
-			setYDifference(new_y_pos - y_pos);
-		}
+		setYPos(new_y_pos);	
+		setYDifference(new_y_pos - y_pos);
+		
 		
 			
 			
