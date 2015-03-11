@@ -740,12 +740,8 @@ public class Mazub {
 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
 		}
 		if (this.getNewXPos() < MIN_X_VALUE){
-			this.setNewXPos(MIN_X_VALUE);
-			this.setXPos(MIN_X_VALUE);
-		}
-		if (this.getNewXPos() > MAX_X_VALUE){
-			this.setNewXPos(MAX_X_VALUE);
-			this.setXPos(MAX_X_VALUE);
+			this.setNewXPos(0);
+			this.setXPos(0);
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
@@ -779,7 +775,8 @@ public class Mazub {
 				this.setySpeed(this.getYSpeed() - dt * this.getYAcc());
 				if (this.getNewYPos() <= 0) {
 					endFall();
-				}	
+				}				
+				setYPos(new_y_pos);	
 			}
 			else {
 				new_y_pos = (double) this.getYPos()
@@ -788,24 +785,27 @@ public class Mazub {
 				if (this.getNewYPos() <= 0) {
 					this.setXPos(0);
 				}				
-				
+				setYPos(new_y_pos);	
 			}
-			setYPos(new_y_pos);	
-			setYDifference(new_y_pos - y_pos);
+			
+			
+			
+			
+			
+			new_y_pos = (double) this.getYPos()
+					+ this.getYSpeed()*100*dt + 0.5 * this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
+			this.setySpeed(this.getYSpeed() - dt * this.getYAcc());
+			if (this.getNewYPos() <= 0) {
+				endFall();
+			}
+			setYPos(new_y_pos);			
+		}
+		setYDifference(new_y_pos - y_pos);
+		
+		if (this.getYPos() > 0)	{
+			fall();
 		}
 		
-			
-			
-			
-//			new_y_pos = (double) this.getYPos()
-//					+ this.getYSpeed()*100*dt + 0.5 * this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
-//			this.setySpeed(this.getYSpeed() - dt * this.getYAcc());
-//			if (this.getNewYPos() <= 0) {
-//				endFall();
-//			}
-//			setYPos(new_y_pos);			
-//		}
-//		setYDifference(new_y_pos - y_pos);
 		
 //		if ((this.getYSpeed() > 0) && (! isFalling())) {
 //			new_y_pos = (double) this.getYPos()

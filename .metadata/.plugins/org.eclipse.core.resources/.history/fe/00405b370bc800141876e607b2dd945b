@@ -793,7 +793,6 @@ public class Mazub {
 			setYPos(new_y_pos);	
 			setYDifference(new_y_pos - y_pos);
 		}
-		
 			
 			
 			
@@ -806,6 +805,11 @@ public class Mazub {
 //			setYPos(new_y_pos);			
 //		}
 //		setYDifference(new_y_pos - y_pos);
+		
+		if (this.getYPos() > 0)	{
+			fall();
+		}
+		
 		
 //		if ((this.getYSpeed() > 0) && (! isFalling())) {
 //			new_y_pos = (double) this.getYPos()
