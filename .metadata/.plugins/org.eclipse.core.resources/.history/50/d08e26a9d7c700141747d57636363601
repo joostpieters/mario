@@ -779,7 +779,8 @@ public class Mazub {
 			this.setNewYPos(0);
 		}
 		if (this.getYPos() > 0) {
-			fall();
+			this.setyAcc(FALL_ACC);
+			this.setFalling();
 		}
 		
 		setYPos(new_y_pos);

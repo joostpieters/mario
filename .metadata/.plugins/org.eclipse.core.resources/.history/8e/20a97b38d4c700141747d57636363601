@@ -662,7 +662,9 @@ public class Mazub {
 	 * DEFENSIEF uitwerken
 	 */
 	public void startJump() {
-		setySpeed(JUMP_SPEED);		
+		setySpeed(JUMP_SPEED);
+		fall();
+		setFalling();
 	}
 	
 	/**
@@ -761,25 +763,20 @@ public class Mazub {
 	}
 	
 	public void advance_y(double dt){
-		
 		if ((this.getYSpeed() > 0) && (! isFalling())) {
 			new_y_pos = (double) this.getYPos()
-					+ this.getYSpeed()*100*dt + this.getYDifference();
+					+ this.getYSpeed()*100*dt + 0.5 * this.getYAcc() * 100 * Math.pow(dt,2) + this.getYDifference();
 		}
-		//else if ((this.getYAcc() > 0) && (isFalling())) {
-		else if (this.getYSpeed() > 0) {
+		else if ((this.getYAcc() > 0) && (isFalling())) {
 			new_y_pos = (double) this.getYPos()
 					- this.getYSpeed()*100*dt - 0.5 * this.getYAcc() * 100 * Math.pow(dt,2) + this.getYDifference();
-			this.setySpeed(this.getYSpeed() - dt * this.getYAcc());
 		}
-				
+		this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
+		
 		if (isFalling() && (this.getNewYPos() < 0)) {
 			endFall();
 			this.setYPos(0);
 			this.setNewYPos(0);
-		}
-		if (this.getYPos() > 0) {
-			fall();
 		}
 		
 		setYPos(new_y_pos);
