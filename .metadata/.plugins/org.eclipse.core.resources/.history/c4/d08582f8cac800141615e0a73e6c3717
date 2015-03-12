@@ -2,7 +2,6 @@ package jumpingalien.part1.facade;
 
 
 import jumpingalien.util.ModelException;
-import jumpingalien.model.IllegalDtException;
 import jumpingalien.model.IllegalPositionException;
 import jumpingalien.model.Mazub;
 import jumpingalien.util.Sprite;
@@ -94,10 +93,7 @@ public class Facade implements IFacade {
 
 	 
 	public void advanceTime(Mazub alien, double dt) {
-		try {alien.advanceTime(dt);}
-		catch(IllegalDtException e) {
-			throw new ModelException(e.getMessage());
-		}		
+		alien.advanceTime(dt);
 	}
 
 	public boolean isValidPosition(Mazub alien) {

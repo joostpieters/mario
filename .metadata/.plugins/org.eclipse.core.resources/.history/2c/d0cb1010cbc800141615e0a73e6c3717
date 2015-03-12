@@ -224,7 +224,7 @@ public class Mazub {
 	 * the vertical speed at which mazub moves when 
 	 * startJump() is initiated
 	 */
-	public static int JUMP_SPEED = 20;
+	public static int JUMP_SPEED = 12;
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
@@ -799,7 +799,6 @@ public class Mazub {
 		
 		if (this.getNewYPos() > MAX_Y_VALUE) {
 			this.setNewYPos(MAX_Y_VALUE);
-			this.setySpeed(0);
 		}
 	
 		setYPos(new_y_pos);	
