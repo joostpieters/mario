@@ -42,10 +42,10 @@ public class Mazub {
 	 * 
 	 * COMMENTAAR MOET AANGEPAST WORDEN
 	 */
-	public Mazub(int x_pos, int y_pos, Sprite[] sprites){
-//			throws IllegalPositionException, IllegalDimensionException {
-//				if(!isValidPosition())
-//					throw new IllegalPositionException(x_pos,y_pos);
+	public Mazub(int x_pos, int y_pos, Sprite[] sprites)
+			throws IllegalPositionException {
+				if(!isValidPosition())
+					throw new IllegalPositionException(x_pos,y_pos);
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
 		this.sprites = sprites;
@@ -244,7 +244,7 @@ public class Mazub {
 	 * the vertical speed at which mazub moves when 
 	 * startJump() is initiated
 	 */
-	public static int JUMP_SPEED = 8;
+	public static int JUMP_SPEED = 20;
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
@@ -781,16 +781,7 @@ public class Mazub {
 			endFall();
 			this.setNewYPos(0);
 		}	
-	//	}
-//			else {
-//				new_y_pos = (double) this.getYPos()
-//						+ this.getYSpeed()*100*dt + 0.5 * 100 * this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
-//				this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
-//				if (this.getNewYPos() <= 0) {
-//					
-//				}				
-//				
-//			}
+	
 		setYPos(new_y_pos);	
 		setYDifference(new_y_pos - y_pos);
 		

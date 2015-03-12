@@ -2,6 +2,7 @@ package jumpingalien.part1.facade;
 
 
 import jumpingalien.util.ModelException;
+import jumpingalien.model.IllegalPositionException;
 import jumpingalien.model.Mazub;
 import jumpingalien.util.Sprite;
 
@@ -17,7 +18,10 @@ public class Facade implements IFacade {
 //	throws ModelException {
 //		if (  )
 //			throw new ModelException("error");
-	return new Mazub(pixelLeftX, pixelBottomY,sprites);
+	try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
+	catch(IllegalPositionException e) {
+		throw new ModelException(e.getMessage());
+	}
 	}
 		
 	
