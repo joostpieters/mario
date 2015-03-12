@@ -123,7 +123,8 @@ public class Mazub {
 	 * the dimensions of mazub, the set consists of the x_dim
 	 * and the y_dim.
 	 */
-	public int[] dimension = {this.getXDim(),this.getYDim()};
+	public int[] dimension
+	;
 	/**
 	 * the starting speed when startMove is initiated
 	 */
@@ -354,7 +355,7 @@ public class Mazub {
 	 */
 	@Basic
 	public int getXDim() {
-		return x_dim;
+		return this.getCurrentSprite().getWidth();
 	}
 	/**
 	 * 
@@ -362,7 +363,7 @@ public class Mazub {
 	 */
 	@Basic
 	public int getYDim() {
-		return y_dim;
+		return this.getCurrentSprite().getHeight();
 	}
 	public Sprite[] getSprite(){
 		return this.sprites;
@@ -889,23 +890,23 @@ public class Mazub {
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
-		if ((this.getXSpeed()==0) && (! isDucked()) && (time_since_endMove > NOT_MOVING_TIME)){
+		if ((this.getXSpeed()==0) && (! isDucked()) && (getTime_since_endMove() > NOT_MOVING_TIME)){
 			return sprites[0];
 		}
-		else if ((xSpeed==0) && (time_since_endMove > NOT_MOVING_TIME)){
+		else if ((getXSpeed()==0) && (getTime_since_endMove() > NOT_MOVING_TIME)){
 			return sprites[1];
 		}
-		else if ((xSpeed==0) && (!isDucked()) && (getOrientation() == "right" )){
+		else if ((getXSpeed()==0) && (!isDucked()) && (getOrientation() == "right" )){
 			return sprites[2];
 		}		
-		else if ((xSpeed==0) && (!isDucked())){
+		else if ((getXSpeed()==0) && (!isDucked())){
 			return sprites[3];
 		}
-		else if ((xSpeed > 0) && (getOrientation() == "right" ) && (ySpeed > 0) && 
+		else if ((getXSpeed() > 0) && (getOrientation() == "right" ) && (getYSpeed() > 0) && 
 				(!isDucked())){
 			return sprites[4];
 		}
-		else if ((xSpeed > 0) && (ySpeed > 0) && (!isDucked())){
+		else if ((getXSpeed() > 0) && (getYSpeed() > 0) && (!isDucked())){
 			return sprites[5];
 		}
 		else if ((getOrientation() == "right") && (isDucked())){
