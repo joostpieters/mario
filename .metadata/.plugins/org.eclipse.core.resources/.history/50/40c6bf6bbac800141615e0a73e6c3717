@@ -14,7 +14,8 @@ import jumpingalien.util.Sprite;
  * 		| isValidSpeed(getSpeed())
  * @author Pieter Van den Berghe, Ward Romanus
  */
-public class Mazub {	
+public class Mazub {
+	
 
 	/**
 	 * Initialize this new Mazub with given x and y positions and given dimensions.
@@ -45,8 +46,7 @@ public class Mazub {
 			throws IllegalPositionException {
 				if(!isValidPosition())
 					throw new IllegalPositionException(x_pos,y_pos);
-		
-		// setXPos(xpos);
+			
 		this.x_pos =  x_pos;
 		this.y_pos = y_pos;
 		this.sprites = sprites;

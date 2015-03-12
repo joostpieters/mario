@@ -14,7 +14,8 @@ import jumpingalien.util.Sprite;
  * 		| isValidSpeed(getSpeed())
  * @author Pieter Van den Berghe, Ward Romanus
  */
-public class Mazub {	
+public class Mazub {
+	
 
 	/**
 	 * Initialize this new Mazub with given x and y positions and given dimensions.

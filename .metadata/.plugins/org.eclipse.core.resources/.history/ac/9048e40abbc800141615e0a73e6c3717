@@ -17,14 +17,7 @@ public class Facade implements IFacade {
 //	throws ModelException {
 //		if (  )
 //			throw new ModelException("error");
-	try {
-		return new Mazub(pixelLeftX, pixelBottomY,sprites)
-	}
-	catch (illegalPositionException exc) {
-		assert false;
-		return null;
-	}
-	
+	return new Mazub(pixelLeftX, pixelBottomY,sprites);
 	}
 		
 	
