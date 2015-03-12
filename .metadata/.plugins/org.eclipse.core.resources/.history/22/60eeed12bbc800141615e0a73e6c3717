@@ -71,5 +71,4 @@ public class PartialFacadeTest {
 	}
 
 	// TODO: add more tests
-	// junit: @test exception (synthax opzoeken)
 }
