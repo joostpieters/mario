@@ -18,21 +18,11 @@ public class Facade implements IFacade {
 //	throws ModelException {
 //		if (  )
 //			throw new ModelException("error");
-<<<<<<< HEAD
 	try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
 	catch(IllegalPositionException e) {
 		throw new ModelException(e.getMessage());
 	}
-=======
-	try {
-		return new Mazub(pixelLeftX, pixelBottomY,sprites)
-	}
-	catch (illegalPositionException exc) {
-		assert false;
-		return null;
-	}
-	
->>>>>>> origin/master
+
 	}
 		
 	

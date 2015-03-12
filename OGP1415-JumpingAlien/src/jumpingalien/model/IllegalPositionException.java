@@ -45,9 +45,4 @@ public class IllegalPositionException extends Exception {
 		public int getYPos() {
 			return y_pos;
 		}
-
-		/**
-		 * The Java API strongly recommends to explicitly define a version
-		 * number for classes that implement the interface Serializable. 
-		 */
 }
