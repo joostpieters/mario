@@ -54,9 +54,7 @@ public class Mazub {
 	
 
 	/**
-	 * Initialize this new Mazub with given x and y positions, sprites,
-	 * 
-	 * < horizontal start speed and maximum horizontal speed.
+	 * Initialize this new Mazub with given x and y positions, sprites, horizontal start speed and maximum horizontal speed.
 	 * 
 	 * @param x_pos
 	 * The x position in the field for the new Mazub
@@ -298,8 +296,7 @@ public class Mazub {
 		return x_pos;
 	}	
 	/**
-	 * Returns the difference between the real horizontal position of Mazub
-	 * and the rounded down value 
+	 * Returns the difference between the real horizontal position of Mazub and the rounded down value 
 	 * @return x_difference
 	 */
 	public double getXDifference() {
@@ -321,8 +318,7 @@ public class Mazub {
 		return y_pos;
 	}
 	/**
-	 * Returns the difference between the real vertical position of Mazub
-	 * and the rounded down value 
+	 * Returns the difference between the real vertical position of Mazub and the rounded down value 
 	 * @return y_difference
 	 */
 	public double getYDifference() {
@@ -492,28 +488,6 @@ public class Mazub {
 	private double getFALLACC() {
 		return FALL_ACC;
 	}
-	private double getNOTMOVINGTIME() {
-		return NOT_MOVING_TIME;
-	}
-	/**
-	 * Returns the boolean duck, if mazub is ducked, true is returned,
-	 * otherwise false
-	 * 
-	 * @return (duck)
-	 *     __
-        .'  `.
-        |a_a  |
-        \<_)__/    ,
-         /   `-...-'\
-        |    -~',   /
-     ~`~\   '.-`  .' ~~^-~
-     ~~` `-.~-..~` ~~`  ~`
-     '~~ ~~`-  ^-~~`~ ^
-	 */
-	public boolean isDucked(){
-		return (this.duck);
-	}
-	
 //Setters	
 	/**
 	 * 
@@ -844,8 +818,7 @@ public class Mazub {
 			fall();
 		}
 		new_y_pos = (double) this.getYPos()
-				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc()
-				* Math.pow(dt,2) + this.getYDifference();
+				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if (this.getNewYPos() <= 0) {
 			endFall();
@@ -859,7 +832,8 @@ public class Mazub {
 	
 		setYPos(new_y_pos);	
 		setYDifference(new_y_pos - y_pos);
-	}	
+	}
+	
 	/**
 	 *  
 	 * DEFENSIEF uitwerken
@@ -870,61 +844,84 @@ public class Mazub {
 		advance_x(dt);
 		advance_y(dt);	
 	}	
+	
+
+	
+	/**
+	 * Returns the boolean duck, if mazub is ducked, true is returned,
+	 * otherwise false
+	 * 
+	 * @return (duck)
+	 *     __
+        .'  `.
+        |a_a  |
+        \<_)__/    ,
+         /   `-...-'\
+        |    -~',   /
+     ~`~\   '.-`  .' ~~^-~
+     ~~` `-.~-..~` ~~`  ~`
+     '~~ ~~`-  ^-~~`~ ^
+	 */
+	public boolean isDucked(){
+		return (this.duck);
+	}
+	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
 	 * and the maxSpeed back to MAX_SPEED_DUCK
 	 * @effect
-	 * 			| duck = true
-	 * 			| maxSpeed = MAX_SPEED_DUCK
+	 * 			| duck == true
+	 * 			| Xspeed == MAX_SPEED_DUCK
+	 * DEFENSIEF uitwerken
 	 */
 	public void startDuck() {
-		this.duck = true ;
-		this.setMaxSpeed(this.getMAXSPEEDDUCK());
-	}	
+		duck = true ;
+		maxSpeed = MAX_SPEED_DUCK;
+	}
+		
+	
 	/**
 	 * Ends the ducking of Mazub by setting the boolean duck on false 
 	 * and the maxSpeed back to MAX_SPEED
 	 * @effect
-	 * 			| duck = false
-	 * 			| maxSpeed = MAX_SPEED
+	 * 			| duck == false
+	 * 			| Xspeed == MAX_SPEED
+	 * DEFENSIEF uitwerken
 	 */
 	public void endDuck()  {	
 		this.setDuck(false);
-		this.setMaxSpeed(this.getMAXSPEED());
-	}		
+		this.setMaxSpeed(MAX_SPEED);
+	}	
+	
 	/**
 	 * GEEN formele documentatie nodig
 	 */
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
-		if ((this.getXSpeed()==0) && (! this.isDucked()) &&
-				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
+		if ((this.getXSpeed()==0) && (! isDucked()) && (getTime_since_endMove() > NOT_MOVING_TIME)){
 			return sprites[0];
 		}
-		else if ((this.getXSpeed()==0) &&
-				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
+		else if ((getXSpeed()==0) && (getTime_since_endMove() > NOT_MOVING_TIME)){
 			return sprites[1];
 		}
-		else if ((this.getXSpeed()==0) &&
-				(!this.isDucked()) && (this.getOrientation() == "right" )){
+		else if ((getXSpeed()==0) && (!isDucked()) && (getOrientation() == "right" )){
 			return sprites[2];
 		}		
-		else if ((this.getXSpeed()==0) && (!this.isDucked())){
+		else if ((getXSpeed()==0) && (!isDucked())){
 			return sprites[3];
 		}
-		else if ((this.getXSpeed() > 0) && (this.getOrientation() == "right" ) 
-				&& (this.getYSpeed() > 0) && 
+		else if ((getXSpeed() > 0) && (getOrientation() == "right" ) && (getYSpeed() > 0) && 
 				(!isDucked())){
 			return sprites[4];
 		}
-		else if ((this.getXSpeed() > 0) && (getYSpeed() > 0) && (!this.isDucked())){
+		else if ((getXSpeed() > 0) && (getYSpeed() > 0) && (!isDucked())){
 			return sprites[5];
 		}
-		else if ((this.getOrientation() == "right") && (this.isDucked())){
+		else if ((getOrientation() == "right") && (isDucked())){
 			return sprites[6];
 		}
-		else if (this.isDucked()){
+		else if (isDucked()){
 			return sprites[7];
 		}
 		else if (getOrientation() == "right"){
@@ -933,8 +930,12 @@ public class Mazub {
 		else {
 			return sprites[8 + m + i]; 
 		}
+		
 	}
+
+
 	
+		
 }
 
 		

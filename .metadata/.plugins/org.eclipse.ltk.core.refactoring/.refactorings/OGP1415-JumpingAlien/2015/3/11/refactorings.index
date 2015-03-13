@@ -9,3 +9,7 @@
 1426004933787	Rename method 'getAcc'
 1426006137524	Rename local variable 'deltaT'
 1426007786413	Rename method 'setSpeed'
+1426242833866	Copy method
+1426244977883	Rename method 'setxAcc'
+1426244999072	Rename method 'setySpeed'
+1426245010728	Rename method 'setyAcc'

@@ -55,8 +55,7 @@ public class Mazub {
 
 	/**
 	 * Initialize this new Mazub with given x and y positions, sprites,
-	 * 
-	 * < horizontal start speed and maximum horizontal speed.
+	 * horizontal start speed and maximum horizontal speed.
 	 * 
 	 * @param x_pos
 	 * The x position in the field for the new Mazub

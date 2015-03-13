@@ -54,9 +54,7 @@ public class Mazub {
 	
 
 	/**
-	 * Initialize this new Mazub with given x and y positions, sprites,
-	 * 
-	 * < horizontal start speed and maximum horizontal speed.
+	 * Initialize this new Mazub with given x and y positions, sprites, horizontal start speed and maximum horizontal speed.
 	 * 
 	 * @param x_pos
 	 * The x position in the field for the new Mazub
@@ -298,8 +296,7 @@ public class Mazub {
 		return x_pos;
 	}	
 	/**
-	 * Returns the difference between the real horizontal position of Mazub
-	 * and the rounded down value 
+	 * Returns the difference between the real horizontal position of Mazub and the rounded down value 
 	 * @return x_difference
 	 */
 	public double getXDifference() {
@@ -321,8 +318,7 @@ public class Mazub {
 		return y_pos;
 	}
 	/**
-	 * Returns the difference between the real vertical position of Mazub
-	 * and the rounded down value 
+	 * Returns the difference between the real vertical position of Mazub and the rounded down value 
 	 * @return y_difference
 	 */
 	public double getYDifference() {
@@ -489,31 +485,7 @@ public class Mazub {
 	public int getSTARTSPEED() {
 		return START_SPEED;
 	}
-	private double getFALLACC() {
-		return FALL_ACC;
-	}
-	private double getNOTMOVINGTIME() {
-		return NOT_MOVING_TIME;
-	}
-	/**
-	 * Returns the boolean duck, if mazub is ducked, true is returned,
-	 * otherwise false
-	 * 
-	 * @return (duck)
-	 *     __
-        .'  `.
-        |a_a  |
-        \<_)__/    ,
-         /   `-...-'\
-        |    -~',   /
-     ~`~\   '.-`  .' ~~^-~
-     ~~` `-.~-..~` ~~`  ~`
-     '~~ ~~`-  ^-~~`~ ^
-	 */
-	public boolean isDucked(){
-		return (this.duck);
-	}
-	
+
 //Setters	
 	/**
 	 * 
@@ -535,7 +507,7 @@ public class Mazub {
 		this.maxSpeed = maxspeed;
 	}
 	
-	public void setXAcc(double xAcc) {
+	public void setxAcc(double xAcc) {
 		this.xAcc = xAcc;
 	}
 	
@@ -585,11 +557,11 @@ public class Mazub {
 	/**
 	 * @param ySpeed the ySpeed to set
 	 */
-	public void setYSpeed(double ySpeed) {
+	public void setySpeed(double ySpeed) {
 		this.ySpeed = ySpeed;
 	}
 	
-	public void setYAcc(double a) {
+	public void setyAcc(double a) {
 		this.yAcc = a;
 	}
 	public void setOrientationRight() {
@@ -641,6 +613,8 @@ public class Mazub {
 	public boolean isValidXSpeed() {
 		return ((this.getXSpeed() >= 0) && (this.getXSpeed() <= this.getMaxSpeed()));
 	}
+	
+	
 	/**
 	 * Checks whether the current vertical speed is valid
 	 * for any Mazub
@@ -649,15 +623,6 @@ public class Mazub {
 	 */
 	public boolean isValidYSpeed() {
 		return (this.getYSpeed() <= getJUMPSPEED());
-	}
-	/**
-	 * Checks if dt has a proper value between 0 and 0.2.
-	 * @param dt
-	 * @return True if dt is a value between 0 and 0.2 otherwise false.
-	 * 		| (dt <= 0.2 && dt > 0)
-	 */
-	private boolean isValidDt(double dt) {
-		return (dt <= 0.2 && dt > 0);
 	}
 
 	/**
@@ -676,38 +641,40 @@ public class Mazub {
 	 * 			|	maxSpeed = MAX_SPEED_DUCK
 	 * @effect time_since_startMove is set to zero
 	 * 			| time_since_startMove = 0
+	 * 
+	 * NOMINAAL uitwerken
 	 */
 	public void startMove() {
 		assert isValidPosition();
 		assert isValidSpeed();
 		this.setXSpeed(this.getSTARTSPEED()); 
 		if (this.isDucked() == false) {
-			this.setXAcc(0.9);
+			this.setxAcc(0.9);
 			this.setMaxSpeed(this.getMAXSPEED());
 		}
 		else {
-			this.setXAcc(0);
+			this.setxAcc(0);
 			setMaxSpeed(this.getMAXSPEEDDUCK());
 		}
 		this.setTime_since_startMove(0);
 	}	
 	/**
 	 * Mazub starts moving to the right
-	 * @effect 	| startMove()
+	 * @post 	| startMove()
 	 * 			| orientation = right
 	 */
 	public void startMoveRight(){
 		this.setOrientationRight();
-		this.startMove();
+		startMove();
 	}
 	/**
 	 * Mazub starts moving to the left
-	 * @effect 	| startMove()
+	 * @post 	| startMove()
 	 * 			| orientation = left
 	 */
 	public void startMoveLeft(){
 		this.setOrientationLeft();
-		this.startMove();
+		startMove();
 	}	
 	/**
 	 * Method to end the move of a Mazub
@@ -715,88 +682,104 @@ public class Mazub {
 	 * 			| isValidXSpeed()
 	 * @pre The position of Mazub must be valid
 	 * 			| isValidPosition()
-	 * @effect Mazub does not move
+	 * @post Mazub does not move
 	 * 			| speed = 0;
 	 * 			| acc = 0;
-	 * @effect time_until_endMove is set to zero
+	 * @post time_until_endMove is set to zero
 	 * 			| time_until_endMove = 0
+	 * 
+	 * NOMINAAL uitwerken
+	 * 
 	 */
 	public void endMove() {
 		assert (this.isValidXSpeed());
 		assert (this.isValidPosition());
 		this.setXSpeed(0);
-		this.setXAcc(0);
+		this.setxAcc(0);
 		this.setTime_since_endMove(0);
-	}	
+	}
+	
 	/**
 	 * Ends the mazub's movement to the left
 	 */
 	public void endMoveLeft() {
 		endMove();
-	}	
+	}
+	
 	/**
 	 * ends the mazub's movement to the right
 	 */
 	public void endMoveRight() {
 		endMove();
-	}	
+	}
+	
 	/**
-	 * Makes Mazub start his jump, when he is standing
-	 * on the ground, by setting his vertical speed
-	 * @effect ySpeed = JUMP_SPEED
-	 * 			| if (this.getYPos() == 0)
-	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
+	 *  
+	 * DEFENSIEF uitwerken
 	 */
 	public void startJump() {
 		if (this.getYPos() == 0) {
-			this.setYSpeed(this.getJUMPSPEED());	
+			setySpeed(JUMP_SPEED);	
 		}
-	}	
+	}
+	
 	/**
-	 * Ends Mazub's jump
-	 * @effect ySpeed = 0
-	 * 			| setYSpeed(0)
+	 * DEFENSIEF uitwerken
 	 */
 	public void endJump() {
-		this.setYSpeed(0);
+		if (this.getYSpeed() > 0) {
+			this.setySpeed(0);
+		}
 	}
+	
 	/**
 	 * Makes mazub fall if he is not on the standing on the ground
-	 * @effect 	mazub accelerates to the ground with an acceleration
+	 * 
+	 * @post 	mazub accelerates to the ground with an acceleration
 	 * 			of 10 m/s² if was above the ground and he would not fall 
 	 * 			below the ground. If he would end below the ground, he ends
 	 * 			on the ground and his fall ends.
-	 * 			| if (y_pos > 0)
-	 * 			| 	then yAcc = FALL_ACC
-	 * 			|		 setFalling()	
+	 * 		| 	if ((y_pos >0) && (new_y_pos >= 0))
+	 * 		|		then YAcc = FALL_ACC
+	 * 		| 	else if (y_pos > 0) 
+	 * 		|		then y_pos = 0 
+	 * 		|			endFall()
 	 */
 	public void fall() {
+		//this.setFalling();
 		if (this.getYPos() > 0){
-			this.setYAcc(this.getFALLACC());
+			this.setyAcc(FALL_ACC);
 			this.setFalling();
 		}
+//		new_y_pos = (double) this.getYPos() + ySpeed*100*dt
+//				+ 0.5 * FALL_ACC * 100 * Math.pow(dt,2) + y_difference;
+//		if ((y_pos >0) && (new_y_pos >= 0)) {
+//			yAcc = FALL_ACC;
+//		}
+//		else if (y_pos > 0) {
+//			y_pos = 0;
+//			endFall();
+//		}
 	} 
 	/**
 	 * Mazub fall ends
-	 * @effect	the acceleration of Mazub is set to 0
-	 * 		|	yAcc = 0
-	 * 		|	ySpeed = 0
-	 * 		|	endFalling()
+	 * 
+	 * @post	the acceleration of Mazub is set to 0
+	 * 		|	YAcc = 0
+	 * 
+	 * 
 	 */
 	public void endFall() {
-		this.setYAcc(0);
-		this.setYSpeed(0);
+		this.setyAcc(0);
+		this.setySpeed(0);
 		this.endFalling();
 		
 	}
-	/**
-	 * 
-	 * @param dt
-	 */
+	
 	public void advance_x(double dt) {
 		if (this.getXSpeed() >= this.getMaxSpeed()){
 			this.setXSpeed(this.getMaxSpeed());
-			this.setXAcc(0);
+			this.setxAcc(0);
 		}
 		
 		if (this.getOrientation() == "right") {
@@ -843,10 +826,10 @@ public class Mazub {
 		if ((this.getYPos() > 0) && (!this.isFalling())){
 			fall();
 		}
+
 		new_y_pos = (double) this.getYPos()
-				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc()
-				* Math.pow(dt,2) + this.getYDifference();
-		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
+				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
+		this.setySpeed(this.getYSpeed() + dt * this.getYAcc());
 		if (this.getNewYPos() <= 0) {
 			endFall();
 			this.setNewYPos(0);
@@ -854,12 +837,13 @@ public class Mazub {
 		
 		if (this.getNewYPos() > MAX_Y_VALUE) {
 			this.setNewYPos(MAX_Y_VALUE);
-			this.setYSpeed(0);
+			this.setySpeed(0);
 		}
 	
 		setYPos(new_y_pos);	
 		setYDifference(new_y_pos - y_pos);
-	}	
+	}
+	
 	/**
 	 *  
 	 * DEFENSIEF uitwerken
@@ -870,61 +854,97 @@ public class Mazub {
 		advance_x(dt);
 		advance_y(dt);	
 	}	
+	
+	/**
+	 * Checks if dt has a proper value between 0 and 0.2.
+	 * @param dt
+	 * @return True if dt is a value between 0 and 0.2 otherwise false.
+	 * 		| if (dt > 0.2 || dt < 0)
+	 * 		| then false
+	 * 		| else true
+	 */
+	private boolean isValidDt(double dt) {
+		if(dt > 0.2 || dt < 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns the boolean duck, if mazub is ducked, true is returned,
+	 * otherwise false
+	 * 
+	 * @return (duck)
+	 *     __
+        .'  `.
+        |a_a  |
+        \<_)__/    ,
+         /   `-...-'\
+        |    -~',   /
+     ~`~\   '.-`  .' ~~^-~
+     ~~` `-.~-..~` ~~`  ~`
+     '~~ ~~`-  ^-~~`~ ^
+	 */
+	public boolean isDucked(){
+		return (this.duck);
+	}
+	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
 	 * and the maxSpeed back to MAX_SPEED_DUCK
 	 * @effect
-	 * 			| duck = true
-	 * 			| maxSpeed = MAX_SPEED_DUCK
+	 * 			| duck == true
+	 * 			| Xspeed == MAX_SPEED_DUCK
+	 * DEFENSIEF uitwerken
 	 */
 	public void startDuck() {
-		this.duck = true ;
-		this.setMaxSpeed(this.getMAXSPEEDDUCK());
-	}	
+		duck = true ;
+		maxSpeed = MAX_SPEED_DUCK;
+	}
+		
+	
 	/**
 	 * Ends the ducking of Mazub by setting the boolean duck on false 
 	 * and the maxSpeed back to MAX_SPEED
 	 * @effect
-	 * 			| duck = false
-	 * 			| maxSpeed = MAX_SPEED
+	 * 			| duck == false
+	 * 			| Xspeed == MAX_SPEED
+	 * DEFENSIEF uitwerken
 	 */
 	public void endDuck()  {	
 		this.setDuck(false);
-		this.setMaxSpeed(this.getMAXSPEED());
-	}		
+		this.setMaxSpeed(MAX_SPEED);
+	}	
+	
 	/**
 	 * GEEN formele documentatie nodig
 	 */
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
-		if ((this.getXSpeed()==0) && (! this.isDucked()) &&
-				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
+		if ((this.getXSpeed()==0) && (! isDucked()) && (getTime_since_endMove() > NOT_MOVING_TIME)){
 			return sprites[0];
 		}
-		else if ((this.getXSpeed()==0) &&
-				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
+		else if ((getXSpeed()==0) && (getTime_since_endMove() > NOT_MOVING_TIME)){
 			return sprites[1];
 		}
-		else if ((this.getXSpeed()==0) &&
-				(!this.isDucked()) && (this.getOrientation() == "right" )){
+		else if ((getXSpeed()==0) && (!isDucked()) && (getOrientation() == "right" )){
 			return sprites[2];
 		}		
-		else if ((this.getXSpeed()==0) && (!this.isDucked())){
+		else if ((getXSpeed()==0) && (!isDucked())){
 			return sprites[3];
 		}
-		else if ((this.getXSpeed() > 0) && (this.getOrientation() == "right" ) 
-				&& (this.getYSpeed() > 0) && 
+		else if ((getXSpeed() > 0) && (getOrientation() == "right" ) && (getYSpeed() > 0) && 
 				(!isDucked())){
 			return sprites[4];
 		}
-		else if ((this.getXSpeed() > 0) && (getYSpeed() > 0) && (!this.isDucked())){
+		else if ((getXSpeed() > 0) && (getYSpeed() > 0) && (!isDucked())){
 			return sprites[5];
 		}
-		else if ((this.getOrientation() == "right") && (this.isDucked())){
+		else if ((getOrientation() == "right") && (isDucked())){
 			return sprites[6];
 		}
-		else if (this.isDucked()){
+		else if (isDucked()){
 			return sprites[7];
 		}
 		else if (getOrientation() == "right"){
@@ -933,8 +953,12 @@ public class Mazub {
 		else {
 			return sprites[8 + m + i]; 
 		}
+		
 	}
+
+
 	
+		
 }
 
 		

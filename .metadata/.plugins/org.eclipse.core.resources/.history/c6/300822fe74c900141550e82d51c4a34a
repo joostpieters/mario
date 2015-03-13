@@ -54,9 +54,7 @@ public class Mazub {
 	
 
 	/**
-	 * Initialize this new Mazub with given x and y positions, sprites,
-	 * 
-	 * < horizontal start speed and maximum horizontal speed.
+	 * Initialize this new Mazub with given x and y positions, sprites, horizontal start speed and maximum horizontal speed.
 	 * 
 	 * @param x_pos
 	 * The x position in the field for the new Mazub
@@ -298,8 +296,7 @@ public class Mazub {
 		return x_pos;
 	}	
 	/**
-	 * Returns the difference between the real horizontal position of Mazub
-	 * and the rounded down value 
+	 * Returns the difference between the real horizontal position of Mazub and the rounded down value 
 	 * @return x_difference
 	 */
 	public double getXDifference() {
@@ -321,8 +318,7 @@ public class Mazub {
 		return y_pos;
 	}
 	/**
-	 * Returns the difference between the real vertical position of Mazub
-	 * and the rounded down value 
+	 * Returns the difference between the real vertical position of Mazub and the rounded down value 
 	 * @return y_difference
 	 */
 	public double getYDifference() {
@@ -844,8 +840,7 @@ public class Mazub {
 			fall();
 		}
 		new_y_pos = (double) this.getYPos()
-				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc()
-				* Math.pow(dt,2) + this.getYDifference();
+				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc() * Math.pow(dt,2) + this.getYDifference();
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if (this.getNewYPos() <= 0) {
 			endFall();
@@ -898,23 +893,19 @@ public class Mazub {
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
-		if ((this.getXSpeed()==0) && (! this.isDucked()) &&
-				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
+		if ((this.getXSpeed()==0) && (! this.isDucked()) && (this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
 			return sprites[0];
 		}
-		else if ((this.getXSpeed()==0) &&
-				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
+		else if ((this.getXSpeed()==0) && (this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
 			return sprites[1];
 		}
-		else if ((this.getXSpeed()==0) &&
-				(!this.isDucked()) && (this.getOrientation() == "right" )){
+		else if ((this.getXSpeed()==0) && (!this.isDucked()) && (this.getOrientation() == "right" )){
 			return sprites[2];
 		}		
 		else if ((this.getXSpeed()==0) && (!this.isDucked())){
 			return sprites[3];
 		}
-		else if ((this.getXSpeed() > 0) && (this.getOrientation() == "right" ) 
-				&& (this.getYSpeed() > 0) && 
+		else if ((this.getXSpeed() > 0) && (this.getOrientation() == "right" ) && (this.getYSpeed() > 0) && 
 				(!isDucked())){
 			return sprites[4];
 		}
@@ -933,8 +924,12 @@ public class Mazub {
 		else {
 			return sprites[8 + m + i]; 
 		}
+		
 	}
+
+
 	
+		
 }
 
 		
