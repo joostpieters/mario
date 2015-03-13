@@ -791,7 +791,7 @@ public class Mazub {
 	/**
 	 * Changes the horizontal coordinates of mazub when mazub is moving
 	 * with a certain speed and accelerating with a certain acceleration
-	 * for a given time interval. 
+	 * for a given time interval.
 	 * Changes the horizontal speed of Mazub.
 	 * Changes the counter of the sprites when running and changes the 
 	 * time since startMove
@@ -882,28 +882,45 @@ public class Mazub {
 	}
 	/**
 	 * Changes the vertival position of Mazub with the current speed and accelleration
-	 * and with a given time interval dt.
-	 * Changes the vertical speed of Mazub.
+	 * and with a given time interval dt. The method will keep Mazub between the boundaries
+	 * of the game world by setting his speed to zero if he jumps too high.
+	 * Changes the vertical speed of Mazub. If Mazub comes on the ground, his fall will ends.
 	 * @param dt: A small time interval
+	 * @effect	The new vertical position is changed
+	 * 			| new_y_pos = this.getYPos() +  this.getYSpeed()*100*dt + 0.5 * 100 *
+	 * 			| 				this.getYAcc() * Math.pow(dt,2) + this.getYDifference()
+	 * @effect 	The ySpeed is changed given the acceleration and the time interval
+	 * 			| ySpeed += dt * this.getYAcc()
+	 * @effect 	If the new position is the ground or lower, his fall will end and
+	 * 			his vertical position will be 0
+	 * 			| if new_y_pos == 0
+	 * 			| 	then endfall()
+	 * 			| 		 new_y_pos = 0
+	 * @effect  If the vertical position of Mazub would exceed the upper boundary, 
+	 * 			Mazubs speed is set to zero and het new vertical position to MAX_Y_VALUE
+	 * 			| if new_y_pos > MAX_Y_VALUE
+	 * 			| 	then new_y_pos = MAX_Y_VALUE
+	 * 			| 		 ySpeed = 0
+	 * @effect the current vertical position is changed to the rounded down new position
+	 * 			and the difference between the two values is stored in y_difference
+	 * 			| y_pos = new_y_pos
+	 * 			| y_difference = new_y_pos - y_pos
 	 */
 	public void advance_y(double dt){	
 		if ((this.getYPos() > 0) && (!this.isFalling())){
 			fall();
 		}
-		new_y_pos = (double) this.getYPos()
-				+ this.getYSpeed()*100*dt + 0.5 * 100 *  this.getYAcc()
-				* Math.pow(dt,2) + this.getYDifference();
+		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+				this.getYAcc() * Math.pow(dt,2) + this.getYDifference());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if (this.getNewYPos() <= 0) {
 			endFall();
 			this.setNewYPos(0);
 		}
-		
 		if (this.getNewYPos() > MAX_Y_VALUE) {
 			this.setNewYPos(MAX_Y_VALUE);
 			this.setYSpeed(0);
 		}
-	
 		setYPos(new_y_pos);	
 		setYDifference(new_y_pos - y_pos);
 	}	
