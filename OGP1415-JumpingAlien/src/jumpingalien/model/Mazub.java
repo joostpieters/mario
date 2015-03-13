@@ -555,10 +555,10 @@ public class Mazub {
 		this.y_difference = y_difference;
 	}
 	
-	public void setNewXPos(int n) {
+	public void setNewXPos(double n) {
 		this.new_x_pos = n;
 	}
-	public void setNewYPos(int f) {
+	public void setNewYPos(double f) {
 		this.new_y_pos = f;
 	}
 	
@@ -786,12 +786,41 @@ public class Mazub {
 	public void endFall() {
 		this.setYAcc(0);
 		this.setYSpeed(0);
-		this.endFalling();
-		
+		this.endFalling();		
 	}
 	/**
-	 * 
-	 * @param dt
+	 * CHanges the horizontal coordinates of mazub when mazub is moving
+	 * with a certain speed and accelerating with a certain acceleration
+	 * for a given time interval. 
+	 * Changes the horizontal speed of Mazub.
+	 * Changes the sprite when running and changes the time since startMove
+	 * @param dt: A small time interval
+	 * @effect if the current speeds exceeds the maximum speed, xSpeed is set to
+	 * 			maxspeed and the acceleration is set to zero
+	 * 			| if xSpeed >= maxSpeed
+	 * 			| 	then sSpeed = maxSpeed
+	 * 			| 		 xAcc = 0
+	 * @effect if mazub is oriented right, his horizontal new position changes to the right,
+	 * 		   if mazub is oriented left, his horizontal new position changes to the left
+	 * 			| if orientation == right
+	 * 			| 	then new_x_pos = this.getXPos() + this.getXSpeed()*100*dt
+	 * 			| 					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
+	 * 			| else if orientation == left
+	 * 			| 	then new_x_pos = this.getXPos() - this.getXSpeed()*100*dt
+	 * 			|					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
+	 * @effect if mazub's new horizontal position exceeds the boundaries of the game field, his new position 
+	 * 			is set to the boundary of the game
+	 * 			| if new_x_pos < MIN_X_VALUE
+	 * 			|	then new_x_pos = MIN_X_VALUE
+	 * 			| else if new_x_pos > MAX_X_VALUE
+	 * 			|	then new_x_pos = MAX_X_VALUE
+	 * @effect the current speed changes given the acceleration and dt
+	 * 			| xSpeed + = dt * xAcc
+	 * @effect the current position is changed to the rounded down new position
+	 * 			and the difference between the two values is stored in x_difference
+	 * 			| x_pos = new_x_pos
+	 * 			| x_difference = new_x_pos - x_pos
+	 * @effect 
 	 */
 	public void advance_x(double dt) {
 		if (this.getXSpeed() >= this.getMaxSpeed()){
@@ -800,27 +829,25 @@ public class Mazub {
 		}
 		
 		if (this.getOrientation() == "right") {
-			new_x_pos = (double) this.getXPos() + this.getXSpeed()*100*dt
-					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();		
-			
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());		
 		}
 		else if (this.getOrientation() == "left") {
-			new_x_pos = (double) this.getXPos() - this.getXSpeed()*100*dt
-					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());
 		}
+		
 		if (this.getNewXPos() < MIN_X_VALUE){
 			this.setNewXPos(MIN_X_VALUE);
-			this.setXPos(MIN_X_VALUE);
 		}
-		if (this.getNewXPos() > MAX_X_VALUE){
+		else if (this.getNewXPos() > MAX_X_VALUE){
 			this.setNewXPos(MAX_X_VALUE);
-			this.setXPos(MAX_X_VALUE);
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
 		
-		setXPos(new_x_pos);
-		setXDifference(new_x_pos - x_pos);
+		this.setXPos(new_x_pos);
+		this.setXDifference(new_x_pos - x_pos);
 		
 		if (this.getXSpeed() == 0) {
 			time_since_endMove += dt;
