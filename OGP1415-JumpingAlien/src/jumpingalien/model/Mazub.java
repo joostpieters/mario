@@ -253,7 +253,7 @@ public class Mazub {
 	/**
 	 * the time every image is displayed when mazub is running
 	 */
-	public static double TIME_DIFFERENT_IMAGE = 0.075;
+	public static double TIME_DIFFERENT_SPRITE = 0.075;
 	/**
 	 * the amount of running images with a certain orientation
 	 */
@@ -789,11 +789,12 @@ public class Mazub {
 		this.endFalling();		
 	}
 	/**
-	 * CHanges the horizontal coordinates of mazub when mazub is moving
+	 * Changes the horizontal coordinates of mazub when mazub is moving
 	 * with a certain speed and accelerating with a certain acceleration
 	 * for a given time interval. 
 	 * Changes the horizontal speed of Mazub.
-	 * Changes the sprite when running and changes the time since startMove
+	 * Changes the counter of the sprites when running and changes the 
+	 * time since startMove
 	 * @param dt: A small time interval
 	 * @effect if the current speeds exceeds the maximum speed, xSpeed is set to
 	 * 			maxspeed and the acceleration is set to zero
@@ -821,7 +822,20 @@ public class Mazub {
 	 * 			| x_pos = new_x_pos
 	 * 			| x_difference = new_x_pos - x_pos
 	 * @effect if the speed is 0, the time since endMove is increased with dt
-	 * 			if the speed is greater than 0, 
+	 * 			if the speed is greater than 0, time since startMove is 
+	 * 			increased with dt and when this time exceeds the time for a different
+	 * 			sprite, the time since startmove is decreased by the time for a 
+	 * 			different sprite and the counter for the sprites is increment or, if
+	 * 			it has come to it's maximum value (m), set to zero.
+	 * 			| if xSpeed == 0
+	 * 			| 	then time_since_endMove += dt
+	 * 			| else if xSpeed > 0
+	 * 			| 	then time_since_startMove += dt
+	 * 			| 		 if time_since_startMove >= TIME_DIFFERENT_SPRITE
+	 * 			| 				then time_since_startMove -= TIME_DIFFERENT_SPRITE
+	 * 			|					 if i< m-1
+	 * 			| 						then i += 1
+	 * 			|					 else i=0					
 	 */
 	public void advance_x(double dt) {
 		if (this.getXSpeed() >= this.getMaxSpeed()){
@@ -851,12 +865,12 @@ public class Mazub {
 		this.setXDifference(new_x_pos - x_pos);
 		
 		if (this.getXSpeed() == 0) {
-			time_since_endMove += dt;
+			this.setTime_since_endMove(this.getTime_since_endMove() + dt);
 		}
 		else if (this.getXSpeed() > 0) {
 			this.setTime_since_startMove(this.getTime_since_startMove() + dt);
-			if (this.getTime_since_startMove() > TIME_DIFFERENT_IMAGE) {
-				this.setTime_since_startMove(this.getTime_since_startMove() - TIME_DIFFERENT_IMAGE);
+			if (this.getTime_since_startMove() > TIME_DIFFERENT_SPRITE) {
+				this.setTime_since_startMove(this.getTime_since_startMove() - TIME_DIFFERENT_SPRITE);
 				if (i < m-1) {
 					i += 1;
 				}
@@ -866,7 +880,12 @@ public class Mazub {
 			}
 		}
 	}
-	
+	/**
+	 * Changes the vertival position of Mazub with the current speed and accelleration
+	 * and with a given time interval dt.
+	 * Changes the vertical speed of Mazub.
+	 * @param dt: A small time interval
+	 */
 	public void advance_y(double dt){	
 		if ((this.getYPos() > 0) && (!this.isFalling())){
 			fall();
