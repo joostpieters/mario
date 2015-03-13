@@ -921,8 +921,8 @@ public class Mazub {
 			this.setNewYPos(MAX_Y_VALUE);
 			this.setYSpeed(0);
 		}
-		setYPos(new_y_pos);	
-		setYDifference(new_y_pos - y_pos);
+		this.setYPos(this.getNewYPos());	
+		this.setYDifference(this.getNewYPos() - this.getYPos());
 	}	
 	/**
 	 *  
@@ -931,8 +931,8 @@ public class Mazub {
 	public void advanceTime(double dt) throws IllegalDtException {
 		if (!isValidDt(dt))
 			throw new IllegalDtException(dt);
-		advance_x(dt);
-		advance_y(dt);	
+		this.advance_x(dt);
+		this.advance_y(dt);	
 	}	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
