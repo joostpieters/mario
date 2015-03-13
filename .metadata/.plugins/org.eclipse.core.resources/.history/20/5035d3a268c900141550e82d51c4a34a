@@ -50,7 +50,8 @@ public class Mazub {
 		this.setSprite(sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_SPEED);
-	}
+	}	
+	
 	
 
 	/**
@@ -90,13 +91,13 @@ public class Mazub {
 				throw new IllegalPositionException(x_pos,y_pos);
 			if ( ! isValidSprite(sprites))
 				throw new IllegalSpriteException(sprites);
-			if ( ! isValidSpeed())
+			if ( ! isValidSpeed(initStartSpeed, maxSpeed))
 				throw new IllegalSpeedException(initStartSpeed,maxSpeed);
-			this.setXPos(x_pos);
-			this.setYPos(y_pos);
-			this.setSprite(sprites);
-			this.setInitStartSpeed(initStartSpeed);
-			this.setMaxSpeed(maxSpeed);
+		this.x_pos = x_pos;
+		this.y_pos = y_pos;
+		this.sprites = sprites;
+		this.initStartSpeed = initStartSpeed;
+		this.maxSpeed = maxSpeed;
 	}
 	
 	
@@ -107,11 +108,13 @@ public class Mazub {
 	/**
 	 * the vertical position of mazub
 	 */
-	public int y_pos = 0;	
+	public int y_pos = 0;
+	
 	/**
 	 * The sprites for Mazub
 	 */
 	private Sprite[] sprites;
+	
 	/**
 	 * the orientation of Mazub
 	 */
@@ -124,11 +127,13 @@ public class Mazub {
 	 * the height/vertical size of mazub
 	 */
 	public int y_dim;
+
 	/**
 	 * the dimensions of mazub, the set consists of the x_dim
 	 * and the y_dim.
 	 */
-	public int[] dimension;
+	public int[] dimension
+	;
 	/**
 	 * the starting speed when startMove is initiated
 	 */
@@ -259,34 +264,37 @@ public class Mazub {
 	/**
 	 * the variable to go over the array of possible images
 	 */
-	public int i = 0;	
+	public int i = 0;
+	
 	/**
 	 * The boolean to reflect if Mazub is falling or not
 	 */
-	public boolean falling = false;	
+	public boolean falling = false;
+	
 	/**
 	 * Returns True if Mazub is falling
 	 * @return falling
 	 */
 	public boolean isFalling() {
 		return falling;
-	}	
+	}
+	
 	/**
 	 * Marks the boolean falling as true
 	 * @post falling == true
 	 */
 	public void setFalling() {
 		this.falling = true;
-	}	
+	}
+	
 	/**
 	 * Marks the boolean falling as false
 	 * @post falling == false
 	 */
 	public void endFalling() {
 		this.falling = false;
-	}	
-	
-//Getters	
+	}
+		
 	/**
 	 * Returns the x position
 	 * @return x_pos
@@ -294,7 +302,8 @@ public class Mazub {
 	@Basic
 	public int getXPos() {
 		return x_pos;
-	}	
+	}
+	
 	/**
 	 * Returns the difference between the real horizontal position of Mazub and the rounded down value 
 	 * @return x_difference
@@ -302,44 +311,45 @@ public class Mazub {
 	public double getXDifference() {
 		return x_difference;
 	}
+	
 	/**
 	 * Returns the horizontal position of Mazub after dt seconds
 	 * @return new_x_pos
 	 */
 	public double getNewXPos() {
 		return new_x_pos;
-	}	
+	}
+	
+	
+	
 	/**
 	 * Returns the y position
+	 * 
 	 * @return the y position
 	 */
 	@Basic
 	public int getYPos() {
 		return y_pos;
 	}
-	/**
-	 * Returns the difference between the real vertical position of Mazub and the rounded down value 
-	 * @return y_difference
-	 */
 	public double getYDifference() {
 		return y_difference;
 	}
-	/**
-	 * Returns the vertical position of Mazub after dt seconds
-	 * @return new_y_pos
-	 */
 	public double getNewYPos() {
 		return new_y_pos;
 	}
+	public void setNewYPos(int f) {
+		this.new_y_pos = f;
+	}
+	
 	/**
-	 * Returns the location of mazub
+	 * 
 	 * @return an array, consisting of 2 integers {x, y}, that represents the
 	 *         coordinates of the given alien's bottom left pixel in the world.	
-	 *         | {x_pos,y_pos}
 	 */
 	public int[] getLocation() {
 		return new int[]{this.getXPos(),this.getYPos()};
-	}		
+	}	
+	
 	/**
 	 * Returns the orientation of Mazub
 	 * @return orientation
@@ -349,33 +359,28 @@ public class Mazub {
 		return orientation;
 	}
 	/**
-	 * Returns the horizontal dimension of mazub (width)
+	 * 
 	 * @return the horizontal dimension of mazub (width)
-	 * 			| this.getCurrentSprite().getWidth()
 	 */
 	@Basic
 	public int getXDim() {
 		return this.getCurrentSprite().getWidth();
 	}
 	/**
-	 * Returns the vertical dimension of mazub (height)
+	 * 
 	 * @return the vertical dimension of mazub (height)
-	 * 			| this.getCurrentSprite().getHeight()
 	 */
 	@Basic
 	public int getYDim() {
 		return this.getCurrentSprite().getHeight();
 	}
-	/**
-	 * Returns the sprites of Mazub
-	 * @return sprites
-	 */
-	@Basic
 	public Sprite[] getSprite(){
 		return this.sprites;
 	}
+	
 	/**
 	 * Returns the dimensions
+	 * 
 	 * @return the dimensions
 	 */
 	public int[] getDimension() {
@@ -383,15 +388,17 @@ public class Mazub {
 	}
 	/**
 	 * Returns the horizontal speed
+	 * 
 	 * @return the horizontal speed
-	 * 			| xSpeed
+	 * 			| speed
 	 */
 	@Basic
 	public double getXSpeed() {
 		return xSpeed;
 	}
+	
 	/**
-	 * Returns the vertical speed
+	 * 
 	 * @return the vertical speed of mazub
 	 * 			| YSpeed
 	 */
@@ -399,15 +406,14 @@ public class Mazub {
 	public double getYSpeed() {
 		return ySpeed;
 	}
-	/**
-	 * Returns the horizontal and vertical velocity
-	 * @return {xSpeed,ySpeed}
-	 */
+	
 	public double[] getVelocity(){
 		return new double[] {xSpeed,ySpeed};
 	}
+
 	/**
-	 * Returns the horizontal acceleration 
+	 * Returns the horizontal acceleration
+	 * 
 	 * @return the horizontal acceleration 
 	 * 			| Acc
 	 */
@@ -416,7 +422,7 @@ public class Mazub {
 		return xAcc;
 	}
 	/**
-	 *  Returns the vertical acceleration 
+	 * 
 	 * @return the vertical acceleration of mazub
 	 * 			| YAcc
 	 */
@@ -424,9 +430,9 @@ public class Mazub {
 	public double getYAcc() {
 		return yAcc;
 	}
+	
 	/**
-	 * Returns an array consisting of the horizontal and 
-	 * vertical acceleration.
+	 * 
 	 * @return an array consisting of the horizontal and 
 	 * vertical acceleration.
 	 * 			| {Acc,YAcc}
@@ -434,59 +440,127 @@ public class Mazub {
 	public double[] getAcceleration(){
 		return new double[] {this.getXAcc(),this.getYAcc()};
 	}
+	
 	/**
-	 * Returns an array consisting of the width and height of mazub
+	 * 
+	 * MOGEN DE GEWONE VARIABELEN IN DE ARRAY OF MOETEN
+	 * WE DAARVOOR GETTERS AANMAKEN????
+	 * 
+	 * 
 	 * @return an array consisting of the width and height of mazub
-	 * 			| {XDim,YDim}
 	 */
 	public int[] getSize() {
 		return new int[] {this.getXDim(),this.getYDim()};
 	}
+
 	/**
 	 * Returns the initial start speed
+	 * 
 	 * @return the initial start speed
-	 * 			| initStartSpeed
 	 */
 	@Immutable
 	public int getInitStartSpeed() {
 		return initStartSpeed;
 	}
+	
 	/**
 	 * Returns the maximum speed
+	 * 
 	 * @return the maximum speed
 	 */
 	@Immutable
 	public int getMaxSpeed() {
 		return maxSpeed;
 	}	
+	
 	/**
-	 * Returns the time since Mazub stopped moving horizontally
 	 * @return the time_since_endMove
 	 */
 	public double getTime_since_endMove() {
 		return time_since_endMove;
 	}
+
 	/**
-	 * Returns the time since Mazub started moving
+	 * @param time_since_endMove the time_since_endMove to set
+	 */
+	public void setTime_since_endMove(double time_since_endMove) {
+		this.time_since_endMove = time_since_endMove;
+	}
+
+	/**
 	 * @return the time_since_startMove
 	 */
 	public double getTime_since_startMove() {
 		return time_since_startMove;
 	}
 
-//Setters	
 	/**
-	 * 
-	 * @param initstartspeed
+	 * @param time_since_startMove the time_since_startMove to set
 	 */
-	public void setInitStartSpeed(int initstartspeed) {
-		this.initStartSpeed = initstartspeed;
+	public void setTime_since_startMove(double time_since_startMove) {
+		this.time_since_startMove = time_since_startMove;
 	}
+
 	/**
-	 * sets the horizontal speed of mazub to a new value speed
+	 * @param ySpeed the ySpeed to set
+	 */
+	public void setySpeed(double ySpeed) {
+		this.ySpeed = ySpeed;
+	}
+	
+	public void setyAcc(double a) {
+		this.yAcc = a;
+	}
+
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any Mazub.
+	 * 
+	 * @param x_pos 
+	 * 			the horizontal position of Mazub
+	 * @param y_pos
+	 * 			the vertical position of Mazub
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| return (x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE) 
+	 */
+	public boolean isValidPosition() {
+		return (this.getXPos() >= MIN_X_VALUE && this.getXPos() <= MAX_X_VALUE
+				 && this.getYPos() >= MIN_Y_VALUE && this.getYPos() <= MAX_Y_VALUE);
+	}
+	public boolean isValidSprite(Sprite[] sprites) {
+		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
+	}
+	public boolean isValidSpeed(int initStartSpeed, int maxSpeed) {
+		return ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed));
+	}
+
+	
+//	/**
+//	 * 	Checks whether the given dimensions are valid dimensions for 
+//	 *  any Mazub.
+//	 * 
+//	 * @param dimension
+//	 * 			the dimension of Mazub
+//	 * @return 	True if both dimensions are positive
+//	 *			| return (dimension[0] > 0) && (dimension[1] > 0)
+//	 */
+//	public static boolean isValidDimension(int[] dimension) {
+//		return (dimension[0] > 0) && (dimension[1] > 0);
+//	}	
+	
+	/**
+	 * sets the speed of mazub to a new value speed
 	 * @param speed
 	 * 			the new speed of mazub
 	 */
+	
+	public void setInitStartSpeed(double initstartspeed) {
+		this.initStartSpeed = (int) initstartspeed;
+	}
+	
 	public void setXSpeed(double s){
 		this.xSpeed = s;
 	}
@@ -518,9 +592,6 @@ public class Mazub {
 	public void setNewXPos(int n) {
 		this.new_x_pos = n;
 	}
-	public void setNewYPos(int f) {
-		this.new_y_pos = f;
-	}
 	
 	private void setSprite(Sprite[] sprites) {
 		this.sprites = sprites;	
@@ -529,65 +600,7 @@ public class Mazub {
 	private void setDuck(boolean duck) {
 		this.duck = duck;
 	}
-	/**
-	 * @param time_since_endMove the time_since_endMove to set
-	 */
-	public void setTime_since_endMove(double time_since_endMove) {
-		this.time_since_endMove = time_since_endMove;
-	}
-	/**
-	 * @param time_since_startMove the time_since_startMove to set
-	 */
-	public void setTime_since_startMove(double time_since_startMove) {
-		this.time_since_startMove = time_since_startMove;
-	}
 
-	/**
-	 * @param ySpeed the ySpeed to set
-	 */
-	public void setySpeed(double ySpeed) {
-		this.ySpeed = ySpeed;
-	}
-	
-	public void setyAcc(double a) {
-		this.yAcc = a;
-	}
-
-//Validations
-	/**
-	 * 	Checks whether the given positions are valid positions for 
-	 *  any Mazub.
-	 * @return 	True if the horizontal position x_pos and 
-	 *			and the vertical position y_pos stay in the 
-	 *			game world.
-	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
-	 */
-	public boolean isValidPosition() {
-		return (this.getXPos() >= MIN_X_VALUE && this.getXPos() <= MAX_X_VALUE
-				 && this.getYPos() >= MIN_Y_VALUE && this.getYPos() <= MAX_Y_VALUE);
-	}
-	/**
-	 * Checks whether the given sprites are valid for any Mazub
-	 * @param sprites
-	 * @return True if the sprites are valid
-	 * 			| ((sprites.length >= 8) && (sprites.length % 2 == 0))
-	 */
-	public boolean isValidSprite(Sprite[] sprites) {
-		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
-	}
-	/**
-	 * Checks whether the given initstartspeed and maxspeed are valid
-	 * for any Mazub
-	 * @return True if the given initstartspeed and maxspeed are valid
-	 * 			|  ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed() 
-	 * 			|	>= this.getInitStartSpeed()))
-	 */
-	public boolean isValidSpeed() {
-		return ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed()
-				>= this.getInitStartSpeed()));
-	}
-	
 	/**
 	 * Method to make the Mazub start moving
 	 * 
@@ -597,7 +610,6 @@ public class Mazub {
 	 * 			the vertical position of Mazub
 	 * @pre the position of Mazub must be valid
 	 * 			| isValidPosition(getXPos(),getYPos())
-	 * @pre the initialstartspeed and maxspeed of Mazub must be valid
 	 * @post Mazub starts moving with a certain speed and acceleration
 	 * 			| if (! isDucked())
 	 * 			| 	then acc = 0.9
@@ -614,7 +626,6 @@ public class Mazub {
 	 */
 	public void startMove() {
 		assert isValidPosition();
-		assert isValidSpeed();
 		this.setXSpeed(START_SPEED); 
 		if (this.isDucked() == false) {
 			xAcc = (float) 0.9;
@@ -923,7 +934,9 @@ public class Mazub {
 		
 	}
 
-
+	public void setInitStartSpeed(int initStartSpeed) {
+		this.initStartSpeed = initStartSpeed;
+	}
 	
 		
 }

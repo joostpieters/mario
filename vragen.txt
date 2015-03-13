@@ -1,15 +1,2 @@
-constructor mazub: meerdere exceptions throwen: position en dimension
+naamgeving variabelen?
 
-Serialnumber bij exception classes
-
-2de exception Dimension thrower
-
-hebben we overal setters/getters nodig?
-
-Hoe defensief uitwerken van advanceTime? (try/catch)
-
-verschil tussen @effect en @post
-
-Wat is de declaratie van getCurrentSprite, want die returned an image.
-
-Bij facade klasse: hoe juiste mazub class importeren?

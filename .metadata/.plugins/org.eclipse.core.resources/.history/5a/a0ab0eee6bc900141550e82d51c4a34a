@@ -560,8 +560,8 @@ public class Mazub {
 	 * @return 	True if the horizontal position x_pos and 
 	 *			and the vertical position y_pos stay in the 
 	 *			game world.
-	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 *			| return (x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE) 
 	 */
 	public boolean isValidPosition() {
 		return (this.getXPos() >= MIN_X_VALUE && this.getXPos() <= MAX_X_VALUE
@@ -570,24 +570,16 @@ public class Mazub {
 	/**
 	 * Checks whether the given sprites are valid for any Mazub
 	 * @param sprites
-	 * @return True if the sprites are valid
-	 * 			| ((sprites.length >= 8) && (sprites.length % 2 == 0))
+	 * @return 
 	 */
 	public boolean isValidSprite(Sprite[] sprites) {
 		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
 	}
-	/**
-	 * Checks whether the given initstartspeed and maxspeed are valid
-	 * for any Mazub
-	 * @return True if the given initstartspeed and maxspeed are valid
-	 * 			|  ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed() 
-	 * 			|	>= this.getInitStartSpeed()))
-	 */
 	public boolean isValidSpeed() {
-		return ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed()
-				>= this.getInitStartSpeed()));
+		return ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed() >= this.getInitStartSpeed()));
 	}
 	
+
 	/**
 	 * Method to make the Mazub start moving
 	 * 
@@ -597,7 +589,6 @@ public class Mazub {
 	 * 			the vertical position of Mazub
 	 * @pre the position of Mazub must be valid
 	 * 			| isValidPosition(getXPos(),getYPos())
-	 * @pre the initialstartspeed and maxspeed of Mazub must be valid
 	 * @post Mazub starts moving with a certain speed and acceleration
 	 * 			| if (! isDucked())
 	 * 			| 	then acc = 0.9

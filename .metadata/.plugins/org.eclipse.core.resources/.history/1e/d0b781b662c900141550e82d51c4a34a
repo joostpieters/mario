@@ -4,8 +4,6 @@ package jumpingalien.part1.facade;
 import jumpingalien.util.ModelException;
 import jumpingalien.model.IllegalDtException;
 import jumpingalien.model.IllegalPositionException;
-import jumpingalien.model.IllegalSpeedException;
-import jumpingalien.model.IllegalSpriteException;
 import jumpingalien.model.Mazub;
 import jumpingalien.util.Sprite;
 
@@ -18,27 +16,14 @@ public class Facade implements IFacade {
 	//	throw new ModelException(null, IllegalPositionException(pixelLeftX,pixelBottomY));
 	
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
-		try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
-		catch(IllegalPositionException e) {
-			throw new ModelException(e.getMessage());
-		}
-		catch (IllegalSpriteException f) {
-			throw new ModelException(f.getMessage());
-		}
+//	throws ModelException {
+//		if (  )
+//			throw new ModelException("error");
+	try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
+	catch(IllegalPositionException e) {
+		throw new ModelException(e.getMessage());
 	}
-	
-	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
-			int initStartSpeed, int maxSpeed){
-		try {return new Mazub(pixelLeftX, pixelBottomY, sprites, initStartSpeed, maxSpeed);}
-		catch(IllegalPositionException e) {
-			throw new ModelException(e.getMessage());
-		}
-		catch (IllegalSpriteException f) {
-			throw new ModelException(f.getMessage());
-		}
-		catch (IllegalSpeedException g) {
-			throw new ModelException(g.getMessage());
-		}
+
 	}
 		
 	
