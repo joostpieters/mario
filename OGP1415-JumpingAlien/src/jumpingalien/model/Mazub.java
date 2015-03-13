@@ -820,7 +820,8 @@ public class Mazub {
 	 * 			and the difference between the two values is stored in x_difference
 	 * 			| x_pos = new_x_pos
 	 * 			| x_difference = new_x_pos - x_pos
-	 * @effect 
+	 * @effect if the speed is 0, the time since endMove is increased with dt
+	 * 			if the speed is greater than 0, 
 	 */
 	public void advance_x(double dt) {
 		if (this.getXSpeed() >= this.getMaxSpeed()){
