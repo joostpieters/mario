@@ -61,7 +61,6 @@ public class PartialFacadeTest {
 		Mazub alien = facade.createMazub(0, 0, sprites);
 
 		facade.startMoveRight(alien);
-
 		facade.advanceTime(alien, 0.005);
 		for (int i = 0; i < m; i++) {
 			facade.advanceTime(alien, 0.075);
@@ -70,6 +69,68 @@ public class PartialFacadeTest {
 		assertEquals(sprites[8+m], facade.getCurrentSprite(alien));
 	}
 
+	@Test
+	public void testDuckSpriteNotMoving() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+
+		facade.startDuck(alien);
+		for (int i = 0; i < 6; i++) {
+			facade.advanceTime(alien, 0.2);
+		}
+		assertEquals(sprites[1], facade.getCurrentSprite(alien));
+	}
+	
+	@Test
+	public void testBoundaryRight() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startMoveRight(alien);
+		//walking till past the last pixel
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(alien, 0.2);
+		}
+		assertArrayEquals(intArray(1023, 0), facade.getLocation(alien));
+	}
+	
+	@Test
+	public void testBoundaryLeft() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startMoveLeft(alien);
+		//walking to the left, so out of the field
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(alien, 0.2);
+		}
+		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
+	}
+	
+	@Test
+	public void testVelocityDucking() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startMoveLeft(alien);
+		//walking till stop steep and then ducking
+		for (int i = 0; i < 100 ; i++) {
+			facade.advanceTime(alien, 0.2/9);
+		}
+		facade.startDuck(alien);
+		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
+	}
+	
+	
 	// TODO: add more tests
 	// junit: @test exception (synthax opzoeken)
 }
