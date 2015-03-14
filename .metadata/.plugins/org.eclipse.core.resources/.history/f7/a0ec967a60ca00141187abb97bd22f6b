@@ -12,6 +12,11 @@ import jumpingalien.util.Sprite;
 
 public class Facade implements IFacade {
 	
+	
+	//throws ModelException {
+	//	if (( ! isValidPosition(pixelLeftX, pixelBottomY))  || (! isValidSprite(sprites)))
+	//	throw new ModelException(null, IllegalPositionException(pixelLeftX,pixelBottomY));
+	
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
 		try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
 		catch(IllegalPositionException e) {
@@ -21,6 +26,7 @@ public class Facade implements IFacade {
 			throw new ModelException(f.getMessage());
 		}
 	}
+	
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
 			int initStartSpeed, int maxSpeed){
 		try {return new Mazub(pixelLeftX, pixelBottomY, sprites, initStartSpeed, maxSpeed);}
