@@ -1057,7 +1057,7 @@ public class Mazub {
 	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
 	public void startDuck() {
-		this.setDuck(true);
+		this.duck = true ;
 		this.setMaxSpeed(this.getMAXSPEEDDUCK());
 	}	
 	/**

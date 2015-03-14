@@ -438,7 +438,7 @@ public class Mazub {
 	 * the time interval dt
 	 * @return dt
 	 */
-	public double getDt() {
+	private double getDt() {
 		return dt;
 	}
 	/**
@@ -525,13 +525,6 @@ public class Mazub {
 	 */
 	private static int getMAXYVALUE() {
 		return MAX_Y_VALUE;
-	}
-	/**
-	 * returns the time until the next sprite
-	 * @return TIME_DIFFERENT_SPRITE
-	 */
-	private static double getTIMEDIFFERENTSPRITE() {
-		return TIME_DIFFERENT_SPRITE;
 	}
 	/**
 	 * Returns the boolean duck, if mazub is ducked, true is returned,
@@ -757,7 +750,7 @@ public class Mazub {
 	 * 		| (dt <= 0.2 && dt > 0)
 	 */
 	private boolean isValidDt(double dt) {
-		return ( dt <= 0.2 && dt > 0);
+		return ( this.getDt() <= 0.2 && this.getDt() > 0);
 	}
 
 	/**
@@ -778,8 +771,8 @@ public class Mazub {
 	 * 			| time_since_startMove == 0
 	 */
 	private void startMove() {
-		assert this.isValidPosition();
-		assert this.isValidSpeed();
+		assert isValidPosition();
+		assert isValidSpeed();
 		this.setXSpeed(this.getSTARTSPEED()); 
 		if (this.isDucked() == false) {
 			this.setXAcc(0.9);
@@ -787,7 +780,7 @@ public class Mazub {
 		}
 		else {
 			this.setXAcc(0);
-			this.setMaxSpeed(this.getMAXSPEEDDUCK());
+			setMaxSpeed(this.getMAXSPEEDDUCK());
 		}
 		this.setTime_since_startMove(0);
 	}	
@@ -832,13 +825,13 @@ public class Mazub {
 	 * Ends the mazub's movement to the left
 	 */
 	public void endMoveLeft() {
-		this.endMove();
+		endMove();
 	}	
 	/**
 	 * ends the mazub's movement to the right
 	 */
 	public void endMoveRight() {
-		this.endMove();
+		endMove();
 	}	
 	/**
 	 * Makes Mazub start his jump, when he is standing
@@ -955,26 +948,25 @@ public class Mazub {
 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());
 		}
 		
-		if (this.getNewXPos() < Mazub.getMINXVALUE()){
-			this.setNewXPos(Mazub.getMINXVALUE());
+		if (this.getNewXPos() < MIN_X_VALUE){
+			this.setNewXPos(MIN_X_VALUE);
 		}
-		else if (this.getNewXPos() > Mazub.getMAXXVALUE()){
-			this.setNewXPos(Mazub.getMAXXVALUE());
+		else if (this.getNewXPos() > MAX_X_VALUE){
+			this.setNewXPos(MAX_X_VALUE);
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
 		
-		this.setXPos(this.getNewXPos());
-		this.setXDifference(this.getNewXPos() - this.getXPos());
+		this.setXPos(new_x_pos);
+		this.setXDifference(new_x_pos - x_pos);
 		
 		if (this.getXSpeed() == 0) {
 			this.setTime_since_endMove(this.getTime_since_endMove() + dt);
 		}
 		else if (this.getXSpeed() > 0) {
 			this.setTime_since_startMove(this.getTime_since_startMove() + dt);
-			if (this.getTime_since_startMove() > Mazub.getTIMEDIFFERENTSPRITE()) {
-				this.setTime_since_startMove(this.getTime_since_startMove()
-						- Mazub.getTIMEDIFFERENTSPRITE());
+			if (this.getTime_since_startMove() > TIME_DIFFERENT_SPRITE) {
+				this.setTime_since_startMove(this.getTime_since_startMove() - TIME_DIFFERENT_SPRITE);
 				if (i < m-1) {
 					i += 1;
 				}
@@ -1028,8 +1020,8 @@ public class Mazub {
 			endFall();
 			this.setNewYPos(0);
 		}
-		if (this.getNewYPos() > Mazub.getMAXYVALUE()) {
-			this.setNewYPos(Mazub.getMAXYVALUE());
+		if (this.getNewYPos() > MAX_Y_VALUE) {
+			this.setNewYPos(MAX_Y_VALUE);
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
@@ -1057,7 +1049,7 @@ public class Mazub {
 	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
 	public void startDuck() {
-		this.setDuck(true);
+		this.duck = true ;
 		this.setMaxSpeed(this.getMAXSPEEDDUCK());
 	}	
 	/**

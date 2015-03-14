@@ -527,13 +527,6 @@ public class Mazub {
 		return MAX_Y_VALUE;
 	}
 	/**
-	 * returns the time until the next sprite
-	 * @return TIME_DIFFERENT_SPRITE
-	 */
-	private static double getTIMEDIFFERENTSPRITE() {
-		return TIME_DIFFERENT_SPRITE;
-	}
-	/**
 	 * Returns the boolean duck, if mazub is ducked, true is returned,
 	 * otherwise false
 	 * @return (duck)
@@ -972,9 +965,8 @@ public class Mazub {
 		}
 		else if (this.getXSpeed() > 0) {
 			this.setTime_since_startMove(this.getTime_since_startMove() + dt);
-			if (this.getTime_since_startMove() > Mazub.getTIMEDIFFERENTSPRITE()) {
-				this.setTime_since_startMove(this.getTime_since_startMove()
-						- Mazub.getTIMEDIFFERENTSPRITE());
+			if (this.getTime_since_startMove() > TIME_DIFFERENT_SPRITE) {
+				this.setTime_since_startMove(this.getTime_since_startMove() - TIME_DIFFERENT_SPRITE);
 				if (i < m-1) {
 					i += 1;
 				}
@@ -1028,8 +1020,8 @@ public class Mazub {
 			endFall();
 			this.setNewYPos(0);
 		}
-		if (this.getNewYPos() > Mazub.getMAXYVALUE()) {
-			this.setNewYPos(Mazub.getMAXYVALUE());
+		if (this.getNewYPos() > MAX_Y_VALUE) {
+			this.setNewYPos(MAX_Y_VALUE);
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
@@ -1057,7 +1049,7 @@ public class Mazub {
 	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
 	public void startDuck() {
-		this.setDuck(true);
+		this.duck = true ;
 		this.setMaxSpeed(this.getMAXSPEEDDUCK());
 	}	
 	/**
