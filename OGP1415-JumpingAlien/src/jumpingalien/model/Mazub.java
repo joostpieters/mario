@@ -40,6 +40,7 @@ public class Mazub {
 	 * 			| !isValidSprite(sprites) 
 	 * 
 	 */
+	@Raw
 	public Mazub(int x_pos, int y_pos, Sprite[] sprites)
 			throws IllegalPositionException, IllegalSpriteException {
 				if(!isValidPosition())
@@ -85,6 +86,7 @@ public class Mazub {
 	 * IllegalMaxSpeedException. 
 	 * 
 	 */	
+	@Raw
 	public Mazub(int x_pos, int y_pos, Sprite[] sprites,
 			int initStartSpeed,int maxSpeed)
 		throws IllegalPositionException,IllegalSpriteException
@@ -271,7 +273,7 @@ public class Mazub {
 	 * Returns the x position
 	 * @return x_pos
 	 */
-	@Basic
+	@Basic @Raw 
 	private int getXPos() {
 		return x_pos;
 	}	
@@ -280,6 +282,7 @@ public class Mazub {
 	 * and the rounded down value 
 	 * @return x_difference
 	 */
+	@Raw 
 	private double getXDifference() {
 		return x_difference;
 	}
@@ -287,6 +290,7 @@ public class Mazub {
 	 * Returns the horizontal position of Mazub after dt seconds
 	 * @return new_x_pos
 	 */
+	@Raw 
 	private double getNewXPos() {
 		return new_x_pos;
 	}	
@@ -294,7 +298,7 @@ public class Mazub {
 	 * Returns the y position
 	 * @return the y position
 	 */
-	@Basic
+	@Basic @Raw 
 	private int getYPos() {
 		return y_pos;
 	}
@@ -303,6 +307,7 @@ public class Mazub {
 	 * and the rounded down value 
 	 * @return y_difference
 	 */
+	@Raw 
 	private double getYDifference() {
 		return y_difference;
 	}
@@ -310,6 +315,7 @@ public class Mazub {
 	 * Returns the vertical position of Mazub after dt seconds
 	 * @return new_y_pos
 	 */
+	@Raw 
 	private double getNewYPos() {
 		return new_y_pos;
 	}
@@ -319,6 +325,7 @@ public class Mazub {
 	 *         coordinates of the given alien's bottom left pixel in the world.	
 	 *         | {x_pos,y_pos}
 	 */
+	@Basic @Raw 
 	public int[] getLocation() {
 		return new int[]{this.getXPos(),this.getYPos()};
 	}		
@@ -326,7 +333,7 @@ public class Mazub {
 	 * Returns the orientation of Mazub
 	 * @return orientation
 	 */
-	@Basic
+	@Basic @Raw 
 	public String getOrientation() {
 		return orientation;
 	}
@@ -335,7 +342,7 @@ public class Mazub {
 	 * @return the horizontal dimension of mazub (width)
 	 * 			| this.getCurrentSprite().getWidth()
 	 */
-	@Basic
+	@Basic @Raw 
 	private int getXDim() {
 		return this.getCurrentSprite().getWidth();
 	}
@@ -344,7 +351,7 @@ public class Mazub {
 	 * @return the vertical dimension of mazub (height)
 	 * 			| this.getCurrentSprite().getHeight()
 	 */
-	@Basic
+	@Basic @Raw 
 	private int getYDim() {
 		return this.getCurrentSprite().getHeight();
 	}
@@ -352,7 +359,7 @@ public class Mazub {
 	 * Returns the sprites of Mazub
 	 * @return sprites
 	 */
-	@Basic
+	@Basic @Raw 
 	private Sprite[] getSprite(){
 		return this.sprites;
 	}
@@ -361,7 +368,7 @@ public class Mazub {
 	 * @return the horizontal speed
 	 * 			| xSpeed
 	 */
-	@Basic
+	@Basic @Raw 
 	private double getXSpeed() {
 		return xSpeed;
 	}
@@ -370,7 +377,7 @@ public class Mazub {
 	 * @return the vertical speed of mazub
 	 * 			| YSpeed
 	 */
-	@Basic
+	@Basic @Raw 
 	private double getYSpeed() {
 		return ySpeed;
 	}
@@ -378,15 +385,16 @@ public class Mazub {
 	 * Returns the horizontal and vertical velocity
 	 * @return {xSpeed,ySpeed}
 	 */
+	@Basic @Raw 
 	public double[] getVelocity(){
-		return new double[] {xSpeed,ySpeed};
+		return new double[] {this.getXSpeed(),this.getYSpeed()};
 	}
 	/**
 	 * Returns the horizontal acceleration 
 	 * @return the horizontal acceleration 
 	 * 			| Acc
 	 */
-	@Basic
+	@Basic @Raw 
 	private double getXAcc() {
 		return xAcc;
 	}
@@ -395,7 +403,7 @@ public class Mazub {
 	 * @return the vertical acceleration of mazub
 	 * 			| YAcc
 	 */
-	@Basic
+	@Basic @Raw 
 	private double getYAcc() {
 		return yAcc;
 	}
@@ -406,6 +414,7 @@ public class Mazub {
 	 * vertical acceleration.
 	 * 			| {Acc,YAcc}
 	 */
+	@Basic @Raw 
 	public double[] getAcceleration(){
 		return new double[] {this.getXAcc(),this.getYAcc()};
 	}
@@ -414,6 +423,7 @@ public class Mazub {
 	 * @return an array consisting of the width and height of mazub
 	 * 			| {XDim,YDim}
 	 */
+	@Basic @Raw 
 	public int[] getSize() {
 		return new int[] {this.getXDim(),this.getYDim()};
 	}
@@ -422,7 +432,7 @@ public class Mazub {
 	 * @return the initial start speed
 	 * 			| initStartSpeed
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private int getInitStartSpeed() {
 		return initStartSpeed;
 	}
@@ -431,7 +441,7 @@ public class Mazub {
 	 * @return the maximum speed
 	 * 			| maxSpeed
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private int getMaxSpeed() {
 		return maxSpeed;
 	}
@@ -439,6 +449,7 @@ public class Mazub {
 	 * the time interval dt
 	 * @return dt
 	 */
+	@Raw 
 	public double getDt() {
 		return dt;
 	}
@@ -447,6 +458,7 @@ public class Mazub {
 	 * @return the time_since_endMove
 	 * 			| time_since_endMove
 	 */
+	@Raw 
 	private double getTime_since_endMove() {
 		return time_since_endMove;
 	}
@@ -455,6 +467,7 @@ public class Mazub {
 	 * @return the time_since_startMove
 	 * 			| time_since_startMove
 	 */
+	@Raw 
 	private double getTime_since_startMove() {
 		return time_since_startMove;
 	}
@@ -462,7 +475,7 @@ public class Mazub {
 	 * Returns the jump speed of Mazub
 	 * @return JUMP_SPEED
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private int getJUMPSPEED() {
 		return JUMP_SPEED;
 	}
@@ -470,7 +483,7 @@ public class Mazub {
 	 * Returns the maximum horizontal speed of mazub
 	 * @return MAX_SPEED
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private int getMAXSPEED() {
 		return MAX_SPEED;
 	}
@@ -478,7 +491,7 @@ public class Mazub {
 	 * Returns the maximum speed as Mazub ducks
 	 * @return MAX_SPEED_DUCK
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private int getMAXSPEEDDUCK() {
 		return MAX_SPEED_DUCK;
 	}
@@ -486,7 +499,7 @@ public class Mazub {
 	 * Returns the starting speed for running
 	 * @return START_SPEED
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private int getSTARTSPEED() {
 		return START_SPEED;
 	}
@@ -494,7 +507,7 @@ public class Mazub {
 	 * Returns the acceleration when Mazub falls
 	 * @return FALL_ACC
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private double getFALLACC() {
 		return FALL_ACC;
 	}
@@ -502,7 +515,7 @@ public class Mazub {
 	 * Returns the time between endMove and an change of sprites
 	 * @return NOT_MOVING_TIME
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private double getNOTMOVINGTIME() {
 		return NOT_MOVING_TIME;
 	}
@@ -510,7 +523,7 @@ public class Mazub {
 	 * returns the minimal value of x_pos
 	 * @return MIN_X_VALUE
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private static int getMINXVALUE() {
 		return MIN_X_VALUE;
 	}
@@ -518,7 +531,7 @@ public class Mazub {
 	 * returns the maximal value of x_pos
 	 * @return MAX_X_VALUE
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private static int getMAXXVALUE() {
 		return MAX_X_VALUE;
 	}
@@ -526,14 +539,14 @@ public class Mazub {
 	 * returns the minimal value of y_pos
 	 * @return MIN_Y_VALUE
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private static int getMINYVALUE() {
 		return MIN_Y_VALUE;
 	}/**
 	 * returns the maximal value of y_pos
 	 * @return MAX_Y_VALUE
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private static int getMAXYVALUE() {
 		return MAX_Y_VALUE;
 	}
@@ -541,7 +554,7 @@ public class Mazub {
 	 * returns the time until the next sprite
 	 * @return TIME_DIFFERENT_SPRITE
 	 */
-	@Immutable
+	@Basic @Immutable @Raw 
 	private static double getTIMEDIFFERENTSPRITE() {
 		return TIME_DIFFERENT_SPRITE;
 	}
@@ -569,6 +582,7 @@ public class Mazub {
 	 * @param initstartspeed
 	 * 			The new speed by initialization
 	 */
+	@Raw 
 	private void setInitStartSpeed(int initstartspeed) {
 		this.initStartSpeed = initstartspeed;
 	}
@@ -577,6 +591,7 @@ public class Mazub {
 	 * @param maxspeed
 	 * 			the new maxsimum horizontal speed of mazub
 	 */
+	@Raw 
 	private void setMaxSpeed(int maxspeed) {
 		this.maxSpeed = maxspeed;
 	}
@@ -585,6 +600,7 @@ public class Mazub {
 	 * @param x
 	 * 			The new value for the horizontal position
 	 */
+	@Raw 
 	private void setXPos(double x) {
 		this.x_pos = (int) Math.floor(x);
 	}
@@ -593,6 +609,7 @@ public class Mazub {
 	 * @param y
 	 * 			The new value for the vertical position
 	 */	
+	@Raw 
 	private void setYPos(double y) {
 		this.y_pos = (int) Math.floor(y);
 	}
@@ -601,6 +618,7 @@ public class Mazub {
 	 * @param xSpeed
 	 * 			the new horizontal speed of mazub
 	 */
+	@Raw 
 	private void setXSpeed(double xSpeed){
 		this.xSpeed = xSpeed;
 	}
@@ -609,6 +627,7 @@ public class Mazub {
 	 * @param yspeed
 	 * 			the new vertical speed of mazub
 	 */
+	@Raw 
 	private void setYSpeed(double ySpeed) {
 		this.ySpeed = ySpeed;
 	}
@@ -617,6 +636,7 @@ public class Mazub {
 	 * @param xAcc
 	 * 			the new value of the horizontal acceleration
 	 */
+	@Raw 
 	private void setXAcc(double xAcc) {
 		this.xAcc = xAcc;
 	}
@@ -625,6 +645,7 @@ public class Mazub {
 	 * @param yAcc
 	 * 			the new value of the vertical acceleration
 	 */
+	@Raw 
 	private void setYAcc(double yAcc) {
 		this.yAcc = yAcc;
 	}
@@ -634,6 +655,7 @@ public class Mazub {
 	 * @param x_difference
 	 * 			The new value for the x_difference of Maxub
 	 */
+	@Raw 
 	private void setXDifference(double x_difference) {
 		this.x_difference = x_difference;
 	}
@@ -643,6 +665,7 @@ public class Mazub {
 	 * @param y_difference
 	 * 			The new value for theyx_difference of Maxub
 	 */	
+	@Raw 
 	private void setYDifference(double y_difference) {
 		this.y_difference = y_difference;
 	}
@@ -651,6 +674,7 @@ public class Mazub {
 	 * @param x
 	 * 			The new value for the new horizontal position
 	 */
+	@Raw 
 	private void setNewXPos(double x) {
 		this.new_x_pos = x;
 	}
@@ -659,6 +683,7 @@ public class Mazub {
 	 * @param y
 	 * 			The new value for the new vertical position
 	 */
+	@Raw 
 	private void setNewYPos(double y) {
 		this.new_y_pos = y;
 	}
@@ -667,6 +692,7 @@ public class Mazub {
 	 * @param sprites
 	 * 			the new sprites
 	 */
+	@Raw 
 	private void setSprite(Sprite[] sprites) {
 		this.sprites = sprites;	
 	}
@@ -675,6 +701,7 @@ public class Mazub {
 	 * @param duck
 	 * 			The new boolean for duck
 	 */
+	@Raw 
 	private void setDuck(boolean duck) {
 		this.duck = duck;
 	}
@@ -683,6 +710,7 @@ public class Mazub {
 	 * @param time_since_endMove 
 	 * 			the new time_since_endMove
 	 */
+	@Raw 
 	private void setTime_since_endMove(double time_since_endMove) {
 		this.time_since_endMove = time_since_endMove;
 	}
@@ -691,6 +719,7 @@ public class Mazub {
 	 * @param time_since_startMove 
 	 * 			the new time_since_startMove
 	 */
+	@Raw 
 	private void setTime_since_startMove(double time_since_startMove) {
 		this.time_since_startMove = time_since_startMove;
 	}
@@ -698,6 +727,7 @@ public class Mazub {
 	 * Sets the orientation of Mazub to right
 	 * @post orientation == "right"
 	 */
+	@Raw 
 	private void setOrientationRight() {
 		this.orientation = "right";
 	}
@@ -705,6 +735,7 @@ public class Mazub {
 	 * Sets the orientation of Mazub to left
 	 * @post orientation == "left"
 	 */
+	@Raw 
 	private void setOrientationLeft() {
 		this.orientation = "left";
 	}
