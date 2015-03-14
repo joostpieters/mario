@@ -461,7 +461,6 @@ public class Mazub {
 	 * Returns the jump speed of Mazub
 	 * @return JUMP_SPEED
 	 */
-	@Immutable
 	private int getJUMPSPEED() {
 		return JUMP_SPEED;
 	}
@@ -469,7 +468,6 @@ public class Mazub {
 	 * Returns the maximum horizontal speed of mazub
 	 * @return MAX_SPEED
 	 */
-	@Immutable
 	private int getMAXSPEED() {
 		return MAX_SPEED;
 	}
@@ -477,7 +475,6 @@ public class Mazub {
 	 * Returns the maximum speed as Mazub ducks
 	 * @return MAX_SPEED_DUCK
 	 */
-	@Immutable
 	private int getMAXSPEEDDUCK() {
 		return MAX_SPEED_DUCK;
 	}
@@ -485,7 +482,6 @@ public class Mazub {
 	 * Returns the starting speed for running
 	 * @return START_SPEED
 	 */
-	@Immutable
 	private int getSTARTSPEED() {
 		return START_SPEED;
 	}
@@ -493,7 +489,6 @@ public class Mazub {
 	 * Returns the acceleration when Mazub falls
 	 * @return FALL_ACC
 	 */
-	@Immutable
 	private double getFALLACC() {
 		return FALL_ACC;
 	}
@@ -501,7 +496,6 @@ public class Mazub {
 	 * Returns the time between endMove and an change of sprites
 	 * @return NOT_MOVING_TIME
 	 */
-	@Immutable
 	private double getNOTMOVINGTIME() {
 		return NOT_MOVING_TIME;
 	}
@@ -509,7 +503,6 @@ public class Mazub {
 	 * returns the minimal value of x_pos
 	 * @return MIN_X_VALUE
 	 */
-	@Immutable
 	private static int getMINXVALUE() {
 		return MIN_X_VALUE;
 	}
@@ -517,7 +510,6 @@ public class Mazub {
 	 * returns the maximal value of x_pos
 	 * @return MAX_X_VALUE
 	 */
-	@Immutable
 	private static int getMAXXVALUE() {
 		return MAX_X_VALUE;
 	}
@@ -525,14 +517,12 @@ public class Mazub {
 	 * returns the minimal value of y_pos
 	 * @return MIN_Y_VALUE
 	 */
-	@Immutable
 	private static int getMINYVALUE() {
 		return MIN_Y_VALUE;
 	}/**
 	 * returns the maximal value of y_pos
 	 * @return MAX_Y_VALUE
 	 */
-	@Immutable
 	private static int getMAXYVALUE() {
 		return MAX_Y_VALUE;
 	}
@@ -540,7 +530,6 @@ public class Mazub {
 	 * returns the time until the next sprite
 	 * @return TIME_DIFFERENT_SPRITE
 	 */
-	@Immutable
 	private static double getTIMEDIFFERENTSPRITE() {
 		return TIME_DIFFERENT_SPRITE;
 	}
