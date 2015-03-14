@@ -1,7 +1,6 @@
 package jumpingalien.model;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
-import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
 /**
@@ -789,7 +788,6 @@ public class Mazub {
 	 * @effect time_since_startMove is set to zero
 	 * 			| time_since_startMove == 0
 	 */
-	@Raw
 	private void startMove() {
 		assert this.isValidPosition();
 		assert this.isValidSpeed();
@@ -834,7 +832,6 @@ public class Mazub {
 	 * @effect time_until_endMove is set to zero
 	 * 			| time_until_endMove == 0
 	 */
-	@Raw
 	private void endMove() {
 		assert (this.isValidXSpeed());
 		assert (this.isValidPosition());
@@ -1088,7 +1085,6 @@ public class Mazub {
 	/**
 	 * GEEN formele documentatie nodig
 	 */
-	@Raw
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
 		m = ((this.getSprite()).length-8)/2;
