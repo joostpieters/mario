@@ -92,7 +92,7 @@ public class PartialFacadeTest {
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(0, 0, sprites);
 		facade.startMoveRight(alien);
-		// walking till past the last pixel
+		//walking till past the last pixel
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
 		}
@@ -107,7 +107,7 @@ public class PartialFacadeTest {
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(0, 0, sprites);
 		facade.startMoveLeft(alien);
-		// walking to the left, so out of the field
+		//walking to the left, so out of the field
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
 		}
@@ -122,7 +122,7 @@ public class PartialFacadeTest {
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(800, 200, sprites);
 		facade.startMoveLeft(alien);
-		// falling and walking to the left
+		// falling and walking to the left, so out of the field
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
 		}
@@ -136,7 +136,7 @@ public class PartialFacadeTest {
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(0, 300, sprites);
-		// falling to the ground
+		//falling to the ground
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
 		}
@@ -149,7 +149,7 @@ public class PartialFacadeTest {
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(250, 0, sprites);
-		// jumping and falling to the ground
+		//jumping and falling to the ground
 		facade.startJump(alien);
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
@@ -164,7 +164,7 @@ public class PartialFacadeTest {
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(0, 0, sprites);
 		facade.startMoveLeft(alien);
-		// walking till stop steep and then ducking
+		//walking till stop steep and then ducking
 		for (int i = 0; i < 100 ; i++) {
 			facade.advanceTime(alien, 0.2/9);
 		}
