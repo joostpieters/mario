@@ -140,6 +140,7 @@ public class PartialFacadeTest {
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
 		}
+		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
 	}
 	
 	@Test
@@ -154,6 +155,7 @@ public class PartialFacadeTest {
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(alien, 0.2);
 		}
+		assertArrayEquals(intArray(250, 0), facade.getLocation(alien));
 	}
 	
 	@Test
@@ -171,6 +173,40 @@ public class PartialFacadeTest {
 		facade.startDuck(alien);
 		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
 	}
+	
+	@Test
+	public void testVelocityJumpHighestPoint() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startJump(alien);
+		// jumping till highest point
+		for (int i = 0; i < 11 ; i++) {
+			facade.advanceTime(alien, 0.08);
+		}
+		assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	
+	@Test
+	public void testAccelerationJump() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startJump(alien);
+		// jumping till highest point
+		for (int i = 0; i < 11 ; i++) {
+			facade.advanceTime(alien, 0.08);
+		}
+		assertArrayEquals(doubleArray(0, -10), facade.getAcceleration(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	
+
 	
 	
 	// TODO: add more tests
