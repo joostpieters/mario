@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="jumpingalien.model.IllegalDtException"/>
+<fullyQualifiedTypeName name="jumpingalien.util.Sprite"/>
+<fullyQualifiedTypeName name="jumpingalien.model.IllegalSpriteException"/>
+<fullyQualifiedTypeName name="jumpingalien.model.IllegalSpeedException"/>
 </qualifiedTypeNameHistroy>

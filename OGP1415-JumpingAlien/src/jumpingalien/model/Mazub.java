@@ -948,6 +948,10 @@ public class Mazub {
 	 * 			| 				this.getYAcc() * Math.pow(dt,2) + this.getYDifference()
 	 * @effect 	The ySpeed is changed given the acceleration and the time interval
 	 * 			| ySpeed += dt * this.getYAcc()
+	 * @effect	If the new speed is not valid (greater then the jumpspeed), the speed
+	 * 			is set to JUMP_SPEED
+	 * 			| if ( ! isValidSpeed())
+	 * 			| 	then ySpeed = JUMP_SPEED
 	 * @effect 	If the new position is the ground or lower, his fall will end and
 	 * 			his vertical position will be 0
 	 * 			| if new_y_pos == 0
@@ -970,6 +974,9 @@ public class Mazub {
 		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
 				this.getYAcc() * Math.pow(dt,2) + this.getYDifference());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
+		if ( ! this.isValidYSpeed()) {
+			this.setYSpeed(this.getJUMPSPEED());
+		}
 		if (this.getNewYPos() <= 0) {
 			endFall();
 			this.setNewYPos(0);
