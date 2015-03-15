@@ -238,6 +238,21 @@ public class PartialFacadeTest {
 	}
 	
 	@Test
+	public void testFallAcceleration() {
+		IFacade facade = new Facade();
+
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startJump(alien);
+		// jumping till highest point
+		for (int i = 0; i < 5; i++) {
+			facade.advanceTime(alien, 0.07);
+		}
+		assertArrayEquals(intArray(0, 240), facade.getLocation(alien));
+	}
+	
+	@Test
 	public void testEndFallLocation() {
 		IFacade facade = new Facade();
 
@@ -269,10 +284,11 @@ public class PartialFacadeTest {
 		// mazub starts jumping when he is moving horizontally
 		// at a speed of 3m/s (maxSpeed)
 		facade.startJump(alien);
-		for (int i = 0; i < 7 ; i++) {
+		for (int i = 0; i < 1 ; i++) {
 			facade.advanceTime(alien, 0.08);
 		}
-		assert(facade.getVelocity(alien)[0] == 3);
+		assertArrayEquals(doubleArray(3, 8), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
 	}
 	
 	@Test
@@ -301,7 +317,7 @@ public class PartialFacadeTest {
 			facade.advanceTime(alien, 0.08);
 		}
 		// the horizontal speed of mazub must be 1m/s
-		assert(facade.getVelocity(alien)[0] == 1);
+		assertEquals(1, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
 	}
 	
 	@Test(expected = ModelException.class)
@@ -317,15 +333,12 @@ public class PartialFacadeTest {
 	}
 	
 	@Test(expected = ModelException.class)
-	public void illegalPositionConstructor() {
+	public void illegalPosition() {
 		IFacade facade = new Facade();
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(20000, -500, sprites);
-		facade.startMoveLeft(alien);
-		for (int i = 0; i < 29 ; i++) {
-			facade.advanceTime(alien, 0.08);
-		}
+		facade.startMoveRight(alien);
 	}
 	
 	@Test
@@ -339,7 +352,37 @@ public class PartialFacadeTest {
 			facade.advanceTime(alien, 0.08);
 		}
 		// mazub has reached it's maxSpeed (5m/s)
-		assert(facade.getVelocity(alien)[0] == 5);
+		assertEquals(5, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalInitStartSpeed() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// the adapted initStartSpeed is negative
+		Mazub alien = facade.createMazub(5, 6, sprites, -5, 3);
+		facade.startMoveRight(alien);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalMaxSpeed() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// the adapted initStartSpeed is negative
+		Mazub alien = facade.createMazub(5, 6, sprites, 2, -666);
+		facade.startMoveRight(alien);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalSpeed() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// The maxSpeed of mazub is smaller than the initStartSpeed
+		Mazub alien = facade.createMazub(5, 6, sprites, 2, 1);
+		facade.startMoveRight(alien);
 	}
 	
 	
