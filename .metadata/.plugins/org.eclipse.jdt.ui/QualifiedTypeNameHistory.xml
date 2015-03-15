@@ -4,4 +4,6 @@
 <fullyQualifiedTypeName name="jumpingalien.util.Sprite"/>
 <fullyQualifiedTypeName name="jumpingalien.model.IllegalSpriteException"/>
 <fullyQualifiedTypeName name="jumpingalien.model.IllegalSpeedException"/>
+<fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Immutable"/>
+<fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Raw"/>
 </qualifiedTypeNameHistroy>

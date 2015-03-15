@@ -83,6 +83,24 @@ public interface IFacade {
 	 * @return
 	 */
 	Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites);
+	
+	/**
+	 * Create an instance of Mazub.
+	 * 
+	 * @param pixelLeftX
+	 *            The x-location of Mazub's bottom left pixel.
+	 * @param pixelBottomY
+	 *            The y-location of Mazub's bottom left pixel.
+	 * @param sprites
+	 *            The array of sprite images for Mazub.
+	 * @param initStartSpeed
+	 * 			  The initial speed of mazub when he starts moving horizontally
+	 * @param maxSpeed
+	 * 			  The maximum horizontal velocity mazub can reach 
+	 * @return
+	 */
+	Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
+			int initStartSpeed, int maxSpeed);
 
 	/**
 	 * Return the current location of the given alien.
