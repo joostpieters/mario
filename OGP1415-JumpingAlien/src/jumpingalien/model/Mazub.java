@@ -219,7 +219,7 @@ public class Mazub {
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
-	private static double FALL_ACC = 4;
+	private static double FALL_ACC = -10;
 	/**
 	 * the acceleration when mazub starts moving horizontally
 	 */

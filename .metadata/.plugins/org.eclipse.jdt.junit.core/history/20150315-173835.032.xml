@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PartialFacadeTest.illegalPosition2" project="OGP1415-JumpingAlien" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testcase name="illegalPosition2" classname="jumpingalien.part1.tests.PartialFacadeTest" time="0.006"/>
+</testrun>
