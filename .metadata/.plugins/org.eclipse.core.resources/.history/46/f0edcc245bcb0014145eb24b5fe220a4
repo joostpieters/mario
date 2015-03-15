@@ -5,12 +5,6 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
 /**
- * First part of the jumping alien project for OGP
- * made by: Ward Romanus (2e bach ELT-CW) and Pieter Van den Berghe (2e bach ELT-CW)
- * github: https://github.com/pietervdb/mario
- */
-
-/**
  * A class that describes the movement of the rectangular player
  * character Mazub in a game world. 
  * 
