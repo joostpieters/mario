@@ -197,14 +197,15 @@ public class PartialFacadeTest {
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(0, 0, sprites);
 		facade.startMoveLeft(alien);
-		// walking till stop steep and then ducking
+		// walking till maximum speed and then ducking
 		for (int i = 0; i < 100 ; i++) {
 			facade.advanceTime(alien, 0.2/9);
 		}
 		facade.startDuck(alien);
-		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
+		facade.advanceTime(alien, 0.005);
+		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
 	}
-	
 	@Test
 	public void testVelocityJumpHighestPoint() {
 		IFacade facade = new Facade();
@@ -373,6 +374,26 @@ public class PartialFacadeTest {
 		facade.startMoveRight(alien);
 	}
 	
+	@Test(expected = ModelException.class)
+	public void illegalnegativeDt() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// the adapted maxSpeed is negative
+		Mazub alien = facade.createMazub(0,0, sprites);
+		facade.advanceTime(alien,-1);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalbigDt() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// the adapted maxSpeed is negative
+		Mazub alien = facade.createMazub(0,0, sprites);
+		facade.advanceTime(alien,2.01);
+	}
+	
 	@Test
 	public void otherInitStartSpeed() {
 		IFacade facade = new Facade();
@@ -383,4 +404,19 @@ public class PartialFacadeTest {
 		assertEquals(2, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
 	}
 	
+	@Test
+	public void MaxSpeedAfterDucking() {
+		IFacade facade = new Facade();
+
+		Mazub alien = facade.createMazub(0, 0, spriteArrayForSize(2, 2));
+		facade.startDuck(alien);
+		facade.endDuck(alien);
+		facade.startMoveRight(alien);
+		// maximum speed reached after 20/9 seconds
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(alien, 0.2 / 9);
+		}
+		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+	}
 }
