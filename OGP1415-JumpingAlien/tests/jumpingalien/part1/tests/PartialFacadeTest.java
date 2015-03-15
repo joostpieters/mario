@@ -338,7 +338,7 @@ public class PartialFacadeTest {
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		// an illegal horizontal position of mazub
-		Mazub alien = facade.createMazub(-5, 5, sprites, 2,3);
+		Mazub alien = facade.createMazub(-5, 5, sprites);
 		facade.startMoveRight(alien);
 		facade.advanceTime(alien, 0.08);
 	}
@@ -358,7 +358,7 @@ public class PartialFacadeTest {
 		IFacade facade = new Facade();
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// the adapted initStartSpeed is negative
+		// the adapted maxSpeed is negative
 		Mazub alien = facade.createMazub(5, 6, sprites, 2, -666);
 		facade.startMoveRight(alien);
 	}
@@ -378,10 +378,8 @@ public class PartialFacadeTest {
 		IFacade facade = new Facade();
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// The maxSpeed of mazub is smaller than the initStartSpeed
-		Mazub alien = facade.createMazub(5, 6, sprites, 2, 2);
+		Mazub alien = facade.createMazub(0, 0, sprites, 2, 2);
 		facade.startMoveRight(alien);
-		facade.advanceTime(alien, 0.08);
 		assertEquals(2, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
 	}
 	

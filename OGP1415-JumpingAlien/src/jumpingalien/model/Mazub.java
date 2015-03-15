@@ -43,7 +43,7 @@ public class Mazub {
 	@Raw
 	public Mazub(int x_pos, int y_pos, Sprite[] sprites)
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition())
+				if(!isValidPosition(x_pos,y_pos))
 					throw new IllegalPositionException(x_pos,y_pos);
 				if ( ! isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
@@ -79,8 +79,12 @@ public class Mazub {
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
 	 * 			| !isValidPosition(x_pos,y_pos)
-	 * 	 
-	 * 
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
+	 * @throws IllegalSpeedException
+	 * 			The given maxSpeed and initalStartSpeed are not valid
+	 * 			| ! isValidSpeed()
 	 * The initial velocity will never be changed below 1 m/s so
 	 * we don't need an IllegalInitStartSpeedException or a
 	 * IllegalMaxSpeedException. 
@@ -91,11 +95,11 @@ public class Mazub {
 			int initStartSpeed,int maxSpeed)
 		throws IllegalPositionException,IllegalSpriteException
 			, IllegalSpeedException {
-			if ( ! isValidPosition())
+			if ( ! isValidPosition(x_pos,y_pos))
 				throw new IllegalPositionException(x_pos,y_pos);
 			if ( ! isValidSprite(sprites))
 				throw new IllegalSpriteException(sprites);
-			if ( ! isValidSpeed())
+			if ( ! isValidSpeed(initStartSpeed,maxSpeed))
 				throw new IllegalSpeedException(initStartSpeed,maxSpeed);
 			this.setXPos(x_pos);
 			this.setYPos(y_pos);
@@ -762,11 +766,11 @@ public class Mazub {
 	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
 	 */
-	public boolean isValidPosition() {
-		return (this.getXPos() >= Mazub.getMINXVALUE() 
-				&& this.getXPos() <= Mazub.getMAXXVALUE()
-				 && this.getYPos() >= Mazub.getMINYVALUE() 
-				 && this.getYPos() <= Mazub.getMAXYVALUE());
+	public boolean isValidPosition(int x_pos, int y_pos) {
+		return ((x_pos >= Mazub.getMINXVALUE())
+				&& (x_pos <= Mazub.getMAXXVALUE())
+				 && (y_pos >= Mazub.getMINYVALUE())
+				 && (y_pos <= Mazub.getMAXYVALUE()));
 	}
 	/**
 	 * Checks whether the given sprites are valid for any Mazub
@@ -784,9 +788,8 @@ public class Mazub {
 	 * 			| ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed() 
 	 * 			|	>= this.getInitStartSpeed()))
 	 */
-	private boolean isValidSpeed() {
-		return ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed()
-				>= this.getInitStartSpeed()));
+	private boolean isValidSpeed(int initStartSpeed,int maxSpeed) {
+		return ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed));
 	}
 	/**
 	 * Checks whether the current horizontal speed is valid
@@ -834,8 +837,8 @@ public class Mazub {
 	 */
 	@Raw
 	private void startMove() {
-		assert this.isValidPosition();
-		assert this.isValidSpeed();
+		assert this.isValidPosition(this.getXPos(),this.getYPos());
+		assert this.isValidSpeed(this.getInitStartSpeed(), this.getMaxSpeed());
 		this.setXSpeed(this.getInitStartSpeed());
 		if (this.isDucked() == false) {
 			this.setXSpeed(this.getInitStartSpeed());
@@ -882,7 +885,7 @@ public class Mazub {
 	@Raw
 	private void endMove() {
 		assert (this.isValidXSpeed());
-		assert (this.isValidPosition());
+		assert (this.isValidPosition(this.getXPos(),this.getYPos()));
 		this.setXSpeed(0);
 		this.setXAcc(0);
 		this.setTime_since_endMove(0);

@@ -109,12 +109,6 @@ public class Facade implements IFacade {
 		}		
 	}
 
-	public boolean isValidPosition(Mazub alien) {
-		return alien.isValidPosition();
-	}
-	
-	public boolean isValidSprite(Sprite[] sprites) {
-		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
-	}
+
 
 }
