@@ -404,6 +404,7 @@ public class PartialFacadeTest {
 		assertEquals(2, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
 	}
 	
+
 	@Test
 	public void MaxSpeedAfterDucking() {
 		IFacade facade = new Facade();
@@ -419,4 +420,51 @@ public class PartialFacadeTest {
 		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
+
+	@Test(expected = ModelException.class)
+	public void illegalPosition2() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// The maxSpeed of mazub is smaller than the initStartSpeed
+		Mazub alien = facade.createMazub(500, 2000, sprites);
+		facade.startMoveRight(alien);
+	}
+	
+	@Test
+	public void JumpAndEndJump() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(200, 0, sprites);
+		// the alien starts jumping
+		facade.startJump(alien);
+		for (int i = 0; i < 4 ; i++) {
+			facade.advanceTime(alien, 0.08);
+		}
+		// while the alien is jumping, endJump is invoced,
+		// ySpeed becomes 0 and the alien falls
+		facade.endJump(alien);
+		for (int i = 0; i < 11 ; i++) {
+			facade.advanceTime(alien, 0.08);
+		}
+		assertArrayEquals(intArray(200, 0), facade.getLocation(alien));
+	}
+	
+	@Test
+	public void twoMazubs() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub ward = facade.createMazub(0, 0, sprites);
+		Mazub pieter = facade.createMazub(0, 0, sprites, 2, 4);
+		facade.startMoveRight(ward);
+		facade.startMoveRight(pieter);
+		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(ward),
+				Util.DEFAULT_EPSILON);
+		assertArrayEquals(doubleArray(2, 0), facade.getVelocity(pieter),
+				Util.DEFAULT_EPSILON);
+	}
+	
+
 }

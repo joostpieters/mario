@@ -6,4 +6,8 @@
 <fullyQualifiedTypeName name="jumpingalien.model.IllegalSpeedException"/>
 <fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Immutable"/>
 <fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Raw"/>
+<fullyQualifiedTypeName name="jumpingalien.util.ModelException"/>
+<fullyQualifiedTypeName name="jumpingalien.model.IllegalPositionException"/>
+<fullyQualifiedTypeName name="jumpingalien.model.IllegalInitStartSpeedException"/>
+<fullyQualifiedTypeName name="jumpingalien.model.IllegalMaxSpeedException"/>
 </qualifiedTypeNameHistroy>
