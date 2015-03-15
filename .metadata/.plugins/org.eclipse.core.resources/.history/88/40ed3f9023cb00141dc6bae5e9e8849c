@@ -192,7 +192,7 @@ public class Mazub {
 	/**
 	 * the maximal value for y_pos
 	 */
-	private static int MAX_Y_VALUE = 767;
+	private static int MAX_Y_VALUE = 500; //767;
 	/**
 	 * the static int giving the starting speed of mazub
 	 * when startMove() is initiated

@@ -211,11 +211,11 @@ public class Mazub {
 	 * the vertical speed at which mazub moves when 
 	 * startJump() is initiated
 	 */
-	private static int JUMP_SPEED = 8;
+	private static int JUMP_SPEED = 20;
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
-	private static double FALL_ACC = 4;
+	private static double FALL_ACC = -10;
 	/**
 	 * the acceleration when mazub starts moving horizontally
 	 */
