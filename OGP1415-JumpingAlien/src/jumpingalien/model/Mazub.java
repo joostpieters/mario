@@ -243,13 +243,13 @@ public class Mazub {
 	 */
 	private static double TIME_DIFFERENT_SPRITE = 0.075;
 	/**
-	 * the amount of running images with a certain orientation
+	 * the amount of running sprites with a certain orientation
 	 */
-	private int m;
+	private int nbRunningSprites;
 	/**
-	 * the variable to go over the array of possible images
+	 * the counter to go over the array of possible sprites
 	 */
-	private int i = 0;	
+	private int counterSprites;	
 	/**
 	 * The boolean to reflect if Mazub is falling or not
 	 */
@@ -460,6 +460,22 @@ public class Mazub {
 	@Raw 
 	public double getDt() {
 		return dt;
+	}
+	/**
+	 * Returns the number of available sprites for running
+	 * @return the nbRunningSprites
+	 * 			| nbRunningSprites
+	 */
+	private int getNbRunningSprites() {
+		return nbRunningSprites;
+	}
+	/**
+	 * Returns the counter that goes over the available sprites for running
+	 * @return the counterSprites
+	 * 			| counterSprites
+	 */
+	private int getCounterSprites() {
+		return counterSprites;
 	}
 	/**
 	 * Returns the time since Mazub stopped moving horizontally
@@ -720,6 +736,22 @@ public class Mazub {
 	@Raw 
 	private void setDuck(boolean duck) {
 		this.duck = duck;
+	}
+	/**
+	 * Sets the number of available running sprites to a new value
+	 * @param nbRunningSprites
+	 * 			the nuw value for nbRunningSprites
+	 */
+	private void setNbRunningSprites(int nbRunningSprites) {
+		this.nbRunningSprites = nbRunningSprites;
+	}
+	/**
+	 * Sets the counter of the running sprites to a new value
+	 * @param counterSprites
+	 * 			the new value for counterSprites
+	 */
+	private void setCounterSprites(int counterSprites) {
+		this.counterSprites = counterSprites;
 	}
 	/**
 	 * Sets the time since endMove to a new value
@@ -1037,11 +1069,11 @@ public class Mazub {
 			if (this.getTime_since_startMove() > Mazub.getTIMEDIFFERENTSPRITE()) {
 				this.setTime_since_startMove(this.getTime_since_startMove()
 						- Mazub.getTIMEDIFFERENTSPRITE());
-				if (i < m-1) {
-					i += 1;
+				if (this.getCounterSprites() < this.getNbRunningSprites()-1) {
+					this.setCounterSprites(this.getCounterSprites() +1);
 				}
 				else {
-					i = 0;
+					this.setCounterSprites(0);
 				}
 			}
 		}
@@ -1139,7 +1171,7 @@ public class Mazub {
 	@Raw
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
-		m = ((this.getSprite()).length-8)/2;
+		this.setNbRunningSprites(((this.getSprite()).length-8)/2);
 		if ((this.getXSpeed()==0) && (! this.isDucked()) &&
 				(this.getTime_since_endMove() > this.getNOTMOVINGTIME())){
 			return sprites[0];
@@ -1156,8 +1188,7 @@ public class Mazub {
 			return sprites[3];
 		}
 		else if ((this.getXSpeed() > 0) && (this.getOrientation() == "right" ) 
-				&& (this.isFalling()) && 
-				(!isDucked())){
+				&& (this.isFalling()) && (!this.isDucked())){
 			return sprites[4];
 		}
 		else if ((this.getXSpeed() > 0) && (this.isFalling()) && (!this.isDucked())){
@@ -1169,11 +1200,11 @@ public class Mazub {
 		else if (this.isDucked()){
 			return sprites[7];
 		}
-		else if (getOrientation() == "right"){
-			return sprites[8 + i];
+		else if (this.getOrientation() == "right"){
+			return sprites[8 + this.getCounterSprites()];
 		}
 		else {
-			return sprites[8 + m + i]; 
+			return sprites[8 + this.getNbRunningSprites() + this.getCounterSprites()]; 
 		}
 	}
 	
