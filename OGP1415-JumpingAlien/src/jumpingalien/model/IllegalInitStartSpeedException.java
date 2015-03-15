@@ -28,7 +28,7 @@ public class IllegalInitStartSpeedException extends Exception {
 		this.initStartSpeed = initStartSpeed;
 	}
 	
-	public double getinitStartSpeed() {
+	public int getinitStartSpeed() {
 		return initStartSpeed;
 	}
 }
