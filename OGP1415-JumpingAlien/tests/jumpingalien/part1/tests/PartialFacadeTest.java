@@ -337,22 +337,10 @@ public class PartialFacadeTest {
 		IFacade facade = new Facade();
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(20000, -500, sprites);
+		// an illegal horizontal position of mazub
+		Mazub alien = facade.createMazub(-5, 5, sprites, 2,3);
 		facade.startMoveRight(alien);
-	}
-	
-	@Test
-	public void SecondConstructor() {
-		IFacade facade = new Facade();
-
-		int m = 10;
-		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites,2,3);
-		for (int i = 0; i < 43 ; i++) {
-			facade.advanceTime(alien, 0.08);
-		}
-		// mazub has reached it's maxSpeed (5m/s)
-		assertEquals(5, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
+		facade.advanceTime(alien, 0.08);
 	}
 	
 	@Test(expected = ModelException.class)
@@ -385,10 +373,16 @@ public class PartialFacadeTest {
 		facade.startMoveRight(alien);
 	}
 	
+	@Test
+	public void otherInitStartSpeed() {
+		IFacade facade = new Facade();
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		// The maxSpeed of mazub is smaller than the initStartSpeed
+		Mazub alien = facade.createMazub(5, 6, sprites, 2, 2);
+		facade.startMoveRight(alien);
+		facade.advanceTime(alien, 0.08);
+		assertEquals(2, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
+	}
 	
-	
-		
-	
-	
-	// junit: @test exception (synthax opzoeken)
 }
