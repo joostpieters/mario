@@ -42,6 +42,36 @@ public class PartialFacadeTest {
 		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
+	
+	@Test
+	public void startMoveLeftCorrect() {
+		IFacade facade = new Facade();
+
+		Mazub alien = facade.createMazub(200, 0, spriteArrayForSize(2, 2));
+		facade.startMoveLeft(alien);
+		facade.advanceTime(alien, 0.1);
+
+		// x_new [m] = 0 + 1 [m/s] * 0.1 [s] + 1/2 0.9 [m/s^2] * (0.1 [s])^2 =
+		// 0.1045 [m] --> 200- 10.45 [cm] = 189.55, which falls into pixel (189, 0)
+
+		assertArrayEquals(intArray(189, 0), facade.getLocation(alien));
+	}
+
+	@Test 
+	public void startMoveLeftMaxSpeedAtRightTime() {
+		IFacade facade = new Facade();
+
+		Mazub alien = facade.createMazub(0, 500, spriteArrayForSize(2, 2));
+		facade.startMoveLeft(alien);
+		// maximum speed reached after 20/9 seconds
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(alien, 0.2 / 9);
+		}
+
+		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+	}
+
 
 	@Test
 	public void testAccellerationZeroWhenNotMoving() {
@@ -206,7 +236,21 @@ public class PartialFacadeTest {
 				Util.DEFAULT_EPSILON);
 	}
 	
+	@Test
+	public void testEndFallLocation() {
+		IFacade facade = new Facade();
 
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 0, sprites);
+		facade.startJump(alien);
+		//jumping and falling
+		for (int i = 0; i < 22 ; i++) {
+			facade.advanceTime(alien, 0.08);
+		}
+		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
+	}
+		
 	
 	
 	// TODO: add more tests
