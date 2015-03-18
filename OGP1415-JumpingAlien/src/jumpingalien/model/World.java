@@ -20,6 +20,14 @@ public class World {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	private int getLengthTile(){
+		
+	}
+	
+	/**
+	 * 
 	 * @param position
 	 * @return
 	 */
