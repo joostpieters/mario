@@ -1,0 +1,87 @@
+package jumpingalien.model;
+
+public class Plant {
+	
+	/**
+	 * the initial amount of hitpoints a plant possesses
+	 */
+	private int INITHITPOINTS = 1;
+	/**
+	 * the horizontal speed of a plant
+	 */
+	private double xSpeed = 0.5;
+	/**
+	 * the orientation of the plant
+	 */
+	private String orientation  = "right";
+	
+	private int getINITHITPOINTS() {
+		return INITHITPOINTS;
+	}
+	private double getXSpeed() {
+		return xSpeed;
+	}
+	private String getOrientation() {
+		return orientation;
+	}
+	
+	/**
+	 * starts the action period for an object
+	 */
+	public void start<action> {
+		
+	}
+	
+	/**
+	 * ends the action period for an object
+	 */
+	public void stop<action> {
+		
+	}
+
+	public void advanceTime() {
+		if (this.getXSpeed() >= this.getMaxSpeed()){
+			this.setXSpeed(this.getMaxSpeed());
+			this.setXAcc(0);
+		}
+		
+		if (this.getOrientation() == "right") {
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());		
+		}
+		else if (this.getOrientation() == "left") {
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());
+		}
+		
+		if (this.getNewXPos() < Mazub.getMINXVALUE()){
+			this.setNewXPos(Mazub.getMINXVALUE());
+		}
+		else if (this.getNewXPos() > Mazub.getMAXXVALUE()){
+			this.setNewXPos(Mazub.getMAXXVALUE());
+		}
+		
+		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
+		
+		this.setXPos(this.getNewXPos());
+		this.setXDifference(this.getNewXPos() - this.getXPos());
+		
+		if (this.getXSpeed() == 0) {
+			this.setTime_since_endMove(this.getTime_since_endMove() + dt);
+		}
+		else if (this.getXSpeed() > 0) {
+			this.setTime_since_startMove(this.getTime_since_startMove() + dt);
+			if (this.getTime_since_startMove() > Mazub.getTIMEDIFFERENTSPRITE()) {
+				this.setTime_since_startMove(this.getTime_since_startMove()
+						- Mazub.getTIMEDIFFERENTSPRITE());
+				if (this.getCounterSprites() < this.getNbRunningSprites()-1) {
+					this.setCounterSprites(this.getCounterSprites() +1);
+				}
+				else {
+					this.setCounterSprites(0);
+				}
+			}
+		}
+	}
+	
+}

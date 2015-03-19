@@ -1,0 +1,26 @@
+package jumpingalien.model;
+
+public class Plant {
+	
+	private int HITPOINTS = 1;
+	private double xSpeed = 0.5;
+	
+	/**
+	 * starts the action period for an object
+	 */
+	public void start<action> {
+		
+	}
+	
+	/**
+	 * ends the action period for an object
+	 */
+	public void stop<action> {
+		
+	}
+
+	public void advanceTime() {
+		
+	}
+	
+}

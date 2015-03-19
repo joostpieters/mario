@@ -4,6 +4,7 @@ import jumpingalien.util.Sprite;
 
 public class Shark {
 	
+
 	/**
 	 * Creates a new shark, located at the provided pixel location (x, y).
 	 * The returned shark should not belong to a world.
@@ -82,8 +83,24 @@ public class Shark {
 		this.sprites = sprites;
 	}
 
+	private int HITPOINTS = 1;
 	
-	private void advanceTime() {
+	
+	/**
+	 * starts the action period for an object
+	 */
+	public void start<action> {
+		
+	}
+	
+	/**
+	 * ends the action period for an object
+	 */
+	public void stop<action> {
+		
+	}
+	
+	private void advanceTime() {		
 		
 	}
 	

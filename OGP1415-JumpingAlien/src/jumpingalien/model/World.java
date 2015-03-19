@@ -5,6 +5,9 @@ import jumpingalien.util.ModelException;
 
 public class World {
 	
+	
+	private int X;
+	private int Y;
 	/**
 	 * Create a new world with the given parameters.
 	 * 

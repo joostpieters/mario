@@ -1,0 +1,65 @@
+package jumpingalien.model;
+
+public class Slime {
+	
+	/**
+	 * the initial amount of hitpoints a slime possesses
+	 */
+	private int INITHITPOINTS = 100;
+	/**
+	 * the horizontal acceleration of a slime
+	 */
+	private double xAcc = 0.7;
+	/**
+	 * the maximum horizontal sopeed a slime can reach
+	 */
+	private double MAXXSPEED = 2.5;
+	/**
+	 * the duration of a movement period (2 to 6s)
+	 */
+	private int movementDuration;
+	/**
+	 * the amount of hitpoints a slime loses when touching 
+	 * a shark or mazub.
+	 */
+	private int CONTACTDAMAGE = 50;
+	/**
+	 * the damage every slime in the school looses when a single
+	 * slime looses some hitpoints
+	 */
+	private int SCHOOLDAMAGE = 1;
+	/**
+	 * the amount of hitpoints a slime hands over to the members of 
+	 * the old school when joining a school
+	 */
+	private int JOININGHITPOINTSTOGIVE = 1;
+	/**
+	 * the amount of hitpoints a slime recieves when from every
+	 * member of the new group when joining
+	 */
+	private int JOININGHITPOINTSTORECIEVE = 1;
+	/**
+	 * the maximum amount of slime schools in a game world
+	 */
+	private int MAXAMOUNTOFSCHOOLS = 10;
+	
+	
+	/**
+	 * starts the action period for an object
+	 */
+	public void start<action> {
+		
+	}
+	
+	/**
+	 * ends the action period for an object
+	 */
+	public void stop<action> {
+		
+	}
+	
+	private void advanceTime() {
+		
+	}
+	
+}
