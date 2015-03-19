@@ -1214,4 +1214,15 @@ public class Mazub {
 		}
 	}
 	
+// PART 2	
+	private int NbHitPoints;
+	
+	public int getNbHitPoints() {
+		return this.NbHitPoints;
+	}
+	
+	public boolean isImmune(Mazub alien) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
