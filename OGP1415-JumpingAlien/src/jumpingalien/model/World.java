@@ -2,6 +2,9 @@ package jumpingalien.model;
 
 public class World {
 	
+	
+	private int X;
+	private int Y;
 	/**
 	 * 
 	 * @return

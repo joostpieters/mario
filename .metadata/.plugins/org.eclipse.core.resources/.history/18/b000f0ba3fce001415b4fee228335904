@@ -1,0 +1,190 @@
+package jumpingalien.model;
+
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
+
+public class Plant {
+	
+	public Plant(int x_pos,int y_pos) 
+		throws IllegalPositionException {
+			if(!isValidPosition(x_pos,y_pos))
+				throw new IllegalPositionException(x_pos,y_pos); {
+	this.setXPos(x_pos);
+	this.setYPos(y_pos);
+	}
+	
+	/**
+	 *  the horizontal position of mazub
+	 */
+	private int x_pos = 0;
+	/**
+	 * the vertical position of mazub
+	 */
+	private int y_pos = 0;	
+	/**
+	 * the initial amount of hitpoints a plant possesses
+	 */
+	private int INITHITPOINTS = 1;
+	/**
+	 * the horizontal speed of a plant
+	 */
+	private double xSpeed = 0.5;
+	/**
+	 * the orientation of the plant
+	 */
+	private String orientation  = "right";
+	
+	private int getINITHITPOINTS() {
+		return INITHITPOINTS;
+	}
+	private double getXSpeed() {
+		return xSpeed;
+	}
+	private String getOrientation() {
+		return orientation;
+	}
+	/**
+	 * the minimal value for x_pos
+	 */
+	private static int MIN_X_VALUE = 0;
+	/**
+	 * the maximal value for x_pos
+	 */
+	private static int MAX_X_VALUE = 1023;
+	/**
+	 * the minimal value for y_pos
+	 */
+	private static int MIN_Y_VALUE = 0;
+	/**
+	 * the maximal value for y_pos
+	 */
+	private static int MAX_Y_VALUE = 767;
+
+// GETTERS
+	
+	/**
+	 * returns the minimal value of x_pos
+	 * @return MIN_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINXVALUE() {
+		return MIN_X_VALUE;
+	}
+	/**
+	 * returns the maximal value of x_pos
+	 * @return MAX_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXXVALUE() {
+		return MAX_X_VALUE;
+	}
+	/**
+	 * returns the minimal value of y_pos
+	 * @return MIN_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINYVALUE() {
+		return MIN_Y_VALUE;
+	}/**
+	 * returns the maximal value of y_pos
+	 * @return MAX_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXYVALUE() {
+		return MAX_Y_VALUE;
+	}
+
+// SETTERS
+	/**
+	 * Sets the horizontal position of the plant to the rounded down value of x
+	 * @param x
+	 * 			The new value for the horizontal position
+	 */
+	@Raw 
+	private void setXPos(double x) {
+		this.x_pos = (int) Math.floor(x);
+	}
+	/**
+	 * Sets the vertical position of the plant to the rounded down value of y
+	 * @param y
+	 * 			The new value for the vertical position
+	 */	
+	@Raw 
+	private void setYPos(double y) {
+		this.y_pos = (int) Math.floor(y);
+	}
+
+// VALIDATIONS 
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any plant
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(int x_pos, int y_pos) {
+		return ((x_pos >= Plant.getMINXVALUE())
+				&& (x_pos <= Plant.getMAXXVALUE())
+				 && (y_pos >= Plant.getMINYVALUE())
+				 && (y_pos <= Plant.getMAXYVALUE()));
+	}
+	
+	/**
+	 * starts the action period for an object
+	 */
+	public void start<action> {
+		
+	}
+	
+	/**
+	 * ends the action period for an object
+	 */
+	public void stop<action> {
+		
+	}
+
+	public void advanceTime() {
+		
+		if (this.getOrientation() == "right") {
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());		
+		}
+		else if (this.getOrientation() == "left") {
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());
+		}
+		
+		if (this.getNewXPos() < Mazub.getMINXVALUE()){
+			this.setNewXPos(Mazub.getMINXVALUE());
+		}
+		else if (this.getNewXPos() > Mazub.getMAXXVALUE()){
+			this.setNewXPos(Mazub.getMAXXVALUE());
+		}
+		
+		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
+		
+		this.setXPos(this.getNewXPos());
+		this.setXDifference(this.getNewXPos() - this.getXPos());
+		
+		if (this.getXSpeed() == 0) {
+			this.setTime_since_endMove(this.getTime_since_endMove() + dt);
+		}
+		else if (this.getXSpeed() > 0) {
+			this.setTime_since_startMove(this.getTime_since_startMove() + dt);
+			if (this.getTime_since_startMove() > Mazub.getTIMEDIFFERENTSPRITE()) {
+				this.setTime_since_startMove(this.getTime_since_startMove()
+						- Mazub.getTIMEDIFFERENTSPRITE());
+				if (this.getCounterSprites() < this.getNbRunningSprites()-1) {
+					this.setCounterSprites(this.getCounterSprites() +1);
+				}
+				else {
+					this.setCounterSprites(0);
+				}
+			}
+		}
+	}
+	
+}

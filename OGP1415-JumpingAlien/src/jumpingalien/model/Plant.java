@@ -1,8 +1,273 @@
 package jumpingalien.model;
 
-public class Plant {
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
 
-	private void advanceTime() {
+public class Plant {
+	
+	public Plant(int x_pos,int y_pos) 
+		throws IllegalPositionException {
+			if(!isValidPosition(x_pos,y_pos))
+				throw new IllegalPositionException(x_pos,y_pos); 
+	this.setXPos(x_pos);
+	this.setYPos(y_pos);
+	}
+	
+	/**
+	 *  the horizontal position of mazub
+	 */
+	private int x_pos = 0;
+	/**
+	 * the vertical position of mazub
+	 */
+	private int y_pos = 0;
+	/**
+	 * the x position (horizontal position) after dt seconds
+	 */
+	private double new_x_pos;
+	/**
+	 * the initial amount of hitpoints a plant possesses
+	 */
+	
+	private int INITHITPOINTS = 1;
+	/**
+	 * the horizontal speed of a plant
+	 */
+	private double xSpeed = 0.5;
+	/**
+	 * the orientation of the plant
+	 */
+	private String orientation  = "right";
+	/**
+	 * 
+	 */
+	private double TIMEUNTILCHANGEORIENTATION = 0.5;	
+	/**
+	 * the minimal value for x_pos
+	 */
+	private static int MIN_X_VALUE = 0;
+	/**
+	 * the maximal value for x_pos
+	 */
+	private static int MAX_X_VALUE = 1023;
+	/**
+	 * the minimal value for y_pos
+	 */
+	private static int MIN_Y_VALUE = 0;
+	/**
+	 * the maximal value for y_pos
+	 */
+	private static int MAX_Y_VALUE = 767;
+	/**
+	 * the difference between the new x_position (new_x_pos) and
+	 * the previous x_pos (x_pos)
+	 */
+	private double x_difference;
+	/**
+	 * the time a plant is moving in 1 direction
+	 */
+	private double timeSameOrientation = 0;
+
+// GETTERS
+	
+	/**
+	 * returns the minimal value of x_pos
+	 * @return MIN_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINXVALUE() {
+		return MIN_X_VALUE;
+	}
+	/**
+	 * returns the maximal value of x_pos
+	 * @return MAX_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXXVALUE() {
+		return MAX_X_VALUE;
+	}
+	/**
+	 * returns the minimal value of y_pos
+	 * @return MIN_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINYVALUE() {
+		return MIN_Y_VALUE;
+	}/**
+	 * returns the maximal value of y_pos
+	 * @return MAX_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXYVALUE() {
+		return MAX_Y_VALUE;
+	}
+	/**
+	 * Returns the horizontal position of Mazub after dt seconds
+	 * @return new_x_pos
+	 */
+	@Raw 
+	private double getNewXPos() {
+		return new_x_pos;
+	}
+	/**
+	 * Returns the x position
+	 * @return x_pos
+	 */
+	@Basic @Raw 
+	private int getXPos() {
+		return x_pos;
+	}
+	/**
+	 * Returns the difference between the real horizontal position of Mazub
+	 * and the rounded down value 
+	 * @return x_difference
+	 */
+	@Raw 
+	private double getXDifference() {
+		return x_difference;
+	}
+	/**
+	 * 
+	 */
+	private double getTimeSameOrientation() {
+		return timeSameOrientation;
+	}
+	private int getINITHITPOINTS() {
+		return INITHITPOINTS;
+	}
+	private double getXSpeed() {
+		return xSpeed;
+	}
+	private String getOrientation() {
+		return orientation;
+	}
+	private double getTIMEUNTILCHANGEORIENTATION() {
+		return TIMEUNTILCHANGEORIENTATION;
+	}
+
+// SETTERS
+	/**
+	 * Sets the horizontal position of the plant to the rounded down value of x
+	 * @param x
+	 * 			The new value for the horizontal position
+	 */
+	@Raw 
+	private void setXPos(double x) {
+		this.x_pos = (int) Math.floor(x);
+	}
+	/**
+	 * Sets the vertical position of the plant to the rounded down value of y
+	 * @param y
+	 * 			The new value for the vertical position
+	 */	
+	@Raw 
+	private void setYPos(double y) {
+		this.y_pos = (int) Math.floor(y);
+	}
+	/**
+	 * Sets the new horizontal position of mazub to a new value
+	 * @param x
+	 * 			The new value for the new horizontal position
+	 */
+	@Raw 
+	private void setNewXPos(double x) {
+		this.new_x_pos = x;
+	}
+	/**
+	 * Sets the difference between the reel x position and the
+	 * rounded down x position to a new value x_difference
+	 * @param x_difference
+	 * 			The new value for the x_difference of Maxub
+	 */
+	@Raw 
+	private void setXDifference(double x_difference) {
+		this.x_difference = x_difference;
+	}
+	
+	/**
+	 * 
+	 */
+	private void setTimeSameOrientation(double t) {
+		this.timeSameOrientation = t;
+	}
+	
+	/**
+	 * 
+	 */
+	private void setOrientation(String s) {
+		this.orientation = s;
+	}
+	
+// VALIDATIONS 
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any plant
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(int x_pos, int y_pos) {
+		return ((x_pos >= Plant.getMINXVALUE())
+				&& (x_pos <= Plant.getMAXXVALUE())
+				 && (y_pos >= Plant.getMINYVALUE())
+				 && (y_pos <= Plant.getMAXYVALUE()));
+	}
+	
+	/**
+	 * starts the action period for an object
+	 */
+	public void start<action> {
+		
+	}
+	
+	/**
+	 * ends the action period for an object
+	 */
+	public void stop<action> {
+		
+	}
+	
+	/**
+	 * changes the orientation of the plant
+	 */
+	private void changeOrientation() {
+		if (this.getOrientation() == "right") {
+			this.setOrientation("left");
+		}
+		else {
+			this.setOrientation("right");
+		}
+	}
+
+	public void advanceTime(double dt) {
+		
+		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
+		
+		if (this.getOrientation() == "right") {
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+					+ this.getXDifference());		
+		}
+		else if (this.getOrientation() == "left") {
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+					+ this.getXDifference());
+		}
+		
+		if (this.getNewXPos() < Plant.getMINXVALUE()){
+			this.setNewXPos(Plant.getMINXVALUE());
+		}
+		else if (this.getNewXPos() > Plant.getMAXXVALUE()){
+			this.setNewXPos(Plant.getMAXXVALUE());
+		}
+		
+		this.setXPos(this.getNewXPos());
+		this.setXDifference(this.getNewXPos() - this.getXPos());
+		
+		if (this.getTimeSameOrientation() > this.getTIMEUNTILCHANGEORIENTATION()) {
+			this.changeOrientation();
+		}
 		
 	}
 	
