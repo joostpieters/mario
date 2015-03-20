@@ -1,9 +1,6 @@
 package jumpingalien.model;
 
 
-import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Immutable;
-import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
 public class Plant {
@@ -36,7 +33,6 @@ public class Plant {
 	
 //	GETTERS	
 	/**
-	 * the horizontal position of the bottom left pixel of the plant
 	 * @return the x
 	 */
 	private int getX() {
@@ -44,7 +40,6 @@ public class Plant {
 	}
 
 	/**
-	 * the vertical position of the bottom left pixel of the plant
 	 * @return the y
 	 */
 	private int getY() {

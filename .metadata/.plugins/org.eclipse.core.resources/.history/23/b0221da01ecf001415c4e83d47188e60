@@ -51,11 +51,6 @@ public class Shark {
 	 * the maximal duration of a movement period (4s)
 	 */
 	private static int MAXMOVEMENTDURATION = 4;
-	/**
-	 * the amount of hitpoints a shark loses when touching 
-	 * a mazub or a slime
-	 */
-	private int CONTACTDAMAGE = 50;
 	
 // GETTERS
 	

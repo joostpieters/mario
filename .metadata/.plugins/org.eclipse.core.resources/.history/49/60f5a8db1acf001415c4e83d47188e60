@@ -612,7 +612,7 @@ public class Mazub {
 	 */
 	private boolean isDucked(){
 		return (this.duck);
-	}	
+	}
 	
 //Setters	
 	/**
@@ -1215,39 +1215,10 @@ public class Mazub {
 	}
 	
 // PART 2	
-	/**
-	 * the amount of hitpoints mazub possesses
-	 */
-	private int NbHitPoints = this.getINITHITPOINTS();
-	/**
-	 * the amount of hitpoints mazub possesses in the beginning of a game
-	 */
-	private static int INITHITPOINTS = 100;
-	/**
-	 * the maximum amount of hitpoints a mazub can reach
-	 */
-	private static int MAXHITPOINTS = 500;
-	/**
-	 * the initial amount of hitpoints
-	 * @return INITHITPOINTS
-	 */
-	private int getINITHITPOINTS() {
-		return INITHITPOINTS;
-	}
-	/**
-	 * the maximum amount of hitpoints
-	 * @returnMAXHITPOINTS
-	 */
-	private int getMAXHITPOINTS() {
-		return MAXHITPOINTS;
-	}
+	private int NbHitPoints;
+	
 	public int getNbHitPoints() {
 		return this.NbHitPoints;
-	}
-	public void setNbHitPoints(int number) {
-		if ( ! (number > this.getMAXHITPOINTS())) {
-			this.NbHitPoints = number;
-		}		
 	}
 	
 	public boolean isImmune(Mazub alien) {

@@ -26,54 +26,9 @@ public class Shark {
 	private int y;
 	private Sprite[] sprites;
 	
-	/**
-	 * the initial amount of hitpoints a shark possesses
-	 */
-	private static int INITHITPOINTS = 100;
-	/**
-	 * the horizontal acceleration of a shark
-	 */
-	private double xAcc = 1.5;
-	/**
-	 * the maximum horizontal speed a slime can reach
-	 */
-	private static double MAXXSPEED = 4;
-	/**
-	 * the vertical speed at which the shark moves when 
-	 * startJump() is initiated
-	 */
-	private static int JUMP_SPEED = 2;
-	/**
-	 * the minimal duration of a movement period (1s)
-	 */
-	private static int MINMOVEMENTDURATION = 1;
-	/**
-	 * the maximal duration of a movement period (4s)
-	 */
-	private static int MAXMOVEMENTDURATION = 4;
-	/**
-	 * the amount of hitpoints a shark loses when touching 
-	 * a mazub or a slime
-	 */
-	private int CONTACTDAMAGE = 50;
 	
-// GETTERS
 	
-	private static int getINITHITPOINTS() {
-		return INITHITPOINTS;
-	}
-	private double getXAcc() {
-		return xAcc;
-	}
-	private static double getMAXXSPEED() {
-		return  MAXXSPEED;
-	}
-	private static int getMaxMovementDuration() {
-		return MAXMOVEMENTDURATION;
-	}
-	private static int getMinMovementDuration() {
-		return MINMOVEMENTDURATION;
-	}
+//	GETTERS	
 	/**
 	 * @return the x
 	 */

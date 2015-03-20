@@ -29,7 +29,7 @@ public class Shark {
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
-	private static int INITHITPOINTS = 100;
+	private int INITHITPOINTS = 100;
 	/**
 	 * the horizontal acceleration of a shark
 	 */
@@ -37,7 +37,7 @@ public class Shark {
 	/**
 	 * the maximum horizontal speed a slime can reach
 	 */
-	private static double MAXXSPEED = 4;
+	private double MAXXSPEED = 4;
 	/**
 	 * the vertical speed at which the shark moves when 
 	 * startJump() is initiated
@@ -52,28 +52,59 @@ public class Shark {
 	 */
 	private static int MAXMOVEMENTDURATION = 4;
 	/**
-	 * the amount of hitpoints a shark loses when touching 
-	 * a mazub or a slime
+	 * the amount of hitpoints a slime loses when touching 
+	 * a shark or mazub.
 	 */
 	private int CONTACTDAMAGE = 50;
+	/**
+	 * the damage every slime in the school looses when a single
+	 * slime looses some hitpoints
+	 */
+	private int SCHOOLDAMAGE = 1;
+	/**
+	 * the amount of hitpoints a slime hands over to the members of 
+	 * the old school when joining a school
+	 */
+	private int JOININGHITPOINTSTOGIVE = 1;
+	/**
+	 * the amount of hitpoints a slime recieves when from every
+	 * member of the new group when joining
+	 */
+	private int JOININGHITPOINTSTORECIEVE = 1;
+	/**
+	 * the maximum amount of slime schools in a game world
+	 */
+	private int MAXAMOUNTOFSCHOOLS = 10;
 	
-// GETTERS
-	
-	private static int getINITHITPOINTS() {
+	private int getINITHITPOINTS() {
 		return INITHITPOINTS;
 	}
 	private double getXAcc() {
 		return xAcc;
 	}
-	private static double getMAXXSPEED() {
+	private double getMAXXSPEED() {
 		return  MAXXSPEED;
 	}
-	private static int getMaxMovementDuration() {
-		return MAXMOVEMENTDURATION;
+	private int getMovementDuration() {
+		return movementDuration;
 	}
-	private static int getMinMovementDuration() {
-		return MINMOVEMENTDURATION;
+	private int getCONTACTDAMAGE() {
+		return CONTACTDAMAGE;
 	}
+	private int getSCHOOLDAMAGE() {
+		return SCHOOLDAMAGE;
+	}
+	private int getJOININGHITPOINTSTOGIVE() {
+		return JOININGHITPOINTSTOGIVE;
+	}
+	private int getJOININGHITPOINTSTORECIEVE() {
+		return JOININGHITPOINTSTORECIEVE;
+	}
+	private int getMAXAMOUNTOFSCHOOLS() {
+		return MAXAMOUNTOFSCHOOLS;
+	}
+	
+//	GETTERS	
 	/**
 	 * @return the x
 	 */

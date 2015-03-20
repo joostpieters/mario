@@ -84,17 +84,13 @@ public class Slime {
 	 */
 	private double xAcc = 0.7;
 	/**
-	 * the maximum horizontal speed a slime can reach
+	 * the maximum horizontal sopeed a slime can reach
 	 */
 	private double MAXXSPEED = 2.5;
 	/**
-	 * the minimal duration of a movement period (2s)
+	 * the duration of a movement period (2 to 6s)
 	 */
-	private static int MINMOVEMENTDURATION = 2;
-	/**
-	 * the maximal duration of a movement period (6s)
-	 */
-	private static int MAXMOVEMENTDURATION = 6;
+	private int movementDuration;
 	/**
 	 * the amount of hitpoints a slime loses when touching 
 	 * a shark or mazub.
