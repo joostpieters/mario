@@ -1,5 +1,8 @@
 package jumpingalien.model;
 
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
 public class Shark {
@@ -15,17 +18,47 @@ public class Shark {
 	 *            The y-coordinate of the shark's initial position
 	 * @param sprites
 	 *            An array of sprites for the new shark
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the shark
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
 	 */
-	public Shark(int x, int y, Sprite[] sprites) {
-		this.setX(x);
-		this.setY(y);
-		this.setSprites(sprites);
+	public Shark(int x_pos,int y_pos, Sprite[] sprites ) 
+			throws IllegalPositionException, IllegalSpriteException {
+				if(!isValidPosition(x_pos,y_pos))
+					throw new IllegalPositionException(x_pos,y_pos); 
+				if (!isValidSprite(sprites))
+					throw new IllegalSpriteException(sprites);
+		this.setXPos(x_pos);
+		this.setYPos(y_pos);
+		this.setSprite(sprites);
 	}
 	
-	private int x;
-	private int y;
+	private int x_pos;
+	private int y_pos;
 	private Sprite[] sprites;
-	
+	/**
+	 * the orientation of the shark
+	 */
+	private String orientation  = "left";
+	/**
+	 * the minimal value for x_pos
+	 */
+	private static int MIN_X_VALUE = 0;
+	/**
+	 * the maximal value for x_pos
+	 */
+	private static int MAX_X_VALUE = 1023;
+	/**
+	 * the minimal value for y_pos
+	 */
+	private static int MIN_Y_VALUE = 0;
+	/**
+	 * the maximal value for y_pos
+	 */
+	private static int MAX_Y_VALUE = 767;
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
@@ -57,8 +90,40 @@ public class Shark {
 	 */
 	private int CONTACTDAMAGE = 50;
 	
-// GETTERS
+	private int HITPOINTS = 1;
 	
+// GETTERS
+	/**
+	 * returns the minimal value of x_pos
+	 * @return MIN_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINXVALUE() {
+		return MIN_X_VALUE;
+	}
+	/**
+	 * returns the maximal value of x_pos
+	 * @return MAX_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXXVALUE() {
+		return MAX_X_VALUE;
+	}
+	/**
+	 * returns the minimal value of y_pos
+	 * @return MIN_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINYVALUE() {
+		return MIN_Y_VALUE;
+	}/**
+	 * returns the maximal value of y_pos
+	 * @return MAX_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXYVALUE() {
+		return MAX_Y_VALUE;
+	}
 	private static int getINITHITPOINTS() {
 		return INITHITPOINTS;
 	}
@@ -77,24 +142,26 @@ public class Shark {
 	/**
 	 * @return the x
 	 */
-	private int getX() {
-		return x;
+	private int getXPos() {
+		return x_pos;
 	}
 
 	/**
 	 * @return the y
 	 */
-	private int getY() {
-		return y;
+	private int getYPos() {
+		return y_pos;
 	}
 
 	/**
 	 * @return the sprites
 	 */
-	private Sprite[] getSprites() {
+	private Sprite[] getSprite() {
 		return sprites;
 	}
-	
+	private String getOrientation() {
+		return orientation;
+	}
 	/**
 	 * Returns the current location of the given shark.
 	 * 
@@ -102,7 +169,7 @@ public class Shark {
 	 *         coordinates of the given shark's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{this.getX(),this.getY()};
+		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
 	
@@ -110,26 +177,58 @@ public class Shark {
 	/**
 	 * @param x the x to set
 	 */
-	private void setX(int x) {
-		this.x = x;
+	private void setXPos(int x) {
+		this.x_pos = x;
 	}
 
 	/**
 	 * @param y the y to set
 	 */
-	private void setY(int y) {
-		this.y = y;
+	private void setYPos(int y) {
+		this.y_pos = y;
 	}
 	
 	/**
 	 * @param sprites the sprites to set
 	 */
-	private void setSprites(Sprite[] sprites) {
+	private void setSprite(Sprite[] sprites) {
 		this.sprites = sprites;
 	}
-
-	private int HITPOINTS = 1;
-	
+	/**
+	 * Sets the orientation of the shark to right
+	 * @post orientation == "right"
+	 */
+	@Raw 
+	private void setOrientationRight() {
+		this.orientation = "right";
+	}
+	/**
+	 * Sets the orientation of the shark to left
+	 * @post orientation == "left"
+	 */
+	@Raw 
+	private void setOrientationLeft() {
+		this.orientation = "left";
+	}
+//	Validations
+	private boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any shark
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(int x_pos, int y_pos) {
+		return ((x_pos >= Shark.getMINXVALUE())
+				&& (x_pos <= Shark.getMAXXVALUE())
+				 && (y_pos >= Shark.getMINYVALUE())
+				 && (y_pos <= Shark.getMAXYVALUE()));
+	}
 	
 	/**
 	 * starts the action period for an object
@@ -156,7 +255,13 @@ public class Shark {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == "right") {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
 	}
-
+	
 }

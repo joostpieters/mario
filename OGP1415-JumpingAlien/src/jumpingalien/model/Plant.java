@@ -18,79 +18,26 @@ public class Plant {
 	 *            The y-coordinate of the plant's initial position
 	 * @param sprites
 	 *            An array of sprites for the new plant
-	 * 
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the plant
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
 	 */
 	public Plant(int x_pos,int y_pos, Sprite[] sprites ) 
-			throws IllegalPositionException {
+			throws IllegalPositionException, IllegalSpriteException {
 				if(!isValidPosition(x_pos,y_pos))
 					throw new IllegalPositionException(x_pos,y_pos); 
+				if (!isValidSprite(sprites))
+					throw new IllegalSpriteException(sprites);
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
-		this.setSprites(sprites);
+		this.setSprite(sprites);
 		}
 	
-	private int x;
-	private int y;
+
 	private Sprite[] sprites;
-	
-	
-//	GETTERS	
-	/**
-	 * the horizontal position of the bottom left pixel of the plant
-	 * @return the x
-	 */
-	private int getX() {
-		return x;
-	}
-
-	/**
-	 * the vertical position of the bottom left pixel of the plant
-	 * @return the y
-	 */
-	private int getY() {
-		return y;
-	}
-
-	/**
-	 * @return the sprites
-	 */
-	private Sprite[] getSprites() {
-		return sprites;
-	}
-
-	/**
-	 * Returns the current location of the given plant.
-	 * 
-	 * @return An array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given plant's bottom left pixel in the world.
-	 */
-	public int[] getLocation(){
-		return new int[]{this.getX(),this.getY()};
-	}
-	
-	
-//	SETTERS
-	/**
-	 * @param x the x to set
-	 */
-	private void setX(int x) {
-		this.x = x;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	private void setY(int y) {
-		this.y = y;
-	}
-	
-	/**
-	 * @param sprites the sprites to set
-	 */
-	private void setSprites(Sprite[] sprites) {
-		this.sprites = sprites;
-	}
-
 	
 	/**
 	 *  the horizontal position 
@@ -116,7 +63,7 @@ public class Plant {
 	/**
 	 * the orientation of the plant
 	 */
-	private String orientation  = "right";
+	private String orientation  = "left";
 	/**
 	 * 
 	 */
@@ -181,7 +128,7 @@ public class Plant {
 		return MAX_Y_VALUE;
 	}
 	/**
-	 * Returns the horizontal position of Mazub after dt seconds
+	 * Returns the horizontal position of the plant after dt seconds
 	 * @return new_x_pos
 	 */
 	@Raw 
@@ -196,8 +143,17 @@ public class Plant {
 	private int getXPos() {
 		return x_pos;
 	}
+	
 	/**
-	 * Returns the difference between the real horizontal position of Mazub
+	 * Returns the y position
+	 * @return y_pos
+	 */
+	@Basic @Raw 
+	private int getYPos() {
+		return y_pos;
+	}
+	/**
+	 * Returns the difference between the real horizontal position of the plant
 	 * and the rounded down value 
 	 * @return x_difference
 	 */
@@ -224,7 +180,34 @@ public class Plant {
 		return TIMEUNTILCHANGEORIENTATION;
 	}
 
-// SETTERS
+	/**
+	 * @return the sprites
+	 */
+	private Sprite[] getSprite() {
+		return sprites;
+	}
+
+	/**
+	 * Returns the current location of the given plant.
+	 * 
+	 * @return An array, consisting of 2 integers {x, y}, that represents the
+	 *         coordinates of the given plant's bottom left pixel in the world.
+	 */
+	public int[] getLocation(){
+		return new int[]{this.getXPos(),this.getYPos()};
+	}
+	
+	
+//	SETTERS
+	
+	
+	/**
+	 * @param sprites the sprites to set
+	 */
+	private void setSprite(Sprite[] sprites) {
+		this.sprites = sprites;
+	}
+
 	/**
 	 * Sets the horizontal position of the plant to the rounded down value of x
 	 * @param x
@@ -244,7 +227,23 @@ public class Plant {
 		this.y_pos = (int) Math.floor(y);
 	}
 	/**
-	 * Sets the new horizontal position of mazub to a new value
+	 * Sets the orientation of the plant to right
+	 * @post orientation == "right"
+	 */
+	@Raw 
+	private void setOrientationRight() {
+		this.orientation = "right";
+	}
+	/**
+	 * Sets the orientation of plant to left
+	 * @post orientation == "left"
+	 */
+	@Raw 
+	private void setOrientationLeft() {
+		this.orientation = "left";
+	}
+	/**
+	 * Sets the new horizontal position of the plant to a new value
 	 * @param x
 	 * 			The new value for the new horizontal position
 	 */
@@ -293,6 +292,13 @@ public class Plant {
 				 && (y_pos >= Plant.getMINYVALUE())
 				 && (y_pos <= Plant.getMAXYVALUE()));
 	}
+	
+	private boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}
+	
+	
+	
 	
 	/**
 	 * starts the action period for an object
@@ -349,6 +355,8 @@ public class Plant {
 		
 	}
 	
+
+	
 	/**
 	 * Return the current sprite image for the given plant.
 	 * 
@@ -356,7 +364,13 @@ public class Plant {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == "right") {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
 	}
 	
 }

@@ -1,5 +1,8 @@
 package jumpingalien.model;
 
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
 public class Slime {
@@ -16,69 +19,56 @@ public class Slime {
 	 *            An array of sprites for the new slime
 	 * @param school
 	 *            The initial school to which the new slime belongs
-	 * 
+		 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the slime
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
 	 */
-	public Slime(int x, int y, Sprite[] sprites){
-		this.setX(x);
-		this.setY(y);
-		this.setSprites(sprites);
+	public Slime(int x_pos,int y_pos, Sprite[] sprites ) 
+			throws IllegalPositionException, IllegalSpriteException {
+				if(!isValidPosition(x_pos,y_pos))
+					throw new IllegalPositionException(x_pos,y_pos); 
+				if (!isValidSprite(sprites))
+					throw new IllegalSpriteException(sprites);
+		this.setXPos(x_pos);
+		this.setYPos(y_pos);
+		this.setSprite(sprites);
 	}
 	
 
-	private int x;
-	private int y;
+	private int x_pos;
+	
+	private int y_pos;
+	
 	private Sprite[] sprites;
 	
-
+	/**
+	 * the orientation of the slime
+	 */
+	private String orientation  = "left";
+	/**
+	 * the minimal value for x_pos
+	 */
+	private static int MIN_X_VALUE = 0;
+	/**
+	 * the maximal value for x_pos
+	 */
+	private static int MAX_X_VALUE = 1023;
+	/**
+	 * the minimal value for y_pos
+	 */
+	private static int MIN_Y_VALUE = 0;
+	/**
+	 * the maximal value for y_pos
+	 */
+	private static int MAX_Y_VALUE = 767;
 	
-	
-//	GETTERS	
-	/**
-	 * @return the x
-	 */
-	private int getX() {
-		return x;
-	}
+	private int movementDuration;
 
-	/**
-	 * @return the y
-	 */
-	private int getY() {
-		return y;
-	}
-
-	/**
-	 * @return the sprites
-	 */
-	private Sprite[] getSprites() {
-		return sprites;
-	}
-
-	/**
-	 * Returns the current location of the given slime.
-	 * 
-	 * @return An array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given slime's bottom left pixel in the world.
-	 */
-	public int[] getLocation(){
-		return new int[]{this.getX(),this.getY()};
-	}
-	
-	/**
-	 * Returns the current school to which the given slime belongs.
-	 * 
-	 * @param slime
-	 *            The slime for which to retrieve the school.
-	 * 
-	 * @return The current school of the given slime.
-	 */
-	public School getSchool() {
-		
-	}
-
-		
-		
 	private int INITHITPOINTS = 100;
+	
 	/**
 	 * the horizontal acceleration of a slime
 	 */
@@ -111,7 +101,7 @@ public class Slime {
 	 */
 	private int JOININGHITPOINTSTOGIVE = 1;
 	/**
-	 * the amount of hitpoints a slime recieves when from every
+	 * the amount of hitpoints a slime receives when from every
 	 * member of the new group when joining
 	 */
 	private int JOININGHITPOINTSTORECIEVE = 1;
@@ -129,6 +119,84 @@ public class Slime {
 	private double getMAXXSPEED() {
 		return  MAXXSPEED;
 	}
+	
+//	GETTERS	
+	/**
+	 * @return the x
+	 */
+	private int getXPos() {
+		return x_pos;
+	}
+
+	/**
+	 * @return the y
+	 */
+	private int getYPos() {
+		return y_pos;
+	}
+
+	/**
+	 * @return the sprites
+	 */
+	private Sprite[] getSprite() {
+		return sprites;
+	}
+	private String getOrientation() {
+		return orientation;
+	}
+	/**
+	 * returns the minimal value of x_pos
+	 * @return MIN_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINXVALUE() {
+		return MIN_X_VALUE;
+	}
+	/**
+	 * returns the maximal value of x_pos
+	 * @return MAX_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXXVALUE() {
+		return MAX_X_VALUE;
+	}
+	/**
+	 * returns the minimal value of y_pos
+	 * @return MIN_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMINYVALUE() {
+		return MIN_Y_VALUE;
+	}/**
+	 * returns the maximal value of y_pos
+	 * @return MAX_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMAXYVALUE() {
+		return MAX_Y_VALUE;
+	}
+	/**
+	 * Returns the current location of the given slime.
+	 * 
+	 * @return An array, consisting of 2 integers {x, y}, that represents the
+	 *         coordinates of the given slime's bottom left pixel in the world.
+	 */
+	public int[] getLocation(){
+		return new int[]{this.getXPos(),this.getYPos()};
+	}
+	
+	/**
+	 * Returns the current school to which the given slime belongs.
+	 * 
+	 * @param slime
+	 *            The slime for which to retrieve the school.
+	 * 
+	 * @return The current school of the given slime.
+	 */
+	public School getSchool() {
+		
+	}
+
 	private int getMovementDuration() {
 		return movementDuration;
 	}
@@ -149,6 +217,69 @@ public class Slime {
 	}
 	
 	
+
+	
+
+//	SETTERS
+	/**
+	 * @param x the x to set
+	 */
+	private void setXPos(int x) {
+		this.x_pos = x;
+	}
+
+	/**
+	 * @param y the y to set
+	 */
+	private void setYPos(int y) {
+		this.y_pos = y;
+	}
+	
+	/**
+	 * @param sprites the sprites to set
+	 */
+	private void setSprite(Sprite[] sprites) {
+		this.sprites = sprites;
+	}
+	/**
+	 * Sets the orientation of the slime to right
+	 * @post orientation == "right"
+	 */
+	@Raw 
+	private void setOrientationRight() {
+		this.orientation = "right";
+	}
+	/**
+	 * Sets the orientation of the slime to left
+	 * @post orientation == "left"
+	 */
+	@Raw 
+	private void setOrientationLeft() {
+		this.orientation = "left";
+	}
+	
+//	VALIDATIONS
+	
+	private boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}
+	
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any slime
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(int x_pos, int y_pos) {
+		return ((x_pos >= Slime.getMINXVALUE())
+				&& (x_pos <= Slime.getMAXXVALUE())
+				 && (y_pos >= Slime.getMINYVALUE())
+				 && (y_pos <= Slime.getMAXYVALUE()));
+	}
+	
 	/**
 	 * starts the action period for an object
 	 */
@@ -163,32 +294,6 @@ public class Slime {
 		
 	}
 	
-	private void advanceTime() {
-		
-	}
-	
-
-//	SETTERS
-	/**
-	 * @param x the x to set
-	 */
-	private void setX(int x) {
-		this.x = x;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	private void setY(int y) {
-		this.y = y;
-	}
-	
-	/**
-	 * @param sprites the sprites to set
-	 */
-	private void setSprites(Sprite[] sprites) {
-		this.sprites = sprites;
-	}
 	
 	private void advanceTime() {
 		
@@ -201,6 +306,13 @@ public class Slime {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == "right") {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
 	}
+
 }

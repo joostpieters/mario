@@ -1,13 +1,11 @@
 package jumpingalien.model;
 
 import jumpingalien.part2.facade.IFacadePart2;
-import jumpingalien.util.ModelException;
+
 
 public class World {
 	
-	
-	private int X;
-	private int Y;
+
 	/**
 	 * Create a new world with the given parameters.
 	 * 
@@ -46,7 +44,9 @@ public class World {
 	private int visibleWindowHeight;
 	private int targetTileX;
 	private int targetTileY;
-	
+	private int XVisibleWindow;
+	private int YVisibleWindow;
+	private int[][] geologicalFeature = new int[this.getNbTilesY()][this.getNbTilesX()];
 
 	
 	
@@ -121,8 +121,10 @@ public class World {
 	 * @return The pixel coordinates of the visible window, in the order
 	 *         <b>left, bottom, right, top</b>.
 	 */
-	public int[] getVisibleWindow(World world) {
-		
+	public int[] getVisibleWindow() {
+		return new int[] {this.getXVisibleWindow(), this.getYVisibleWindow(),
+				this.getXVisibleWindow() + this.getVisibleWindowWidth(),
+				this.getYVisibleWindow() + this.getVisibleWindowHeight()};
 	}
 	
 	/**
@@ -136,9 +138,14 @@ public class World {
 	 * @return An array which contains the x-coordinate and y-coordinate of the
 	 *         bottom left pixel of the given tile, in that order.
 	 */
-	public int[] getBottomLeftPixelOfTile(int tileX, int tileY){
-		
+	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
+		return new int[] {tileX - tileX % this.getTileLength(),
+				tileY - tileY % this.getTileLength()};
 	}
+		
+		
+	
+	
 	
 	/**
 	 * Returns the tile positions of all tiles within the given rectangular
@@ -163,7 +170,6 @@ public class World {
 	 */
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
-		
 	}
 	
 	/**
@@ -192,13 +198,15 @@ public class World {
 	 * 
 	 * @note This method must return its result in constant time.
 	 * 
-	 * @throw Exception if the given position does not correspond to the
+	 * @throw IllegalPixelException if the given position does not correspond to the
 	 *        bottom left pixel of a tile.
 	 */
-//  juiste exeption maken en aanpassen in commentaar
+//  TODO exception maken
 	public int getGeologicalFeature(int pixelX, int pixelY)
-			throws Exception {
-		
+			throws IllegalPixelException {
+				if(!isValidBottomLeftPixel(pixelX, pixelY))
+					throw new IllegalPixelException(pixelX,pixelY);
+		return this.geologicalFeature[pixelY/this.getTileLength()][pixelX/this.getTileLength()];
 	}
 	
 	
@@ -222,6 +230,20 @@ public class World {
 //	SETTERS
 	
 	
+	/**
+	 * @return the xVisibleWindow
+	 */
+	private int getXVisibleWindow() {
+		return XVisibleWindow;
+	}
+
+	/**
+	 * @return the yVisibleWindow
+	 */
+	private int getYVisibleWindow() {
+		return YVisibleWindow;
+	}
+
 	/**
 	 * @param tileSize the tileSize to set
 	 */
@@ -272,6 +294,20 @@ public class World {
 	}
 	
 	/**
+	 * @param xVisibleWindow the xVisibleWindow to set
+	 */
+	private void setXVisibleWindow(int xVisibleWindow) {
+		XVisibleWindow = xVisibleWindow;
+	}
+
+	/**
+	 * @param yVisibleWindow the yVisibleWindow to set
+	 */
+	private void setYVisibleWindow(int yVisibleWindow) {
+		YVisibleWindow = yVisibleWindow;
+	}
+
+	/**
 	 * Modify the geological type of a specific tile in the given world to a
 	 * given type.
 	 * 
@@ -290,9 +326,31 @@ public class World {
 	 *            <li>the value 3 is provided for a <b>magma</b> tile.</li>
 	 *            </ul>
 	 */
-	public void setGeologicalFeature(int tileX, int tileY, int tileType);
+// 	TODO exception toevoegen
+	public void setGeologicalFeature(int tileX, int tileY, int tileType) {
+		this.geologicalFeature[tileY/this.getTileLength()][tileX/this.getTileLength()]
+				= tileType;
+	}
 
-
+//	VALIDATIONS
+	
+	private boolean isValidTileSize(int tileSize){
+		return tileSize > 0;
+	}
+	
+	private boolean isValidNbTiles(int nbTiles){
+		return nbTiles >0;
+	}
+	
+	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
+				int tileSize, int nbTilesX, int nbTilesY){
+		return ((visiblewindowWidth <= tileSize * nbTilesX) && (visibleWindowHeight
+				<= tileSize * nbTilesY));
+	}
+	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
+		return (new int[] {pixelX, pixelY} == this.getBottomLeftPixelOfTile(pixelX, pixelY));
+	}
+	
 	/**
 	 * 
 	 * @param position
