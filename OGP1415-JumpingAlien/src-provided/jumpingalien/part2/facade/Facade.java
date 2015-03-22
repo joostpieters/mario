@@ -2,6 +2,8 @@ package jumpingalien.part2.facade;
 
 import java.util.Collection;
 
+import jumpingalien.model.IllegalDtException;
+import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.IllegalPositionException;
 import jumpingalien.model.IllegalSpeedException;
 import jumpingalien.model.IllegalSpriteException;
@@ -104,82 +106,80 @@ public class Facade implements IFacadePart2 {
 	public void endDuck(Mazub alien) {
 		alien.endDuck();
 	}
-	@Override
+	
 	public void advanceTime(Mazub alien, double dt) {
-		// TODO Auto-generated method stub
-		
+		try {alien.advanceTime(dt);}
+		catch(IllegalDtException e) {
+			throw new ModelException(e.getMessage());
+		}		
 	}
-	@Override
+	
 	public int getNbHitPoints(Mazub alien) {
-		// TODO Auto-generated method stub
-		return 0;
+		return alien.getNbHitPoints();
 	}
-	@Override
+	
+	
 	public World createWorld(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
 			int targetTileY) {
-		// TODO Auto-generated method stub
-		return null;
+		try{ return new World(tileSize, nbTilesX,nbTilesY, visibleWindowWidth, 
+				visibleWindowHeight, targetTileX, targetTileY);}
+// TODO andere exceptions nog toevoegen
+		catch(IllegalArgumentException e){
+			throw new ModelException(e.getMessage());
+		}
 	}
-	@Override
+
+	
 	public int[] getWorldSizeInPixels(World world) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getWorldSizeInPixels();
 	}
-	@Override
+	
 	public int getTileLength(World world) {
-		// TODO Auto-generated method stub
-		return 0;
+		return world.getTileLength();
 	}
-	@Override
+	
 	public void startGame(World world) {
-		// TODO Auto-generated method stub
-		
+		world.startGame();
 	}
-	@Override
+	
 	public boolean isGameOver(World world) {
-		// TODO Auto-generated method stub
-		return false;
+		return world.isGameOver();
 	}
-	@Override
+	
 	public boolean didPlayerWin(World world) {
-		// TODO Auto-generated method stub
-		return false;
+		return world.didPlayerWin();
 	}
-	@Override
+	
 	public void advanceTime(World world, double dt) {
-		// TODO Auto-generated method stub
-		
+		world.advanceTime(dt);	
 	}
-	@Override
+	
 	public int[] getVisibleWindow(World world) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getVisibleWindow();
 	}
 	@Override
 	public int[] getBottomLeftPixelOfTile(World world, int tileX, int tileY) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getBottomLeftPixelOfTile(tileX,tileY);
 	}
-	@Override
+	
 	public int[][] getTilePositionsIn(World world, int pixelLeft,
 			int pixelBottom, int pixelRight, int pixelTop) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getTilePositionsIn(pixelLeft, pixelBottom, pixelRight, pixelTop);
 	}
-	@Override
-	public int getGeologicalFeature(World world, int pixelX, int pixelY)
-			throws ModelException {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public int getGeologicalFeature(World world, int pixelX, int pixelY) {
+		try {return world.getGeologicalFeature(pixelX, pixelY);}
+		catch(IllegalPixelException e) {
+			throw new ModelException(e.getMessage());
+		}	
 	}
-	@Override
+	
 	public void setGeologicalFeature(World world, int tileX, int tileY,
 			int tileType) {
-		// TODO Auto-generated method stub
-		
+		world.setGeologicalFeature(tileX, tileY, tileType);		
 	}
-	@Override
+	
 	public void setMazub(World world, Mazub alien) {
 		// TODO Auto-generated method stub
 		

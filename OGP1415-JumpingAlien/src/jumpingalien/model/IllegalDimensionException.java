@@ -34,9 +34,4 @@ public class IllegalDimensionException extends Exception {
 		return dimension;
 	}
 	
-	/**
-	 * The Java API strongly recommends to explicitly define a version
-	 * number for classes that implement the interface Serializable. 
-	 */
-
 }

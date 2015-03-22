@@ -1,5 +1,7 @@
 package jumpingalien.model;
 
+import java.util.Collection;
+
 import jumpingalien.part2.facade.IFacadePart2;
 
 
@@ -26,7 +28,10 @@ public class World {
 	 */
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
-			int targetTileY) {
+			int targetTileY) 
+		throws IllegalArgumentException {
+			if (!isValidTileSize(tileSize))
+				throw new IllegalArgumentException();
 // TODO illegaltilesizeecxeption, illegalsetarget..., illegalvis... toevoegen
 		this.setTileSize(tileSize);
 		this.setNbTilesX(nbTilesX);
@@ -139,11 +144,24 @@ public class World {
 	 *         bottom left pixel of the given tile, in that order.
 	 */
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
-		return new int[] {tileX - tileX % this.getTileLength(),
-				tileY - tileY % this.getTileLength()};
+		return new int[] {tileX * this.getTileLength(),
+				tileY * this.getTileLength()};
 	}
 		
-		
+	/**
+	 * Returns the tile coordinate of the tile at the given pixels.
+	 * 
+	 * @param pixelX
+	 *            The x-pixel
+	 * @param pixelY
+	 *            The y-pixel
+	 * @return An array which contains the x-coordinate and y-coordinate of the
+	 *          given tile, in that order.
+	 */
+	private int[] getTileOfPixels(int pixelX, int pixelY) {
+		return new int[] {(pixelX - pixelX % this.getTileLength())/this.getTileLength(),
+				(pixelY - pixelY % this.getTileLength())/this.getTileLength()};
+	}
 	
 	
 	
@@ -170,6 +188,22 @@ public class World {
 	 */
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
+		int posLeft = this.getTileOfPixels(pixelLeft,pixelBottom)[0];
+		int posBottom = this.getTileOfPixels(pixelLeft,pixelBottom)[1];
+		int posRight = this.getTileOfPixels(pixelRight,pixelTop)[0];
+		int posTop = this.getTileOfPixels(pixelRight,pixelTop)[1];
+		
+		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];
+		
+		int counter = 0;
+		for (int i=posBottom;i <= posTop;i++ ) {
+			for (int j=posLeft;j <= posRight;j++){
+				array[counter][0] = j;
+				array[counter][1] = i;
+				counter++;
+			}
+		}
+		return array;
 	}
 	
 	/**
@@ -389,7 +423,7 @@ public class World {
 	 * 
 	 * @return true if the game is over and the player has won; false otherwise.
 	 */
-	boolean didPlayerWin() {
+	public boolean didPlayerWin() {
 		
 	}
 	
@@ -397,9 +431,20 @@ public class World {
 	/**
 	 * NO DOCUMENTATION MUST BE WORKED OUT
 	 */
-	private void advanceTime(double dt) {
+	public void advanceTime(double dt) {
 		
 	}
-	
+	public Collection<Plant> getPlants() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Collection<Shark> getSharks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Collection<Slime> getSlimes(World world) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
