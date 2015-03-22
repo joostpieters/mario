@@ -34,7 +34,6 @@ public class Shark {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNumberOfSharksPlusOne();
 	}
 	
 	private int x_pos;
@@ -92,10 +91,6 @@ public class Shark {
 	private int CONTACTDAMAGE = 50;
 	
 	private int HITPOINTS = 1;
-	/**
-	 * a variable containing the amount of characters Shark
-	 */
-	private int numberOfSharks;
 	
 // GETTERS
 	/**
@@ -177,10 +172,6 @@ public class Shark {
 		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
-	public int getNumberOfSharks() {
-		return this.numberOfSharks;
-	}
-	
 	
 //	SETTERS
 	/**
@@ -218,14 +209,6 @@ public class Shark {
 	@Raw 
 	private void setOrientationLeft() {
 		this.orientation = "left";
-	}
-	public void setNumberOfSharksPlusOne() {
-		if (this.getNumberOfSharks() == 0) {
-			this.numberOfSharks = 1;
-		}
-		else {
-			this.numberOfSharks += 1;
-		}
 	}
 //	Validations
 	private boolean isValidSprite(Sprite[] sprites) {

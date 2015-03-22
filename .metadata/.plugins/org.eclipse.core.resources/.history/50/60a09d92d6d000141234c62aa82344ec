@@ -35,7 +35,6 @@ public class Slime {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNumberOfSlimesPlusOne();
 	}
 	
 
@@ -109,13 +108,17 @@ public class Slime {
 	/**
 	 * the maximum amount of slime schools in a game world
 	 */
-	private int MAXAMOUNTOFSCHOOLS = 10;	
-	/**
-	 * a variable containing the amount of characters Slimes
-	 */
-	private int numberOfSlimes;
+	private int MAXAMOUNTOFSCHOOLS = 10;
 	
-	
+	private int getINITHITPOINTS() {
+		return INITHITPOINTS;
+	}
+	private double getXAcc() {
+		return xAcc;
+	}
+	private double getMAXXSPEED() {
+		return  MAXXSPEED;
+	}
 	
 //	GETTERS	
 	/**
@@ -137,15 +140,6 @@ public class Slime {
 	 */
 	private Sprite[] getSprite() {
 		return sprites;
-	}
-	private int getINITHITPOINTS() {
-		return INITHITPOINTS;
-	}
-	private double getXAcc() {
-		return xAcc;
-	}
-	private double getMAXXSPEED() {
-		return  MAXXSPEED;
 	}
 	private String getOrientation() {
 		return orientation;
@@ -221,10 +215,10 @@ public class Slime {
 	private int getMAXAMOUNTOFSCHOOLS() {
 		return MAXAMOUNTOFSCHOOLS;
 	}
-	public int getNumberOfSlimes() {
-		return this.numberOfSlimes;
-	}
-	
+	/**
+	 * a variable containing the amount of characters Slimes
+	 */
+	private int numberOfSlimes;
 	
 	
 
@@ -266,14 +260,6 @@ public class Slime {
 	@Raw 
 	private void setOrientationLeft() {
 		this.orientation = "left";
-	}
-	public void setNumberOfSlimesPlusOne() {
-		if (this.getNumberOfSlimes() == 0) {
-			this.numberOfSlimes = 1;
-		}
-		else {
-			this.numberOfSlimes += 1;
-		}
 	}
 	
 //	VALIDATIONS

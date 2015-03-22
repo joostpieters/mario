@@ -38,7 +38,6 @@ public class Mazub {
 	 * 			| new.getSprite() == sprites
 	 * 			| new.getInitStartSpeed() == START_SPEED
 	 * 			| new.getMaxSpeed() == MAX_SPEED
-	 * 			| new.getNumberOfMazubs += 1
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
 	 * 			| !isValidPosition(x_pos,y_pos)
@@ -59,7 +58,6 @@ public class Mazub {
 		this.setSprite(sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_SPEED);
-		
 	}
 	
 
@@ -84,7 +82,6 @@ public class Mazub {
 	 * 			| new.getSprite() == sprites
 	 * 			| new.getInitStartSpeed() == initStartSpeed
 	 * 			| new.getMaxSpeed() == maxSpeed
-	 * 			| new.getNumberOfMazubs += 1
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
 	 * 			| !isValidPosition(x_pos,y_pos)
@@ -115,7 +112,6 @@ public class Mazub {
 			this.setSprite(sprites);
 			this.setInitStartSpeed(initStartSpeed);
 			this.setMaxSpeed(maxSpeed);
-			this.setNumberOfMazubsPlusOne();
 	}
 	
 	
@@ -1218,7 +1214,7 @@ public class Mazub {
 		}
 	}
 	
-// PART 2
+// PART 2	
 	/**
 	 * the amount of hitpoints mazub possesses
 	 */
@@ -1231,10 +1227,6 @@ public class Mazub {
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
 	private static int MAXHITPOINTS = 500;
-	/**
-	 * a variable containing the amount of characters Mazub
-	 */
-	private int numberOfMazubs;
 	/**
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
@@ -1252,27 +1244,14 @@ public class Mazub {
 	public int getNbHitPoints() {
 		return this.NbHitPoints;
 	}
-	public int getNumberOfMazubs() {
-		return this.numberOfMazubs;
-	}
 	public void setNbHitPoints(int number) {
 		if ( ! (number > this.getMAXHITPOINTS())) {
 			this.NbHitPoints = number;
 		}		
 	}
-	public void setNumberOfMazubsPlusOne() {
-		if (this.getNumberOfMazubs() == 0) {
-			this.numberOfMazubs = 1;
-		}
-		else {
-			this.numberOfMazubs += 1;
-		}
-		
-	}
-
+	
 	public boolean isImmune(Mazub alien) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 }

@@ -34,7 +34,6 @@ public class Plant {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNumberOfPlantsPlusOne();
 		}
 	
 
@@ -94,10 +93,6 @@ public class Plant {
 	 * the time a plant is moving in 1 direction
 	 */
 	private double timeSameOrientation = 0;
-	/**
-	 * a variable containing the amount of characters Plant
-	 */
-	private int numberOfPlants;
 
 // GETTERS
 	
@@ -202,9 +197,6 @@ public class Plant {
 		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
-	private int getNumberOfPlants() {
-		return this.numberOfPlants;
-	}
 	
 //	SETTERS
 	
@@ -282,15 +274,6 @@ public class Plant {
 	 */
 	private void setOrientation(String s) {
 		this.orientation = s;
-	}
-	
-	public void setNumberOfPlantsPlusOne() {
-		if (this.getNumberOfPlants() == 0) {
-			this.numberOfPlants = 1;
-		}
-		else {
-			this.numberOfPlants += 1;
-		}
 	}
 	
 // VALIDATIONS 

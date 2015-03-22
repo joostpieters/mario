@@ -387,8 +387,8 @@ public class World {
 	}
 	
 	private boolean isValidAmountOfCharacters() {
-		return ((Mazub.getNumberOfMazubs() > 1) && (Plant.getNumberOfPlants() + 
-				Slime.getNumberOfSlimes() + Shark.getNumberOfSharks() <= 100));
+		return (Mazub.getNumberOfMazubs() > 1) && (Plant.getNumberOfPlants() + 
+				Slime.getNumberOfSlimes() + Shark.getNumberOfSharks() <= 100)
 	}
 	
 	/**
