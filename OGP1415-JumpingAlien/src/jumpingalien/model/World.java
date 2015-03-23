@@ -438,6 +438,7 @@ public class World {
 	 * NO DOCUMENTATION MUST BE WORKED OUT
 	 * @throws IllegalDtException 
 	 */
+// TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
 		Mazub.advanceTime(dt);
 		Plant.advanceTime(dt);
