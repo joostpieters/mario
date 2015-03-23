@@ -233,7 +233,7 @@ public class Shark {
 		}
 	}
 	
-	private void setNbHitpoints(int nb) {
+	private void setNbHitPoints(int nb) {
 		this.hitpoints = nb;
 	}
 //	Validations

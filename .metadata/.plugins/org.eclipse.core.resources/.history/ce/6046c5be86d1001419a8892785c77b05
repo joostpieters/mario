@@ -370,10 +370,6 @@ public class Plant {
 			this.changeOrientation();
 		}
 		
-		if (this.getNbHitPoints() <= 0) {
-			this.die();
-		}
-		
 	}
 	
 

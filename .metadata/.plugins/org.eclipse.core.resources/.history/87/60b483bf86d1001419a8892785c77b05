@@ -1151,11 +1151,7 @@ public class Mazub {
 		if (!isValidDt(dt))
 			throw new IllegalDtException(dt);
 		this.advance_x(dt);
-		this.advance_y(dt);
-		
-		if (this.getNbHitPoints() <= 0) {
-			this.die();
-		}
+		this.advance_y(dt);	
 	}	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 

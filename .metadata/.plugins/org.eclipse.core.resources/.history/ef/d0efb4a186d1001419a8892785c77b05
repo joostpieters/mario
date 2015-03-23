@@ -35,7 +35,7 @@ public class Shark {
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
 		this.setNumberOfSharksPlusOne();
-		this.setNbHitpoints(INITHITPOINTS);
+		this.setNbHitpoints(HITPOINTS);
 	}
 	
 	private int x_pos;
@@ -233,7 +233,7 @@ public class Shark {
 		}
 	}
 	
-	private void setNbHitpoints(int nb) {
+	private void setNbHitPoints(int nb) {
 		this.hitpoints = nb;
 	}
 //	Validations

@@ -35,7 +35,6 @@ public class Shark {
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
 		this.setNumberOfSharksPlusOne();
-		this.setNbHitpoints(INITHITPOINTS);
 	}
 	
 	private int x_pos;
@@ -97,7 +96,6 @@ public class Shark {
 	 * a variable containing the amount of characters Shark
 	 */
 	private int numberOfSharks;
-	private int hitpoints;
 	
 // GETTERS
 	/**
@@ -182,9 +180,6 @@ public class Shark {
 	public int getNumberOfSharks() {
 		return this.numberOfSharks;
 	}
-	private int getNbHitpoints() {
-		return this.hitpoints;
-	}
 	
 	
 //	SETTERS
@@ -232,10 +227,6 @@ public class Shark {
 			this.numberOfSharks += 1;
 		}
 	}
-	
-	private void setNbHitpoints(int nb) {
-		this.hitpoints = nb;
-	}
 //	Validations
 	private boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
@@ -271,9 +262,7 @@ public class Shark {
 	}
 	
 	public void advanceTime(double dt) {		
-		if (this.getNbHitPoints() <= 0) {
-			this.die();
-		}
+		
 	}
 	
 	/**

@@ -315,9 +315,7 @@ public class Slime {
 	
 	
 	public void advanceTime(double dt) {
-		if (this.getNbHitPoints() <= 0) {
-			this.die();
-		}
+		
 	}
 
 	/**
