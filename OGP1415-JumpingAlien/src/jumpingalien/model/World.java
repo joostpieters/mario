@@ -436,10 +436,15 @@ public class World {
 	
 	/**
 	 * NO DOCUMENTATION MUST BE WORKED OUT
+	 * @throws IllegalDtException 
 	 */
-	public void advanceTime(double dt) {
-		
+	public void advanceTime(double dt) throws IllegalDtException {
+		Mazub.advanceTime(dt);
+		Plant.advanceTime(dt);
+		Shark.advanceTime(dt);
+		Slime.advanceTime(dt);
 	}
+	
 	public Collection<Plant> getPlants() {
 		// TODO Auto-generated method stub
 		return null;
@@ -448,7 +453,7 @@ public class World {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public Collection<Slime> getSlimes(World world) {
+	public Collection<Slime> getSlimes() {
 		// TODO Auto-generated method stub
 		return null;
 	}

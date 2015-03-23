@@ -261,7 +261,7 @@ public class Shark {
 		
 	}
 	
-	private void advanceTime() {		
+	public void advanceTime(double dt) {		
 		
 	}
 	
@@ -280,5 +280,6 @@ public class Shark {
 			return sprites[0];
 		}
 	}
+
 	
 }

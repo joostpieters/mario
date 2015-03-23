@@ -202,7 +202,7 @@ public class Plant {
 		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
-	private int getNumberOfPlants() {
+	public int getNumberOfPlants() {
 		return this.numberOfPlants;
 	}
 	

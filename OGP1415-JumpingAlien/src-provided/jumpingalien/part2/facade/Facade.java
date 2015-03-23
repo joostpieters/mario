@@ -2,6 +2,7 @@ package jumpingalien.part2.facade;
 
 import java.util.Collection;
 
+import jumpingalien.model.IllegalAmountOfCharactersException;
 import jumpingalien.model.IllegalDtException;
 import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.IllegalPositionException;
@@ -17,7 +18,7 @@ import jumpingalien.util.ModelException;
 import jumpingalien.util.Sprite;
 
 public class Facade implements IFacadePart2 {
-//  Hier zou een default constructor moeten staan!!
+// TODO Hier zou een default constructor moeten staan!!
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
 		try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
 		catch(IllegalPositionException e) {
@@ -128,6 +129,9 @@ public class Facade implements IFacadePart2 {
 		catch(IllegalArgumentException e){
 			throw new ModelException(e.getMessage());
 		}
+		catch(IllegalAmountOfCharactersException f){
+			throw new ModelException(f.getMessage());
+		}
 	}
 
 	
@@ -152,7 +156,10 @@ public class Facade implements IFacadePart2 {
 	}
 	
 	public void advanceTime(World world, double dt) {
-		world.advanceTime(dt);	
+		try{world.advanceTime(dt);}
+		catch(IllegalDtException e) {
+			throw new ModelException(e.getMessage());
+		}
 	}
 	
 	public int[] getVisibleWindow(World world) {
@@ -184,15 +191,19 @@ public class Facade implements IFacadePart2 {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	
 	public boolean isImmune(Mazub alien) {
-		// TODO Auto-generated method stub
-		return false;
+		return alien.isImmune();
 	}
-	@Override
+	
 	public Plant createPlant(int x, int y, Sprite[] sprites) {
-		// TODO Auto-generated method stub
-		return null;
+		try{ return new Plant(x,y,sprites);}
+		catch (IllegalPositionException e) {
+			throw new ModelException(e.getMessage());
+		}
+		catch (IllegalSpriteException e) {
+			throw new ModelException(e.getMessage());
+		}
 	}
 	@Override
 	public void addPlant(World world, Plant plant) {
@@ -204,20 +215,23 @@ public class Facade implements IFacadePart2 {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+	
 	public int[] getLocation(Plant plant) {
-		// TODO Auto-generated method stub
-		return null;
+		return plant.getLocation();
 	}
-	@Override
+	
 	public Sprite getCurrentSprite(Plant plant) {
-		// TODO Auto-generated method stub
-		return null;
+		return plant.getCurrentSprite();
 	}
-	@Override
+	
 	public Shark createShark(int x, int y, Sprite[] sprites) {
-		// TODO Auto-generated method stub
-		return null;
+		try{ return new Shark(x,y,sprites);}
+		catch (IllegalPositionException e) {
+			throw new ModelException(e.getMessage());
+		}
+		catch (IllegalSpriteException e) {
+			throw new ModelException(e.getMessage());
+		}
 	}
 	@Override
 	public void addShark(World world, Shark shark) {
@@ -229,15 +243,13 @@ public class Facade implements IFacadePart2 {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+	
 	public int[] getLocation(Shark shark) {
-		// TODO Auto-generated method stub
-		return null;
+		return shark.getLocation();
 	}
-	@Override
+	
 	public Sprite getCurrentSprite(Shark shark) {
-		// TODO Auto-generated method stub
-		return null;
+		return shark.getCurrentSprite();
 	}
 	@Override
 	public School createSchool() {
@@ -259,15 +271,13 @@ public class Facade implements IFacadePart2 {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+	
 	public int[] getLocation(Slime slime) {
-		// TODO Auto-generated method stub
-		return null;
+		return slime.getLocation();
 	}
-	@Override
+	
 	public Sprite getCurrentSprite(Slime slime) {
-		// TODO Auto-generated method stub
-		return null;
+		return slime.getCurrentSprite();
 	}
 	@Override
 	public School getSchool(Slime slime) {

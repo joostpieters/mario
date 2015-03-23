@@ -19,13 +19,14 @@ public class Slime {
 	 *            An array of sprites for the new slime
 	 * @param school
 	 *            The initial school to which the new slime belongs
-		 * @throws	IllegalPositionException
+	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the slime
 	 * 			| !isValidPosition(x_pos,y_pos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
+// TODO school nog toewijzen	
 	public Slime(int x_pos,int y_pos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 				if(!isValidPosition(x_pos,y_pos))
@@ -313,7 +314,7 @@ public class Slime {
 	}
 	
 	
-	private void advanceTime() {
+	public void advanceTime(double dt) {
 		
 	}
 

@@ -1270,7 +1270,7 @@ public class Mazub {
 		
 	}
 
-	public boolean isImmune(Mazub alien) {
+	public boolean isImmune() {
 		// TODO Auto-generated method stub
 		return false;
 	}
