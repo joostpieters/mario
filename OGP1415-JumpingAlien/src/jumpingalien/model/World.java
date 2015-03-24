@@ -444,6 +444,42 @@ public class World {
 		Plant.advanceTime(dt);
 		Shark.advanceTime(dt);
 		Slime.advanceTime(dt);
+		
+		positioningVisibleWindow();
+	}
+	
+	private void positioningVisibleWindow() {
+		//x
+		if (Mazub.getLocation()[0] < 200) {
+			this.setXVisibleWindow(0);
+		}
+		else if (Mazub.getLocation()[0] + Mazub.getSize()[0] > this.getX() - 200) {
+			this.setXVisibleWindow(this.getX() - this.getVisibleWindowWidth());
+		}
+		else if (Mazub.getLocation()[0] - 200 < this.getXVisibleWindow()) {
+			this.setXVisibleWindow(Mazub.getLocation()[0] - 200);
+		}
+		else if (Mazub.getLocation()[0] + Mazub.getSize()[0] + 200 >
+				this.getXVisibleWindow() + this.getVisibleWindowWidth()){
+			this.setXVisibleWindow(Mazub.getLocation()[0] + Mazub.getSize()[0]
+								- this.getVisibleWindowWidth() + 200);
+		}
+		//y
+		if (Mazub.getLocation()[1] < 200) {
+			this.setYVisibleWindow(0);
+		}
+		else if (Mazub.getLocation()[1] + Mazub.getSize()[1] > this.getY() - 200) {
+			this.setYVisibleWindow(this.getY() - this.getVisibleWindowHeight());
+		}
+		else if (Mazub.getLocation()[1] - 200 < this.getYVisibleWindow()) {
+			this.setYVisibleWindow(Mazub.getLocation()[1] - 200);
+		}
+		else if (Mazub.getLocation()[1] + Mazub.getSize()[1] + 200 >
+				this.getYVisibleWindow() + this.getVisibleWindowHeight()){
+			this.setYVisibleWindow(Mazub.getLocation()[1] + Mazub.getSize()[1]
+								- this.getVisibleWindowHeight() + 200);
+		}
+		
 	}
 	
 	public Collection<Plant> getPlants() {

@@ -1,2 +1,5 @@
-naamgeving variabelen?
+- naamgeving variabelen?
+- Gebruik IllegalArgumentException bij Illegalfilesize,...
+- Oproepen van andere AdvanceTimes
+- PositioningVisibleWindow: beter lokale variabelen?
 
