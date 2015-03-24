@@ -98,6 +98,13 @@ public class Shark {
 	 */
 	private int numberOfSharks;
 	private int hitpoints;
+	private double xSpeed;
+	private double ySpeed;
+	private double REMAININGTIME = 0.6;
+	
+	private boolean isDying = false;
+	
+	private double timeSinceDeath = 0;
 	
 // GETTERS
 	/**
@@ -186,6 +193,23 @@ public class Shark {
 		return this.hitpoints;
 	}
 	
+	private double getXSpeed() {
+		return this.xSpeed;
+	}
+	private double getYSpeed() {
+		return this.ySpeed;
+	}
+	private double getREMAININGTIME() {
+		return this.REMAININGTIME;
+	}
+	
+	private double getTimeSinceDeath() {
+		return this.timeSinceDeath;
+	}
+	
+	private boolean isDying() {
+		return this.isDying;
+	}
 	
 //	SETTERS
 	/**
@@ -236,6 +260,21 @@ public class Shark {
 	private void setNbHitpoints(int nb) {
 		this.hitpoints = nb;
 	}
+	
+	private void setXSpeed(double speed) {
+		this.xSpeed = speed;
+	}
+	private void setYSpeed(double speed) {
+		this.ySpeed = speed;
+	}
+	private void setTimeSinceDeath(double t) {
+		this.timeSinceDeath += t;
+	}
+	
+	private void setDying() {
+		this.isDying = true;
+	}
+	
 //	Validations
 	private boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
@@ -270,12 +309,104 @@ public class Shark {
 		
 	}
 	
-	public void advanceTime(double dt) {		
-		if (this.getNbHitPoints() <= 0) {
-			this.die();
+	private void advance_x(double dt) {
+		if (this.getOrientation() == "right") {
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+					+ this.getXDifference());		
 		}
+		else if (this.getOrientation() == "left") {
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+					+ this.getXDifference());
+		}
+		
+		if ((this.getNewXPos() < Shark.getMINXVALUE()) || 
+				(this.getNewXPos() > Shark.getMAXXVALUE())){
+			this.remove();
+		}
+		
+		this.setXPos(this.getNewXPos());
+		this.setXDifference(this.getNewXPos() - this.getXPos());
 	}
 	
+	/**
+	 * Changes the vertival position of Mazub with the current speed and accelleration
+	 * and with a given time interval dt. The method will keep Mazub between the boundaries
+	 * of the game world by setting his speed to zero if he jumps too high.
+	 * Changes the vertical speed of Mazub. If Mazub comes on the ground, his fall will ends.
+	 * @param dt: A small time interval
+	 * @effect	The new vertical position is changed
+	 * 			| new_y_pos == this.getYPos() +  this.getYSpeed()*100*dt + 0.5 * 100 *
+	 * 			| 				this.getYAcc() * Math.pow(dt,2) + this.getYDifference()
+	 * @effect 	The ySpeed is changed given the acceleration and the time interval
+	 * 			| ySpeed += dt * this.getYAcc()
+	 * @effect	If the new speed is not valid (greater then the jumpspeed), the speed
+	 * 			is set to JUMP_SPEED
+	 * 			| if ( ! isValidSpeed())
+	 * 			| 	then ySpeed = JUMP_SPEED
+	 * @effect 	If the new position is the ground or lower, his fall will end and
+	 * 			his vertical position will be 0
+	 * 			| if new_y_pos == 0
+	 * 			| 	then endfall()
+	 * 			| 		 new_y_pos == 0
+	 * @effect  If the vertical position of Mazub would exceed the upper boundary, 
+	 * 			Mazubs speed is set to zero and het new vertical position to MAX_Y_VALUE
+	 * 			| if new_y_pos > MAX_Y_VALUE
+	 * 			| 	then new_y_pos == MAX_Y_VALUE
+	 * 			| 		 ySpeed == 0
+	 * @effect the current vertical position is changed to the rounded down new position
+	 * 			and the difference between the two values is stored in y_difference
+	 * 			| y_pos == new_y_pos
+	 * 			| y_difference == new_y_pos - y_pos
+	 */
+	private void advance_y(double dt){	
+		if ((this.getYPos() > 0) && (!this.isFalling())){
+			fall();
+		}
+		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+				this.getYAcc() * Math.pow(dt,2) + this.getYDifference());
+		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
+		if ( ! this.isValidYSpeed()) {
+			this.setYSpeed(this.getJUMPSPEED());
+		}
+		if (this.getNewYPos() <= 0) {
+			this.endFall();
+			this.setNewYPos(0);
+		}
+		if (this.getNewYPos() > Mazub.getMAXYVALUE()) {
+			this.setNewYPos(Mazub.getMAXYVALUE());
+			this.setYSpeed(0);
+		}
+		this.setYPos(this.getNewYPos());	
+		this.setYDifference(this.getNewYPos() - this.getYPos());
+	}
+	
+	public void advanceTime(double dt) {
+		
+		this.advance_x(dt);
+		this.advance_y(dt);
+		
+		if (this.isDying()) {
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			if (this.getTimeSinceDeath() >= this.getREMAININGTIME()) {
+				this.remove();
+			}
+		}
+		else if (this.getNbHitpoints() <= 0) {
+			this.die();
+		}
+	}	
+	
+	private void die() {
+		this.setXSpeed(0);
+		this.setYSpeed(0);
+		this.setDying();
+	}
+	
+// TODO hoe deleten?
+	private void remove() {
+		this.world = null;
+//		Plant plant = null;
+	}
 	/**
 	 * Return the current sprite image for the given shark.
 	 * 

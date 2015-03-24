@@ -2,4 +2,8 @@
 - Gebruik IllegalArgumentException bij Illegalfilesize,...
 - Oproepen van andere AdvanceTimes
 - PositioningVisibleWindow: beter lokale variabelen?
+- altijd alles naar static veranderen bij verwijzen naar andere klasse.
+- hoe object verwijderen
+- Plant: random heen en weer of gewoon?
+- compute dt voor elk object
 

@@ -56,6 +56,12 @@ public class World {
 	private int XVisibleWindow;
 	private int YVisibleWindow;
 	private int[][] geologicalFeature = new int[this.getNbTilesY()][this.getNbTilesX()];
+	
+	private Mazub alien;
+	private Plant plant;
+	private Shark shark;
+	private Slime slime;
+	
 
 	
 	
@@ -421,6 +427,7 @@ public class World {
 	 * @return true if the game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
+		
 	}
 	
 	/**
@@ -440,10 +447,10 @@ public class World {
 	 */
 // TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
-		Mazub.advanceTime(dt);
-		Plant.advanceTime(dt);
-		Shark.advanceTime(dt);
-		Slime.advanceTime(dt);
+		alien.advanceTime(dt);
+		plant.advanceTime(dt);
+		shark.advanceTime(dt);
+		slime.advanceTime(dt);
 		
 		positioningVisibleWindow();
 	}
@@ -480,6 +487,11 @@ public class World {
 								- this.getVisibleWindowHeight() + 200);
 		}
 		
+	}
+	
+	// TODO dit maken
+	private double computeDt() {
+		return Math.min()
 	}
 	
 	public Collection<Plant> getPlants() {

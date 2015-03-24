@@ -43,20 +43,20 @@ public class Plant {
 	/**
 	 *  the horizontal position 
 	 */
-	private int x_pos = 0;
+	private int x_pos;
 	/**
 	 * the vertical position
 	 */
-	private int y_pos = 0;
+	private int y_pos;
 	/**
 	 * the x position (horizontal position) after dt seconds
 	 */
 	private double new_x_pos;
 	/**
 	 * the initial amount of hitpoints a plant possesses
-	 */
-	
+	 */	
 	private int INITHITPOINTS = 1;
+	public int hitpoints;
 	/**
 	 * the horizontal speed of a plant
 	 */
@@ -66,7 +66,7 @@ public class Plant {
 	 */
 	private String orientation  = "left";
 	/**
-	 * 
+	 * every 0.5 seconds the orientation of the plant changes
 	 */
 	private double TIMEUNTILCHANGEORIENTATION = 0.5;	
 	/**
@@ -76,7 +76,9 @@ public class Plant {
 	/**
 	 * the maximal value for x_pos
 	 */
-	private static int MAX_X_VALUE = 1023;
+	
+// TODO dees fixen en die andere
+	private static int MAX_X_VALUE = getXWorld();
 	/**
 	 * the minimal value for y_pos
 	 */
@@ -84,7 +86,7 @@ public class Plant {
 	/**
 	 * the maximal value for y_pos
 	 */
-	private static int MAX_Y_VALUE = 767;
+	private static int MAX_Y_VALUE = World.getY();
 	/**
 	 * the difference between the new x_position (new_x_pos) and
 	 * the previous x_pos (x_pos)
@@ -98,6 +100,14 @@ public class Plant {
 	 * a variable containing the amount of characters Plant
 	 */
 	private int numberOfPlants;
+	
+	private World world;
+	
+	private double REMAININGTIME = 0.6;
+	
+	private boolean isDying = false;
+	
+	private double timeSinceDeath = 0;
 
 // GETTERS
 	
@@ -205,6 +215,35 @@ public class Plant {
 	public int getNumberOfPlants() {
 		return this.numberOfPlants;
 	}
+
+	// TODO dees ook fixen
+	public World getWorld() {
+		return this.world;
+	}
+	
+	public static int getXWorld() {
+		getWorld().getX();
+	}
+	
+	public int getYWorld() {
+		getWorld().getY();
+	}
+	
+	private double getREMAININGTIME() {
+		return this.REMAININGTIME;
+	}
+	
+	private double getTimeSinceDeath() {
+		return this.timeSinceDeath;
+	}
+	
+	private boolean isDying() {
+		return this.isDying;
+	}
+	
+	private int getNbHitpoints() {
+		return this.hitpoints;
+	}
 	
 //	SETTERS
 	
@@ -293,6 +332,18 @@ public class Plant {
 		}
 	}
 	
+	private void setXspeed(double speed) {
+		this.xSpeed = speed;
+	}
+	
+	private void setTimeSinceDeath(double t) {
+		this.timeSinceDeath += t;
+	}
+	
+	private void setDying() {
+		this.isDying = true;
+	}
+	
 // VALIDATIONS 
 	/**
 	 * 	Checks whether the given positions are valid positions for 
@@ -356,11 +407,9 @@ public class Plant {
 					+ this.getXDifference());
 		}
 		
-		if (this.getNewXPos() < Plant.getMINXVALUE()){
-			this.setNewXPos(Plant.getMINXVALUE());
-		}
-		else if (this.getNewXPos() > Plant.getMAXXVALUE()){
-			this.setNewXPos(Plant.getMAXXVALUE());
+		if ((this.getNewXPos() < Plant.getMINXVALUE()) || 
+				(this.getNewXPos() > Plant.getMAXXVALUE())){
+			this.remove();
 		}
 		
 		this.setXPos(this.getNewXPos());
@@ -368,12 +417,33 @@ public class Plant {
 		
 		if (this.getTimeSameOrientation() > this.getTIMEUNTILCHANGEORIENTATION()) {
 			this.changeOrientation();
+			this.setTimeSameOrientation(this.getTimeSameOrientation()
+					- this.getTIMEUNTILCHANGEORIENTATION());
 		}
 		
-		if (this.getNbHitPoints() <= 0) {
+		
+		if (this.isDying()) {
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			if (this.getTimeSinceDeath() >= this.getREMAININGTIME()) {
+				this.remove();
+			}
+		}
+		else if (this.getNbHitpoints() <= 0) {
 			this.die();
 		}
 		
+	}
+	
+
+	private void die() {
+		this.setXspeed(0);
+		this.setDying();
+	}
+	
+// TODO hoe deleten?
+	private void remove() {
+		this.world = null;
+//		Plant plant = null;
 	}
 	
 
