@@ -42,6 +42,24 @@ public class Shark {
 	private int y_pos;
 	private Sprite[] sprites;
 	/**
+	 * the x position (horizontal position) after dt seconds
+	 */
+	private double new_x_pos;
+	/**
+	 * the y position (vertical position) after dt seconds
+	 */
+	private double new_y_pos;
+	/**
+	 * the difference between the new x_position (new_x_pos) and
+	 * the previous x_pos (x_pos)
+	 */
+	private double x_difference;
+	/**
+	 * the difference between the new y_position (new_y_pos) and
+	 * the previous y_pos (y_pos)
+	 */
+	private double y_difference;
+	/**
 	 * the orientation of the shark
 	 */
 	private String orientation  = "left";
@@ -70,6 +88,10 @@ public class Shark {
 	 */
 	private double xAcc = 1.5;
 	/**
+	 * the vertical acceleartion of a shark
+	 */
+	private double yAcc;
+	/**
 	 * the maximum horizontal speed a slime can reach
 	 */
 	private static double MAXXSPEED = 4;
@@ -78,6 +100,10 @@ public class Shark {
 	 * startJump() is initiated
 	 */
 	private static int JUMP_SPEED = 2;
+	/**
+	 * the vertical acceleration at which mazub falls
+	 */
+	private static double FALL_ACC = -10;
 	/**
 	 * the minimal duration of a movement period (1s)
 	 */
@@ -105,6 +131,15 @@ public class Shark {
 	private boolean isDying = false;
 	
 	private double timeSinceDeath = 0;
+	
+	/**
+	 * The boolean to reflect or shark is falling or not
+	 */
+	private boolean falling = false;	
+	
+	private boolean isFalling() {
+		return falling;
+	}
 	
 // GETTERS
 	/**
@@ -147,6 +182,17 @@ public class Shark {
 	private static double getMAXXSPEED() {
 		return  MAXXSPEED;
 	}
+	private static double getJUMPSPEED() {
+		return JUMP_SPEED;
+	}
+	/**
+	 * Returns the acceleration when the shark falls
+	 * @return FALL_ACC
+	 */
+	@Basic @Immutable @Raw 
+	private double getFALLACC() {
+		return FALL_ACC;
+	}
 	private static int getMaxMovementDuration() {
 		return MAXMOVEMENTDURATION;
 	}
@@ -177,6 +223,41 @@ public class Shark {
 		return orientation;
 	}
 	/**
+	 * Returns the difference between the real horizontal position
+	 * and the rounded down value 
+	 * @return x_difference
+	 */
+	@Raw 
+	private double getXDifference() {
+		return x_difference;
+	}
+	/**
+	 * Returns the horizontal position after dt seconds
+	 * @return new_x_pos
+	 */
+	@Raw 
+	private double getNewXPos() {
+		return new_x_pos;
+	}	
+	
+	/**
+	 * Returns the difference between the real vertical position
+	 * and the rounded down value 
+	 * @return y_difference
+	 */
+	@Raw 
+	private double getYDifference() {
+		return y_difference;
+	}
+	/**
+	 * Returns the vertical position after dt seconds
+	 * @return new_y_pos
+	 */
+	@Raw 
+	private double getNewYPos() {
+		return new_y_pos;
+	}
+	/**
 	 * Returns the current location of the given shark.
 	 * 
 	 * @return An array, consisting of 2 integers {x, y}, that represents the
@@ -199,6 +280,16 @@ public class Shark {
 	private double getYSpeed() {
 		return this.ySpeed;
 	}
+	/**
+	 *  Returns the vertical acceleration 
+	 * @return the vertical acceleration
+	 * 			| YAcc
+	 */
+	@Basic @Raw 
+	private double getYAcc() {
+		return yAcc;
+	}
+	
 	private double getREMAININGTIME() {
 		return this.REMAININGTIME;
 	}
@@ -213,17 +304,22 @@ public class Shark {
 	
 //	SETTERS
 	/**
-	 * @param x the x to set
+	 * Sets the horizontal position to the rounded down value of x
+	 * @param x
+	 * 			The new value for the horizontal position
 	 */
-	private void setXPos(int x) {
-		this.x_pos = x;
+	@Raw 
+	private void setXPos(double x) {
+		this.x_pos = (int) Math.floor(x);
 	}
-
 	/**
-	 * @param y the y to set
-	 */
-	private void setYPos(int y) {
-		this.y_pos = y;
+	 * Sets the vertical position to the rounded down value of y
+	 * @param y
+	 * 			The new value for the vertical position
+	 */	
+	@Raw 
+	private void setYPos(double y) {
+		this.y_pos = (int) Math.floor(y);
 	}
 	
 	/**
@@ -248,6 +344,44 @@ public class Shark {
 	private void setOrientationLeft() {
 		this.orientation = "left";
 	}
+	/**
+	 * Sets the difference between the reel x position and the
+	 * rounded down x position to a new value x_difference
+	 * @param x_difference
+	 * 			The new value for the x_difference of Maxub
+	 */
+	@Raw 
+	private void setXDifference(double x_difference) {
+		this.x_difference = x_difference;
+	}
+	/**
+	 * Sets the difference between the reel y position and the
+	 * rounded down y position to a new value y_difference
+	 * @param y_difference
+	 * 			The new value for theyx_difference of Maxub
+	 */	
+	@Raw 
+	private void setYDifference(double y_difference) {
+		this.y_difference = y_difference;
+	}
+	/**
+	 * Sets the new horizontal position to a new value
+	 * @param x
+	 * 			The new value for the new horizontal position
+	 */
+	@Raw 
+	private void setNewXPos(double x) {
+		this.new_x_pos = x;
+	}
+	/**
+	 * Sets the new vertical position to a new value
+	 * @param y
+	 * 			The new value for the new vertical position
+	 */
+	@Raw 
+	private void setNewYPos(double y) {
+		this.new_y_pos = y;
+	}
 	public void setNumberOfSharksPlusOne() {
 		if (this.getNumberOfSharks() == 0) {
 			this.numberOfSharks = 1;
@@ -267,6 +401,15 @@ public class Shark {
 	private void setYSpeed(double speed) {
 		this.ySpeed = speed;
 	}
+	/**
+	 * Sets the vertical acceleration to a new value
+	 * @param yAcc
+	 * 			the new value of the vertical acceleration
+	 */
+	@Raw 
+	private void setYAcc(double yAcc) {
+		this.yAcc = yAcc;
+	}
 	private void setTimeSinceDeath(double t) {
 		this.timeSinceDeath += t;
 	}
@@ -274,6 +417,20 @@ public class Shark {
 	private void setDying() {
 		this.isDying = true;
 	}
+	/**
+	 * Marks the boolean falling as true
+	 * @post falling == true
+	 */
+	private void setFalling() {
+		this.falling = true;
+	}	
+	/**
+	 * Marks the boolean falling as false
+	 * @post falling == false
+	 */
+	private void endFalling() {
+		this.falling = false;
+	}	
 	
 //	Validations
 	private boolean isValidSprite(Sprite[] sprites) {
@@ -366,18 +523,37 @@ public class Shark {
 				this.getYAcc() * Math.pow(dt,2) + this.getYDifference());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if ( ! this.isValidYSpeed()) {
-			this.setYSpeed(this.getJUMPSPEED());
+			this.setYSpeed(Shark.getJUMPSPEED());
 		}
 		if (this.getNewYPos() <= 0) {
 			this.endFall();
 			this.setNewYPos(0);
 		}
-		if (this.getNewYPos() > Mazub.getMAXYVALUE()) {
-			this.setNewYPos(Mazub.getMAXYVALUE());
+		if (this.getNewYPos() > Shark.getMAXYVALUE()) {
+			this.setNewYPos(Shark.getMAXYVALUE());
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
 		this.setYDifference(this.getNewYPos() - this.getYPos());
+	}
+	
+	private void fall() {
+		if (this.getYPos() > 0){
+			this.setYAcc(this.getFALLACC());
+			this.setFalling();
+		}
+	} 
+	/**
+	 * Fall ends
+	 * @effect	the acceleration is set to 0
+	 * 		|	yAcc == 0
+	 * 		|	ySpeed == 0
+	 * 		|	endFalling()
+	 */
+	private void endFall() {
+		this.setYAcc(0);
+		this.setYSpeed(0);
+		this.endFalling();		
 	}
 	
 	public void advanceTime(double dt) {
