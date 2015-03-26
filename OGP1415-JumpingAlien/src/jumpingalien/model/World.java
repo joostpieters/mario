@@ -142,6 +142,22 @@ public class World {
 				this.getYVisibleWindow() + this.getVisibleWindowHeight()};
 	}
 	
+	private Mazub getAlien() {
+		return this.alien;
+	}
+	
+	private Shark getShark() {
+		return this.shark;
+	}
+	
+	private Plant getPlant() {
+		return this.plant;
+	}
+	
+	private Slime getSlime() {
+		return this.slime;
+	}
+	
 	/**
 	 * Returns the bottom left pixel coordinate of the tile at the given tile
 	 * position.
@@ -257,7 +273,7 @@ public class World {
 	 * 
 	 * @return
 	 */
-	private int getX() {
+	public int getX() {
 		return this.getNbTilesX() * this.getTileLength();
 	}
 	
@@ -265,7 +281,7 @@ public class World {
 	 * 
 	 * @return
 	 */
-	private int getY() {
+	public int getY() {
 		return this.getNbTilesY() * this.getTileLength();
 	}
 //	SETTERS
@@ -369,8 +385,7 @@ public class World {
 	 */
 // 	TODO exception toevoegen
 	public void setGeologicalFeature(int tileX, int tileY, int tileType) {
-		this.geologicalFeature[tileY/this.getTileLength()][tileX/this.getTileLength()]
-				= tileType;
+		this.geologicalFeature[tileY][tileX] = tileType;
 	}
 
 //	VALIDATIONS
@@ -393,18 +408,11 @@ public class World {
 	}
 	
 	private boolean isValidAmountOfCharacters() {
-		return ((Mazub.getNumberOfMazubs() > 1) && (Plant.getNumberOfPlants() + 
-				Slime.getNumberOfSlimes() + Shark.getNumberOfSharks() <= 100));
+		return true;
+			//	((alien.getNumberOfMazubs() > 1) && (plant.getNumberOfPlants() + 
+				//slime.getNumberOfSlimes() + shark.getNumberOfSharks() <= 100));
 	}
 	
-	/**
-	 * 
-	 * @param position
-	 * @return
-	 */
-	private Mazub pixelPositioned(int[] position) {
-		
-	}
 	
 	/**
 	 * Starts the game that is played in the given world.
@@ -427,7 +435,7 @@ public class World {
 	 * @return true if the game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
-		
+		return (alien.isDeath() || didPlayerWin());
 	}
 	
 	/**
@@ -438,6 +446,7 @@ public class World {
 	 */
 	public boolean didPlayerWin() {
 		
+		return (this.getAlien().getLocation() == new int[] {this.getTargetTileX(),this.getTargetTileY()});
 	}
 	
 	
@@ -457,33 +466,33 @@ public class World {
 	
 	private void positioningVisibleWindow() {
 		//x
-		if (Mazub.getLocation()[0] < 200) {
+		if (this.getAlien().getLocation()[0] < 200) {
 			this.setXVisibleWindow(0);
 		}
-		else if (Mazub.getLocation()[0] + Mazub.getSize()[0] > this.getX() - 200) {
+		else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] > this.getX() - 200) {
 			this.setXVisibleWindow(this.getX() - this.getVisibleWindowWidth());
 		}
-		else if (Mazub.getLocation()[0] - 200 < this.getXVisibleWindow()) {
-			this.setXVisibleWindow(Mazub.getLocation()[0] - 200);
+		else if (this.getAlien().getLocation()[0] - 200 < this.getXVisibleWindow()) {
+			this.setXVisibleWindow(this.getAlien().getLocation()[0] - 200);
 		}
-		else if (Mazub.getLocation()[0] + Mazub.getSize()[0] + 200 >
+		else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] + 200 >
 				this.getXVisibleWindow() + this.getVisibleWindowWidth()){
-			this.setXVisibleWindow(Mazub.getLocation()[0] + Mazub.getSize()[0]
+			this.setXVisibleWindow(this.getAlien().getLocation()[0] +this.getAlien().getSize()[0]
 								- this.getVisibleWindowWidth() + 200);
 		}
 		//y
-		if (Mazub.getLocation()[1] < 200) {
+		if (this.getAlien().getLocation()[1] < 200) {
 			this.setYVisibleWindow(0);
 		}
-		else if (Mazub.getLocation()[1] + Mazub.getSize()[1] > this.getY() - 200) {
+		else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] > this.getY() - 200) {
 			this.setYVisibleWindow(this.getY() - this.getVisibleWindowHeight());
 		}
-		else if (Mazub.getLocation()[1] - 200 < this.getYVisibleWindow()) {
-			this.setYVisibleWindow(Mazub.getLocation()[1] - 200);
+		else if (this.getAlien().getLocation()[1] - 200 < this.getYVisibleWindow()) {
+			this.setYVisibleWindow(this.getAlien().getLocation()[1] - 200);
 		}
-		else if (Mazub.getLocation()[1] + Mazub.getSize()[1] + 200 >
+		else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] + 200 >
 				this.getYVisibleWindow() + this.getVisibleWindowHeight()){
-			this.setYVisibleWindow(Mazub.getLocation()[1] + Mazub.getSize()[1]
+			this.setYVisibleWindow(this.getAlien().getLocation()[1] + this.getAlien().getSize()[1]
 								- this.getVisibleWindowHeight() + 200);
 		}
 		

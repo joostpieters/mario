@@ -115,18 +115,17 @@ public class Mazub {
 			this.setSprite(sprites);
 			this.setInitStartSpeed(initStartSpeed);
 			this.setMaxSpeed(maxSpeed);
-			this.setNumberOfMazubsPlusOne();
 	}
 	
 	
 	/**
 	 *  the horizontal position of mazub
 	 */
-	private int x_pos = 0;
+	private double xPos = 0;
 	/**
 	 * the vertical position of mazub
 	 */
-	private int y_pos = 0;	
+	private double yPos = 0;	
 	/**
 	 * The sprites for Mazub
 	 */
@@ -134,7 +133,7 @@ public class Mazub {
 	/**
 	 * the orientation of Mazub
 	 */
-	private String orientation  = "right";
+	private Orientation orientation  = Orientation.RIGHT;
 	/**
 	 * the starting speed when startMove is initiated
 	 */
@@ -156,21 +155,11 @@ public class Mazub {
 	/**
 	 * the x position (horizontal position) after dt seconds
 	 */
-	private double new_x_pos;
+	private double newXPos;
 	/**
 	 * the y position (vertical position) after dt seconds
 	 */
-	private double new_y_pos;
-	/**
-	 * the difference between the new x_position (new_x_pos) and
-	 * the previous x_pos (x_pos)
-	 */
-	private double x_difference;
-	/**
-	 * the difference between the new y_position (new_y_pos) and
-	 * the previous y_pos (y_pos)
-	 */
-	private double y_difference;
+	private double newYPos;
 	/**
 	 * a boolean saying if the mazub is ducked
 	 */
@@ -292,42 +281,24 @@ public class Mazub {
 	 * @return x_pos
 	 */
 	@Basic @Raw 
-	private int getXPos() {
-		return x_pos;
+	private double getXPos() {
+		return xPos;
 	}	
-	/**
-	 * Returns the difference between the real horizontal position of Mazub
-	 * and the rounded down value 
-	 * @return x_difference
-	 */
-	@Raw 
-	private double getXDifference() {
-		return x_difference;
-	}
 	/**
 	 * Returns the horizontal position of Mazub after dt seconds
 	 * @return new_x_pos
 	 */
 	@Raw 
 	private double getNewXPos() {
-		return new_x_pos;
+		return newXPos;
 	}	
 	/**
 	 * Returns the y position
 	 * @return the y position
 	 */
 	@Basic @Raw 
-	private int getYPos() {
-		return y_pos;
-	}
-	/**
-	 * Returns the difference between the real vertical position of Mazub
-	 * and the rounded down value 
-	 * @return y_difference
-	 */
-	@Raw 
-	private double getYDifference() {
-		return y_difference;
+	private double getYPos() {
+		return yPos;
 	}
 	/**
 	 * Returns the vertical position of Mazub after dt seconds
@@ -335,7 +306,7 @@ public class Mazub {
 	 */
 	@Raw 
 	private double getNewYPos() {
-		return new_y_pos;
+		return newYPos;
 	}
 	/**
 	 * Returns the location of mazub
@@ -345,14 +316,14 @@ public class Mazub {
 	 */
 	@Basic @Raw 
 	public int[] getLocation() {
-		return new int[]{this.getXPos(),this.getYPos()};
+		return new int[]{(int) Math.floor(this.getXPos()),(int) Math.floor(this.getYPos())};
 	}		
 	/**
 	 * Returns the orientation of Mazub
 	 * @return orientation
 	 */
 	@Basic @Raw 
-	public String getOrientation() {
+	public Orientation getOrientation() {
 		return orientation;
 	}
 	/**
@@ -644,7 +615,7 @@ public class Mazub {
 	 */
 	@Raw 
 	private void setXPos(double x) {
-		this.x_pos = (int) Math.floor(x);
+		this.xPos = x;
 	}
 	/**
 	 * Sets the vertical position of mazub to the rounded down value of y
@@ -653,7 +624,7 @@ public class Mazub {
 	 */	
 	@Raw 
 	private void setYPos(double y) {
-		this.y_pos = (int) Math.floor(y);
+		this.yPos = y;
 	}
 	/**
 	 * sets the horizontal speed of mazub to a new value speed
@@ -692,33 +663,13 @@ public class Mazub {
 		this.yAcc = yAcc;
 	}
 	/**
-	 * Sets the difference between the reel x position and the
-	 * rounded down x position to a new value x_difference
-	 * @param x_difference
-	 * 			The new value for the x_difference of Maxub
-	 */
-	@Raw 
-	private void setXDifference(double x_difference) {
-		this.x_difference = x_difference;
-	}
-	/**
-	 * Sets the difference between the reel y position and the
-	 * rounded down y position to a new value y_difference
-	 * @param y_difference
-	 * 			The new value for theyx_difference of Maxub
-	 */	
-	@Raw 
-	private void setYDifference(double y_difference) {
-		this.y_difference = y_difference;
-	}
-	/**
 	 * Sets the new horizontal position of mazub to a new value
 	 * @param x
 	 * 			The new value for the new horizontal position
 	 */
 	@Raw 
 	private void setNewXPos(double x) {
-		this.new_x_pos = x;
+		this.newXPos = x;
 	}
 	/**
 	 * Sets the new vertical position of mazub to a new value
@@ -727,7 +678,7 @@ public class Mazub {
 	 */
 	@Raw 
 	private void setNewYPos(double y) {
-		this.new_y_pos = y;
+		this.newYPos = y;
 	}
 	/**
 	 * Sets the sprites of Mazub to new sprites
@@ -787,7 +738,7 @@ public class Mazub {
 	 */
 	@Raw 
 	private void setOrientationRight() {
-		this.orientation = "right";
+		this.orientation = Orientation.RIGHT;
 	}
 	/**
 	 * Sets the orientation of Mazub to left
@@ -795,7 +746,7 @@ public class Mazub {
 	 */
 	@Raw 
 	private void setOrientationLeft() {
-		this.orientation = "left";
+		this.orientation = Orientation.LEFT;
 	}
 
 //Validations
@@ -808,11 +759,11 @@ public class Mazub {
 	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
 	 */
-	public boolean isValidPosition(int x_pos, int y_pos) {
-		return ((x_pos >= Mazub.getMINXVALUE())
-				&& (x_pos <= Mazub.getMAXXVALUE())
-				 && (y_pos >= Mazub.getMINYVALUE())
-				 && (y_pos <= Mazub.getMAXYVALUE()));
+	public boolean isValidPosition(double x, double y) {
+		return ((x >= Mazub.getMINXVALUE())
+				&& (x <= Mazub.getMAXXVALUE())
+				 && (y >= Mazub.getMINYVALUE())
+				 && (y <= Mazub.getMAXYVALUE()));
 	}
 	/**
 	 * Checks whether the given sprites are valid for any Mazub
@@ -1050,13 +1001,13 @@ public class Mazub {
 			this.setXAcc(0);
 		}
 		
-		if (this.getOrientation() == "right") {
+		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
-					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());		
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2));		
 		}
-		else if (this.getOrientation() == "left") {
+		else if (this.getOrientation() == Orientation.LEFT) {
 			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
-					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference());
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2));
 		}
 		
 		if (this.getNewXPos() < Mazub.getMINXVALUE()){
@@ -1069,7 +1020,6 @@ public class Mazub {
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
 		
 		this.setXPos(this.getNewXPos());
-		this.setXDifference(this.getNewXPos() - this.getXPos());
 		
 		if (this.getXSpeed() == 0) {
 			this.setTime_since_endMove(this.getTime_since_endMove() + dt);
@@ -1123,7 +1073,7 @@ public class Mazub {
 			fall();
 		}
 		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
-				this.getYAcc() * Math.pow(dt,2) + this.getYDifference());
+				this.getYAcc() * Math.pow(dt,2));
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if ( ! this.isValidYSpeed()) {
 			this.setYSpeed(this.getJUMPSPEED());
@@ -1137,8 +1087,7 @@ public class Mazub {
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
-		this.setYDifference(this.getNewYPos() - this.getYPos());
-	}	
+		}	
 	/**
 	 * Advances the time by calling two other functions: advance_x 
 	 * and advance_y with a given time interval dt
@@ -1195,26 +1144,26 @@ public class Mazub {
 			return sprites[1];
 		}
 		else if ((this.getXSpeed()==0) &&
-				(!this.isDucked()) && (this.getOrientation() == "right" )){
+				(!this.isDucked()) && (this.getOrientation() == Orientation.RIGHT )){
 			return sprites[2];
 		}		
 		else if ((this.getXSpeed()==0) && (!this.isDucked())){
 			return sprites[3];
 		}
-		else if ((this.getXSpeed() > 0) && (this.getOrientation() == "right" ) 
+		else if ((this.getXSpeed() > 0) && (this.getOrientation() == Orientation.RIGHT ) 
 				&& (this.isFalling()) && (!this.isDucked())){
 			return sprites[4];
 		}
 		else if ((this.getXSpeed() > 0) && (this.isFalling()) && (!this.isDucked())){
 			return sprites[5];
 		}
-		else if ((this.getOrientation() == "right") && (this.isDucked())){
+		else if ((this.getOrientation() == Orientation.RIGHT) && (this.isDucked())){
 			return sprites[6];
 		}
 		else if (this.isDucked()){
 			return sprites[7];
 		}
-		else if (this.getOrientation() == "right"){
+		else if (this.getOrientation() == Orientation.RIGHT){
 			return sprites[8 + this.getCounterSprites()];
 		}
 		else {
@@ -1235,10 +1184,7 @@ public class Mazub {
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
 	private static int MAXHITPOINTS = 500;
-	/**
-	 * a variable containing the amount of characters Mazub
-	 */
-	private int numberOfMazubs;
+	
 	/**
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
@@ -1256,23 +1202,13 @@ public class Mazub {
 	public int getNbHitPoints() {
 		return this.NbHitPoints;
 	}
-	public int getNumberOfMazubs() {
-		return this.numberOfMazubs;
-	}
+	
 	public void setNbHitPoints(int number) {
 		if ( ! (number > this.getMAXHITPOINTS())) {
 			this.NbHitPoints = number;
 		}		
 	}
-	public void setNumberOfMazubsPlusOne() {
-		if (this.getNumberOfMazubs() == 0) {
-			this.numberOfMazubs = 1;
-		}
-		else {
-			this.numberOfMazubs += 1;
-		}
-		
-	}
+	
 
 	public boolean isImmune() {
 		// TODO Auto-generated method stub

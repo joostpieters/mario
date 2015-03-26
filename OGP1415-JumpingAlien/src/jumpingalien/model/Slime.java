@@ -36,7 +36,6 @@ public class Slime {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNumberOfSlimesPlusOne();
 	}
 	
 
@@ -49,7 +48,7 @@ public class Slime {
 	/**
 	 * the orientation of the slime
 	 */
-	private String orientation  = "left";
+	private Orientation orientation  = Orientation.LEFT;
 	/**
 	 * the minimal value for x_pos
 	 */
@@ -111,12 +110,10 @@ public class Slime {
 	 * the maximum amount of slime schools in a game world
 	 */
 	private int MAXAMOUNTOFSCHOOLS = 10;	
-	/**
-	 * a variable containing the amount of characters Slimes
-	 */
-	private int numberOfSlimes;
 	
+	private World world;
 	
+	private School school;
 	
 //	GETTERS	
 	/**
@@ -145,10 +142,13 @@ public class Slime {
 	private double getXAcc() {
 		return xAcc;
 	}
+	private World getWorld() {
+		return this.world;
+	}
 	private double getMAXXSPEED() {
 		return  MAXXSPEED;
 	}
-	private String getOrientation() {
+	private Orientation getOrientation() {
 		return orientation;
 	}
 	/**
@@ -201,7 +201,7 @@ public class Slime {
 	 * @return The current school of the given slime.
 	 */
 	public School getSchool() {
-		
+		return this.school;
 	}
 
 	private int getMovementDuration() {
@@ -222,13 +222,6 @@ public class Slime {
 	private int getMAXAMOUNTOFSCHOOLS() {
 		return MAXAMOUNTOFSCHOOLS;
 	}
-	public int getNumberOfSlimes() {
-		return this.numberOfSlimes;
-	}
-	
-	
-	
-
 	
 
 //	SETTERS
@@ -258,7 +251,7 @@ public class Slime {
 	 */
 	@Raw 
 	private void setOrientationRight() {
-		this.orientation = "right";
+		this.orientation = Orientation.RIGHT;
 	}
 	/**
 	 * Sets the orientation of the slime to left
@@ -266,15 +259,13 @@ public class Slime {
 	 */
 	@Raw 
 	private void setOrientationLeft() {
-		this.orientation = "left";
+		this.orientation =Orientation.LEFT;
 	}
-	public void setNumberOfSlimesPlusOne() {
-		if (this.getNumberOfSlimes() == 0) {
-			this.numberOfSlimes = 1;
-		}
-		else {
-			this.numberOfSlimes += 1;
-		}
+	private void setWorld(World world) {
+		this.world = world;
+	}
+	private void setSchool(School school) {
+		this.school = school;
 	}
 	
 //	VALIDATIONS
@@ -328,12 +319,17 @@ public class Slime {
 	 */
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == "right") {
+		if (this.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {
 			return sprites[0];
 		}
 	}
-
+	
+	public void die() {
+		this.setWorld(null);
+		this.setSchool(null);
+	}
 }
+	

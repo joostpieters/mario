@@ -6,4 +6,5 @@
 - hoe object verwijderen
 - Plant: random heen en weer of gewoon?
 - compute dt voor elk object
-
+- wat moet in startgame?
+- Wanneer static?

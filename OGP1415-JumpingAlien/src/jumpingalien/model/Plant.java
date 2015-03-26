@@ -34,7 +34,6 @@ public class Plant {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNumberOfPlantsPlusOne();
 		}
 	
 
@@ -78,15 +77,15 @@ public class Plant {
 	 */
 	
 // TODO dees fixen en die andere
-	private static int MAX_X_VALUE = getXWorld();
+	private final int MAX_X_VALUE = getXWorld();
 	/**
 	 * the minimal value for y_pos
 	 */
-	private static int MIN_Y_VALUE = 0;
+	private final int MIN_Y_VALUE = 0;
 	/**
 	 * the maximal value for y_pos
 	 */
-	private static int MAX_Y_VALUE = World.getY();
+	private final int MAX_Y_VALUE = getYWorld();
 	/**
 	 * the difference between the new x_position (new_x_pos) and
 	 * the previous x_pos (x_pos)
@@ -96,11 +95,7 @@ public class Plant {
 	 * the time a plant is moving in 1 direction
 	 */
 	private double timeSameOrientation = 0;
-	/**
-	 * a variable containing the amount of characters Plant
-	 */
-	private int numberOfPlants;
-	
+
 	private World world;
 	
 	private double REMAININGTIME = 0.6;
@@ -124,7 +119,7 @@ public class Plant {
 	 * @return MAX_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMAXXVALUE() {
+	private int getMAXXVALUE() {
 		return MAX_X_VALUE;
 	}
 	/**
@@ -132,14 +127,14 @@ public class Plant {
 	 * @return MIN_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMINYVALUE() {
+	private int getMINYVALUE() {
 		return MIN_Y_VALUE;
 	}/**
 	 * returns the maximal value of y_pos
 	 * @return MAX_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMAXYVALUE() {
+	private int getMAXYVALUE() {
 		return MAX_Y_VALUE;
 	}
 	/**
@@ -211,18 +206,14 @@ public class Plant {
 	public int[] getLocation(){
 		return new int[]{this.getXPos(),this.getYPos()};
 	}
-	
-	public int getNumberOfPlants() {
-		return this.numberOfPlants;
-	}
 
 	// TODO dees ook fixen
-	public World getWorld() {
+	private World getWorld() {
 		return this.world;
 	}
 	
-	public static int getXWorld() {
-		getWorld().getX();
+	private  int getXWorld() {
+		this.getWorld().getX();
 	}
 	
 	public int getYWorld() {
@@ -323,14 +314,7 @@ public class Plant {
 		this.orientation = s;
 	}
 	
-	public void setNumberOfPlantsPlusOne() {
-		if (this.getNumberOfPlants() == 0) {
-			this.numberOfPlants = 1;
-		}
-		else {
-			this.numberOfPlants += 1;
-		}
-	}
+
 	
 	private void setXspeed(double speed) {
 		this.xSpeed = speed;

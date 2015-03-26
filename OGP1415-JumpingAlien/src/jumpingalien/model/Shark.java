@@ -34,13 +34,13 @@ public class Shark {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNumberOfSharksPlusOne();
 		this.setNbHitpoints(INITHITPOINTS);
 	}
 	
 	private int x_pos;
 	private int y_pos;
 	private Sprite[] sprites;
+	private World world;
 	/**
 	 * the x position (horizontal position) after dt seconds
 	 */
@@ -62,7 +62,7 @@ public class Shark {
 	/**
 	 * the orientation of the shark
 	 */
-	private String orientation  = "left";
+	private Orientation orientation  = Orientation.LEFT;
 	/**
 	 * the minimal value for x_pos
 	 */
@@ -122,7 +122,6 @@ public class Shark {
 	/**
 	 * a variable containing the amount of characters Shark
 	 */
-	private int numberOfSharks;
 	private int hitpoints;
 	private double xSpeed;
 	private double ySpeed;
@@ -219,7 +218,7 @@ public class Shark {
 	private Sprite[] getSprite() {
 		return sprites;
 	}
-	private String getOrientation() {
+	private Orientation getOrientation() {
 		return orientation;
 	}
 	/**
@@ -267,9 +266,7 @@ public class Shark {
 		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
-	public int getNumberOfSharks() {
-		return this.numberOfSharks;
-	}
+
 	private int getNbHitpoints() {
 		return this.hitpoints;
 	}
@@ -302,6 +299,10 @@ public class Shark {
 		return this.isDying;
 	}
 	
+	private World getWorld() {
+		return this.world;
+	}
+	
 //	SETTERS
 	/**
 	 * Sets the horizontal position to the rounded down value of x
@@ -322,6 +323,10 @@ public class Shark {
 		this.y_pos = (int) Math.floor(y);
 	}
 	
+	private void setWorld(World world) {
+		this.world = world;
+	}
+	
 	/**
 	 * @param sprites the sprites to set
 	 */
@@ -330,19 +335,19 @@ public class Shark {
 	}
 	/**
 	 * Sets the orientation of the shark to right
-	 * @post orientation == "right"
+	 * @post orientation == Orientation.RIGHT
 	 */
 	@Raw 
 	private void setOrientationRight() {
-		this.orientation = "right";
+		this.orientation = Orientation.RIGHT;
 	}
 	/**
 	 * Sets the orientation of the shark to left
-	 * @post orientation == "left"
+	 * @post orientation == Orientation.LEFT
 	 */
 	@Raw 
 	private void setOrientationLeft() {
-		this.orientation = "left";
+		this.orientation = Orientation.LEFT;
 	}
 	/**
 	 * Sets the difference between the reel x position and the
@@ -382,14 +387,7 @@ public class Shark {
 	private void setNewYPos(double y) {
 		this.new_y_pos = y;
 	}
-	public void setNumberOfSharksPlusOne() {
-		if (this.getNumberOfSharks() == 0) {
-			this.numberOfSharks = 1;
-		}
-		else {
-			this.numberOfSharks += 1;
-		}
-	}
+
 	
 	private void setNbHitpoints(int nb) {
 		this.hitpoints = nb;
@@ -467,11 +465,11 @@ public class Shark {
 	}
 	
 	private void advance_x(double dt) {
-		if (this.getOrientation() == "right") {
+		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
 					+ this.getXDifference());		
 		}
-		else if (this.getOrientation() == "left") {
+		else if (this.getOrientation() == Orientation.LEFT) {
 			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
 					+ this.getXDifference());
 		}
@@ -580,8 +578,7 @@ public class Shark {
 	
 // TODO hoe deleten?
 	private void remove() {
-		this.world = null;
-//		Plant plant = null;
+		this.setWorld(null);
 	}
 	/**
 	 * Return the current sprite image for the given shark.
@@ -591,7 +588,7 @@ public class Shark {
 	 */
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == "right") {
+		if (this.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {
