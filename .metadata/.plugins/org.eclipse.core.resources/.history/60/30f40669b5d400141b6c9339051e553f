@@ -602,7 +602,7 @@ public class Mazub {
 	/**
 	 * Sets the maximum horizontal speed to a new value maxspeed
 	 * @param maxspeed
-	 * 			the new maximum horizontal speed of mazub
+	 * 			the new maxsimum horizontal speed of mazub
 	 */
 	@Raw 
 	private void setMaxSpeed(int maxspeed) {

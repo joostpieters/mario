@@ -18,7 +18,7 @@ import jumpingalien.util.Sprite;
  * 			in the game world.
  * 		| isValidPosition(getXPos(), getYPos())
  * @invar The speed has to be limited to a maximum speed
- * 		| isValidSpeed(getXSpeed(), getYSpeed())
+ * 		| isValidSpeed(getSpeed())
  * @author Pieter Van den Berghe, Ward Romanus
  */
 public class Mazub {
@@ -148,7 +148,7 @@ public class Mazub {
 	private double xSpeed;
 	/**
 	 * a small time interval, for example the new_speed after 
-	 * dt seconds is given by speed + dt*xAcc 
+	 * deltaT seconds is given by speed + deltaT*xAcc 
 	 * (xAcc = horizontal acceleration)
 	 */	
 	public double dt;
@@ -381,7 +381,7 @@ public class Mazub {
 	/**
 	 * Returns the horizontal acceleration 
 	 * @return the horizontal acceleration 
-	 * 			| xAcc
+	 * 			| Acc
 	 */
 	@Basic @Raw 
 	private double getXAcc() {
@@ -390,7 +390,7 @@ public class Mazub {
 	/**
 	 *  Returns the vertical acceleration 
 	 * @return the vertical acceleration of mazub
-	 * 			| yAcc
+	 * 			| YAcc
 	 */
 	@Basic @Raw 
 	private double getYAcc() {
@@ -401,7 +401,7 @@ public class Mazub {
 	 * vertical acceleration.
 	 * @return an array consisting of the horizontal and 
 	 * vertical acceleration.
-	 * 			| {xAcc,YAcc}
+	 * 			| {Acc,YAcc}
 	 */
 	@Basic @Raw 
 	public double[] getAcceleration(){
@@ -602,7 +602,7 @@ public class Mazub {
 	/**
 	 * Sets the maximum horizontal speed to a new value maxspeed
 	 * @param maxspeed
-	 * 			the new maximum horizontal speed of mazub
+	 * 			the new maxsimum horizontal speed of mazub
 	 */
 	@Raw 
 	private void setMaxSpeed(int maxspeed) {
