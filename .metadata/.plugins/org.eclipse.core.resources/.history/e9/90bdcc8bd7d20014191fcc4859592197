@@ -1,0 +1,20 @@
+
+public class Number extends Expression {
+	
+	public Number(long value) {
+		this.value = value;
+	}
+	
+	@Override
+	public long evaluate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String toPostfix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
