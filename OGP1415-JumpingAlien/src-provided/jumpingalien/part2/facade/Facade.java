@@ -188,7 +188,8 @@ public class Facade implements IFacadePart2 {
 	}
 	
 	public void setMazub(World world, Mazub alien) {
-		// TODO Auto-generated method stub
+		alien.setWorld(world);
+		world.setAlien(alien);
 		
 	}
 	
@@ -207,7 +208,8 @@ public class Facade implements IFacadePart2 {
 	}
 	@Override
 	public void addPlant(World world, Plant plant) {
-		// TODO Auto-generated method stub
+		plant.setWorld(world);
+		world.setPlant(plant);
 		
 	}
 	@Override
@@ -233,9 +235,10 @@ public class Facade implements IFacadePart2 {
 			throw new ModelException(e.getMessage());
 		}
 	}
-	@Override
+
 	public void addShark(World world, Shark shark) {
-		// TODO Auto-generated method stub
+		shark.setWorld(world);
+		world.setShark(shark);
 		
 	}
 	@Override
@@ -261,9 +264,10 @@ public class Facade implements IFacadePart2 {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+
 	public void addSlime(World world, Slime slime) {
-		// TODO Auto-generated method stub
+		slime.setWorld(world);
+		world.setSlime(slime);
 		
 	}
 	@Override

@@ -261,7 +261,7 @@ public class Slime {
 	private void setOrientationLeft() {
 		this.orientation =Orientation.LEFT;
 	}
-	private void setWorld(World world) {
+	public void setWorld(World world) {
 		this.world = world;
 	}
 	private void setSchool(School school) {

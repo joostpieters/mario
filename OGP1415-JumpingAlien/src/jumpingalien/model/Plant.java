@@ -42,15 +42,15 @@ public class Plant {
 	/**
 	 *  the horizontal position 
 	 */
-	private int x_pos;
+	private int xPos;
 	/**
 	 * the vertical position
 	 */
-	private int y_pos;
+	private int yPos;
 	/**
 	 * the x position (horizontal position) after dt seconds
 	 */
-	private double new_x_pos;
+	private double newXPos;
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
@@ -63,11 +63,11 @@ public class Plant {
 	/**
 	 * the orientation of the plant
 	 */
-	private String orientation  = "left";
+	private Orientation orientation = Orientation.LEFT;
 	/**
 	 * every 0.5 seconds the orientation of the plant changes
 	 */
-	private double TIMEUNTILCHANGEORIENTATION = 0.5;	
+	private double TIME_CHANGE_ORIENTATION = 0.5;	
 	/**
 	 * the minimal value for x_pos
 	 */
@@ -98,7 +98,7 @@ public class Plant {
 
 	private World world;
 	
-	private double REMAININGTIME = 0.6;
+	private double REMAINING_TIME = 0.6;
 	
 	private boolean isDying = false;
 	
@@ -111,7 +111,7 @@ public class Plant {
 	 * @return MIN_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMINXVALUE() {
+	private int getMinXValue() {
 		return MIN_X_VALUE;
 	}
 	/**
@@ -119,7 +119,7 @@ public class Plant {
 	 * @return MAX_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private int getMAXXVALUE() {
+	private int getMaxXValue() {
 		return MAX_X_VALUE;
 	}
 	/**
@@ -127,14 +127,14 @@ public class Plant {
 	 * @return MIN_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private int getMINYVALUE() {
+	private int getMinYValue() {
 		return MIN_Y_VALUE;
 	}/**
 	 * returns the maximal value of y_pos
 	 * @return MAX_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private int getMAXYVALUE() {
+	private int getMaxYValue() {
 		return MAX_Y_VALUE;
 	}
 	/**
@@ -143,7 +143,7 @@ public class Plant {
 	 */
 	@Raw 
 	private double getNewXPos() {
-		return new_x_pos;
+		return newXPos;
 	}
 	/**
 	 * Returns the x position
@@ -151,7 +151,7 @@ public class Plant {
 	 */
 	@Basic @Raw 
 	private int getXPos() {
-		return x_pos;
+		return xPos;
 	}
 	
 	/**
@@ -160,7 +160,7 @@ public class Plant {
 	 */
 	@Basic @Raw 
 	private int getYPos() {
-		return y_pos;
+		return yPos;
 	}
 	/**
 	 * Returns the difference between the real horizontal position of the plant
@@ -177,17 +177,17 @@ public class Plant {
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
-	private int getINITHITPOINTS() {
+	private int getInitHitpoints() {
 		return INITHITPOINTS;
 	}
 	private double getXSpeed() {
 		return xSpeed;
 	}
-	private String getOrientation() {
+	private Orientation getOrientation() {
 		return orientation;
 	}
-	private double getTIMEUNTILCHANGEORIENTATION() {
-		return TIMEUNTILCHANGEORIENTATION;
+	private double getTimeChangeOrientation() {
+		return TIME_CHANGE_ORIENTATION;
 	}
 
 	/**
@@ -212,16 +212,16 @@ public class Plant {
 		return this.world;
 	}
 	
-	private  int getXWorld() {
-		this.getWorld().getX();
+	private int getXWorld() {
+		return this.getWorld().getX();
 	}
 	
 	public int getYWorld() {
-		getWorld().getY();
+		return this.getWorld().getY();
 	}
 	
 	private double getREMAININGTIME() {
-		return this.REMAININGTIME;
+		return this.REMAINING_TIME;
 	}
 	
 	private double getTimeSinceDeath() {
@@ -253,7 +253,7 @@ public class Plant {
 	 */
 	@Raw 
 	private void setXPos(double x) {
-		this.x_pos = (int) Math.floor(x);
+		this.xPos = (int) Math.floor(x);
 	}
 	/**
 	 * Sets the vertical position of the plant to the rounded down value of y
@@ -262,7 +262,7 @@ public class Plant {
 	 */	
 	@Raw 
 	private void setYPos(double y) {
-		this.y_pos = (int) Math.floor(y);
+		this.yPos = (int) Math.floor(y);
 	}
 	/**
 	 * Sets the orientation of the plant to right
@@ -270,7 +270,7 @@ public class Plant {
 	 */
 	@Raw 
 	private void setOrientationRight() {
-		this.orientation = "right";
+		this.orientation = Orientation.RIGHT;
 	}
 	/**
 	 * Sets the orientation of plant to left
@@ -278,7 +278,7 @@ public class Plant {
 	 */
 	@Raw 
 	private void setOrientationLeft() {
-		this.orientation = "left";
+		this.orientation = Orientation.LEFT;
 	}
 	/**
 	 * Sets the new horizontal position of the plant to a new value
@@ -287,7 +287,7 @@ public class Plant {
 	 */
 	@Raw 
 	private void setNewXPos(double x) {
-		this.new_x_pos = x;
+		this.newXPos = x;
 	}
 	/**
 	 * Sets the difference between the reel x position and the
@@ -310,11 +310,6 @@ public class Plant {
 	/**
 	 * 
 	 */
-	private void setOrientation(String s) {
-		this.orientation = s;
-	}
-	
-
 	
 	private void setXspeed(double speed) {
 		this.xSpeed = speed;
@@ -328,6 +323,10 @@ public class Plant {
 		this.isDying = true;
 	}
 	
+	public void setWorld(World world) {
+	this.world = world;
+	}
+	
 // VALIDATIONS 
 	/**
 	 * 	Checks whether the given positions are valid positions for 
@@ -339,10 +338,10 @@ public class Plant {
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
 	 */
 	public boolean isValidPosition(int x_pos, int y_pos) {
-		return ((x_pos >= Plant.getMINXVALUE())
-				&& (x_pos <= Plant.getMAXXVALUE())
-				 && (y_pos >= Plant.getMINYVALUE())
-				 && (y_pos <= Plant.getMAXYVALUE()));
+		return ((x_pos >= this.getMinXValue())
+				&& (x_pos <= this.getMaxXValue())
+				 && (y_pos >= this.getMinYValue())
+				 && (y_pos <= this.getMaxYValue()));
 	}
 	
 	private boolean isValidSprite(Sprite[] sprites) {
@@ -355,26 +354,26 @@ public class Plant {
 	/**
 	 * starts the action period for an object
 	 */
-	public void start<action> {
-		
-	}
+//	public void start<action> {
+//		
+//	}
 	
 	/**
 	 * ends the action period for an object
 	 */
-	public void stop<action> {
+//	public void stop<action> {
 		
-	}
+//	}
 	
 	/**
 	 * changes the orientation of the plant
 	 */
 	private void changeOrientation() {
-		if (this.getOrientation() == "right") {
-			this.setOrientation("left");
+		if (this.getOrientation() == Orientation.LEFT) {
+			this.setOrientationLeft();
 		}
 		else {
-			this.setOrientation("right");
+			this.setOrientationRight();
 		}
 	}
 
@@ -382,27 +381,27 @@ public class Plant {
 		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
-		if (this.getOrientation() == "right") {
+		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
 					+ this.getXDifference());		
 		}
-		else if (this.getOrientation() == "left") {
+		else if (this.getOrientation() == Orientation.RIGHT) {
 			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
 					+ this.getXDifference());
 		}
 		
-		if ((this.getNewXPos() < Plant.getMINXVALUE()) || 
-				(this.getNewXPos() > Plant.getMAXXVALUE())){
+		if ((this.getNewXPos() < this.getMinXValue()) || 
+				(this.getNewXPos() > this.getMaxXValue())){
 			this.remove();
 		}
 		
 		this.setXPos(this.getNewXPos());
 		this.setXDifference(this.getNewXPos() - this.getXPos());
 		
-		if (this.getTimeSameOrientation() > this.getTIMEUNTILCHANGEORIENTATION()) {
+		if (this.getTimeSameOrientation() > this.getTimeChangeOrientation()) {
 			this.changeOrientation();
 			this.setTimeSameOrientation(this.getTimeSameOrientation()
-					- this.getTIMEUNTILCHANGEORIENTATION());
+					- this.getTimeChangeOrientation());
 		}
 		
 		
@@ -440,12 +439,11 @@ public class Plant {
 	 */
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == "right") {
+		if (this.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {
 			return sprites[0];
 		}
 	}
-	
 }

@@ -8,3 +8,4 @@
 - compute dt voor elk object
 - wat moet in startgame?
 - Wanneer static?
+- waar array van geologicalFeature aanmaken

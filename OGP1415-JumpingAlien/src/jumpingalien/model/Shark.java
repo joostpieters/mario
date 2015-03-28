@@ -323,7 +323,7 @@ public class Shark {
 		this.y_pos = (int) Math.floor(y);
 	}
 	
-	private void setWorld(World world) {
+	public void setWorld(World world) {
 		this.world = world;
 	}
 	
@@ -429,6 +429,8 @@ public class Shark {
 	private void endFalling() {
 		this.falling = false;
 	}	
+	
+	
 	
 //	Validations
 	private boolean isValidSprite(Sprite[] sprites) {

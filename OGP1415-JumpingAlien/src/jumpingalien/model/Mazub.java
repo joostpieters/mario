@@ -58,7 +58,7 @@ public class Mazub {
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
 		this.setInitStartSpeed(START_SPEED);
-		this.setMaxSpeed(Max_Moving_Speed);
+		this.setMaxSpeed(MAX_MOVING_SPEED);
 		
 	}
 	
@@ -117,7 +117,7 @@ public class Mazub {
 			this.setMaxSpeed(maxSpeed);
 	}
 	
-	
+	private World world;
 	/**
 	 *  the horizontal position of mazub
 	 */
@@ -204,7 +204,7 @@ public class Mazub {
 	/**
 	 * the maximal horizontal speed mazub can reach
 	 */
-	private static int Max_Moving_Speed = 3;
+	private static int MAX_MOVING_SPEED = 3;
 	/**
 	 * the maximal horizontal speed mazub can reach
 	 * when mazub is ducked
@@ -490,7 +490,7 @@ public class Mazub {
 	 */
 	@Basic @Immutable @Raw 
 	private int getMaxMovingSpeed() {
-		return Max_Moving_Speed;
+		return MAX_MOVING_SPEED;
 	}
 	/**
 	 * Returns the maximum speed as Mazub ducks
@@ -588,6 +588,10 @@ public class Mazub {
 	private boolean isDucked(){
 		return (this.duck);
 	}	
+	
+	public World getWorld() {
+		return this.world;
+	}
 	
 //Setters	
 	/**
@@ -749,6 +753,9 @@ public class Mazub {
 		this.orientation = Orientation.LEFT;
 	}
 
+	public void setWorld(World world) {
+		this.world = world;
+	}
 //Validations
 	/**
 	 * 	Checks whether the given positions are valid positions for 
@@ -1105,7 +1112,14 @@ public class Mazub {
 		if (this.getNbHitPoints() <= 0) {
 			this.die();
 		}
-	}	
+	}
+	
+	private void die() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
 	 * and the maxSpeed back to MAX_SPEED_DUCK
@@ -1211,6 +1225,11 @@ public class Mazub {
 
 	public boolean isImmune() {
 		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public boolean isDeath() {
+		//TODO 
 		return false;
 	}
 	
