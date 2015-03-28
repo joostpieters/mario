@@ -3,6 +3,7 @@ package jumpingalien.model;
 import java.util.Arrays;
 import java.util.Collection;
 
+import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 
@@ -59,10 +60,10 @@ public class World {
 	private int YVisibleWindow;
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
-	private Plant plant;
-	private Shark shark;
-	private Slime slime;
 	
+	private Collection<Shark> sharks;
+	private Collection<Plant> plants;
+	private Collection<Slime> slimes;
 
 	
 	
@@ -147,17 +148,6 @@ public class World {
 		return this.alien;
 	}
 	
-	private Shark getShark() {
-		return this.shark;
-	}
-	
-	private Plant getPlant() {
-		return this.plant;
-	}
-	
-	private Slime getSlime() {
-		return this.slime;
-	}
 	
 	/**
 	 * Returns the bottom left pixel coordinate of the tile at the given tile
@@ -285,6 +275,16 @@ public class World {
 	public int getY() {
 		return this.getNbTilesY() * this.getTileLength();
 	}
+	
+	public Collection<Plant> getPlants() {
+		return this.plants;
+	}
+	public Collection<Shark> getSharks() {
+		return this.sharks;
+	}
+	public Collection<Slime> getSlimes() {
+		return this.slimes;
+	}
 //	SETTERS
 	
 	
@@ -394,18 +394,58 @@ public class World {
 		this.alien = alien;
 	}
 	
-	public void setPlant(Plant plant) {
-		this.plant = plant;
+	public void removeSlime(@Raw Slime slime) {
+		assert this.hasSlime(slime);
+		assert slime != null;
+		this.slimes.remove(slime);
 	}
 	
-	public void setShark(Shark shark) {
-		this.shark = shark;
+	public void removePlant(@Raw Plant plant) {
+		assert this.hasPlant(plant);
+		assert plant != null;
+		this.plants.remove(plant);
 	}
 	
-	public void setSlime(Slime slime) {
-		this.slime = slime;
+	public void removeShark(@Raw Shark shark) {
+		assert this.hasShark(shark);
+		assert shark != null;
+		this.sharks.remove(shark);
+	}
+	
+	public void addSlime(Slime slime) {
+		assert slime != null;
+	    assert slime.getWorld() == this;
+	    assert !this.hasSlime(slime);
+		this.slimes.add(slime);
+	}
+	
+	public void addShark(Shark shark) {
+		assert shark != null;
+	    assert shark.getWorld() == this;
+	    assert !this.hasShark(shark);
+		this.sharks.add(shark);
 	}
 
+	public void addPlant(Plant plant) {
+		assert plant != null;
+	    assert plant.getWorld() == this;
+	    assert !this.hasPlant(plant);
+		this.plants.add(plant);
+	}
+	
+	private boolean hasPlant(Plant plant) {
+		return this.plants.contains(plant);
+	}
+	
+	private boolean hasShark(Shark shark) {
+		return this.sharks.contains(shark);
+	}
+	
+	private boolean hasSlime(Slime slime) {
+		return this.slimes.contains(slime);
+	}
+	
+	
 //	VALIDATIONS
 	
 	private boolean isValidTileSize(int tileSize){
@@ -475,10 +515,16 @@ public class World {
 // TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
 		alien.advanceTime(dt);
-		plant.advanceTime(dt);
-		shark.advanceTime(dt);
-		slime.advanceTime(dt);
-		
+		for (Plant plant : this.getPlants()) {
+			 plant.advanceTime(dt);
+		}
+		for (Shark shark: this.getSharks()) {
+			shark.advanceTime(dt);
+		}
+		for (Slime slime: this.getSlimes()) {
+			slime.advanceTime(dt);
+		}
+	
 		positioningVisibleWindow();
 	}
 	
@@ -521,19 +567,8 @@ public class World {
 		return Math.min();
 	}
 	
-	public Collection<Plant> getPlants() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public Collection<Shark> getSharks() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public Collection<Slime> getSlimes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-
+	
 
 }

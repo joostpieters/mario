@@ -165,7 +165,7 @@ public class Facade implements IFacadePart2 {
 	public int[] getVisibleWindow(World world) {
 		return world.getVisibleWindow();
 	}
-	@Override
+	
 	public int[] getBottomLeftPixelOfTile(World world, int tileX, int tileY) {
 		return world.getBottomLeftPixelOfTile(tileX,tileY);
 	}
@@ -209,13 +209,12 @@ public class Facade implements IFacadePart2 {
 	@Override
 	public void addPlant(World world, Plant plant) {
 		plant.setWorld(world);
-		world.setPlant(plant);
+		world.addPlant(plant);
 		
 	}
 	@Override
 	public Collection<Plant> getPlants(World world) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getPlants();
 	}
 	
 	public int[] getLocation(Plant plant) {
@@ -238,13 +237,12 @@ public class Facade implements IFacadePart2 {
 
 	public void addShark(World world, Shark shark) {
 		shark.setWorld(world);
-		world.setShark(shark);
+		world.addShark(shark);
 		
 	}
 	@Override
 	public Collection<Shark> getSharks(World world) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getSharks();
 	}
 	
 	public int[] getLocation(Shark shark) {
@@ -254,26 +252,30 @@ public class Facade implements IFacadePart2 {
 	public Sprite getCurrentSprite(Shark shark) {
 		return shark.getCurrentSprite();
 	}
-	@Override
+
 	public School createSchool() {
-		// TODO Auto-generated method stub
-		return null;
+		return new School();
 	}
-	@Override
+
 	public Slime createSlime(int x, int y, Sprite[] sprites, School school) {
-		// TODO Auto-generated method stub
-		return null;
+		try{ return new Slime(x,y,sprites,school);}
+		catch (IllegalPositionException e) {
+			throw new ModelException(e.getMessage());
+		}
+		catch (IllegalSpriteException e) {
+			throw new ModelException(e.getMessage());
+		}
+		
 	}
 
 	public void addSlime(World world, Slime slime) {
 		slime.setWorld(world);
-		world.setSlime(slime);
+		world.addSlime(slime);
 		
 	}
-	@Override
+
 	public Collection<Slime> getSlimes(World world) {
-		// TODO Auto-generated method stub
-		return null;
+		return world.getSlimes();
 	}
 	
 	public int[] getLocation(Slime slime) {
@@ -285,8 +287,7 @@ public class Facade implements IFacadePart2 {
 	}
 	@Override
 	public School getSchool(Slime slime) {
-		// TODO Auto-generated method stub
-		return null;
+		return slime.getSchool();
 	}
 
 }

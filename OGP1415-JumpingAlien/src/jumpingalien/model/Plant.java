@@ -208,7 +208,7 @@ public class Plant {
 	}
 
 	// TODO dees ook fixen
-	private World getWorld() {
+	public World getWorld() {
 		return this.world;
 	}
 	
@@ -423,10 +423,10 @@ public class Plant {
 		this.setDying();
 	}
 	
-// TODO hoe deleten?
+// TODO hier een getter of niet
 	private void remove() {
-		this.world = null;
-//		Plant plant = null;
+		this.world.removePlant(this);
+		this.setWorld(null);
 	}
 	
 

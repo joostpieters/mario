@@ -299,7 +299,7 @@ public class Shark {
 		return this.isDying;
 	}
 	
-	private World getWorld() {
+	public World getWorld() {
 		return this.world;
 	}
 	
@@ -578,8 +578,9 @@ public class Shark {
 		this.setDying();
 	}
 	
-// TODO hoe deleten?
+
 	private void remove() {
+		this.world.removeShark(this);
 		this.setWorld(null);
 	}
 	/**

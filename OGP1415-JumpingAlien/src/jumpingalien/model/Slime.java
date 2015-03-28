@@ -27,7 +27,7 @@ public class Slime {
 	 * 			| !isValidSprite(sprites) 
 	 */
 // TODO school nog toewijzen	
-	public Slime(int x_pos,int y_pos, Sprite[] sprites ) 
+	public Slime(int x_pos,int y_pos, Sprite[] sprites,School school) 
 			throws IllegalPositionException, IllegalSpriteException {
 				if(!isValidPosition(x_pos,y_pos))
 					throw new IllegalPositionException(x_pos,y_pos); 
@@ -36,6 +36,7 @@ public class Slime {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
+		this.setSchool(school);
 	}
 	
 
@@ -142,7 +143,7 @@ public class Slime {
 	private double getXAcc() {
 		return xAcc;
 	}
-	private World getWorld() {
+	public World getWorld() {
 		return this.world;
 	}
 	private double getMAXXSPEED() {
@@ -328,8 +329,12 @@ public class Slime {
 	}
 	
 	public void die() {
+
+	}
+	
+	public void remove() {
+		this.world.removeSlime(this);
 		this.setWorld(null);
-		this.setSchool(null);
 	}
 }
 	

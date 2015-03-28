@@ -1,11 +1,14 @@
 - naamgeving variabelen?
 - Gebruik IllegalArgumentException bij Illegalfilesize,...
-- Oproepen van andere AdvanceTimes
+- Oproepen van andere AdvanceTimes juist?
 - PositioningVisibleWindow: beter lokale variabelen?
 - altijd alles naar static veranderen bij verwijzen naar andere klasse.
-- hoe object verwijderen
+- Getters bij verwijderen van een object?
 - Plant: random heen en weer of gewoon?
 - compute dt voor elk object
 - wat moet in startgame?
-- Wanneer static?
+- Wanneer static? Wanneer final? Bv. MAX_X_VALUE
 - waar array van geologicalFeature aanmaken
+- Moet in facade de @override weg?
+- Moet er commentaar in facade?
+- wat is de juiste manier om associatie te verwijderen in slime/plant/shark (zie terminate() in purchase)?
