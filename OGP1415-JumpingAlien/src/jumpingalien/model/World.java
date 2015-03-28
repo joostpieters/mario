@@ -1,5 +1,6 @@
 package jumpingalien.model;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import jumpingalien.part2.facade.IFacadePart2;
@@ -42,6 +43,7 @@ public class World {
 		this.setVisibleWindowHeight(visibleWindowHeight);
 		this.setTargetTileX(targetTileX);
 		this.setTargetTileY(targetTileY);
+		this.geologicalFeature = new int[nbTilesY][nbTilesX];
 	}
 	
 	
@@ -55,8 +57,7 @@ public class World {
 	private int targetTileY;
 	private int XVisibleWindow;
 	private int YVisibleWindow;
-	private int[][] geologicalFeature = new int[this.getNbTilesY()][this.getNbTilesX()];
-	
+	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
 	private Plant plant;
 	private Shark shark;
@@ -385,7 +386,24 @@ public class World {
 	 */
 // 	TODO exception toevoegen
 	public void setGeologicalFeature(int tileX, int tileY, int tileType) {
+		
 		this.geologicalFeature[tileY][tileX] = tileType;
+	}
+	
+	public void setAlien(Mazub alien) {
+		this.alien = alien;
+	}
+	
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
+	
+	public void setShark(Shark shark) {
+		this.shark = shark;
+	}
+	
+	public void setSlime(Slime slime) {
+		this.slime = slime;
 	}
 
 //	VALIDATIONS
@@ -435,7 +453,7 @@ public class World {
 	 * @return true if the game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
-		return (alien.isDeath() || didPlayerWin());
+		return (this.getAlien().isDeath() || didPlayerWin());
 	}
 	
 	/**
@@ -500,7 +518,7 @@ public class World {
 	
 	// TODO dit maken
 	private double computeDt() {
-		return Math.min()
+		return Math.min();
 	}
 	
 	public Collection<Plant> getPlants() {
@@ -515,5 +533,7 @@ public class World {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
