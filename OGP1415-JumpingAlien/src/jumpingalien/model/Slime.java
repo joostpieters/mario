@@ -69,7 +69,7 @@ public class Slime {
 	
 	private int movementDuration;
 
-	private int INITHITPOINTS = 100;
+	private int INIT_HITPOINTS = 100;
 	
 	/**
 	 * the horizontal acceleration of a slime
@@ -78,39 +78,39 @@ public class Slime {
 	/**
 	 * the maximum horizontal speed a slime can reach
 	 */
-	private double MAXXSPEED = 2.5;
+	private double MAX_X_SPEED = 2.5;
 	/**
 	 * the minimal duration of a movement period (2s)
 	 */
-	private static int MINMOVEMENTDURATION = 2;
+	private static int MIN_MOVEMENT_DURATION = 2;
 	/**
 	 * the maximal duration of a movement period (6s)
 	 */
-	private static int MAXMOVEMENTDURATION = 6;
+	private static int MAX_MOVEMENT_DURATION = 6;
 	/**
 	 * the amount of hitpoints a slime loses when touching 
 	 * a shark or mazub.
 	 */
-	private int CONTACTDAMAGE = 50;
+	private int CONTACT_DAMAGE = 50;
 	/**
 	 * the damage every slime in the school looses when a single
 	 * slime looses some hitpoints
 	 */
-	private int SCHOOLDAMAGE = 1;
+	private int SCHOOL_DAMAGE = 1;
 	/**
 	 * the amount of hitpoints a slime hands over to the members of 
 	 * the old school when joining a school
 	 */
-	private int JOININGHITPOINTSTOGIVE = 1;
+	private int JOINING_HITPOINTS_GIVE = 1;
 	/**
 	 * the amount of hitpoints a slime receives when from every
 	 * member of the new group when joining
 	 */
-	private int JOININGHITPOINTSTORECIEVE = 1;
+	private int JOINING_HITPOINTS_RECIEVE = 1;
 	/**
 	 * the maximum amount of slime schools in a game world
 	 */
-	private int MAXAMOUNTOFSCHOOLS = 10;	
+	private int MAX_AMOUNT_OF_SCHOOLS = 10;	
 	
 	private World world;
 	
@@ -137,8 +137,8 @@ public class Slime {
 	private Sprite[] getSprite() {
 		return sprites;
 	}
-	private int getINITHITPOINTS() {
-		return INITHITPOINTS;
+	private int getIinitHitpoints() {
+		return INIT_HITPOINTS;
 	}
 	private double getXAcc() {
 		return xAcc;
@@ -146,8 +146,8 @@ public class Slime {
 	public World getWorld() {
 		return this.world;
 	}
-	private double getMAXXSPEED() {
-		return  MAXXSPEED;
+	private double getMaxXSpeed() {
+		return  MAX_X_SPEED;
 	}
 	private Orientation getOrientation() {
 		return orientation;
@@ -157,7 +157,7 @@ public class Slime {
 	 * @return MIN_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMINXVALUE() {
+	private static int getMinXValue() {
 		return MIN_X_VALUE;
 	}
 	/**
@@ -165,7 +165,7 @@ public class Slime {
 	 * @return MAX_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMAXXVALUE() {
+	private static int getMaxXValue() {
 		return MAX_X_VALUE;
 	}
 	/**
@@ -173,14 +173,14 @@ public class Slime {
 	 * @return MIN_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMINYVALUE() {
+	private static int getMinYValue() {
 		return MIN_Y_VALUE;
 	}/**
 	 * returns the maximal value of y_pos
 	 * @return MAX_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMAXYVALUE() {
+	private static int getMaxYValue() {
 		return MAX_Y_VALUE;
 	}
 	/**
@@ -208,20 +208,20 @@ public class Slime {
 	private int getMovementDuration() {
 		return movementDuration;
 	}
-	private int getCONTACTDAMAGE() {
-		return CONTACTDAMAGE;
+	private int getContactDamage() {
+		return CONTACT_DAMAGE;
 	}
-	private int getSCHOOLDAMAGE() {
-		return SCHOOLDAMAGE;
+	private int getSchoolDamage() {
+		return SCHOOL_DAMAGE;
 	}
-	private int getJOININGHITPOINTSTOGIVE() {
-		return JOININGHITPOINTSTOGIVE;
+	private int getJoiningHitpointsGive() {
+		return JOINING_HITPOINTS_GIVE;
 	}
-	private int getJOININGHITPOINTSTORECIEVE() {
-		return JOININGHITPOINTSTORECIEVE;
+	private int getJoiningHitpointsRecieve() {
+		return JOINING_HITPOINTS_RECIEVE;
 	}
-	private int getMAXAMOUNTOFSCHOOLS() {
-		return MAXAMOUNTOFSCHOOLS;
+	private int getMaxAmountOfSchools() {
+		return MAX_AMOUNT_OF_SCHOOLS;
 	}
 	
 
@@ -285,31 +285,36 @@ public class Slime {
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
 	 */
 	public boolean isValidPosition(int x_pos, int y_pos) {
-		return ((x_pos >= Slime.getMINXVALUE())
-				&& (x_pos <= Slime.getMAXXVALUE())
-				 && (y_pos >= Slime.getMINYVALUE())
-				 && (y_pos <= Slime.getMAXYVALUE()));
+		return ((x_pos >= Slime.getMinXValue())
+				&& (x_pos <= Slime.getMaxXValue())
+				 && (y_pos >= Slime.getMinYValue())
+				 && (y_pos <= Slime.getMaxYValue()));
 	}
 	
 	/**
 	 * starts the action period for an object
 	 */
-	public void start<action> {
-		
-	}
+//	public void start<action> {
+//		
+//	}
 	
 	/**
 	 * ends the action period for an object
 	 */
-	public void stop<action> {
-		
-	}
+//	public void stop<action> {
+//		
+//	}
 	
 	
 	public void advanceTime(double dt) {
 		if (this.getNbHitPoints() <= 0) {
 			this.die();
 		}
+	}
+
+	private int getNbHitPoints() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	/**
