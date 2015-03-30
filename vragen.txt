@@ -1,4 +1,3 @@
-- naamgeving variabelen?
 - Gebruik IllegalArgumentException bij Illegalfilesize,...
 - Oproepen van andere AdvanceTimes juist?
 - PositioningVisibleWindow: beter lokale variabelen?
@@ -12,3 +11,5 @@
 - Moet in facade de @override weg?
 - Moet er commentaar in facade?
 - wat is de juiste manier om associatie te verwijderen in slime/plant/shark (zie terminate() in purchase)?
+- aparte positionklasse
+- this. ?
