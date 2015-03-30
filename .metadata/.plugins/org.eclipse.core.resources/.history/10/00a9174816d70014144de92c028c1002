@@ -597,7 +597,7 @@ public class World {
 						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
 								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) ));
 			}
-			else {
+			if (this.getYAcc != 0) {
 				setOwnDt(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed()), 
 						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
 								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) ));			
@@ -614,17 +614,17 @@ public class World {
 //		}
 		for (Plant plant : this.getPlants()) {
 			if (plant.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(plant.getOwnDt());
+				this.setMinimalDt(plant.computeOwnDt());
 			}
 		}
 		for (Shark shark: this.getSharks()) {
 			if (shark.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(shark.getOwnDt());
+				this.setMinimalDt(shark.computeOwnDt());
 			}
 		}
 		for (Slime slime: this.getSlimes()) {
 			if (slime.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(slime.getOwnDt());
+				this.setMinimalDt(slime.computeOwnDt());
 			}
 		}
 		return this.getMinimalDt();

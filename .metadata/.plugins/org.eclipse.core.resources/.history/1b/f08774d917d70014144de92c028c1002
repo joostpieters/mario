@@ -147,7 +147,7 @@ public class Plant {
 	}
 	/**
 	 * Returns the x position
-	 * @return xPos
+	 * @return x_pos
 	 */
 	@Basic @Raw 
 	private int getXPos() {
@@ -156,7 +156,7 @@ public class Plant {
 	
 	/**
 	 * Returns the y position
-	 * @return yPos
+	 * @return y_pos
 	 */
 	@Basic @Raw 
 	private int getYPos() {

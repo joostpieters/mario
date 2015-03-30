@@ -579,53 +579,20 @@ public class World {
 	private void setMinimalDt(double dt) {
 		this.minimalDt = dt;
 	}
-	private double ownDt;
-	private double getOwnDt() {
-		return ownDt;
-	}
-	private void setOwnDt(double dt) {
-		this.ownDt = dt;
-	}
-	
-	private double computeOwnDt() {
-		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
-			setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
-		}
-		else {
-			if (this.getXAcc != 0) {
-				setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed()), 
-						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
-								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) ));
-			}
-			else {
-				setOwnDt(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed()), 
-						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
-								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) ));			
-			}
-		}
-	}
 	// TODO dit maken
 	private double computeDt() {
-		this.setMinimalDt(alien.computeOwnDt());
-//		for (Mazub alien : this.getAlien()) {
-//			if (alien.computeOwnDt() < this.getMinimalDt()) {
-//				this.setMinimalDt(alien.computeOwnDt());
-//			}
-//		}
+		
+		for (Mazub alien : this.getAlien()) {
+			alien.computeOwnDt();
+		}
 		for (Plant plant : this.getPlants()) {
-			if (plant.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(plant.getOwnDt());
-			}
+			 plant.computeOwnDt();
 		}
 		for (Shark shark: this.getSharks()) {
-			if (shark.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(shark.getOwnDt());
-			}
+			shark.computeOwnDt();
 		}
 		for (Slime slime: this.getSlimes()) {
-			if (slime.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(slime.getOwnDt());
-			}
+			slime.computeOwnDt();
 		}
 		return this.getMinimalDt();
 	}

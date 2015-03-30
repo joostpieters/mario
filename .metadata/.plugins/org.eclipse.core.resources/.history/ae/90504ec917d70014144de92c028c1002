@@ -90,7 +90,7 @@ public class Plant {
 	 * the difference between the new x_position (new_x_pos) and
 	 * the previous x_pos (x_pos)
 	 */
-	private double xDifference;
+	private double xdifference;
 	/**
 	 * the time a plant is moving in 1 direction
 	 */
@@ -147,7 +147,7 @@ public class Plant {
 	}
 	/**
 	 * Returns the x position
-	 * @return xPos
+	 * @return x_pos
 	 */
 	@Basic @Raw 
 	private int getXPos() {
@@ -156,7 +156,7 @@ public class Plant {
 	
 	/**
 	 * Returns the y position
-	 * @return yPos
+	 * @return y_pos
 	 */
 	@Basic @Raw 
 	private int getYPos() {
@@ -169,7 +169,7 @@ public class Plant {
 	 */
 	@Raw 
 	private double getXDifference() {
-		return xDifference;
+		return xdifference;
 	}
 	/**
 	 * 
@@ -297,7 +297,7 @@ public class Plant {
 	 */
 	@Raw 
 	private void setXDifference(double x_difference) {
-		this.xDifference = x_difference;
+		this.xdifference = x_difference;
 	}
 	
 	/**
