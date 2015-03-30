@@ -213,7 +213,7 @@ public class Plant {
 	}
 	
 	private int getXWorld() {
-		return this.getWorld().getX();
+		return this.world.getX();
 	}
 	
 	public int getYWorld() {

@@ -285,7 +285,7 @@ public class Facade implements IFacadePart2 {
 	public Sprite getCurrentSprite(Slime slime) {
 		return slime.getCurrentSprite();
 	}
-	@Override
+	
 	public School getSchool(Slime slime) {
 		return slime.getSchool();
 	}
