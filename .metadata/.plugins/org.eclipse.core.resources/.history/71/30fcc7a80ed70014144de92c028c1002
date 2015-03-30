@@ -1,0 +1,28 @@
+package jumpingalien.model;
+
+public class IllegalVisibleWidthException {
+	/**
+	 * the (horizontal) visible width of the screen;
+	 */
+	private final int visibleWidth;
+	
+	/**
+	 * initialize this new illegal visibleWidth exception with a given
+	 * visible width 
+	 * @param visibleWidth
+	 * @post the value of the new illegal visible width exception is equal
+	 * 			to the given visibleWidth
+	 * 			| new.getVisibleWidth = visibleWidth
+	 */
+	public IllegalVisibleWidthException(int visibleWidth) {
+		this.visibleWidth = visibleWidth;
+	}
+	
+	/**
+	 * the visible width of the screen
+	 * @return visibleWidth
+	 */
+	public int getVisibleWidth() {
+		return visibleWidth;
+	}
+}

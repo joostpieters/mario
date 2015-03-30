@@ -1,0 +1,39 @@
+package jumpingalien.model;
+
+public class IllegalSetTargetException {
+	
+	/**
+	 * 
+	 */
+	private int targetTileX;
+	/**
+	 * 
+	 */
+	private int targetTileY;
+	
+	/**
+	 * 
+	 * @param targetTileX
+	 * @param targetTileY
+	 */
+	public IllegalTargetTileException(int targetTileX, int targetTileY) {
+		this.targetTileX = targetTileX;
+		this.targetTileY = targetTileY;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTargetTileX() {
+		return targetTileX;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTargetTileY() {
+		return targetTileY;
+	}
+}

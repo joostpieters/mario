@@ -1,0 +1,12 @@
+package jumpingalien.model;
+
+public class IllegalTileSizeException {
+	private final int tilesize;
+	
+	public IllegalTileSizeException(int tilesize) {
+		this.tilesize = tilesize;
+	}
+	public int getTileSize() {
+		return tilesize;
+	}
+}

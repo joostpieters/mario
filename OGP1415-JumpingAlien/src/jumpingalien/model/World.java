@@ -31,12 +31,18 @@ public class World {
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
 			int targetTileY) 
-		throws IllegalArgumentException, IllegalAmountOfCharactersException {
-			if (!isValidTileSize(tileSize))
-				throw new IllegalArgumentException();
+		throws IllegalArgumentException, IllegalAmountOfCharactersException,
+				IllegalTileSizeException, IllegalTargetTileException,
+				IllegalVisibleWindowException {
 			if ( ! isValidAmountOfCharacters())
 				throw new  IllegalAmountOfCharactersException();
-// TODO illegaltilesizeecxeption, illegalsetarget..., illegalvis... toevoegen
+			if ( ! isValidTileSize(tileSize))
+				throw new  IllegalTileSizeException(tileSize);
+			if ( ! isValidTargetTile(targetTileX, targetTileY))
+				throw new  IllegalTargetTileException(targetTileX, targetTileY);
+			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, getNbTilesX(), getNbTilesY()))
+				throw new  IllegalVisibleWindowException(visibleWindowWidth, visibleWindowHeight);
+		// TODO illegaltilesizeecxeption, illegalsetarget..., illegalvis... toevoegen
 		this.setTileSize(tileSize);
 		this.setNbTilesX(nbTilesX);
 		this.setNbTilesY(nbTilesY);
@@ -470,6 +476,10 @@ public class World {
 			//	((alien.getNumberOfMazubs() > 1) && (plant.getNumberOfPlants() + 
 				//slime.getNumberOfSlimes() + shark.getNumberOfSharks() <= 100));
 	}
+	private boolean isValidTargetTile(int x, int y) {
+		return true;
+	}
+
 	
 	
 	/**

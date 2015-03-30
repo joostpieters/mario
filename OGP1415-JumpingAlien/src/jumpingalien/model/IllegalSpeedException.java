@@ -32,7 +32,7 @@ public class IllegalSpeedException extends Exception {
 	 * 			| new.getInitStartSpeed = initStartSpeed
 	 * 			| new.getMaxSpeed = maxSpeed
 	 */
-	public IllegalSpeedException(int initStartSpeed, int maxSpeed){
+	public IllegalSpeedException(int initStartSpeed, int maxSpeed) {
 		this.initStartSpeed = initStartSpeed;
 		this.maxSpeed = maxSpeed;
 	}

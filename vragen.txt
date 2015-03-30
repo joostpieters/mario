@@ -13,3 +13,4 @@
 - wat is de juiste manier om associatie te verwijderen in slime/plant/shark (zie terminate() in purchase)?
 - aparte positionklasse
 - this. ?
+- hoe het aantal objecten opvragen? 

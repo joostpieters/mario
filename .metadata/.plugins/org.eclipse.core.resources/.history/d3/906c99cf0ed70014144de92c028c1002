@@ -1,0 +1,28 @@
+package jumpingalien.model;
+
+public class IllegalVisibleHeightException {
+	/**
+	 * the (vertical) visible height of the screen;
+	 */
+	private final int visibleHeight;
+	
+	/**
+	 * initialize this new illegal visibleHeight exception with a given
+	 * visible width 
+	 * @param visibleHeight
+	 * @post the value of the new illegal visible height exception is equal
+	 * 			to the given visibleHeight
+	 * 			| new.getVisibleHeight = visibleHeight
+	 */
+	public IllegalVisibleHeightException(int visibleHeight) {
+		this.visibleHeight = visibleHeight;
+	}
+	
+	/**
+	 * the visible height of the screen
+	 * @return visibleHeight
+	 */
+	public int getVisibleHeight() {
+		return visibleHeight;
+	}
+}
