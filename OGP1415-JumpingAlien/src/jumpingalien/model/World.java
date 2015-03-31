@@ -1,7 +1,9 @@
 package jumpingalien.model;
 
+import java.util.List;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
@@ -70,7 +72,7 @@ public class World {
 
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
-	private List<Slime> slimes = new ArrayList<Slime>();
+	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();
 
 
 	
@@ -284,9 +286,9 @@ public class World {
 		return this.getNbTilesY() * this.getTileLength();
 	}
 	
-	public Collection<Mazub> getMazubs() {
-		return this.mazubs;
-	}
+//	public Collection<Mazub> getMazubs() {
+//		return this.mazubs;
+//	}
 	public Collection<Plant> getPlants() {
 		return this.plants;
 	}
@@ -297,17 +299,17 @@ public class World {
 		return this.slimes;
 	}
 	
-	private int getNbMazubs() {
-		return ((Object) mazubs).count();
-	}
+//	private int getNbMazubs() {
+//		return mazubs.size();
+//	}
 	private int getNbPlants() {
-		return ((Object) plants).count();
+		return plants.size();
 	}
 	private int getNbSharks() {
-		return ((Object) sharks).count();
+		return sharks.size();
 	}
 	private int getNbSlimes() {
-		return ((Object) slimes).count();
+		return slimes.size();
 	}
 //	SETTERS
 	
@@ -480,6 +482,7 @@ public class World {
 		return nbTiles >0;
 	}
 	
+	// TODO
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return true;// ((visiblewindowWidth <= tileSize * nbTilesX) && (visibleWindowHeight
@@ -543,7 +546,7 @@ public class World {
 // TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
 		alien.advanceTime(dt);
-		System.out.println("hallo");
+
 //		Iterator<Plant> plantIter = plants.iterator();
 //		while(plantIter.hasNext()) {
 //			Plant plant = plantIter.next();
@@ -552,12 +555,12 @@ public class World {
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
-//		for (Shark shark: this.getSharks()) {
-//			shark.advanceTime(dt);
-//		}
-//		for (Slime slime: this.getSlimes()) {
-//			slime.advanceTime(dt);
-//		}
+		for (Shark shark: this.getSharks()) {
+			shark.advanceTime(dt);
+		}
+		for (Slime slime: this.getSlimes()) {
+			slime.advanceTime(dt);
+		}
 	
 		positioningVisibleWindow();
 	}

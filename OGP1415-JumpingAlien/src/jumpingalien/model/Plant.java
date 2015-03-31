@@ -77,7 +77,7 @@ public class Plant {
 	 */
 	
 // TODO dees fixen en die andere
-	private final int MAX_X_VALUE = getXWorld();
+	private final int MAX_X_VALUE = 1000;//getXWorld();
 	/**
 	 * the minimal value for y_pos
 	 */
@@ -85,7 +85,7 @@ public class Plant {
 	/**
 	 * the maximal value for y_pos
 	 */
-	private final int MAX_Y_VALUE = getYWorld();
+	private final int MAX_Y_VALUE = 1000;//getYWorld();
 	/**
 	 * the difference between the new x_position (new_x_pos) and
 	 * the previous x_pos (x_pos)

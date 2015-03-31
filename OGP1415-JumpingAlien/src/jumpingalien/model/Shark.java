@@ -455,19 +455,24 @@ public class Shark {
 		return ( ! Double.isNaN(ySpeed));
 	}
 	
-	/**
-	 * starts the action period for an object
-	 */
-	public void start<action> {
-		
+	// TODO 
+	public boolean isValidYSpeed() {
+		return true;
 	}
 	
-	/**
-	 * ends the action period for an object
-	 */
-	public void stop<action> {
-		
-	}
+//	/**
+//	 * starts the action period for an object
+//	 */
+//	public void start<action> {
+//		
+//	}
+//	
+//	/**
+//	 * ends the action period for an object
+//	 */
+//	public void stop<action> {
+//		
+//	}
 	
 	private void advance_x(double dt) {
 		if (this.getOrientation() == Orientation.RIGHT) {
