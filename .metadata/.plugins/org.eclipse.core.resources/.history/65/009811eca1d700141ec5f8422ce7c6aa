@@ -295,18 +295,8 @@ public class World {
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
 	}
-	
 	private int getNbMazubs() {
-		return ((Object) mazubs).count();
-	}
-	private int getNbPlants() {
-		return ((Object) plants).count();
-	}
-	private int getNbSharks() {
-		return ((Object) sharks).count();
-	}
-	private int getNbSlimes() {
-		return ((Object) slimes).count();
+		return ((Mazub) mazubs).count();
 	}
 //	SETTERS
 	
@@ -490,8 +480,8 @@ public class World {
 	
 	private boolean isValidAmountOfCharacters() {
 		return true;
-			//	((alien.getNbOfMazubs() > 1) && (plant.getNbOfPlants() + 
-				//slime.getNbOfSlimes() + shark.getNbOfSharks() <= 100));
+			//	((alien.getNumberOfMazubs() > 1) && (plant.getNumberOfPlants() + 
+				//slime.getNumberOfSlimes() + shark.getNumberOfSharks() <= 100));
 	}
 	private boolean isValidTargetTile(int x, int y) {
 		return true;

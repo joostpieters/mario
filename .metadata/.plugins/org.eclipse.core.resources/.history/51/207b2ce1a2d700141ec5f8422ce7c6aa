@@ -295,18 +295,8 @@ public class World {
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
 	}
-	
 	private int getNbMazubs() {
-		return ((Object) mazubs).count();
-	}
-	private int getNbPlants() {
-		return ((Object) plants).count();
-	}
-	private int getNbSharks() {
-		return ((Object) sharks).count();
-	}
-	private int getNbSlimes() {
-		return ((Object) slimes).count();
+		return ((Object) mazubs).length();
 	}
 //	SETTERS
 	
