@@ -1,8 +1,11 @@
 package jumpingalien.model;
+import java.util.Arrays;
+
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
+
 
 /**
  * First part of the jumping alien project for OGP
@@ -915,7 +918,7 @@ public class Mazub {
 	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
 	 */
 	public void startJump() {
-		if (this.getYPos() == 0) {
+		if (this.onFloor()) {
 			this.setYSpeed(this.getStartJumpSpeed());	
 		}
 	}	
@@ -1081,7 +1084,10 @@ public class Mazub {
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
 	private void advance_y(double dt){	
-		if ((this.getYPos() > 0) && (!this.isFalling())){
+		if (isAgainstRoof()) {
+			this.setXSpeed(0);
+		}
+		if ((!onFloor()) && (!this.isFalling())){
 			fall();
 		}
 		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
@@ -1090,9 +1096,9 @@ public class Mazub {
 		if ( ! this.isValidYSpeed()) {
 			this.setYSpeed(this.getStartJumpSpeed());
 		}
-		if (this.getNewYPos()<=0) {
+		if (this.onFloor() && this.isFalling()) {
 			this.endFall();
-			this.setNewYPos(0);
+			this.setNewYPos((this.getTilesUnder()[0][1] +1)* world.getTileLength() -1);
 		}
 		if (this.getNewYPos() > Mazub.getMaxYValue()) {
 			this.setNewYPos(Mazub.getMaxYValue());
@@ -1241,19 +1247,51 @@ public class Mazub {
 		//TODO 
 		return false;
 	}
+	private int[][] getTilesAbove() {
+		int pixelLeft = (int) Math.floor(this.getXPos());
+		int pixelTop = (int) Math.floor(this.getYPos()) + this.getSize()[1];
+		int pixelRight = pixelLeft + this.getSize()[0];
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelTop, pixelRight, pixelTop);
+		return tilesUnder;
+	}
 	
-//	private boolean isFloor(double newYPos2) {
-//		int pixelLeft = (int) Math.floor(this.getXPos());
-//		int pixelBottom = (int) Math.floor(this.getYPos());
-//		int[][] TilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom, pixelLeft, pixelBottom);
-//		for (int[] tile: TilesUnder) {
-//			if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-//						world.getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
-//				
-//			}
-//		}
-//		
-//	}
+	private int[][] getTilesUnder() {
+		int pixelLeft = (int) Math.floor(this.getXPos());
+		int pixelBottom = (int) Math.floor(this.getYPos());
+		int pixelRight = pixelLeft + this.getSize()[0];
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom, pixelRight, pixelBottom);
+		return tilesUnder;
+	}
+	
+	private boolean onFloor() {
+		int[][] tilesUnder = this.getTilesUnder();
+		for (int[] tile: tilesUnder) {
+			try {
+				if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							world.getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	private boolean isAgainstRoof() {
+		int[][] tilesAbove = this.getTilesAbove();
+		for (int[] tile: tilesAbove) {
+			try {
+				if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							world.getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
 	
 
 	

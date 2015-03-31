@@ -489,7 +489,7 @@ public class World {
 				<=  tileSize * nbTilesY));
 	}
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
-		return (new int[] {pixelX, pixelY} == this.getBottomLeftPixelOfTile(pixelX, pixelY));
+		return ((pixelX%this.getTileLength() == 0) && (pixelY%this.getTileLength() ==0));
 	}
 	
 	private boolean isValidAmountOfCharacters() {
