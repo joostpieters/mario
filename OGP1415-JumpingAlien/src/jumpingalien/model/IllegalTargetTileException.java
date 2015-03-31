@@ -1,6 +1,16 @@
 package jumpingalien.model;
-
-public class IllegalTargetTileException {
+/**
+ * 
+ * A class to check for an illegal TargetTile
+ * 
+ * 
+ * @version 1.0
+ * @author Pieter Van den Berghe, Ward Romanus
+ * 
+ *
+ */
+@SuppressWarnings("serial")
+public class IllegalTargetTileException extends Exception {
 	
 	/**
 	 * the horizontal coordinate of the target tile

@@ -31,7 +31,7 @@ public class World {
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
 			int targetTileY) 
-		throws IllegalArgumentException, IllegalAmountOfCharactersException,
+		throws IllegalAmountOfCharactersException,
 				IllegalTileSizeException, IllegalTargetTileException,
 				IllegalVisibleWindowException {
 			if ( ! isValidAmountOfCharacters())
@@ -587,7 +587,7 @@ public class World {
 		this.ownDt = dt;
 	}
 	
-	private double computeOwnDt() {
+/*	private double computeOwnDt() {
 		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
 			setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
 		}
@@ -629,7 +629,7 @@ public class World {
 		}
 		return this.getMinimalDt();
 	}
-	
+	*/
 	
 
 	

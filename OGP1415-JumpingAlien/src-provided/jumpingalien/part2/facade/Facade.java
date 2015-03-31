@@ -8,6 +8,9 @@ import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.IllegalPositionException;
 import jumpingalien.model.IllegalSpeedException;
 import jumpingalien.model.IllegalSpriteException;
+import jumpingalien.model.IllegalTargetTileException;
+import jumpingalien.model.IllegalTileSizeException;
+import jumpingalien.model.IllegalVisibleWindowException;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
 import jumpingalien.model.School;
@@ -126,11 +129,17 @@ public class Facade implements IFacadePart2 {
 		try{ return new World(tileSize, nbTilesX,nbTilesY, visibleWindowWidth, 
 				visibleWindowHeight, targetTileX, targetTileY);}
 // TODO andere exceptions nog toevoegen
-		catch(IllegalArgumentException e){
+		catch(IllegalTileSizeException e){
 			throw new ModelException(e.getMessage());
 		}
 		catch(IllegalAmountOfCharactersException f){
 			throw new ModelException(f.getMessage());
+		}
+		catch(IllegalTargetTileException g) {
+			throw new ModelException(g.getMessage());
+		}
+		catch(IllegalVisibleWindowException h) {
+			throw new ModelException(h.getMessage());
 		}
 	}
 

@@ -1,6 +1,16 @@
 package jumpingalien.model;
-
-public class IllegalVisibleWindowException {
+/**
+ * 
+ * A class to check for an illegal Visible Window
+ * 
+ * 
+ * @version 1.0
+ * @author Pieter Van den Berghe, Ward Romanus
+ * 
+ *
+ */
+@SuppressWarnings("serial")
+public class IllegalVisibleWindowException extends Exception {
 	/**
 	 * the (vertical) visible height of the screen;
 	 */
