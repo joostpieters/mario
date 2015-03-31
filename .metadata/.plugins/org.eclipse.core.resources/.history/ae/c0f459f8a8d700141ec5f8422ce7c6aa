@@ -382,10 +382,10 @@ public class Plant {
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
 		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt;	
 		}
 		else if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt;
 		}
 		
 		if ((this.getNewXPos() < this.getMinXValue()) || 

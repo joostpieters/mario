@@ -263,7 +263,7 @@ public class Shark {
 	 *         coordinates of the given shark's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
+		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
 

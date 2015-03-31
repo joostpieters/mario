@@ -382,10 +382,12 @@ public class Plant {
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
 		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+					+ this.getXDifference());		
 		}
 		else if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+					+ this.getXDifference());
 		}
 		
 		if ((this.getNewXPos() < this.getMinXValue()) || 
@@ -394,12 +396,14 @@ public class Plant {
 		}
 		
 		this.setXPos(this.getNewXPos());
+		this.setXDifference(this.getNewXPos() - this.getXPos());
 		
 		if (this.getTimeSameOrientation() > this.getTimeChangeOrientation()) {
 			this.changeOrientation();
 			this.setTimeSameOrientation(this.getTimeSameOrientation()
 					- this.getTimeChangeOrientation());
-		}		
+		}
+		
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);

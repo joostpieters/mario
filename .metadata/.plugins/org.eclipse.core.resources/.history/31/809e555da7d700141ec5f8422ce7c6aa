@@ -604,21 +604,20 @@ public class World {
 		this.ownDt = dt;
 	}
 	
-	/*
-	private double computeOwnDt() {
-		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
-			setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
+	private double computeOwnDt(Mazub alien) {
+		if (alien.getXAcc() == 0 && alien.getYAcc() == 0) {
+			setOwnDt(Math.min(100 / Math.abs(alien.getXSpeed()), 100 / Math.abs(alien.getYSpeed())));
 		}
 		else {
-			if (this.getXAcc != 0) {
-				setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed()), 
-						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
-								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) ));
+			if (alien.getXAcc != 0) {
+				setOwnDt(Math.min(100 / Math.abs(alien.getXSpeed()), 100 / Math.abs(alien.getXSpeed()), 
+						(Math.sqrt(2 * Math.abs(alien.getXAcc() / 100) + Math.pow(Math.abs(alien.getXSpeed() / 100), 2))
+								- Math.abs(alien.getXSpeed()/ 100)) / (Math.abs(alien.getXAcc() / 100)) ));
 			}
 			else {
-				setOwnDt(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed()), 
-						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
-								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) ));			
+				setOwnDt(Math.min(100 / Math.abs(alien.getYSpeed()), 100 / Math.abs(alien.getYSpeed()), 
+						(Math.sqrt(2 * Math.abs(alien.getYAcc() / 100) + Math.pow(Math.abs(alien.getYSpeed() / 100), 2))
+								- Math.abs(alien.getYSpeed()/ 100)) / (Math.abs(alien.getYAcc() / 100)) ));			
 			}
 		}
 	}
@@ -647,7 +646,7 @@ public class World {
 		}
 		return this.getMinimalDt();
 	}	
-	*/
+
 	
 
 }

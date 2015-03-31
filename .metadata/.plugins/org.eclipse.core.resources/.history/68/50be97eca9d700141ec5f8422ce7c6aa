@@ -190,7 +190,7 @@ public class Slime {
 	 *         coordinates of the given slime's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
+		return new int[]{(int) this.getXPos(),(int) this.getYPos()};
 	}
 	
 	/**

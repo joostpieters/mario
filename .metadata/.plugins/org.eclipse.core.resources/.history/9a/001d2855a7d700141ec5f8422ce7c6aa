@@ -604,7 +604,6 @@ public class World {
 		this.ownDt = dt;
 	}
 	
-	/*
 	private double computeOwnDt() {
 		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
 			setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
@@ -647,7 +646,7 @@ public class World {
 		}
 		return this.getMinimalDt();
 	}	
-	*/
+
 	
 
 }

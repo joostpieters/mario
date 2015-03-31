@@ -263,7 +263,7 @@ public class Shark {
 	 *         coordinates of the given shark's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
+		return new int[]{this.getXPos(),this.getYPos()};
 	}
 	
 
@@ -451,9 +451,6 @@ public class Shark {
 				 && (y_pos >= Shark.getMINYVALUE())
 				 && (y_pos <= Shark.getMAXYVALUE()));
 	}
-	public boolean isValidYSpeed(double ySpeed) {
-		return ( ! Double.isNaN(ySpeed));
-	}
 	
 	/**
 	 * starts the action period for an object
@@ -471,10 +468,10 @@ public class Shark {
 	
 	private void advance_x(double dt) {
 		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt;	
 		}
 		else if (this.getOrientation() == Orientation.LEFT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt;
 		}
 		
 		if ((this.getNewXPos() < Shark.getMINXVALUE()) || 
@@ -483,6 +480,7 @@ public class Shark {
 		}
 		
 		this.setXPos(this.getNewXPos());
+		this.setXDifference(this.getNewXPos() - this.getXPos());
 	}
 	
 	/**
@@ -520,7 +518,7 @@ public class Shark {
 			fall();
 		}
 		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
-				this.getYAcc() * Math.pow(dt,2));
+				this.getYAcc() * Math.pow(dt,2) + this.getYDifference());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if ( ! this.isValidYSpeed()) {
 			this.setYSpeed(Shark.getJUMPSPEED());
@@ -534,6 +532,7 @@ public class Shark {
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
+		this.setYDifference(this.getNewYPos() - this.getYPos());
 	}
 	
 	private void fall() {
