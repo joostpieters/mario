@@ -67,9 +67,9 @@ public class World {
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
 	
-	private Collection<Shark> sharks;
-	private Collection<Plant> plants;
-	private Collection<Slime> slimes;
+	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
+	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
+	private List<Slime> slimes = new ArrayList<Slime>();
 
 	
 	
@@ -433,9 +433,9 @@ public class World {
 	}
 
 	public void addPlant(Plant plant) {
-		assert plant != null;
-	    assert plant.getWorld() == this;
-	    assert !this.hasPlant(plant);
+//		assert plant != null;
+//	    assert plant.getWorld() == this;
+//	    assert !this.hasPlant(plant);
 		this.plants.add(plant);
 	}
 	
@@ -464,8 +464,8 @@ public class World {
 	
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
-		return ((visiblewindowWidth <= tileSize * nbTilesX) && (visibleWindowHeight
-				<= tileSize * nbTilesY));
+		return true;// ((visiblewindowWidth <= tileSize * nbTilesX) && (visibleWindowHeight
+				//<= tileSize * nbTilesY));
 	}
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
 		return (new int[] {pixelX, pixelY} == this.getBottomLeftPixelOfTile(pixelX, pixelY));
@@ -525,15 +525,21 @@ public class World {
 // TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
 		alien.advanceTime(dt);
+		System.out.println("hallo");
+//		Iterator<Plant> plantIter = plants.iterator();
+//		while(plantIter.hasNext()) {
+//			Plant plant = plantIter.next();
+//			plant.advanceTime(dt);
+//		}
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
-		for (Shark shark: this.getSharks()) {
-			shark.advanceTime(dt);
-		}
-		for (Slime slime: this.getSlimes()) {
-			slime.advanceTime(dt);
-		}
+//		for (Shark shark: this.getSharks()) {
+//			shark.advanceTime(dt);
+//		}
+//		for (Slime slime: this.getSlimes()) {
+//			slime.advanceTime(dt);
+//		}
 	
 		positioningVisibleWindow();
 	}
