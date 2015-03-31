@@ -13,5 +13,5 @@
 - wat is de juiste manier om associatie te verwijderen in slime/plant/shark (zie terminate() in purchase)?
 - aparte positionklasse
 - this. ?
-- hoe het aantal objecten opvragen?
 - compute(own)Dt in world: hoe algemeen op een object toepassen 
+- stop en start<action>
