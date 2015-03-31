@@ -1,0 +1,20 @@
+package jumpingalien.model;
+
+public enum geologicalFeature {
+	
+	AIR {
+		
+	},
+	
+	WATER {
+		
+	},
+	
+	MAGMA {
+		
+	},
+	
+	SOLID_GROUND {
+		
+	};
+}

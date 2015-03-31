@@ -29,17 +29,6 @@ public class World {
 	 *            Tile x-coordinate of the target tile of the created world
 	 * @param targetTileY
 	 *            Tile y-coordinate of the target tile of the created world
-	 * @effect the new game world is created
-	 * 			| setTileSize)
-	 * 			| this.setNbTilesX(nbTilesX)
-	 * 			| this.setNbTilesY(nbTilesY)
-	 * 			| this.setVisibleWindowWidth(visibleWindowWidth)
-	 * 			| this.setVisibleWindowHeight(visibleWindowHeight)
-	 * 			| this.setTargetTileX(targetTileX)
-	 * 			| this.setTargetTileY(targetTileY)
-	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
-	 *  		| the geological features of the entire world are by default air (0)
-	 *  		
 	 */
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
@@ -66,7 +55,7 @@ public class World {
 		this.geologicalFeature = new int[nbTilesY][nbTilesX];
 		while (i < nbTilesX - 1) {
 			while (j < nbTilesY - 1) {
-				this.setGeologicalFeature(i * tileSize, j * tileSize, 0);
+				this.setGeologicalFeature(i * tileSize, j * tileSize, AIR);
 				j++;
 			}
 			i++;
@@ -437,7 +426,7 @@ public class World {
 	 *            </ul>
 	 */
 // 	TODO exception toevoegen
-	public void setGeologicalFeature(int tileX, int tileY, int tileType) {
+	public void setGeologicalFeature(int tileX, int tileY, enum tileType) {
 		
 		this.geologicalFeature[tileY][tileX] = tileType;
 	}

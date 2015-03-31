@@ -29,17 +29,6 @@ public class World {
 	 *            Tile x-coordinate of the target tile of the created world
 	 * @param targetTileY
 	 *            Tile y-coordinate of the target tile of the created world
-	 * @effect the new game world is created
-	 * 			| setTileSize)
-	 * 			| this.setNbTilesX(nbTilesX)
-	 * 			| this.setNbTilesY(nbTilesY)
-	 * 			| this.setVisibleWindowWidth(visibleWindowWidth)
-	 * 			| this.setVisibleWindowHeight(visibleWindowHeight)
-	 * 			| this.setTargetTileX(targetTileX)
-	 * 			| this.setTargetTileY(targetTileY)
-	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
-	 *  		| the geological features of the entire world are by default air (0)
-	 *  		
 	 */
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
@@ -64,15 +53,6 @@ public class World {
 		this.setTargetTileX(targetTileX);
 		this.setTargetTileY(targetTileY);
 		this.geologicalFeature = new int[nbTilesY][nbTilesX];
-		while (i < nbTilesX - 1) {
-			while (j < nbTilesY - 1) {
-				this.setGeologicalFeature(i * tileSize, j * tileSize, 0);
-				j++;
-			}
-			i++;
-			this.setJ(0);
-		}
-			
 	}
 	
 	
@@ -88,8 +68,6 @@ public class World {
 	private int YVisibleWindow;
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
-	private int i = 0;
-	private int j = 0;
 	
 
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
@@ -412,10 +390,6 @@ public class World {
 	private void setYVisibleWindow(int yVisibleWindow) {
 		YVisibleWindow = yVisibleWindow;
 	}
-	
-	private void setJ(int value) {
-		this.j = value;
-	}
 
 	/**
 	 * Modify the geological type of a specific tile in the given world to a
@@ -505,7 +479,7 @@ public class World {
 	}
 	
 	private boolean isValidNbTiles(int nbTiles){
-		return nbTiles > 0;
+		return nbTiles >0;
 	}
 	
 	// TODO
