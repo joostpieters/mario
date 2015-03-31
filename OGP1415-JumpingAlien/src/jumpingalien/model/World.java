@@ -67,9 +67,11 @@ public class World {
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
 	
+
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
 	private List<Slime> slimes = new ArrayList<Slime>();
+
 
 	
 	
@@ -282,6 +284,9 @@ public class World {
 		return this.getNbTilesY() * this.getTileLength();
 	}
 	
+	public Collection<Mazub> getMazubs() {
+		return this.mazubs;
+	}
 	public Collection<Plant> getPlants() {
 		return this.plants;
 	}
@@ -290,6 +295,19 @@ public class World {
 	}
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
+	}
+	
+	private int getNbMazubs() {
+		return ((Object) mazubs).count();
+	}
+	private int getNbPlants() {
+		return ((Object) plants).count();
+	}
+	private int getNbSharks() {
+		return ((Object) sharks).count();
+	}
+	private int getNbSlimes() {
+		return ((Object) slimes).count();
 	}
 //	SETTERS
 	
@@ -473,8 +491,8 @@ public class World {
 	
 	private boolean isValidAmountOfCharacters() {
 		return true;
-			//	((alien.getNumberOfMazubs() > 1) && (plant.getNumberOfPlants() + 
-				//slime.getNumberOfSlimes() + shark.getNumberOfSharks() <= 100));
+			//	((alien.getNbOfMazubs() > 1) && (plant.getNbOfPlants() + 
+				//slime.getNbOfSlimes() + shark.getNbOfSharks() <= 100));
 	}
 	private boolean isValidTargetTile(int x, int y) {
 		return true;
@@ -593,7 +611,8 @@ public class World {
 		this.ownDt = dt;
 	}
 	
-/*	private double computeOwnDt() {
+	/*
+	private double computeOwnDt() {
 		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
 			setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
 		}
@@ -634,10 +653,8 @@ public class World {
 			}
 		}
 		return this.getMinimalDt();
-	}
+	}	
 	*/
-	
-
 	
 
 }

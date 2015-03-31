@@ -817,6 +817,10 @@ public class Mazub {
 	private boolean isValidDt(double dt) {
 		return ( dt <= 0.2 && dt > 0);
 	}
+	
+	public boolean isValidYSpeed(double ySpeed) {
+		return ( ! Double.isNaN(ySpeed));
+	}
 
 	/**
 	 * Method to make the Mazub start moving
@@ -1232,5 +1236,6 @@ public class Mazub {
 		//TODO 
 		return false;
 	}
+	
 	
 }

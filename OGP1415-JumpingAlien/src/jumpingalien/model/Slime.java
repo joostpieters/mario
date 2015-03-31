@@ -190,7 +190,7 @@ public class Slime {
 	 *         coordinates of the given slime's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{this.getXPos(),this.getYPos()};
+		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
 	}
 	
 	/**
@@ -289,6 +289,10 @@ public class Slime {
 				&& (x_pos <= Slime.getMaxXValue())
 				 && (y_pos >= Slime.getMinYValue())
 				 && (y_pos <= Slime.getMaxYValue()));
+	}
+	
+	public boolean isValidYSpeed(double ySpeed) {
+		return ( ! Double.isNaN(ySpeed));
 	}
 	
 	/**

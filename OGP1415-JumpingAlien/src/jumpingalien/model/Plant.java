@@ -54,7 +54,7 @@ public class Plant {
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
-	private int INITHITPOINTS = 1;
+	private int INIT_HITPOINTS = 1;
 	public int hitpoints;
 	/**
 	 * the horizontal speed of a plant
@@ -178,7 +178,7 @@ public class Plant {
 		return timeSameOrientation;
 	}
 	private int getInitHitpoints() {
-		return INITHITPOINTS;
+		return INIT_HITPOINTS;
 	}
 	private double getXSpeed() {
 		return xSpeed;
@@ -204,7 +204,7 @@ public class Plant {
 	 *         coordinates of the given plant's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{this.getXPos(),this.getYPos()};
+		return new int[]{ (int) this.getXPos(), (int) this.getYPos()};
 	}
 
 	// TODO dees ook fixen
@@ -382,12 +382,10 @@ public class Plant {
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
 		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
-					+ this.getXDifference());		
+			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
 		}
 		else if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
-					+ this.getXDifference());
+			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
 		}
 		
 		if ((this.getNewXPos() < this.getMinXValue()) || 
@@ -396,14 +394,12 @@ public class Plant {
 		}
 		
 		this.setXPos(this.getNewXPos());
-		this.setXDifference(this.getNewXPos() - this.getXPos());
 		
 		if (this.getTimeSameOrientation() > this.getTimeChangeOrientation()) {
 			this.changeOrientation();
 			this.setTimeSameOrientation(this.getTimeSameOrientation()
 					- this.getTimeChangeOrientation());
-		}
-		
+		}		
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
