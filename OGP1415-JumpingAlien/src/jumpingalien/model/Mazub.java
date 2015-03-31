@@ -822,6 +822,7 @@ public class Mazub {
 		return ( ! Double.isNaN(ySpeed));
 	}
 
+
 	/**
 	 * Method to make the Mazub start moving
 	 * 
@@ -1089,7 +1090,7 @@ public class Mazub {
 		if ( ! this.isValidYSpeed()) {
 			this.setYSpeed(this.getStartJumpSpeed());
 		}
-		if (this.getNewYPos() <= 0) {
+		if (this.getNewYPos()<=0) {
 			this.endFall();
 			this.setNewYPos(0);
 		}
@@ -1098,7 +1099,11 @@ public class Mazub {
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
-		}	
+		}
+	
+
+
+
 	/**
 	 * Advances the time by calling two other functions: advance_x 
 	 * and advance_y with a given time interval dt
@@ -1237,5 +1242,19 @@ public class Mazub {
 		return false;
 	}
 	
+//	private boolean isFloor(double newYPos2) {
+//		int pixelLeft = (int) Math.floor(this.getXPos());
+//		int pixelBottom = (int) Math.floor(this.getYPos());
+//		int[][] TilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom, pixelLeft, pixelBottom);
+//		for (int[] tile: TilesUnder) {
+//			if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+//						world.getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+//				
+//			}
+//		}
+//		
+//	}
+	
+
 	
 }
