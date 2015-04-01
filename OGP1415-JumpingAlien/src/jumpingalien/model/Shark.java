@@ -34,7 +34,7 @@ public class Shark {
 		this.setXPos(x_pos);
 		this.setYPos(y_pos);
 		this.setSprite(sprites);
-		this.setNbHitpoints(INITHITPOINTS);
+		this.setNbHitpoints(INIT_HIT_POINTS);
 	}
 	
 	private int x_pos;
@@ -44,21 +44,21 @@ public class Shark {
 	/**
 	 * the x position (horizontal position) after dt seconds
 	 */
-	private double new_x_pos;
+	private double newXPos;
 	/**
 	 * the y position (vertical position) after dt seconds
 	 */
-	private double new_y_pos;
+	private double newYPos;
 	/**
 	 * the difference between the new x_position (new_x_pos) and
 	 * the previous x_pos (x_pos)
 	 */
-	private double x_difference;
+	private double xDifference;
 	/**
 	 * the difference between the new y_position (new_y_pos) and
 	 * the previous y_pos (y_pos)
 	 */
-	private double y_difference;
+	private double yDifference;
 	/**
 	 * the orientation of the shark
 	 */
@@ -82,7 +82,7 @@ public class Shark {
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
-	private static int INITHITPOINTS = 100;
+	private static int INIT_HIT_POINTS = 100;
 	/**
 	 * the horizontal acceleration of a shark
 	 */
@@ -94,7 +94,7 @@ public class Shark {
 	/**
 	 * the maximum horizontal speed a slime can reach
 	 */
-	private static double MAXXSPEED = 4;
+	private static double MAX_X_SPEED = 4;
 	/**
 	 * the vertical speed at which the shark moves when 
 	 * startJump() is initiated
@@ -107,25 +107,25 @@ public class Shark {
 	/**
 	 * the minimal duration of a movement period (1s)
 	 */
-	private static int MINMOVEMENTDURATION = 1;
+	private static int MIN_MOVEMENT_DURATION = 1;
 	/**
 	 * the maximal duration of a movement period (4s)
 	 */
-	private static int MAXMOVEMENTDURATION = 4;
+	private static int MAX_MOVEMENT_DURATION = 4;
 	/**
 	 * the amount of hitpoints a shark loses when touching 
 	 * a mazub or a slime
 	 */
-	private int CONTACTDAMAGE = 50;
+	private int CONTACT_DAMAGE = 50;
 	
-	private int HITPOINTS = 1;
+	private int HIT_POINTS = 1;
 	/**
-	 * a variable containing the amount of characters Shark
+	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
 	private int hitpoints;
 	private double xSpeed;
 	private double ySpeed;
-	private double REMAININGTIME = 0.6;
+	private double REMAINING_TIME = 0.6;
 	
 	private boolean isDying = false;
 	
@@ -146,7 +146,7 @@ public class Shark {
 	 * @return MIN_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMINXVALUE() {
+	private static int getMinXValue() {
 		return MIN_X_VALUE;
 	}
 	/**
@@ -154,7 +154,7 @@ public class Shark {
 	 * @return MAX_X_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMAXXVALUE() {
+	private static int getMaxXValue() {
 		return MAX_X_VALUE;
 	}
 	/**
@@ -162,26 +162,26 @@ public class Shark {
 	 * @return MIN_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMINYVALUE() {
+	private static int getMinYValue() {
 		return MIN_Y_VALUE;
 	}/**
 	 * returns the maximal value of y_pos
 	 * @return MAX_Y_VALUE
 	 */
 	@Basic @Immutable @Raw 
-	private static int getMAXYVALUE() {
+	private static int getMaxYValue() {
 		return MAX_Y_VALUE;
 	}
-	private static int getINITHITPOINTS() {
-		return INITHITPOINTS;
+	private static int getInitHitpoints() {
+		return INIT_HIT_POINTS;
 	}
 	private double getXAcc() {
 		return xAcc;
 	}
-	private static double getMAXXSPEED() {
-		return  MAXXSPEED;
+	private static double getMaxXSpeed() {
+		return  MAX_X_SPEED;
 	}
-	private static double getJUMPSPEED() {
+	private static double getJumpSpeed() {
 		return JUMP_SPEED;
 	}
 	/**
@@ -189,14 +189,14 @@ public class Shark {
 	 * @return FALL_ACC
 	 */
 	@Basic @Immutable @Raw 
-	private double getFALLACC() {
+	private double getFallAcc() {
 		return FALL_ACC;
 	}
 	private static int getMaxMovementDuration() {
-		return MAXMOVEMENTDURATION;
+		return MAX_MOVEMENT_DURATION;
 	}
 	private static int getMinMovementDuration() {
-		return MINMOVEMENTDURATION;
+		return MIN_MOVEMENT_DURATION;
 	}
 	/**
 	 * @return the x
@@ -228,7 +228,7 @@ public class Shark {
 	 */
 	@Raw 
 	private double getXDifference() {
-		return x_difference;
+		return xDifference;
 	}
 	/**
 	 * Returns the horizontal position after dt seconds
@@ -236,7 +236,7 @@ public class Shark {
 	 */
 	@Raw 
 	private double getNewXPos() {
-		return new_x_pos;
+		return newXPos;
 	}	
 	
 	/**
@@ -246,7 +246,7 @@ public class Shark {
 	 */
 	@Raw 
 	private double getYDifference() {
-		return y_difference;
+		return yDifference;
 	}
 	/**
 	 * Returns the vertical position after dt seconds
@@ -254,7 +254,7 @@ public class Shark {
 	 */
 	@Raw 
 	private double getNewYPos() {
-		return new_y_pos;
+		return newYPos;
 	}
 	/**
 	 * Returns the current location of the given shark.
@@ -264,8 +264,7 @@ public class Shark {
 	 */
 	public int[] getLocation(){
 		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
-	}
-	
+	}	
 
 	private int getNbHitpoints() {
 		return this.hitpoints;
@@ -287,8 +286,8 @@ public class Shark {
 		return yAcc;
 	}
 	
-	private double getREMAININGTIME() {
-		return this.REMAININGTIME;
+	private double getRemainingTime() {
+		return this.REMAINING_TIME;
 	}
 	
 	private double getTimeSinceDeath() {
@@ -357,7 +356,7 @@ public class Shark {
 	 */
 	@Raw 
 	private void setXDifference(double x_difference) {
-		this.x_difference = x_difference;
+		this.xDifference = x_difference;
 	}
 	/**
 	 * Sets the difference between the reel y position and the
@@ -367,7 +366,7 @@ public class Shark {
 	 */	
 	@Raw 
 	private void setYDifference(double y_difference) {
-		this.y_difference = y_difference;
+		this.yDifference = y_difference;
 	}
 	/**
 	 * Sets the new horizontal position to a new value
@@ -376,7 +375,7 @@ public class Shark {
 	 */
 	@Raw 
 	private void setNewXPos(double x) {
-		this.new_x_pos = x;
+		this.newXPos = x;
 	}
 	/**
 	 * Sets the new vertical position to a new value
@@ -385,7 +384,7 @@ public class Shark {
 	 */
 	@Raw 
 	private void setNewYPos(double y) {
-		this.new_y_pos = y;
+		this.newYPos = y;
 	}
 
 	
@@ -430,8 +429,6 @@ public class Shark {
 		this.falling = false;
 	}	
 	
-	
-	
 //	Validations
 	private boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
@@ -446,10 +443,10 @@ public class Shark {
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
 	 */
 	public boolean isValidPosition(int x_pos, int y_pos) {
-		return ((x_pos >= Shark.getMINXVALUE())
-				&& (x_pos <= Shark.getMAXXVALUE())
-				 && (y_pos >= Shark.getMINYVALUE())
-				 && (y_pos <= Shark.getMAXYVALUE()));
+		return ((x_pos >= Shark.getMinXValue())
+				&& (x_pos <= Shark.getMaxXValue())
+				 && (y_pos >= Shark.getMinYValue())
+				 && (y_pos <= Shark.getMaxYValue()));
 	}
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
@@ -474,7 +471,7 @@ public class Shark {
 //		
 //	}
 	
-	private void advance_x(double dt) {
+	private void advanceX(double dt) {
 		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
 		}
@@ -482,8 +479,8 @@ public class Shark {
 			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
 		}
 		
-		if ((this.getNewXPos() < Shark.getMINXVALUE()) || 
-				(this.getNewXPos() > Shark.getMAXXVALUE())){
+		if ((this.getNewXPos() < Shark.getMinXValue()) || 
+				(this.getNewXPos() > Shark.getMaxXValue())){
 			this.remove();
 		}
 		
@@ -520,7 +517,7 @@ public class Shark {
 	 * 			| y_pos == new_y_pos
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
-	private void advance_y(double dt){	
+	private void advanceY(double dt){	
 		if ((this.getYPos() > 0) && (!this.isFalling())){
 			fall();
 		}
@@ -528,14 +525,14 @@ public class Shark {
 				this.getYAcc() * Math.pow(dt,2));
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if ( ! this.isValidYSpeed()) {
-			this.setYSpeed(Shark.getJUMPSPEED());
+			this.setYSpeed(Shark.getJumpSpeed());
 		}
 		if (this.getNewYPos() <= 0) {
 			this.endFall();
 			this.setNewYPos(0);
 		}
-		if (this.getNewYPos() > Shark.getMAXYVALUE()) {
-			this.setNewYPos(Shark.getMAXYVALUE());
+		if (this.getNewYPos() > Shark.getMaxYValue()) {
+			this.setNewYPos(Shark.getMaxYValue());
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
@@ -543,7 +540,7 @@ public class Shark {
 	
 	private void fall() {
 		if (this.getYPos() > 0){
-			this.setYAcc(this.getFALLACC());
+			this.setYAcc(this.getFallAcc());
 			this.setFalling();
 		}
 	} 
@@ -562,12 +559,12 @@ public class Shark {
 	
 	public void advanceTime(double dt) {
 		
-		this.advance_x(dt);
-		this.advance_y(dt);
+		this.advanceX(dt);
+		this.advanceY(dt);
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= this.getREMAININGTIME()) {
+			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
 				this.remove();
 			}
 		}

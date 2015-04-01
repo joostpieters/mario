@@ -40,9 +40,9 @@ public class Slime {
 	}
 	
 
-	private int x_pos;
+	private int xPos;
 	
-	private int y_pos;
+	private int yPos;
 	
 	private Sprite[] sprites;
 	
@@ -121,14 +121,14 @@ public class Slime {
 	 * @return the x
 	 */
 	private int getXPos() {
-		return x_pos;
+		return xPos;
 	}
 
 	/**
 	 * @return the y
 	 */
 	private int getYPos() {
-		return y_pos;
+		return yPos;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Slime {
 	private Sprite[] getSprite() {
 		return sprites;
 	}
-	private int getIinitHitpoints() {
+	private int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
 	private double getXAcc() {
@@ -230,14 +230,14 @@ public class Slime {
 	 * @param x the x to set
 	 */
 	private void setXPos(int x) {
-		this.x_pos = x;
+		this.xPos = x;
 	}
 
 	/**
 	 * @param y the y to set
 	 */
 	private void setYPos(int y) {
-		this.y_pos = y;
+		this.yPos = y;
 	}
 	
 	/**

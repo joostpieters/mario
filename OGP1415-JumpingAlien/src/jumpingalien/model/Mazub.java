@@ -190,7 +190,7 @@ public class Mazub {
 	/**
 	 * the maximal value for x_pos
 	 */
-	private static int MAX_X_VALUE = 1023;
+	private static int MAX_X_VALUE = 1023; // = World.getTileLength() * World.getNbTilesX();
 	/**
 	 * the minimal value for y_pos
 	 */
@@ -198,7 +198,7 @@ public class Mazub {
 	/**
 	 * the maximal value for y_pos
 	 */
-	private static int MAX_Y_VALUE = 767;
+	private static int MAX_Y_VALUE = 767; // = World.getTileLength() * World.getNbTilesY();
 	/**
 	 * the static int giving the starting speed of mazub
 	 * when startMove() is initiated
@@ -759,6 +759,7 @@ public class Mazub {
 	public void setWorld(World world) {
 		this.world = world;
 	}
+	
 //Validations
 	/**
 	 * 	Checks whether the given positions are valid positions for 
@@ -1010,7 +1011,7 @@ public class Mazub {
 	 * 			| 						then i += 1
 	 * 			|					 else i==0					
 	 */
-	private void advance_x(double dt) {
+	private void advanceX(double dt) {
 		if (this.getXSpeed() >= this.getMaxSpeed()){
 			this.setXSpeed(this.getMaxSpeed());
 			this.setXAcc(0);
@@ -1019,6 +1020,14 @@ public class Mazub {
 		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
+			this.setNewYPos((this.getTilesLeft()[0][1] + 1)* world.getTileLength() - 1);
+			//this.setNewXPos(x);
+		}
+		
+		if (againstRightWall() && this.getOrientation() == Orientation.RIGHT) {
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			// TODO wa doet he hieronder eig?? :p #geenzinomnatedenken
 			this.setNewYPos((this.getTilesLeft()[0][1] + 1)* world.getTileLength() - 1);
 			//this.setNewXPos(x);
 		}
@@ -1090,12 +1099,12 @@ public class Mazub {
 	 * 			| y_pos == new_y_pos
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
-	private void advance_y(double dt){	
+	private void advanceY(double dt){	
 		if (isAgainstRoof()) {
 			this.setYSpeed(0);
 			this.setNewYPos((this.getTilesUnder()[0][1])* world.getTileLength() - this.getSize()[1]);
 		}
-		if ((!onFloor()) && (!this.isFalling())){
+		if (( ! onFloor()) && ( ! this.isFalling())){
 			fall();
 		}
 		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
@@ -1129,20 +1138,15 @@ public class Mazub {
 	public void advanceTime(double dt) throws IllegalDtException {
 		if (!isValidDt(dt))
 			throw new IllegalDtException(dt);
-		this.advance_x(dt);
-		this.advance_y(dt);
+		this.advanceX(dt);
+		this.advanceY(dt);
 		
 		if (this.getNbHitPoints() <= 0) {
 			this.die();
 		}
 	}
 	
-	private void die() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
 	 * and the maxSpeed back to MAX_SPEED_DUCK
@@ -1161,9 +1165,11 @@ public class Mazub {
 	 * 			| duck == false
 	 * 			| maxSpeed == MAX_SPEED
 	 */
-	public void endDuck()  {	
-		this.setDuck(false);
-		this.setMaxSpeed(this.getMaxMovingSpeed());
+	public void endDuck()  {
+		if (! this.isAgainstRoof()){
+			this.setDuck(false);
+			this.setMaxSpeed(this.getMaxMovingSpeed());
+		}		
 	}		
 	/**
 	 * GEEN formele documentatie nodig
@@ -1221,7 +1227,10 @@ public class Mazub {
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
 	private static int MAX_HIT_POINTS = 500;
-	
+	/**
+	 * a boolean giving true if the alien is death
+	 */
+	private boolean death = false;
 	/**
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
@@ -1245,6 +1254,10 @@ public class Mazub {
 			this.NbHitPoints = number;
 		}		
 	}	
+	
+	private void die() {
+		this.death = true;		
+	}
 
 	public boolean isImmune() {
 		// TODO Auto-generated method stub
@@ -1252,30 +1265,38 @@ public class Mazub {
 	}
 	
 	public boolean isDeath() {
-		//TODO 
-		return false;
+		return death;
 	}
 	
 	private int[][] getTilesLeft() {
-		int pixelLeft = (int) Math.floor(this.getXPos());
-		int pixelTop = (int) Math.floor(this.getYPos()) + this.getSize()[1];
-		int pixelBottom = (int) Math.floor(this.getYPos());
+		int pixelLeft = (int)(this.getXPos());
+		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
+		int pixelBottom = (int)(this.getYPos());
 
 		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop -1);
 		return tilesUnder;
 	}
 	
+	private int[][] getTilesRight() {
+		int pixelRight = (int)(this.getXPos());
+		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
+		int pixelBottom = (int)(this.getYPos());
+
+		int[][] tilesUnder = world.getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop -1);
+		return tilesUnder;
+	}
+	
 	private int[][] getTilesAbove() {
-		int pixelLeft = (int) Math.floor(this.getXPos());
-		int pixelTop = (int) Math.floor(this.getYPos()) + this.getSize()[1];
+		int pixelLeft = (int)(this.getXPos());
+		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
 		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+2,pixelTop, pixelRight-2, pixelTop);
 		return tilesUnder;
 	}
 	
 	private int[][] getTilesUnder() {
-		int pixelLeft = (int) Math.floor(this.getXPos());
-		int pixelBottom = (int) Math.floor(this.getYPos());
+		int pixelLeft = (int)(this.getXPos());
+		int pixelBottom = (int)(this.getYPos());
 		int pixelRight = pixelLeft + this.getSize()[0];
 		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+2,pixelBottom, pixelRight-2, pixelBottom);
 		return tilesUnder;
@@ -1321,6 +1342,21 @@ public class Mazub {
 				}
 			} catch (IllegalPixelException e) {
 				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	private boolean againstRightWall() {
+		int[][] tilesRight = this.getTilesRight();
+		for (int[] tile: tilesRight) {
+			try {
+				if (world.getGeologicalFeature(world.getBottomRightPixelOfTile(tile[0],tile[1])[0],
+							world.getBottomRightPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet, domme ward!!!!");
 			}
 		}
 		return false;

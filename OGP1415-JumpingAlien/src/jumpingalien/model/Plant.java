@@ -55,6 +55,9 @@ public class Plant {
 	 * the initial amount of hitpoints a plant possesses
 	 */	
 	private int INIT_HITPOINTS = 1;
+	/**
+	 * a variable representing the amount of times mazub can be 'hit'
+	 */
 	public int hitpoints;
 	/**
 	 * the horizontal speed of a plant
@@ -419,7 +422,7 @@ public class Plant {
 		this.setDying();
 	}
 	
-// TODO hier een getter of niet
+	// TODO hier een getter of niet
 	private void remove() {
 		this.world.removePlant(this);
 		this.setWorld(null);

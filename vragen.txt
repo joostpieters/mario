@@ -18,3 +18,5 @@
 - in world: startGame(): hoe maken
 aan ward vragen: met enum gewerkt bij geologicalfeature, klopt dat?
 - stop en start<action>
+- kunnen we donderdag id paasvakantie feedback vragen? ( + hoeveel keer kunt ge int totaal langskomen)
+- inheritance uit superklasse: voor mazub, shark, ...

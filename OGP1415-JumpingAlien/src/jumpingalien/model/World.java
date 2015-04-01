@@ -64,8 +64,7 @@ public class World {
 		this.setTargetTileY(targetTileY);
 		this.geologicalFeature = new int[nbTilesY][nbTilesX];
 		
-	}
-	
+	}	
 	
 
 	private int tileSize;
@@ -79,8 +78,6 @@ public class World {
 	private int YVisibleWindow;
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
-	private int i = 0;
-	private int j = 0;
 	
 
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
@@ -115,7 +112,7 @@ public class World {
 	/**
 	 * @return the nbTilesX
 	 */
-	private int getNbTilesX() {
+	public int getNbTilesX() {
 		return nbTilesX;
 	}
 
@@ -185,6 +182,22 @@ public class World {
 	 */
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
 		return new int[] {tileX * this.getTileLength(),
+				tileY * this.getTileLength()};
+	}
+	
+	/**
+	 * Returns the bottom right pixel coordinate of the tile at the given tile
+	 * position.
+	 * 
+	 * @param tileX
+	 *            The x-position x_T of the tile
+	 * @param tileY
+	 *            The y-position y_T of the tile
+	 * @return An array which contains the x-coordinate and y-coordinate of the
+	 *         bottom right pixel of the given tile, in that order.
+	 */
+	public int[] getBottomRightPixelOfTile(int tileX, int tileY) {
+		return new int[] {tileX * this.getTileLength() + this.getTileLength(),
 				tileY * this.getTileLength()};
 	}
 		
@@ -403,10 +416,6 @@ public class World {
 	 */
 	private void setYVisibleWindow(int yVisibleWindow) {
 		YVisibleWindow = yVisibleWindow;
-	}
-	
-	private void setJ(int value) {
-		this.j = value;
 	}
 
 	/**
