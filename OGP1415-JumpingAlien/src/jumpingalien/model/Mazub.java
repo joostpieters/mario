@@ -1085,7 +1085,8 @@ public class Mazub {
 	 */
 	private void advance_y(double dt){	
 		if (isAgainstRoof()) {
-			this.setXSpeed(0);
+			this.setYSpeed(0);
+			this.setNewYPos((this.getTilesUnder()[0][1])* world.getTileLength() - this.getSize()[1]);
 		}
 		if ((!onFloor()) && (!this.isFalling())){
 			fall();
@@ -1251,7 +1252,7 @@ public class Mazub {
 		int pixelLeft = (int) Math.floor(this.getXPos());
 		int pixelTop = (int) Math.floor(this.getYPos()) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
-		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelTop, pixelRight, pixelTop);
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+1,pixelTop, pixelRight-1, pixelTop);
 		return tilesUnder;
 	}
 	
@@ -1259,7 +1260,7 @@ public class Mazub {
 		int pixelLeft = (int) Math.floor(this.getXPos());
 		int pixelBottom = (int) Math.floor(this.getYPos());
 		int pixelRight = pixelLeft + this.getSize()[0];
-		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom, pixelRight, pixelBottom);
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+1,pixelBottom, pixelRight-1, pixelBottom);
 		return tilesUnder;
 	}
 	
