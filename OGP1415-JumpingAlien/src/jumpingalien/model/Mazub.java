@@ -1016,7 +1016,14 @@ public class Mazub {
 			this.setXAcc(0);
 		}
 		
-		if (this.getOrientation() == Orientation.RIGHT) {
+		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			this.setNewYPos((this.getTilesLeft()[0][1] + 1)* world.getTileLength() - 1);
+			//this.setNewXPos(x);
+		}
+		
+		else if (this.getOrientation() == Orientation.RIGHT) {
 			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
 					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2));		
 		}
@@ -1248,11 +1255,21 @@ public class Mazub {
 		//TODO 
 		return false;
 	}
+	
+	private int[][] getTilesLeft() {
+		int pixelLeft = (int) Math.floor(this.getXPos());
+		int pixelTop = (int) Math.floor(this.getYPos()) + this.getSize()[1];
+		int pixelBottom = (int) Math.floor(this.getYPos());
+
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop -1);
+		return tilesUnder;
+	}
+	
 	private int[][] getTilesAbove() {
 		int pixelLeft = (int) Math.floor(this.getXPos());
 		int pixelTop = (int) Math.floor(this.getYPos()) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
-		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+1,pixelTop, pixelRight-1, pixelTop);
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+2,pixelTop, pixelRight-2, pixelTop);
 		return tilesUnder;
 	}
 	
@@ -1260,7 +1277,7 @@ public class Mazub {
 		int pixelLeft = (int) Math.floor(this.getXPos());
 		int pixelBottom = (int) Math.floor(this.getYPos());
 		int pixelRight = pixelLeft + this.getSize()[0];
-		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+1,pixelBottom, pixelRight-1, pixelBottom);
+		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+2,pixelBottom, pixelRight-2, pixelBottom);
 		return tilesUnder;
 	}
 	
@@ -1294,6 +1311,19 @@ public class Mazub {
 		return false;
 	}
 	
-
+	private boolean againstLeftWall() {
+		int[][] tilesLeft = this.getTilesLeft();
+		for (int[] tile: tilesLeft) {
+			try {
+				if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							world.getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
 	
 }
