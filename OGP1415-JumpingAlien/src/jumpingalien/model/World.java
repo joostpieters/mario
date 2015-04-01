@@ -63,15 +63,7 @@ public class World {
 		this.setTargetTileX(targetTileX);
 		this.setTargetTileY(targetTileY);
 		this.geologicalFeature = new int[nbTilesY][nbTilesX];
-		while (i < nbTilesX - 1) {
-			while (j < nbTilesY - 1) {
-				this.setGeologicalFeature(i * tileSize, j * tileSize, 0);
-				j++;
-			}
-			i++;
-			this.setJ(0);
-		}
-			
+		
 	}
 	
 	
