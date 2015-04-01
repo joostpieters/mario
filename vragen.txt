@@ -13,8 +13,13 @@
 - wat is de juiste manier om associatie te verwijderen in slime/plant/shark (zie terminate() in purchase)?
 - aparte positionklasse
 - this. ?
+<<<<<<< HEAD
 - hoe het aantal objecten opvragen?
 - compute(own)Dt in world: hoe algemeen op een object toepassen 
 - in world: startGame(): hoe maken
 
 aan ward vragen: met enum gewerkt bij geologicalfeature, klopt dat?
+=======
+- compute(own)Dt in world: hoe algemeen op een object toepassen 
+- stop en start<action>
+>>>>>>> a6fe06fc36c4bb314feab3b24c13294f1b22763f

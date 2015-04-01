@@ -1,7 +1,6 @@
 package jumpingalien.model;
 
 import java.util.List;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -53,7 +52,7 @@ public class World {
 				throw new  IllegalTileSizeException(tileSize);
 			if ( ! isValidTargetTile(targetTileX, targetTileY))
 				throw new  IllegalTargetTileException(targetTileX, targetTileY);
-			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, getNbTilesX(), getNbTilesY()))
+			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, nbTilesX, nbTilesY))
 				throw new  IllegalVisibleWindowException(visibleWindowWidth, visibleWindowHeight);
 		// TODO illegaltilesizeecxeption, illegalsetarget..., illegalvis... toevoegen
 		this.setTileSize(tileSize);
@@ -254,6 +253,7 @@ public class World {
 		}
 		return array;
 	}
+
 	
 	/**
 	 * Returns the geological feature of the tile with its bottom left pixel at
@@ -511,11 +511,11 @@ public class World {
 	// TODO
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
-		return true;// ((visiblewindowWidth <= tileSize * nbTilesX) && (visibleWindowHeight
-				//<= tileSize * nbTilesY));
+		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
+				<=  tileSize * nbTilesY));
 	}
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
-		return (new int[] {pixelX, pixelY} == this.getBottomLeftPixelOfTile(pixelX, pixelY));
+		return ((pixelX%this.getTileLength() == 0) && (pixelY%this.getTileLength() ==0));
 	}
 	
 	private boolean isValidAmountOfCharacters() {
