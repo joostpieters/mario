@@ -52,7 +52,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	public Mazub(int xPos, int yPos, Sprite[] sprites)
-		throws IllegalPositionException, IllegalSpriteException {
+			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_MOVING_SPEED);

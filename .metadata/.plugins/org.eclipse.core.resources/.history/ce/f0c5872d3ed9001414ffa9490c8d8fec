@@ -52,7 +52,11 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	public Mazub(int xPos, int yPos, Sprite[] sprites)
-		throws IllegalPositionException, IllegalSpriteException {
+			throws IllegalPositionException, IllegalSpriteException {
+				if(!isValidPosition(xPos,yPos))
+					throw new IllegalPositionException(xPos,yPos);
+				if ( ! isValidSprite(sprites))
+					throw new IllegalSpriteException(sprites);
 		super(xPos,yPos,sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_MOVING_SPEED);
@@ -772,7 +776,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	private void startMove() {
-		assert this.isValidPosition(getPosition().getXPos(), getPosition().getYPos());
+		assert this.isValidPosition(Position.getXPos(), Position.getYPos());
 		assert this.isValidSpeed(this.getInitStartSpeed(), this.getMaxSpeed());
 		this.setXSpeed(this.getInitStartSpeed());
 		if (this.isDucked() == false) {

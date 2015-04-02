@@ -236,7 +236,7 @@ public abstract class GameObject {
 		return sprites.length == 2;
 	}
 	
-	
+	//TODO
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}

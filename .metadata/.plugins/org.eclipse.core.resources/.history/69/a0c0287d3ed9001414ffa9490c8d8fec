@@ -9,7 +9,7 @@ import jumpingalien.util.Sprite;
  * @author Pieter
  *
  */
-public abstract class GameObject {
+public class GameObject {
 	/**
 	 * Creates a new gameObject, located at the provided pixel location (x, y).
 	 * The returned gameObject should not belong to a world.
@@ -27,7 +27,7 @@ public abstract class GameObject {
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
-	protected GameObject(int xPos,int yPos, Sprite[] sprites ) 
+	public GameObject(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 				if(!isValidPosition(xPos,yPos))
 					throw new IllegalPositionException(xPos,yPos); 
@@ -118,7 +118,7 @@ public abstract class GameObject {
 	/**
 	 * @return the sprites
 	 */
-	public Sprite[] getSprite() {
+	private Sprite[] getSprite() {
 		return sprites;
 	}
 	/**
@@ -137,7 +137,7 @@ public abstract class GameObject {
 	}
 	
 	private double xSpeed;
-	public double getXSpeed() {
+	private double getXSpeed() {
 		return this.xSpeed;
 	}
 	private void setXSpeed(double speed) {
@@ -145,10 +145,10 @@ public abstract class GameObject {
 	}
 	
 	private double ySpeed;
-	public double getYSpeed() {
+	private double getYSpeed() {
 		return this.ySpeed;
 	}
-	public void setYSpeed(double speed) {
+	private void setYSpeed(double speed) {
 		this.ySpeed = speed;
 	}
 	
@@ -156,7 +156,7 @@ public abstract class GameObject {
 	 * the horizontal acceleration 
 	 */
 	private double xAcc = 1.5;
-	public double getXAcc() {
+	private double getXAcc() {
 		return xAcc;
 	}
 	/**
@@ -169,7 +169,7 @@ public abstract class GameObject {
 	 * 			| YAcc
 	 */
 	@Basic @Raw 
-	public double getYAcc() {
+	private double getYAcc() {
 		return yAcc;
 	}
 	/**
@@ -178,16 +178,16 @@ public abstract class GameObject {
 	 * 			the new value of the vertical acceleration
 	 */
 	@Raw 
-	public void setYAcc(double yAcc) {
+	private void setYAcc(double yAcc) {
 		this.yAcc = yAcc;
 	}
 	
 	private boolean dying = false;
 	
-	public boolean isDying() {
+	private boolean isDying() {
 		return this.dying;
 	}
-	public void setDying() {
+	private void setDying() {
 		this.dying = true;
 	}
 	
@@ -205,24 +205,24 @@ public abstract class GameObject {
 	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
 	private int hitpoints;
-	public int getNbHitpoints() {
+	private int getNbHitpoints() {
 		return this.hitpoints;
 	}
-	public void setNbHitpoints(int nb) {
+	private void setNbHitpoints(int nb) {
 		this.hitpoints = nb;
 	}
 	private double timeSinceDeath = 0;
-	public double getTimeSinceDeath() {
+	private double getTimeSinceDeath() {
 		return this.timeSinceDeath;
 	}
-	public void setTimeSinceDeath(double t) {
+	private void setTimeSinceDeath(double t) {
 		this.timeSinceDeath += t;
 	}
 	
 	/**
 	 * changes the orientation of the plant
 	 */
-	public void changeOrientation() {
+	private void changeOrientation() {
 		if (this.getOrientation() == Orientation.LEFT) {
 			this.setOrientationLeft();
 		}
@@ -236,7 +236,7 @@ public abstract class GameObject {
 		return sprites.length == 2;
 	}
 	
-	
+	//TODO
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}
@@ -248,7 +248,7 @@ public abstract class GameObject {
 	
 	
 	
-	public void die() {
+	private void die() {
 		this.setXSpeed(0);
 		this.setYSpeed(0);
 		this.setDying();
