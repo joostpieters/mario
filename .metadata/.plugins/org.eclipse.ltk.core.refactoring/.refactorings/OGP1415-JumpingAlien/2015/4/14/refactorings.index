@@ -26,3 +26,8 @@
 1427905235288	Rename field 'x_pos'
 1427905241891	Rename field 'y_pos'
 1427905263319	Rename method 'getIinitHitpoints'
+1427976015879	Rename local variable 'x_pos'
+1427976041177	Rename local variable 'y_pos'
+1427976049693	Rename local variable 'YPos'
+1427976063272	Rename local variable 'x_pos'
+1427976070897	Rename local variable 'y_pos'

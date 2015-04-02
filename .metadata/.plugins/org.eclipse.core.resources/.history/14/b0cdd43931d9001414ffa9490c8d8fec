@@ -1,0 +1,54 @@
+package jumpingalien.model;
+
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Raw;
+
+/**
+ * 
+ * @author Pieter
+ *
+ */
+public class Position {
+	public Position(int xPos, int yPos) {
+		this.setXPos(xPos);
+		this.setYPos(yPos);
+	}
+	
+	private double xPos;
+	/**
+	 * Returns the horizontal position
+	 * @return xPos
+	 */
+	@Basic @Raw 
+	private double getXPos() {
+		return xPos;
+	}	
+	/**
+	 * Sets the horizontal position of mazub to the rounded down value of x
+	 * @param x
+	 * 			The new value for the horizontal position
+	 */
+	@Raw 
+	private void setXPos(double x) {
+		this.xPos = x;
+	}
+	private double yPos;
+	/**
+	 * Returns the vertical position
+	 * @return yPos
+	 */
+	@Basic @Raw 
+	private double getYPos() {
+		return yPos;
+	}	
+	
+	/**
+	 * Sets the vertical position of mazub to the rounded down value of y
+	 * @param y
+	 * 			The new value for the vertical position
+	 */	
+	@Raw 
+	private void setYPos(double y) {
+		this.yPos = y;
+	}
+}

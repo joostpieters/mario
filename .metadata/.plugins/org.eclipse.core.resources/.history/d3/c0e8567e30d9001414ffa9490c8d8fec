@@ -1,0 +1,14 @@
+package jumpingalien.model;
+
+/**
+ * 
+ * @author Pieter
+ *
+ */
+public class Position {
+	public Position(int xPos, int yPos) {
+		this.setXPos(xPos);
+		this.setYPos(yPos);
+	}
+	
+}

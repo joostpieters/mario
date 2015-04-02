@@ -457,19 +457,6 @@ public class Shark extends GameObject {
 		return true;
 	}
 	
-//	/**
-//	 * starts the action period for an object
-//	 */
-//	public void start<action> {
-//		
-//	}
-//	
-//	/**
-//	 * ends the action period for an object
-//	 */
-//	public void stop<action> {
-//		
-//	}
 	
 	private void advanceX(double dt) {
 		if (this.getOrientation() == Orientation.RIGHT) {

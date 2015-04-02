@@ -31,22 +31,12 @@ public class Plant extends GameObject {
 					throw new IllegalPositionException(x_pos,y_pos); 
 				if (!isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
-		this.setXPos(x_pos);
-		this.setYPos(y_pos);
-		this.setSprite(sprites);
-		}
+		super(xPos,yPos,sprites);
+	}
 	
 
 	private Sprite[] sprites;
 	
-	/**
-	 *  the horizontal position 
-	 */
-	private int xPos;
-	/**
-	 * the vertical position
-	 */
-	private int yPos;
 	/**
 	 * the x position (horizontal position) after dt seconds
 	 */
@@ -64,31 +54,10 @@ public class Plant extends GameObject {
 	 */
 	private double xSpeed = 0.5;
 	/**
-	 * the orientation of the plant
-	 */
-	private Orientation orientation = Orientation.LEFT;
-	/**
 	 * every 0.5 seconds the orientation of the plant changes
 	 */
 	private double TIME_CHANGE_ORIENTATION = 0.5;	
-	/**
-	 * the minimal value for x_pos
-	 */
-	private static int MIN_X_VALUE = 0;
-	/**
-	 * the maximal value for x_pos
-	 */
 	
-// TODO dees fixen en die andere
-	private final int MAX_X_VALUE = 1000;//getXWorld();
-	/**
-	 * the minimal value for y_pos
-	 */
-	private final int MIN_Y_VALUE = 0;
-	/**
-	 * the maximal value for y_pos
-	 */
-	private final int MAX_Y_VALUE = 1000;//getYWorld();
 	/**
 	 * the difference between the new x_position (new_x_pos) and
 	 * the previous x_pos (x_pos)
@@ -109,37 +78,7 @@ public class Plant extends GameObject {
 
 // GETTERS
 	
-	/**
-	 * returns the minimal value of x_pos
-	 * @return MIN_X_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private int getMinXValue() {
-		return MIN_X_VALUE;
-	}
-	/**
-	 * returns the maximal value of x_pos
-	 * @return MAX_X_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private int getMaxXValue() {
-		return MAX_X_VALUE;
-	}
-	/**
-	 * returns the minimal value of y_pos
-	 * @return MIN_Y_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private int getMinYValue() {
-		return MIN_Y_VALUE;
-	}/**
-	 * returns the maximal value of y_pos
-	 * @return MAX_Y_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private int getMaxYValue() {
-		return MAX_Y_VALUE;
-	}
+	
 	/**
 	 * Returns the horizontal position of the plant after dt seconds
 	 * @return new_x_pos
@@ -148,23 +87,7 @@ public class Plant extends GameObject {
 	private double getNewXPos() {
 		return newXPos;
 	}
-	/**
-	 * Returns the x position
-	 * @return xPos
-	 */
-	@Basic @Raw 
-	private int getXPos() {
-		return xPos;
-	}
 	
-	/**
-	 * Returns the y position
-	 * @return yPos
-	 */
-	@Basic @Raw 
-	private int getYPos() {
-		return yPos;
-	}
 	/**
 	 * Returns the difference between the real horizontal position of the plant
 	 * and the rounded down value 
@@ -186,18 +109,8 @@ public class Plant extends GameObject {
 	private double getXSpeed() {
 		return xSpeed;
 	}
-	private Orientation getOrientation() {
-		return orientation;
-	}
 	private double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
-	}
-
-	/**
-	 * @return the sprites
-	 */
-	private Sprite[] getSprite() {
-		return sprites;
 	}
 
 	/**
@@ -207,7 +120,7 @@ public class Plant extends GameObject {
 	 *         coordinates of the given plant's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{ (int) this.getXPos(), (int) this.getYPos()};
+		return new int[]{ (int) Position.getXPos(), (int) Position.getYPos()};
 	}
 
 	// TODO dees ook fixen
@@ -249,40 +162,7 @@ public class Plant extends GameObject {
 		this.sprites = sprites;
 	}
 
-	/**
-	 * Sets the horizontal position of the plant to the rounded down value of x
-	 * @param x
-	 * 			The new value for the horizontal position
-	 */
-	@Raw 
-	private void setXPos(double x) {
-		this.xPos = (int) Math.floor(x);
-	}
-	/**
-	 * Sets the vertical position of the plant to the rounded down value of y
-	 * @param y
-	 * 			The new value for the vertical position
-	 */	
-	@Raw 
-	private void setYPos(double y) {
-		this.yPos = (int) Math.floor(y);
-	}
-	/**
-	 * Sets the orientation of the plant to right
-	 * @post orientation == "right"
-	 */
-	@Raw 
-	private void setOrientationRight() {
-		this.orientation = Orientation.RIGHT;
-	}
-	/**
-	 * Sets the orientation of plant to left
-	 * @post orientation == "left"
-	 */
-	@Raw 
-	private void setOrientationLeft() {
-		this.orientation = Orientation.LEFT;
-	}
+	
 	/**
 	 * Sets the new horizontal position of the plant to a new value
 	 * @param x
@@ -351,32 +231,16 @@ public class Plant extends GameObject {
 		return sprites.length == 2;
 	}
 	
-	
-	
-	
-	/**
-	 * starts the action period for an object
-	 */
-//	public void start<action> {
-//		
-//	}
-	
-	/**
-	 * ends the action period for an object
-	 */
-//	public void stop<action> {
 		
-//	}
-	
 	/**
 	 * changes the orientation of the plant
 	 */
 	private void changeOrientation() {
-		if (this.getOrientation() == Orientation.LEFT) {
-			this.setOrientationLeft();
+		if (Position.getOrientation() == Orientation.LEFT) {
+			Position.setOrientationLeft();
 		}
 		else {
-			this.setOrientationRight();
+			Position.setOrientationRight();
 		}
 	}
 
@@ -384,11 +248,11 @@ public class Plant extends GameObject {
 		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
-		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
+		if (Position.getOrientation() == Orientation.RIGHT) {
+			this.setNewXPos(Position.getXPos() + this.getXSpeed()*100*dt);	
 		}
-		else if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
+		else if (Position.getOrientation() == Orientation.RIGHT) {
+			this.setNewXPos(Position.getXPos() - this.getXSpeed()*100*dt);
 		}
 		
 		if ((this.getNewXPos() < this.getMinXValue()) || 
@@ -396,7 +260,7 @@ public class Plant extends GameObject {
 			this.remove();
 		}
 		
-		this.setXPos(this.getNewXPos());
+		Position.setXPos(this.getNewXPos());
 		
 		if (this.getTimeSameOrientation() > this.getTimeChangeOrientation()) {
 			this.changeOrientation();
@@ -437,8 +301,8 @@ public class Plant extends GameObject {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == Orientation.RIGHT) {
+		assert isValidSprite(GameObject.getSprite());
+		if (Position.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {

@@ -29,9 +29,9 @@ public class Mazub extends GameObject {
 	/**
 	 * Initialize this new Mazub with given x and y positions and given sprites.
 	 * 
-	 * @param x_pos
+	 * @param xPos
 	 * The x position in the field for the new Mazub
-	 * @param y_pos
+	 * @param yPos
 	 * The y position in the field for the new Mazub
 	 * @param sprites
 	 * The sprites for the new Mazub
@@ -51,15 +51,13 @@ public class Mazub extends GameObject {
 	 * 
 	 */
 	@Raw
-	public Mazub(int x_pos, int y_pos, Sprite[] sprites)
+	public Mazub(int xPos, int yPos, Sprite[] sprites)
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos);
+				if(!isValidPosition(xPos,yPos))
+					throw new IllegalPositionException(xPos,yPos);
 				if ( ! isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
-		this.setXPos(x_pos);
-		this.setYPos(y_pos);
-		this.setSprite(sprites);
+		super(xPos,yPos,sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_MOVING_SPEED);
 		
@@ -71,9 +69,9 @@ public class Mazub extends GameObject {
 	 * 
 	 * < horizontal start speed and maximum horizontal speed.
 	 * 
-	 * @param x_pos
+	 * @param xPos
 	 * The x position in the field for the new Mazub
-	 * @param y_pos
+	 * @param yPos
 	 * The y position in the field for the new Mazub
 	 * @param sprites
 	 * The sprites for the new Mazub
@@ -103,40 +101,27 @@ public class Mazub extends GameObject {
 	 * 
 	 */	
 	@Raw
-	public Mazub(int x_pos, int y_pos, Sprite[] sprites,
+	public Mazub(int xPos, int yPos, Sprite[] sprites,
 			int initStartSpeed,int maxSpeed)
 		throws IllegalPositionException,IllegalSpriteException
 			, IllegalSpeedException {
-			if ( ! isValidPosition(x_pos,y_pos))
-				throw new IllegalPositionException(x_pos,y_pos);
+			if ( ! isValidPosition(xPos,yPos))
+				throw new IllegalPositionException(xPos,yPos);
 			if ( ! isValidSprite(sprites))
 				throw new IllegalSpriteException(sprites);
 			if ( ! isValidSpeed(initStartSpeed,maxSpeed))
 				throw new IllegalSpeedException(initStartSpeed,maxSpeed);
-			this.setXPos(x_pos);
-			this.setYPos(y_pos);
-			this.setSprite(sprites);
+			super(xPos, yPos, sprites);
 			this.setInitStartSpeed(initStartSpeed);
 			this.setMaxSpeed(maxSpeed);
 	}
 	
 	private World world;
 	/**
-	 *  the horizontal position of mazub
-	 */
-	private double xPos = 0;
-	/**
-	 * the vertical position of mazub
-	 */
-	private double yPos = 0;	
-	/**
 	 * The sprites for Mazub
 	 */
 	private Sprite[] sprites;
-	/**
-	 * the orientation of Mazub
-	 */
-	private Orientation orientation  = Orientation.RIGHT;
+	
 	/**
 	 * the starting speed when startMove is initiated
 	 */
@@ -280,28 +265,12 @@ public class Mazub extends GameObject {
 	
 //Getters	
 	/**
-	 * Returns the x position
-	 * @return x_pos
-	 */
-	@Basic @Raw 
-	private double getXPos() {
-		return xPos;
-	}	
-	/**
 	 * Returns the horizontal position of Mazub after dt seconds
 	 * @return new_x_pos
 	 */
 	@Raw 
 	private double getNewXPos() {
 		return newXPos;
-	}	
-	/**
-	 * Returns the y position
-	 * @return the y position
-	 */
-	@Basic @Raw 
-	private double getYPos() {
-		return yPos;
 	}
 	/**
 	 * Returns the vertical position of Mazub after dt seconds
@@ -319,16 +288,9 @@ public class Mazub extends GameObject {
 	 */
 	@Basic @Raw 
 	public int[] getLocation() {
-		return new int[]{(int) Math.floor(this.getXPos()),(int) Math.floor(this.getYPos())};
+		return new int[]{(int) (Position.getXPos()),(int) (Position.getYPos())};
 	}		
-	/**
-	 * Returns the orientation of Mazub
-	 * @return orientation
-	 */
-	@Basic @Raw 
-	public Orientation getOrientation() {
-		return orientation;
-	}
+	
 	/**
 	 * Returns the horizontal dimension of mazub (width)
 	 * @return the horizontal dimension of mazub (width)
@@ -615,24 +577,7 @@ public class Mazub extends GameObject {
 	private void setMaxSpeed(int maxspeed) {
 		this.maxSpeed = maxspeed;
 	}
-	/**
-	 * Sets the horizontal position of mazub to the rounded down value of x
-	 * @param x
-	 * 			The new value for the horizontal position
-	 */
-	@Raw 
-	private void setXPos(double x) {
-		this.xPos = x;
-	}
-	/**
-	 * Sets the vertical position of mazub to the rounded down value of y
-	 * @param y
-	 * 			The new value for the vertical position
-	 */	
-	@Raw 
-	private void setYPos(double y) {
-		this.yPos = y;
-	}
+	
 	/**
 	 * sets the horizontal speed of mazub to a new value speed
 	 * @param xSpeed
@@ -739,22 +684,7 @@ public class Mazub extends GameObject {
 	private void setTimeSinceStartMove(double time_since_startMove) {
 		this.timeSinceStartMove = time_since_startMove;
 	}
-	/**
-	 * Sets the orientation of Mazub to right
-	 * @post orientation == "right"
-	 */
-	@Raw 
-	private void setOrientationRight() {
-		this.orientation = Orientation.RIGHT;
-	}
-	/**
-	 * Sets the orientation of Mazub to left
-	 * @post orientation == "left"
-	 */
-	@Raw 
-	private void setOrientationLeft() {
-		this.orientation = Orientation.LEFT;
-	}
+	
 
 	public void setWorld(World world) {
 		this.world = world;
@@ -846,7 +776,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	private void startMove() {
-		assert this.isValidPosition(this.getXPos(),this.getYPos());
+		assert this.isValidPosition(Position.getXPos(), Position.getYPos());
 		assert this.isValidSpeed(this.getInitStartSpeed(), this.getMaxSpeed());
 		this.setXSpeed(this.getInitStartSpeed());
 		if (this.isDucked() == false) {
@@ -867,7 +797,7 @@ public class Mazub extends GameObject {
 	 * 			| orientation == right
 	 */
 	public void startMoveRight(){
-		this.setOrientationRight();
+		Position.setOrientationRight();
 		this.startMove();
 	}
 	/**
@@ -876,7 +806,7 @@ public class Mazub extends GameObject {
 	 * 			| orientation == left
 	 */
 	public void startMoveLeft(){
-		this.setOrientationLeft();
+		Position.setOrientationLeft();
 		this.startMove();
 	}	
 	/**
@@ -894,7 +824,7 @@ public class Mazub extends GameObject {
 	@Raw
 	private void endMove() {
 		assert (this.isValidXSpeed());
-		assert (this.isValidPosition(this.getXPos(),this.getYPos()));
+		assert (this.isValidPosition(Position.getXPos(),Position.getYPos()));
 		this.setXSpeed(0);
 		this.setXAcc(0);
 		this.setTimeSinceEndMove(0);
@@ -919,7 +849,7 @@ public class Mazub extends GameObject {
 	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
 	 */
 	public void startJump() {
-		if (this.onFloor(this.getXPos(),this.getYPos())) {
+		if (this.onFloor(Position.getXPos(),Position.getYPos())) {
 			this.setYSpeed(this.getStartJumpSpeed());	
 		}
 	}	
@@ -945,7 +875,7 @@ public class Mazub extends GameObject {
 	 * 			|		 setFalling()	
 	 */
 	private void fall() {
-		if (this.getYPos() > 0){
+		if (Position.getYPos() > 0){
 			this.setYAcc(this.getFallAcc());
 			this.setFalling();
 		}
@@ -985,25 +915,25 @@ public class Mazub extends GameObject {
 			this.setXSpeed(this.getMaxSpeed());
 			this.setXAcc(0);
 		}
-		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
+		if (againstLeftWall() && Position.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
 			this.setNewYPos((this.getTilesLeft()[0][1] + 1)* world.getTileLength() - 1);
 			//this.setNewXPos(x);
 		}		
-		if (againstRightWall() && this.getOrientation() == Orientation.RIGHT) {
+		if (againstRightWall() && Position.getOrientation() == Orientation.RIGHT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
 			// TODO wa doet he hieronder eig?? :p #geenzinomnatedenken
 			this.setNewYPos((this.getTilesLeft()[0][1] + 1)* world.getTileLength() - 1);
 			//this.setNewXPos(x);
 		}
-		else if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt
+		else if (Position.getOrientation() == Orientation.RIGHT) {
+			this.setNewXPos(Position.getXPos() + this.getXSpeed()*100*dt
 					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2));		
 		}
-		else if (this.getOrientation() == Orientation.LEFT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt
+		else if (Position.getOrientation() == Orientation.LEFT) {
+			this.setNewXPos(Position.getXPos() - this.getXSpeed()*100*dt
 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2));
 		}
 	}
@@ -1058,7 +988,7 @@ public class Mazub extends GameObject {
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
-		this.setXPos(this.getNewXPos());
+		Position.setXPos(this.getNewXPos());
 		
 		if (this.getXSpeed() == 0) {
 			this.setTimeSinceEndMove(this.getTimeSinceEndMove() + dt);
@@ -1109,7 +1039,7 @@ public class Mazub extends GameObject {
 	 */
 	private void advanceY(double dt){	
 		
-		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+		this.setNewYPos(Position.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
 				this.getYAcc() * Math.pow(dt,2));
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if ( ! this.isValidYSpeed()) {
@@ -1132,7 +1062,7 @@ public class Mazub extends GameObject {
 			this.setNewYPos(Mazub.getMaxYValue());
 			this.setYSpeed(0);
 		}
-		this.setYPos(this.getNewYPos());	
+		Position.setYPos(this.getNewYPos());	
 	}
 	
 
@@ -1191,7 +1121,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	public Sprite getCurrentSprite() {
-		assert isValidSprite(this.getSprite());
+		assert isValidSprite(GameObject.getSprite());
 		this.setNbRunningSprites(((this.getSprite()).length-8)/2);
 		if ((this.getXSpeed()==0) && (! this.isDucked()) &&
 				(this.getTimeSinceEndMove() > this.getNotMovingTime())){
@@ -1202,26 +1132,26 @@ public class Mazub extends GameObject {
 			return sprites[1];
 		}
 		else if ((this.getXSpeed()==0) &&
-				(!this.isDucked()) && (this.getOrientation() == Orientation.RIGHT )){
+				(!this.isDucked()) && (Position.getOrientation() == Orientation.RIGHT )){
 			return sprites[2];
 		}		
 		else if ((this.getXSpeed()==0) && (!this.isDucked())){
 			return sprites[3];
 		}
-		else if ((this.getXSpeed() > 0) && (this.getOrientation() == Orientation.RIGHT ) 
+		else if ((this.getXSpeed() > 0) && (Position.getOrientation() == Orientation.RIGHT ) 
 				&& (this.isFalling()) && (!this.isDucked())){
 			return sprites[4];
 		}
 		else if ((this.getXSpeed() > 0) && (this.isFalling()) && (!this.isDucked())){
 			return sprites[5];
 		}
-		else if ((this.getOrientation() == Orientation.RIGHT) && (this.isDucked())){
+		else if ((Position.getOrientation() == Orientation.RIGHT) && (this.isDucked())){
 			return sprites[6];
 		}
 		else if (this.isDucked()){
 			return sprites[7];
 		}
-		else if (this.getOrientation() == Orientation.RIGHT){
+		else if (Position.getOrientation() == Orientation.RIGHT){
 			return sprites[8 + this.getCounterSprites()];
 		}
 		else {
@@ -1284,18 +1214,18 @@ public class Mazub extends GameObject {
 	}
 	
 	private int[][] getTilesLeft() {
-		int pixelLeft = (int)(this.getXPos());
-		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
-		int pixelBottom = (int)(this.getYPos());
+		int pixelLeft = (int)(Position.getXPos());
+		int pixelTop = (int)(Position.getYPos()) + this.getSize()[1];
+		int pixelBottom = (int)(Position.getYPos());
 
 		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop -1);
 		return tilesUnder;
 	}
 	
 	private int[][] getTilesRight() {
-		int pixelRight = (int)(this.getXPos());
-		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
-		int pixelBottom = (int)(this.getYPos());
+		int pixelRight = (int)(Position.getXPos());
+		int pixelTop = (int)(Position.getYPos()) + this.getSize()[1];
+		int pixelBottom = (int)(Position.getYPos());
 
 		int[][] tilesUnder = world.getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop -1);
 		return tilesUnder;

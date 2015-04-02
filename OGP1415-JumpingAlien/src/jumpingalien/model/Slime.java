@@ -33,39 +33,10 @@ public class Slime extends GameObject {
 					throw new IllegalPositionException(x_pos,y_pos); 
 				if (!isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
-		this.setXPos(x_pos);
-		this.setYPos(y_pos);
-		this.setSprite(sprites);
+		super(xPos, yPos, sprites);
 		this.setSchool(school);
 	}
-	
 
-	private int xPos;
-	
-	private int yPos;
-	
-	private Sprite[] sprites;
-	
-	/**
-	 * the orientation of the slime
-	 */
-	private Orientation orientation  = Orientation.LEFT;
-	/**
-	 * the minimal value for x_pos
-	 */
-	private static int MIN_X_VALUE = 0;
-	/**
-	 * the maximal value for x_pos
-	 */
-	private static int MAX_X_VALUE = 1023;
-	/**
-	 * the minimal value for y_pos
-	 */
-	private static int MIN_Y_VALUE = 0;
-	/**
-	 * the maximal value for y_pos
-	 */
-	private static int MAX_Y_VALUE = 767;
 	
 	private int movementDuration;
 
@@ -117,26 +88,7 @@ public class Slime extends GameObject {
 	private School school;
 	
 //	GETTERS	
-	/**
-	 * @return the x
-	 */
-	private int getXPos() {
-		return xPos;
-	}
-
-	/**
-	 * @return the y
-	 */
-	private int getYPos() {
-		return yPos;
-	}
-
-	/**
-	 * @return the sprites
-	 */
-	private Sprite[] getSprite() {
-		return sprites;
-	}
+	
 	private int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
@@ -149,40 +101,6 @@ public class Slime extends GameObject {
 	private double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}
-	private Orientation getOrientation() {
-		return orientation;
-	}
-	/**
-	 * returns the minimal value of x_pos
-	 * @return MIN_X_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMinXValue() {
-		return MIN_X_VALUE;
-	}
-	/**
-	 * returns the maximal value of x_pos
-	 * @return MAX_X_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMaxXValue() {
-		return MAX_X_VALUE;
-	}
-	/**
-	 * returns the minimal value of y_pos
-	 * @return MIN_Y_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMinYValue() {
-		return MIN_Y_VALUE;
-	}/**
-	 * returns the maximal value of y_pos
-	 * @return MAX_Y_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMaxYValue() {
-		return MAX_Y_VALUE;
-	}
 	/**
 	 * Returns the current location of the given slime.
 	 * 
@@ -190,7 +108,7 @@ public class Slime extends GameObject {
 	 *         coordinates of the given slime's bottom left pixel in the world.
 	 */
 	public int[] getLocation(){
-		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
+		return new int[]{(int) Position.getXPos(), (int) Position.getYPos()};
 	}
 	
 	/**
@@ -226,42 +144,7 @@ public class Slime extends GameObject {
 	
 
 //	SETTERS
-	/**
-	 * @param x the x to set
-	 */
-	private void setXPos(int x) {
-		this.xPos = x;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	private void setYPos(int y) {
-		this.yPos = y;
-	}
 	
-	/**
-	 * @param sprites the sprites to set
-	 */
-	private void setSprite(Sprite[] sprites) {
-		this.sprites = sprites;
-	}
-	/**
-	 * Sets the orientation of the slime to right
-	 * @post orientation == "right"
-	 */
-	@Raw 
-	private void setOrientationRight() {
-		this.orientation = Orientation.RIGHT;
-	}
-	/**
-	 * Sets the orientation of the slime to left
-	 * @post orientation == "left"
-	 */
-	@Raw 
-	private void setOrientationLeft() {
-		this.orientation =Orientation.LEFT;
-	}
 	public void setWorld(World world) {
 		this.world = world;
 	}
@@ -295,20 +178,6 @@ public class Slime extends GameObject {
 		return ( ! Double.isNaN(ySpeed));
 	}
 	
-	/**
-	 * starts the action period for an object
-	 */
-//	public void start<action> {
-//		
-//	}
-	
-	/**
-	 * ends the action period for an object
-	 */
-//	public void stop<action> {
-//		
-//	}
-	
 	
 	public void advanceTime(double dt) {
 		if (this.getNbHitPoints() <= 0) {
@@ -328,8 +197,8 @@ public class Slime extends GameObject {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == Orientation.RIGHT) {
+		assert isValidSprite(GameObject.getSprite());
+		if (Position.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {
