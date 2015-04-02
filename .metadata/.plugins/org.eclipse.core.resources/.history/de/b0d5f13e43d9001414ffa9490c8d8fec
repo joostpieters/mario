@@ -140,7 +140,7 @@ public abstract class GameObject {
 	public double getXSpeed() {
 		return this.xSpeed;
 	}
-	protected void setXSpeed(double speed) {
+	private void setXSpeed(double speed) {
 		this.xSpeed = speed;
 	}
 	
@@ -279,16 +279,6 @@ public abstract class GameObject {
 //				&& (x <= Mazub.getMaxXValue())
 //				 && (y >= Mazub.getMinYValue())
 //				 && (y <= Mazub.getMaxYValue()));
-	}
-	
-	/**
-	 * Checks if dt has a proper value between 0 and 0.2.
-	 * @param dt
-	 * @return True if dt is a value between 0 and 0.2 otherwise false.
-	 * 		| (dt <= 0.2 && dt > 0)
-	 */
-	private boolean isValidDt(double dt) {
-		return ( dt <= 0.2 && dt > 0);
 	}
 	
 	

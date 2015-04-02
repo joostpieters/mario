@@ -454,7 +454,16 @@ public class Mazub extends GameObject {
 	private boolean isValidYSpeed() {
 		return (this.getYSpeed() <= getStartJumpSpeed());
 	}
-		
+	/**
+	 * Checks if dt has a proper value between 0 and 0.2.
+	 * @param dt
+	 * @return True if dt is a value between 0 and 0.2 otherwise false.
+	 * 		| (dt <= 0.2 && dt > 0)
+	 */
+	private boolean isValidDt(double dt) {
+		return ( dt <= 0.2 && dt > 0);
+	}
+	
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}

@@ -116,9 +116,59 @@ public class Mazub extends GameObject {
 	 */
 	private int maxSpeed; 
 	/**
+	 * the speed of mazub
+	 */
+	private double xSpeed;
+	/**
+	 * a small time interval, for example the new_speed after 
+	 * dt seconds is given by speed + dt*xAcc 
+	 * (xAcc = horizontal acceleration)
+	 */	
+	public double dt;
+	/**
+	 * the x position (horizontal position) after dt seconds
+	 */
+	private double newXPos;
+	/**
+	 * the y position (vertical position) after dt seconds
+	 */
+	private double newYPos;
+	/**
 	 * a boolean saying if the mazub is ducked
 	 */
 	private boolean duck = false;
+	/**
+	 * the horizontal acceleration of mazub
+	 */
+	private double xAcc;
+	/**
+	 * the speed of mazub in the vertical direction
+	 */
+	private double ySpeed;
+	/**
+	 * the acceleration of mazub in the vertical direction
+	 */
+	private double yAcc;
+	/**
+	 * the next 4 int's are the ultimate static values for the borders
+	 * of the gamescreen and thus for (x_pos,y_pos)
+	 */
+	/**
+	 * the minimal value for x_pos
+	 */
+	private static int MIN_X_VALUE = 0;
+	/**
+	 * the maximal value for x_pos
+	 */
+	private static int MAX_X_VALUE = 1023; // = World.getTileLength() * World.getNbTilesX();
+	/**
+	 * the minimal value for y_pos
+	 */
+	private static int MIN_Y_VALUE = 0;
+	/**
+	 * the maximal value for y_pos
+	 */
+	private static int MAX_Y_VALUE = 767; // = World.getTileLength() * World.getNbTilesY();
 	/**
 	 * the static int giving the starting speed of mazub
 	 * when startMove() is initiated
@@ -198,7 +248,33 @@ public class Mazub extends GameObject {
 		this.falling = false;
 	}	
 	
-//GETTERS
+//Getters	
+	/**
+	 * Returns the horizontal position of Mazub after dt seconds
+	 * @return new_x_pos
+	 */
+	@Raw 
+	private double getNewXPos() {
+		return newXPos;
+	}
+	/**
+	 * Returns the vertical position of Mazub after dt seconds
+	 * @return new_y_pos
+	 */
+	@Raw 
+	private double getNewYPos() {
+		return newYPos;
+	}
+	/**
+	 * Returns the location of mazub
+	 * @return an array, consisting of 2 integers {x, y}, that represents the
+	 *         coordinates of the given alien's bottom left pixel in the world.	
+	 *         | {x_pos,y_pos}
+	 */
+	@Basic @Raw 
+	public int[] getLocation() {
+		return new int[]{(int) (Position.getXPos()),(int) (Position.getYPos())};
+	}		
 	
 	/**
 	 * Returns the horizontal dimension of mazub (width)
@@ -217,7 +293,70 @@ public class Mazub extends GameObject {
 	@Basic @Raw 
 	private int getYDim() {
 		return this.getCurrentSprite().getHeight();
-	}	
+	}
+	/**
+	 * Returns the sprites of Mazub
+	 * @return sprites
+	 */
+	@Basic @Raw 
+	private Sprite[] getSprite(){
+		return this.sprites;
+	}
+	/**
+	 * Returns the horizontal speed
+	 * @return the horizontal speed
+	 * 			| xSpeed
+	 */
+	@Basic @Raw 
+	private double getXSpeed() {
+		return xSpeed;
+	}
+	/**
+	 * Returns the vertical speed
+	 * @return the vertical speed of mazub
+	 * 			| YSpeed
+	 */
+	@Basic @Raw 
+	private double getYSpeed() {
+		return ySpeed;
+	}
+	/**
+	 * Returns the horizontal and vertical velocity
+	 * @return {xSpeed,ySpeed}
+	 */
+	@Basic @Raw 
+	public double[] getVelocity(){
+		return new double[] {this.getXSpeed(),this.getYSpeed()};
+	}
+	/**
+	 * Returns the horizontal acceleration 
+	 * @return the horizontal acceleration 
+	 * 			| xAcc
+	 */
+	@Basic @Raw 
+	private double getXAcc() {
+		return xAcc;
+	}
+	/**
+	 *  Returns the vertical acceleration 
+	 * @return the vertical acceleration of mazub
+	 * 			| yAcc
+	 */
+	@Basic @Raw 
+	private double getYAcc() {
+		return yAcc;
+	}
+	/**
+	 * Returns an array consisting of the horizontal and 
+	 * vertical acceleration.
+	 * @return an array consisting of the horizontal and 
+	 * vertical acceleration.
+	 * 			| {xAcc,YAcc}
+	 */
+	@Basic @Raw 
+	public double[] getAcceleration(){
+		return new double[] {this.getXAcc(),this.getYAcc()};
+	}
 	/**
 	 * Returns an array consisting of the width and height of mazub
 	 * @return an array consisting of the width and height of mazub
@@ -244,6 +383,14 @@ public class Mazub extends GameObject {
 	@Basic @Immutable @Raw 
 	private int getMaxSpeed() {
 		return maxSpeed;
+	}
+	/**
+	 * the time interval dt
+	 * @return dt
+	 */
+	@Raw 
+	public double getDt() {
+		return dt;
 	}
 	/**
 	 * Returns the number of available sprites for running
@@ -336,6 +483,37 @@ public class Mazub extends GameObject {
 		return NOT_MOVING_TIME;
 	}
 	/**
+	 * returns the minimal value of x_pos
+	 * @return MIN_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMinXValue() {
+		return MIN_X_VALUE;
+	}
+	/**
+	 * returns the maximal value of x_pos
+	 * @return MAX_X_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMaxXValue() {
+		return MAX_X_VALUE;
+	}
+	/**
+	 * returns the minimal value of y_pos
+	 * @return MIN_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMinYValue() {
+		return MIN_Y_VALUE;
+	}/**
+	 * returns the maximal value of y_pos
+	 * @return MAX_Y_VALUE
+	 */
+	@Basic @Immutable @Raw 
+	private static int getMaxYValue() {
+		return MAX_Y_VALUE;
+	}
+	/**
 	 * returns the time until the next sprite
 	 * @return TIME_DIFFERENT_SPRITE
 	 */
@@ -361,6 +539,9 @@ public class Mazub extends GameObject {
 		return (this.duck);
 	}	
 	
+	public World getWorld() {
+		return this.world;
+	}
 	
 //Setters	
 	/**
@@ -380,6 +561,70 @@ public class Mazub extends GameObject {
 	@Raw 
 	private void setMaxSpeed(int maxspeed) {
 		this.maxSpeed = maxspeed;
+	}
+	
+	/**
+	 * sets the horizontal speed of mazub to a new value speed
+	 * @param xSpeed
+	 * 			the new horizontal speed of mazub
+	 */
+	@Raw 
+	private void setXSpeed(double xSpeed){
+		this.xSpeed = xSpeed;
+	}
+	/**
+	 * sets the vertical speed of mazub to a new value speed
+	 * @param yspeed
+	 * 			the new vertical speed of mazub
+	 */
+	@Raw 
+	private void setYSpeed(double ySpeed) {
+		this.ySpeed = ySpeed;
+	}
+	/**
+	 * Sets the horizontal acceleration to a new value
+	 * @param xAcc
+	 * 			the new value of the horizontal acceleration
+	 */
+	@Raw 
+	private void setXAcc(double xAcc) {
+		this.xAcc = xAcc;
+	}
+	/**
+	 * Sets the vertical acceleration to a new value
+	 * @param yAcc
+	 * 			the new value of the vertical acceleration
+	 */
+	@Raw 
+	private void setYAcc(double yAcc) {
+		this.yAcc = yAcc;
+	}
+	/**
+	 * Sets the new horizontal position of mazub to a new value
+	 * @param x
+	 * 			The new value for the new horizontal position
+	 */
+	@Raw 
+	private void setNewXPos(double x) {
+		this.newXPos = x;
+	}
+	/**
+	 * Sets the new vertical position of mazub to a new value
+	 * @param y
+	 * 			The new value for the new vertical position
+	 */
+	@Raw 
+	private void setNewYPos(double y) {
+		this.newYPos = y;
+	}
+	/**
+	 * Sets the sprites of Mazub to new sprites
+	 * @param sprites
+	 * 			the new sprites
+	 */
+	@Raw 
+	private void setSprite(Sprite[] sprites) {
+		this.sprites = sprites;	
 	}
 	/**
 	 * Sets the boolean duck to a new value duck
@@ -425,8 +670,36 @@ public class Mazub extends GameObject {
 		this.timeSinceStartMove = time_since_startMove;
 	}
 	
-//VALIDATIONS	
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
 	
+//Validations
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any Mazub.
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(double x, double y) {
+		return ((x >= Mazub.getMinXValue())
+				&& (x <= Mazub.getMaxXValue())
+				 && (y >= Mazub.getMinYValue())
+				 && (y <= Mazub.getMaxYValue()));
+	}
+	/**
+	 * Checks whether the given sprites are valid for any Mazub
+	 * @param sprites
+	 * @return True if the sprites are valid
+	 * 			| ((sprites.length >= 8) && (sprites.length % 2 == 0))
+	 */
+	private boolean isValidSprite(Sprite[] sprites) {
+		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
+	}
 	/**
 	 * Checks whether the given initstartspeed and maxspeed are valid
 	 * for any Mazub
@@ -454,7 +727,16 @@ public class Mazub extends GameObject {
 	private boolean isValidYSpeed() {
 		return (this.getYSpeed() <= getStartJumpSpeed());
 	}
-		
+	/**
+	 * Checks if dt has a proper value between 0 and 0.2.
+	 * @param dt
+	 * @return True if dt is a value between 0 and 0.2 otherwise false.
+	 * 		| (dt <= 0.2 && dt > 0)
+	 */
+	private boolean isValidDt(double dt) {
+		return ( dt <= 0.2 && dt > 0);
+	}
+	
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}

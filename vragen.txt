@@ -1,5 +1,6 @@
 1. aantal mazubs
 2. wat is abstract eig???? :o:o:o xoxoxoxoxo
+3. wanneer protected of public gebruiken?
 
 
 TODO: overal @override in facade
