@@ -212,6 +212,18 @@ public class Plant extends GameObject {
 		return sprites.length == 2;
 	}
 	
+		
+	/**
+	 * changes the orientation of the plant
+	 */
+	private void changeOrientation() {
+		if (Position.getOrientation() == Orientation.LEFT) {
+			Position.setOrientationLeft();
+		}
+		else {
+			Position.setOrientationRight();
+		}
+	}
 
 	public void advanceTime(double dt) {
 		

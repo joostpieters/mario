@@ -1,28 +1,8 @@
-1. aparte positionklasse
-2. inheritance uit superklasse: voor mazub, shark, ...
-3. Oproepen van andere AdvanceTimes juist (juiste collections)?
-4.1 compute dt voor elk object
-4.2 compute(own)Dt in world: hoe algemeen op een object toepassen 
-5. Wanneer static? Wanneer final? Bv. MAX_X_VALUE
-6. wat is de juiste manier om associatie te verwijderen in slime/plant/shark (zie terminate() in purchase)?
-7. Getters bij verwijderen van een object?
-8. stop en start<action>
-9. in world: startGame(): hoe maken
-10. waar array van geologicalFeature aanmaken
-11. Plant: random heen en weer of gewoon?
+1. aantal mazubs
+2. wat is abstract eig???? :o:o:o xoxoxoxoxo
 
 
-
-- kunnen we donderdag id paasvakantie feedback vragen? ( + hoeveel keer kunt ge int totaal langskomen)
-
-
-- Gebruik IllegalArgumentException bij Illegalfilesize,...
-- Moet in facade de @override weg?
-- Moet er commentaar in facade?
-- altijd alles naar static veranderen bij verwijzen naar andere klasse.
-- Moet in facade de @override weg?
-- Moet er commentaar in facade?
-- this. ?
+TODO: overal @override in facade
 
 ward is een verkeerd ding
 

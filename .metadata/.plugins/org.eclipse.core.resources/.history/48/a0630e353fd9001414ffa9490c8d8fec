@@ -101,11 +101,22 @@ public class Mazub extends GameObject {
 			int initStartSpeed,int maxSpeed)
 		throws IllegalPositionException,IllegalSpriteException
 			, IllegalSpeedException {
+			if ( ! isValidPosition(xPos,yPos))
+				throw new IllegalPositionException(xPos,yPos);
+			if ( ! isValidSprite(sprites))
+				throw new IllegalSpriteException(sprites);
+			if ( ! isValidSpeed(initStartSpeed,maxSpeed))
+				throw new IllegalSpeedException(initStartSpeed,maxSpeed);
 			super(xPos, yPos, sprites);
 			this.setInitStartSpeed(initStartSpeed);
 			this.setMaxSpeed(maxSpeed);
 	}
 	
+	private World world;
+	/**
+	 * The sprites for Mazub
+	 */
+	private Sprite[] sprites;
 	
 	/**
 	 * the starting speed when startMove is initiated

@@ -106,6 +106,11 @@ public class Mazub extends GameObject {
 			this.setMaxSpeed(maxSpeed);
 	}
 	
+	private World world;
+	/**
+	 * The sprites for Mazub
+	 */
+	private Sprite[] sprites;
 	
 	/**
 	 * the starting speed when startMove is initiated
