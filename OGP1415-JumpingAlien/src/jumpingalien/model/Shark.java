@@ -37,29 +37,51 @@ public class Shark extends GameObject {
 	 * the initial amount of hitpoints a shark possesses
 	 */
 	private static int INIT_HIT_POINTS = 100;
-	
+	private static int getInitHitpoints() {
+		return INIT_HIT_POINTS;
+	}
 	
 	/**
 	 * the maximum horizontal speed a shark can reach
 	 */
 	private static double MAX_X_SPEED = 4;
+	private static double getMaxXSpeed() {
+		return  MAX_X_SPEED;
+	}
 	/**
 	 * the vertical speed at which the shark moves when 
 	 * startJump() is initiated
 	 */
 	private static int JUMP_SPEED = 2;
+	private static double getJumpSpeed() {
+		return JUMP_SPEED;
+	}
 	/**
 	 * the vertical acceleration at which mazub falls
 	 */
 	private static double FALL_ACC = -10;
 	/**
+	 * Returns the acceleration when the shark falls
+	 * @return FALL_ACC
+	 */
+	@Basic @Immutable @Raw 
+	private double getFallAcc() {
+		return FALL_ACC;
+	}
+	/**
 	 * the minimal duration of a movement period (1s)
 	 */
 	private static int MIN_MOVEMENT_DURATION = 1;
+	private static int getMinMovementDuration() {
+		return MIN_MOVEMENT_DURATION;
+	}	
 	/**
 	 * the maximal duration of a movement period (4s)
 	 */
 	private static int MAX_MOVEMENT_DURATION = 4;
+	private static int getMaxMovementDuration() {
+		return MAX_MOVEMENT_DURATION;
+	}
 	/**
 	 * the amount of hitpoints a shark loses when touching 
 	 * a mazub or a slime
@@ -70,6 +92,9 @@ public class Shark extends GameObject {
 
 	
 	private double REMAINING_TIME = 0.6;
+	private double getRemainingTime() {
+		return this.REMAINING_TIME;
+	}
 	
 	
 	
@@ -83,44 +108,6 @@ public class Shark extends GameObject {
 	private boolean isFalling() {
 		return falling;
 	}
-	
-// GETTERS
-	
-	private static int getInitHitpoints() {
-		return INIT_HIT_POINTS;
-	}
-	
-	private static double getMaxXSpeed() {
-		return  MAX_X_SPEED;
-	}
-	private static double getJumpSpeed() {
-		return JUMP_SPEED;
-	}
-	/**
-	 * Returns the acceleration when the shark falls
-	 * @return FALL_ACC
-	 */
-	@Basic @Immutable @Raw 
-	private double getFallAcc() {
-		return FALL_ACC;
-	}
-	private static int getMaxMovementDuration() {
-		return MAX_MOVEMENT_DURATION;
-	}
-	private static int getMinMovementDuration() {
-		return MIN_MOVEMENT_DURATION;
-	}	
-	private double getRemainingTime() {
-		return this.REMAINING_TIME;
-	}
-
-	
-
-
-	
-//	SETTERS
-
-	
 	/**
 	 * Marks the boolean falling as true
 	 * @post falling == true
@@ -134,10 +121,14 @@ public class Shark extends GameObject {
 	 */
 	private void endFalling() {
 		this.falling = false;
-	}	
+	}
 	
+
 //	Validations
-	
+	@Override
+	protected boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}
 	
 
 	

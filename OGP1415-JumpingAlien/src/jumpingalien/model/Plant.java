@@ -83,8 +83,8 @@ public class Plant extends GameObject {
 	
 	
 // VALIDATIONS
-	
-	private boolean isValidSprite(Sprite[] sprites) {
+	@Override
+	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}
 	

@@ -458,6 +458,17 @@ public class Mazub extends GameObject {
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}
+	
+	/**
+	 * Checks whether the given sprites are valid for any Mazub
+	 * @param sprites
+	 * @return True if the sprites are valid
+	 * 			| ((sprites.length >= 8) && (sprites.length % 2 == 0))
+	 */
+	@Override
+	protected boolean isValidSprite(Sprite[] sprites) {
+		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
+	}
 
 
 	/**
@@ -613,25 +624,9 @@ public class Mazub extends GameObject {
 	 * 			| 	then new_x_pos == this.getXPos() - this.getXSpeed()*100*dt
 	 * 			|					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
 	 */
-	private double moveX(double dt) {
-		double newXPos;
-		if (this.getXSpeed() >= this.getMaxSpeed()){
-			this.setXSpeed(this.getMaxSpeed());
-			this.setXAcc(0);
-		}
-
+//	private double moveX(double dt) {
 		
-		if (this.getOrientation() == Orientation.RIGHT) {
-			newXPos = this.getXPos() + this.getXSpeed()*100*dt
-					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);		
-		}
-		else {
-			newXPos = this.getXPos() - this.getXSpeed()*100*dt
-					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
-		}
-		
-		return newXPos;
-	}
+//	}
 	
 	
 	/**
@@ -673,29 +668,11 @@ public class Mazub extends GameObject {
 	 */
 	private void advanceX(double dt) {
 		
-		double newXPos = this.moveX(dt);		
+			
 		
-		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			newXPos = (this.getTilesLeft()[0][1] + 1)* getWorld().getTileLength() - 1;
-		}	
 		
-		if (againstRightWall() && this.getOrientation() == Orientation.RIGHT) {
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			newXPos = (this.getTilesLeft()[0][1] + 1)* getWorld().getTileLength() - 1;
-		}
+				
 		
-		if (this.getNewXPos() < Mazub.getMinXValue()){
-			this.setNewXPos(Mazub.getMinXValue());
-		}
-		else if (this.getNewXPos() > Mazub.getMaxXValue()){
-			this.setNewXPos(Mazub.getMaxXValue());
-		}
-		
-		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
-		Position.setXPos(this.getNewXPos());
 		
 		if (this.getXSpeed() == 0) {
 			this.setTimeSinceEndMove(this.getTimeSinceEndMove() + dt);
@@ -745,34 +722,70 @@ public class Mazub extends GameObject {
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
 	private void advanceY(double dt){
-		
-		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
-		
-		double newYPos = this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
-				this.getYAcc() * Math.pow(dt,2);
-		
-		if (isAgainstRoof(jhhjjh,newYPos)) {
-			this.setYSpeed(0);
-			this.setXSpeed(0);
-			this.setNewYPos((this.getTilesAbove(this.getNewXPos(),newYPos)[0][1]) 
-						* getWorld().getTileLength() - this.getSize()[1] -1);
-		}
-		if (( ! onFloor(this.getNewXPos(),newYPos)) && ( ! this.isFalling())){
-			fall();
-		}
-		if (this.onFloor(this.getNewXPos(),newYPos) && this.isFalling()) {
-			this.endFall();
-			this.setNewYPos((this.getTilesUnder(this.getNewXPos(),newYPos)[0][1] +1)* getWorld().getTileLength() -1);
-		}
-		if (newYPos > Mazub.getMaxYValue()) {
-			this.setNewYPos(Mazub.getMaxYValue());
-			this.setYSpeed(0);
-		}
-		this.setYPos(newYPos);	
+			
 	}
 	
+	private double[] calculatesNewPos(double dt) {		
+		double newXPos;
+		if (this.getOrientation() == Orientation.RIGHT) {
+			newXPos = this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);		
+		}
+		else {
+			newXPos = this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
+		}
+		double newYPos = this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+				this.getYAcc() * Math.pow(dt,2);
+		return new double[] {newXPos, newYPos};
+	}
+	
+	//TODO deftig maken 
+	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS
+	private double[] checkSurroundings(double newXPos, double newYPos) {
+		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			newXPos = (this.getTilesLeft()[0][1] + 1)* getWorld().getTileLength() - 1;
+		}	
+		
+		if (againstRightWall() && this.getOrientation() == Orientation.RIGHT) {
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			newXPos = (this.getTilesLeft()[0][1] + 1)* getWorld().getTileLength() - 1;
+		}
+		
+		if (isAgainstRoof(newXPos,newYPos)) {
+			this.setYSpeed(0);
+			this.setXSpeed(0);
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) 
+						* getWorld().getTileLength() - this.getSize()[1] -1;
+		}
+		
+		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
+			fall();
+		}
+		
+		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
+			this.endFall();
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1)* getWorld().getTileLength() -1);
+		}
+		
+		
+		return new double[] {newXPos, newYPos};
+		
+		
+	}
 
-
+	private void calculatesNewSpeed(double dt) {
+		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
+		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
+		
+		if (this.getXSpeed() >= this.getMaxSpeed()){
+			this.setXSpeed(this.getMaxSpeed());
+			this.setXAcc(0);
+		}
+	}
 
 	/**
 	 * Advances the time by calling two other functions: advance_x 
@@ -783,10 +796,10 @@ public class Mazub extends GameObject {
 	 * 			| isValidDt()
 	 */
 	
-	//TODO  
+	//TODO  deel van functies naar gameoject verhuizen
 	/*opbouwen als volgt:
-	 * - speed aanpassen
 	 * - newpos
+	 * - speed aanpassen
 	 * - boundaries checken
 	 * - isagainst.... (als hij niet dood is)
 	 * - pos aanpassen
@@ -794,8 +807,24 @@ public class Mazub extends GameObject {
 	public void advanceTime(double dt) throws IllegalDtException {
 		if (!isValidDt(dt))
 			throw new IllegalDtException(dt);
-		this.advanceX(dt);
-		this.advanceY(dt);
+//		this.advanceX(dt);
+//		this.advanceY(dt);
+		//TODO dis is mss nogal inefficient
+		double newXPos = this.calculatesNewPos(dt)[0];
+		double newYPos = this.calculatesNewPos(dt)[1];
+		
+		if(!isValidPosition(newXPos,newYPos)) {
+			//TODO
+		}
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newXPos = newPos[0];
+		newYPos = newPos[1];
+		
+		this.calculatesNewSpeed(dt);
+		
+		this.setXPos(newXPos);
+		this.setYPos(newYPos);
+		
 		
 		if (this.getNbHitPoints() <= 0) {
 			this.die();
@@ -926,6 +955,7 @@ public class Mazub extends GameObject {
 		return death;
 	}
 	
+	// TODO xpos en ypos meegeven ipv getters
 	private int[][] getTilesLeft() {
 		int pixelLeft = (int)(this.getXPos());
 		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
@@ -1014,7 +1044,7 @@ public class Mazub extends GameObject {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet, domme ward!!!!");
+				System.out.println("oei twerkt niet");
 			}
 		}
 		return false;

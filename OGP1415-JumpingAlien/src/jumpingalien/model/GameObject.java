@@ -265,7 +265,7 @@ public abstract class GameObject {
 
 //	Validations
 	protected boolean isValidSprite(Sprite[] sprites) {
-		return sprites.length == 2;
+		return (sprites.length % 2 == 0 && sprites != null) ;
 	}
 	
 	
@@ -306,6 +306,8 @@ public abstract class GameObject {
 		this.setYSpeed(0);
 		this.setDying();
 	}
+	
+	
 	
 	
 	
