@@ -338,8 +338,8 @@ public class World {
 	private int getNbSlimes() {
 		return slimes.size();
 	}
+//	SETTERS
 	
-
 	
 	/**
 	 * @return the xVisibleWindow
@@ -354,9 +354,7 @@ public class World {
 	private int getYVisibleWindow() {
 		return YVisibleWindow;
 	}
-	
-//	SETTERS	
-	
+
 	/**
 	 * @param tileSize the tileSize to set
 	 */

@@ -5,7 +5,7 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
-public class Slime extends GameObject {
+public class Slime {
 	
 	/**
 	 * Creates a new slime, located at the provided pixel location (x, y).

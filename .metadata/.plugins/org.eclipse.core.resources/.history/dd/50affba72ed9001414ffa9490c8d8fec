@@ -6,7 +6,7 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
-public class Plant extends GameObject {
+public class Plant {
 	
 	/**
 	 * Creates a new plant, located at the provided pixel location (x, y).

@@ -5,7 +5,7 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
-public class Shark extends GameObject {
+public class Shark {
 	
 
 	/**

@@ -24,7 +24,7 @@ import jumpingalien.util.Sprite;
  * 		| isValidSpeed(getXSpeed(), getYSpeed())
  * @author Pieter Van den Berghe, Ward Romanus
  */
-public class Mazub extends GameObject {
+public class Mazub {
 
 	/**
 	 * Initialize this new Mazub with given x and y positions and given sprites.
@@ -964,27 +964,9 @@ public class Mazub extends GameObject {
 	}
 	
 	/**
-	 * the alien moves horizontally if the  new speed does not exceed the maximum speed
-	 * and if the alien doesn't walk into a wall
-	 * @effect if the current speeds exceeds the maximum speed, xSpeed is set to
-	 * 			maxspeed and the acceleration is set to zero
-	 * 			| if xSpeed >= maxSpeed
-	 * 			| 	then sSpeed == maxSpeed
-	 * 			| 		 xAcc == 0
-	 * @effect if mazub is oriented right, his horizontal new position changes to the right,
-	 * 		   if mazub is oriented left, his horizontal new position changes to the left
-	 * 			| if orientation == right
-	 * 			| 	then new_x_pos == this.getXPos() + this.getXSpeed()*100*dt
-	 * 			| 					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
-	 * 			| else if orientation == left
-	 * 			| 	then new_x_pos == this.getXPos() - this.getXSpeed()*100*dt
-	 * 			|					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
+	 * 
 	 */
 	private void moveX() {
-		if (this.getXSpeed() >= this.getMaxSpeed()){
-			this.setXSpeed(this.getMaxSpeed());
-			this.setXAcc(0);
-		}
 		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
@@ -1008,6 +990,15 @@ public class Mazub extends GameObject {
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	private void tooFastX() {
+		if (this.getXSpeed() >= this.getMaxSpeed()){
+			this.setXSpeed(this.getMaxSpeed());
+			this.setXAcc(0);
+		}
+	}
 	
 	/**
 	 * Changes the horizontal coordinates of mazub when mazub is moving
@@ -1017,7 +1008,19 @@ public class Mazub extends GameObject {
 	 * Changes the counter of the sprites when running and changes the 
 	 * time since startMove
 	 * @param dt: A small time interval
-	 * 
+	 * @effect if the current speeds exceeds the maximum speed, xSpeed is set to
+	 * 			maxspeed and the acceleration is set to zero
+	 * 			| if xSpeed >= maxSpeed
+	 * 			| 	then sSpeed == maxSpeed
+	 * 			| 		 xAcc == 0
+	 * @effect if mazub is oriented right, his horizontal new position changes to the right,
+	 * 		   if mazub is oriented left, his horizontal new position changes to the left
+	 * 			| if orientation == right
+	 * 			| 	then new_x_pos == this.getXPos() + this.getXSpeed()*100*dt
+	 * 			| 					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
+	 * 			| else if orientation == left
+	 * 			| 	then new_x_pos == this.getXPos() - this.getXSpeed()*100*dt
+	 * 			|					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
 	 * @effect if mazub's new horizontal position exceeds the boundaries of the game field, his new position 
 	 * 			is set to the boundary of the game
 	 * 			| if new_x_pos < MIN_X_VALUE
@@ -1048,7 +1051,10 @@ public class Mazub extends GameObject {
 	 */
 	private void advanceX(double dt) {
 		
-		this.moveX();		
+		this.tooFastX();
+		this.moveX();
+		
+		
 		
 		if (this.getNewXPos() < Mazub.getMinXValue()){
 			this.setNewXPos(Mazub.getMinXValue());
@@ -1058,6 +1064,7 @@ public class Mazub extends GameObject {
 		}
 		
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());		
+		
 		this.setXPos(this.getNewXPos());
 		
 		if (this.getXSpeed() == 0) {

@@ -24,7 +24,7 @@ import jumpingalien.util.Sprite;
  * 		| isValidSpeed(getXSpeed(), getYSpeed())
  * @author Pieter Van den Berghe, Ward Romanus
  */
-public class Mazub extends GameObject {
+public class Mazub {
 
 	/**
 	 * Initialize this new Mazub with given x and y positions and given sprites.
