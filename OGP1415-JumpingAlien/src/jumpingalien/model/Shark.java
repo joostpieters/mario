@@ -25,74 +25,26 @@ public class Shark extends GameObject {
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
-	public Shark(int x_pos,int y_pos, Sprite[] sprites ) 
+	public Shark(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition(x_pos,y_pos))
+				if(!isValidPosition(xPos,yPos))
 					throw new IllegalPositionException(x_pos,y_pos); 
 				if (!isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
-		this.setXPos(x_pos);
-		this.setYPos(y_pos);
-		this.setSprite(sprites);
+		super(xPos,yPos,sprites);
 		this.setNbHitpoints(INIT_HIT_POINTS);
 	}
 	
-	private int x_pos;
-	private int y_pos;
-	private Sprite[] sprites;
-	private World world;
-	/**
-	 * the x position (horizontal position) after dt seconds
-	 */
-	private double newXPos;
-	/**
-	 * the y position (vertical position) after dt seconds
-	 */
-	private double newYPos;
-	/**
-	 * the difference between the new x_position (new_x_pos) and
-	 * the previous x_pos (x_pos)
-	 */
-	private double xDifference;
-	/**
-	 * the difference between the new y_position (new_y_pos) and
-	 * the previous y_pos (y_pos)
-	 */
-	private double yDifference;
-	/**
-	 * the orientation of the shark
-	 */
-	private Orientation orientation  = Orientation.LEFT;
-	/**
-	 * the minimal value for x_pos
-	 */
-	private static int MIN_X_VALUE = 0;
-	/**
-	 * the maximal value for x_pos
-	 */
-	private static int MAX_X_VALUE = 1023;
-	/**
-	 * the minimal value for y_pos
-	 */
-	private static int MIN_Y_VALUE = 0;
-	/**
-	 * the maximal value for y_pos
-	 */
-	private static int MAX_Y_VALUE = 767;
+
+
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
 	private static int INIT_HIT_POINTS = 100;
+	
+	
 	/**
-	 * the horizontal acceleration of a shark
-	 */
-	private double xAcc = 1.5;
-	/**
-	 * the vertical acceleartion of a shark
-	 */
-	private double yAcc;
-	/**
-	 * the maximum horizontal speed a slime can reach
+	 * the maximum horizontal speed a shark can reach
 	 */
 	private static double MAX_X_SPEED = 4;
 	/**
@@ -119,17 +71,13 @@ public class Shark extends GameObject {
 	private int CONTACT_DAMAGE = 50;
 	
 	private int HIT_POINTS = 1;
-	/**
-	 * a variable containing the amount of hitpoints a Shark possesses
-	 */
-	private int hitpoints;
-	private double xSpeed;
-	private double ySpeed;
+
+	
 	private double REMAINING_TIME = 0.6;
 	
-	private boolean isDying = false;
 	
-	private double timeSinceDeath = 0;
+	
+	
 	
 	/**
 	 * The boolean to reflect or shark is falling or not
@@ -141,43 +89,11 @@ public class Shark extends GameObject {
 	}
 	
 // GETTERS
-	/**
-	 * returns the minimal value of x_pos
-	 * @return MIN_X_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMinXValue() {
-		return MIN_X_VALUE;
-	}
-	/**
-	 * returns the maximal value of x_pos
-	 * @return MAX_X_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMaxXValue() {
-		return MAX_X_VALUE;
-	}
-	/**
-	 * returns the minimal value of y_pos
-	 * @return MIN_Y_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMinYValue() {
-		return MIN_Y_VALUE;
-	}/**
-	 * returns the maximal value of y_pos
-	 * @return MAX_Y_VALUE
-	 */
-	@Basic @Immutable @Raw 
-	private static int getMaxYValue() {
-		return MAX_Y_VALUE;
-	}
+	
 	private static int getInitHitpoints() {
 		return INIT_HIT_POINTS;
 	}
-	private double getXAcc() {
-		return xAcc;
-	}
+	
 	private static double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}
@@ -197,223 +113,18 @@ public class Shark extends GameObject {
 	}
 	private static int getMinMovementDuration() {
 		return MIN_MOVEMENT_DURATION;
-	}
-	/**
-	 * @return the x
-	 */
-	private int getXPos() {
-		return x_pos;
-	}
-
-	/**
-	 * @return the y
-	 */
-	private int getYPos() {
-		return y_pos;
-	}
-
-	/**
-	 * @return the sprites
-	 */
-	private Sprite[] getSprite() {
-		return sprites;
-	}
-	private Orientation getOrientation() {
-		return orientation;
-	}
-	/**
-	 * Returns the difference between the real horizontal position
-	 * and the rounded down value 
-	 * @return x_difference
-	 */
-	@Raw 
-	private double getXDifference() {
-		return xDifference;
-	}
-	/**
-	 * Returns the horizontal position after dt seconds
-	 * @return new_x_pos
-	 */
-	@Raw 
-	private double getNewXPos() {
-		return newXPos;
 	}	
-	
-	/**
-	 * Returns the difference between the real vertical position
-	 * and the rounded down value 
-	 * @return y_difference
-	 */
-	@Raw 
-	private double getYDifference() {
-		return yDifference;
-	}
-	/**
-	 * Returns the vertical position after dt seconds
-	 * @return new_y_pos
-	 */
-	@Raw 
-	private double getNewYPos() {
-		return newYPos;
-	}
-	/**
-	 * Returns the current location of the given shark.
-	 * 
-	 * @return An array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given shark's bottom left pixel in the world.
-	 */
-	public int[] getLocation(){
-		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
-	}	
-
-	private int getNbHitpoints() {
-		return this.hitpoints;
-	}
-	
-	private double getXSpeed() {
-		return this.xSpeed;
-	}
-	private double getYSpeed() {
-		return this.ySpeed;
-	}
-	/**
-	 *  Returns the vertical acceleration 
-	 * @return the vertical acceleration
-	 * 			| YAcc
-	 */
-	@Basic @Raw 
-	private double getYAcc() {
-		return yAcc;
-	}
-	
 	private double getRemainingTime() {
 		return this.REMAINING_TIME;
 	}
-	
-	private double getTimeSinceDeath() {
-		return this.timeSinceDeath;
-	}
-	
-	private boolean isDying() {
-		return this.isDying;
-	}
-	
-	public World getWorld() {
-		return this.world;
-	}
-	
-//	SETTERS
-	/**
-	 * Sets the horizontal position to the rounded down value of x
-	 * @param x
-	 * 			The new value for the horizontal position
-	 */
-	@Raw 
-	private void setXPos(double x) {
-		this.x_pos = (int) Math.floor(x);
-	}
-	/**
-	 * Sets the vertical position to the rounded down value of y
-	 * @param y
-	 * 			The new value for the vertical position
-	 */	
-	@Raw 
-	private void setYPos(double y) {
-		this.y_pos = (int) Math.floor(y);
-	}
-	
-	public void setWorld(World world) {
-		this.world = world;
-	}
-	
-	/**
-	 * @param sprites the sprites to set
-	 */
-	private void setSprite(Sprite[] sprites) {
-		this.sprites = sprites;
-	}
-	/**
-	 * Sets the orientation of the shark to right
-	 * @post orientation == Orientation.RIGHT
-	 */
-	@Raw 
-	private void setOrientationRight() {
-		this.orientation = Orientation.RIGHT;
-	}
-	/**
-	 * Sets the orientation of the shark to left
-	 * @post orientation == Orientation.LEFT
-	 */
-	@Raw 
-	private void setOrientationLeft() {
-		this.orientation = Orientation.LEFT;
-	}
-	/**
-	 * Sets the difference between the reel x position and the
-	 * rounded down x position to a new value x_difference
-	 * @param x_difference
-	 * 			The new value for the x_difference of Maxub
-	 */
-	@Raw 
-	private void setXDifference(double x_difference) {
-		this.xDifference = x_difference;
-	}
-	/**
-	 * Sets the difference between the reel y position and the
-	 * rounded down y position to a new value y_difference
-	 * @param y_difference
-	 * 			The new value for theyx_difference of Maxub
-	 */	
-	@Raw 
-	private void setYDifference(double y_difference) {
-		this.yDifference = y_difference;
-	}
-	/**
-	 * Sets the new horizontal position to a new value
-	 * @param x
-	 * 			The new value for the new horizontal position
-	 */
-	@Raw 
-	private void setNewXPos(double x) {
-		this.newXPos = x;
-	}
-	/**
-	 * Sets the new vertical position to a new value
-	 * @param y
-	 * 			The new value for the new vertical position
-	 */
-	@Raw 
-	private void setNewYPos(double y) {
-		this.newYPos = y;
-	}
 
 	
-	private void setNbHitpoints(int nb) {
-		this.hitpoints = nb;
-	}
+
+
 	
-	private void setXSpeed(double speed) {
-		this.xSpeed = speed;
-	}
-	private void setYSpeed(double speed) {
-		this.ySpeed = speed;
-	}
-	/**
-	 * Sets the vertical acceleration to a new value
-	 * @param yAcc
-	 * 			the new value of the vertical acceleration
-	 */
-	@Raw 
-	private void setYAcc(double yAcc) {
-		this.yAcc = yAcc;
-	}
-	private void setTimeSinceDeath(double t) {
-		this.timeSinceDeath += t;
-	}
+//	SETTERS
+
 	
-	private void setDying() {
-		this.isDying = true;
-	}
 	/**
 	 * Marks the boolean falling as true
 	 * @post falling == true
@@ -429,47 +140,8 @@ public class Shark extends GameObject {
 		this.falling = false;
 	}	
 	
-//	Validations
-	private boolean isValidSprite(Sprite[] sprites) {
-		return sprites.length == 2;
-	}
-	/**
-	 * 	Checks whether the given positions are valid positions for 
-	 *  any shark
-	 * @return 	True if the horizontal position x_pos and 
-	 *			and the vertical position y_pos stay in the 
-	 *			game world.
-	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
-	 */
-	public boolean isValidPosition(int x_pos, int y_pos) {
-		return ((x_pos >= Shark.getMinXValue())
-				&& (x_pos <= Shark.getMaxXValue())
-				 && (y_pos >= Shark.getMinYValue())
-				 && (y_pos <= Shark.getMaxYValue()));
-	}
-	public boolean isValidYSpeed(double ySpeed) {
-		return ( ! Double.isNaN(ySpeed));
-	}
-	
-	// TODO 
-	public boolean isValidYSpeed() {
-		return true;
-	}
-	
-//	/**
-//	 * starts the action period for an object
-//	 */
-//	public void start<action> {
-//		
-//	}
-//	
-//	/**
-//	 * ends the action period for an object
-//	 */
-//	public void stop<action> {
-//		
-//	}
+
+
 	
 	private void advanceX(double dt) {
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -573,13 +245,6 @@ public class Shark extends GameObject {
 		}
 	}	
 	
-	private void die() {
-		this.setXSpeed(0);
-		this.setYSpeed(0);
-		this.setDying();
-	}
-	
-
 	private void remove() {
 		this.world.removeShark(this);
 		this.setWorld(null);
