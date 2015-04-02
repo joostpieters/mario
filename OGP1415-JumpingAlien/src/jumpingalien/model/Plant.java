@@ -31,68 +31,26 @@ public class Plant extends GameObject {
 	}
 	
 
-	private Sprite[] sprites;
-	
-	/**
-	 * the x position (horizontal position) after dt seconds
-	 */
-	private double newXPos;
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
 	private int INIT_HITPOINTS = 1;
 	/**
-	 * a variable representing the amount of times mazub can be 'hit'
-	 */
-	public int hitpoints;
-	/**
-	 * the horizontal speed of a plant
-	 */
-	private double xSpeed = 0.5;
-	/**
 	 * every 0.5 seconds the orientation of the plant changes
 	 */
 	private double TIME_CHANGE_ORIENTATION = 0.5;	
-	
-	/**
-	 * the difference between the new x_position (new_x_pos) and
-	 * the previous x_pos (x_pos)
-	 */
-	private double xDifference;
 	/**
 	 * the time a plant is moving in 1 direction
 	 */
 	private double timeSameOrientation = 0;
 
-	private World world;
-	
 	private double REMAINING_TIME = 0.6;
-	
-	private boolean isDying = false;
 	
 	private double timeSinceDeath = 0;
 
 // GETTERS
 	
 	
-	/**
-	 * Returns the horizontal position of the plant after dt seconds
-	 * @return new_x_pos
-	 */
-	@Raw 
-	private double getNewXPos() {
-		return newXPos;
-	}
-	
-	/**
-	 * Returns the difference between the real horizontal position of the plant
-	 * and the rounded down value 
-	 * @return x_difference
-	 */
-	@Raw 
-	private double getXDifference() {
-		return xDifference;
-	}
 	/**
 	 * 
 	 */
@@ -102,82 +60,19 @@ public class Plant extends GameObject {
 	private int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
-	private double getXSpeed() {
-		return xSpeed;
-	}
 	private double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
 	}
 
-	/**
-	 * Returns the current location of the given plant.
-	 * 
-	 * @return An array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given plant's bottom left pixel in the world.
-	 */
-	public int[] getLocation(){
-		return new int[]{ (int) Position.getXPos(), (int) Position.getYPos()};
-	}
-
-	// TODO dees ook fixen
-	public World getWorld() {
-		return this.world;
-	}
 	
-	private int getXWorld() {
-		return this.world.getX();
-	}
-	
-	public int getYWorld() {
-		return this.getWorld().getY();
-	}
-	
-	private double getREMAININGTIME() {
+	private double getRemainingTime() {
 		return this.REMAINING_TIME;
 	}
 	
-	private double getTimeSinceDeath() {
-		return this.timeSinceDeath;
-	}
-	
-	private boolean isDying() {
-		return this.isDying;
-	}
-	
-	private int getNbHitpoints() {
-		return this.hitpoints;
-	}
-	
+
 //	SETTERS
 	
 	
-	/**
-	 * @param sprites the sprites to set
-	 */
-	private void setSprite(Sprite[] sprites) {
-		this.sprites = sprites;
-	}
-
-	
-	/**
-	 * Sets the new horizontal position of the plant to a new value
-	 * @param x
-	 * 			The new value for the new horizontal position
-	 */
-	@Raw 
-	private void setNewXPos(double x) {
-		this.newXPos = x;
-	}
-	/**
-	 * Sets the difference between the reel x position and the
-	 * rounded down x position to a new value x_difference
-	 * @param x_difference
-	 * 			The new value for the x_difference of Maxub
-	 */
-	@Raw 
-	private void setXDifference(double x_difference) {
-		this.xDifference = x_difference;
-	}
 	
 	/**
 	 * 
@@ -186,25 +81,6 @@ public class Plant extends GameObject {
 		this.timeSameOrientation = t;
 	}
 	
-	/**
-	 * 
-	 */
-	
-	private void setXspeed(double speed) {
-		this.xSpeed = speed;
-	}
-	
-	private void setTimeSinceDeath(double t) {
-		this.timeSinceDeath += t;
-	}
-	
-	private void setDying() {
-		this.isDying = true;
-	}
-	
-	public void setWorld(World world) {
-	this.world = world;
-	}
 	
 // VALIDATIONS
 	
@@ -239,7 +115,7 @@ public class Plant extends GameObject {
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= this.getREMAININGTIME()) {
+			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
 				this.remove();
 			}
 		}
@@ -249,15 +125,9 @@ public class Plant extends GameObject {
 		
 	}
 	
-
-	private void die() {
-		this.setXspeed(0);
-		this.setDying();
-	}
-	
 	// TODO hier een getter of niet
 	private void remove() {
-		this.world.removePlant(this);
+		this.getWorld().removePlant(this);
 		this.setWorld(null);
 	}
 	
@@ -270,8 +140,8 @@ public class Plant extends GameObject {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		assert isValidSprite(GameObject.getSprite());
-		if (Position.getOrientation() == Orientation.RIGHT) {
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {
