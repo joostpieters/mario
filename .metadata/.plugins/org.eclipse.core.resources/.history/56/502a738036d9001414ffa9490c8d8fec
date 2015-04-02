@@ -140,10 +140,39 @@ public class Shark extends GameObject {
 		this.falling = false;
 	}	
 	
+<<<<<<< HEAD
 //	Validations
+	private boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}
+	/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any shark
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(int x_pos, int y_pos) {
+		return ((x_pos >= Shark.getMinXValue())
+				&& (x_pos <= Shark.getMaxXValue())
+				 && (y_pos >= Shark.getMinYValue())
+				 && (y_pos <= Shark.getMaxYValue()));
+	}
+	public boolean isValidYSpeed(double ySpeed) {
+		return ( ! Double.isNaN(ySpeed));
+	}
 	
+	// TODO 
+	public boolean isValidYSpeed() {
+		return true;
+	}
 	
+=======
 
+
+>>>>>>> 7a8a9bee489a0a385879a9744caa705a3463a334
 	
 	private void advanceX(double dt) {
 		if (this.getOrientation() == Orientation.RIGHT) {
