@@ -33,11 +33,84 @@ public class GameObject {
 					throw new IllegalPositionException(xPos,yPos); 
 				if (!isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
-		this.position  = new Position(xPos, yPos);
+		this.setXPos(xPos);
+		this.setYPos(yPos);
 		this.setSprite(sprites);
 	}
 	
-	Position position;
+	/**
+	 * the horizontal position of the object
+	 */
+	private double xPos = 0;
+	/**
+	 * Returns the horizontal position
+	 * @return xPos
+	 */
+	@Basic @Raw 
+	public double getXPos() {
+		return xPos;
+	}	
+	/**
+	 * Sets the horizontal position of mazub to the rounded down value of x
+	 * @param x
+	 * 			The new value for the horizontal position
+	 */
+	@Raw 
+	public void setXPos(double x) {
+		this.xPos = x;
+	}
+	
+	/**
+	 * the vertical position of the object
+	 */
+	private double yPos = 0;
+	/**
+	 * Returns the vertical position
+	 * @return yPos
+	 */
+	@Basic @Raw 
+	public double getYPos() {
+		return yPos;
+	}	
+	
+	/**
+	 * Sets the vertical position of mazub to the rounded down value of y
+	 * @param y
+	 * 			The new value for the vertical position
+	 */	
+	@Raw 
+	public void setYPos(double y) {
+		this.yPos = y;
+	}
+	
+	/**
+	 * the orientation of Mazub
+	 */
+	private Orientation orientation  = Orientation.RIGHT;	
+	/**
+	 * Returns the orientation of Mazub
+	 * @return orientation
+	 */
+	@Basic @Raw 
+	public Orientation getOrientation() {
+		return orientation;
+	}
+	/**
+	 * Sets the orientation of Mazub to right
+	 * @post orientation == "right"
+	 */
+	@Raw 
+	public void setOrientationRight() {
+		this.orientation = Orientation.RIGHT;
+	}
+	/**
+	 * Sets the orientation of Mazub to left
+	 * @post orientation == "left"
+	 */
+	@Raw 
+	public void setOrientationLeft() {
+		this.orientation = Orientation.LEFT;
+	}
 	
 	private Sprite[] sprites;
 	/**
@@ -113,7 +186,7 @@ public class GameObject {
 		return this.dying;
 	}
 	private void setDying() {
-		this.isDying = true;
+		this.dying = true;
 	}
 	
 	/**
