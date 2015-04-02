@@ -158,10 +158,6 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	public void die() {
-
-	}
-	
 	public void remove() {
 		this.getWorld().removeSlime(this);
 		this.setWorld(null);

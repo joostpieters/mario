@@ -160,6 +160,15 @@ public abstract class GameObject {
 		return xAcc;
 	}
 	/**
+	 * Sets the horizontal acceleration to a new value
+	 * @param xAcc
+	 * 			the new value of the horizontal acceleration
+	 */
+	@Raw 
+	public void setXAcc(double xAcc) {
+		this.xAcc = xAcc;
+	}
+	/**
 	 * the vertical acceleration 
 	 */
 	private double yAcc;
@@ -255,7 +264,7 @@ public abstract class GameObject {
 	
 
 //	Validations
-	public boolean isValidSprite(Sprite[] sprites) {
+	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}
 	
@@ -287,7 +296,7 @@ public abstract class GameObject {
 	 * @return True if dt is a value between 0 and 0.2 otherwise false.
 	 * 		| (dt <= 0.2 && dt > 0)
 	 */
-	private boolean isValidDt(double dt) {
+	protected boolean isValidDt(double dt) {
 		return ( dt <= 0.2 && dt > 0);
 	}
 	
