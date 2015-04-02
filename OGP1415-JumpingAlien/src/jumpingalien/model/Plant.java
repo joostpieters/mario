@@ -25,12 +25,8 @@ public class Plant extends GameObject {
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
-	public Plant(int x_pos,int y_pos, Sprite[] sprites ) 
+	public Plant(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos); 
-				if (!isValidSprite(sprites))
-					throw new IllegalSpriteException(sprites);
 		super(xPos,yPos,sprites);
 	}
 	

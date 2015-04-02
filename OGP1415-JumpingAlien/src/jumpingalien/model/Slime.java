@@ -27,12 +27,8 @@ public class Slime extends GameObject {
 	 * 			| !isValidSprite(sprites) 
 	 */
 // TODO school nog toewijzen	
-	public Slime(int x_pos,int y_pos, Sprite[] sprites,School school) 
+	public Slime(int xPos,int yPos, Sprite[] sprites,School school) 
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition(x_pos,y_pos))
-					throw new IllegalPositionException(x_pos,y_pos); 
-				if (!isValidSprite(sprites))
-					throw new IllegalSpriteException(sprites);
 		super(xPos, yPos, sprites);
 		this.setSchool(school);
 	}

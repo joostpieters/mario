@@ -27,10 +27,6 @@ public class Shark extends GameObject {
 	 */
 	public Shark(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition(xPos,yPos))
-					throw new IllegalPositionException(x_pos,y_pos); 
-				if (!isValidSprite(sprites))
-					throw new IllegalSpriteException(sprites);
 		super(xPos,yPos,sprites);
 		this.setNbHitpoints(INIT_HIT_POINTS);
 	}
