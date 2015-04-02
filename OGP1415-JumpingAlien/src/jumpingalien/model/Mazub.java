@@ -919,7 +919,7 @@ public class Mazub {
 	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
 	 */
 	public void startJump() {
-		if (this.onFloor()) {
+		if (this.onFloor(this.getXPos(),this.getYPos())) {
 			this.setYSpeed(this.getStartJumpSpeed());	
 		}
 	}	
@@ -1100,29 +1100,32 @@ public class Mazub {
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
 	private void advanceY(double dt){	
-		if (isAgainstRoof()) {
-			this.setYSpeed(0);
-			this.setNewYPos((this.getTilesUnder()[0][1])* world.getTileLength() - this.getSize()[1]);
-		}
-		if (( ! onFloor()) && ( ! this.isFalling())){
-			fall();
-		}
+		
 		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
 				this.getYAcc() * Math.pow(dt,2));
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		if ( ! this.isValidYSpeed()) {
 			this.setYSpeed(this.getStartJumpSpeed());
 		}
-		if (this.onFloor() && this.isFalling()) {
+		if (isAgainstRoof(this.getNewXPos(),this.getNewYPos())) {
+			this.setYSpeed(0);
+			this.setXSpeed(0);
+			this.setNewYPos((this.getTilesAbove(this.getNewXPos(),this.getNewYPos())[0][1]) 
+						* world.getTileLength() - this.getSize()[1] -1);
+		}
+		if (( ! onFloor(this.getNewXPos(),this.getNewYPos())) && ( ! this.isFalling())){
+			fall();
+		}
+		if (this.onFloor(this.getNewXPos(),this.getNewYPos()) && this.isFalling()) {
 			this.endFall();
-			this.setNewYPos((this.getTilesUnder()[0][1] +1)* world.getTileLength() -1);
+			this.setNewYPos((this.getTilesUnder(this.getNewXPos(),this.getNewYPos())[0][1] +1)* world.getTileLength() -1);
 		}
 		if (this.getNewYPos() > Mazub.getMaxYValue()) {
 			this.setNewYPos(Mazub.getMaxYValue());
 			this.setYSpeed(0);
 		}
 		this.setYPos(this.getNewYPos());	
-		}
+	}
 	
 
 
@@ -1166,10 +1169,14 @@ public class Mazub {
 	 * 			| maxSpeed == MAX_SPEED
 	 */
 	public void endDuck()  {
-		if (! this.isAgainstRoof()){
-			this.setDuck(false);
-			this.setMaxSpeed(this.getMaxMovingSpeed());
-		}		
+//		if (! this.isAgainstRoof()){
+//			this.setDuck(false);
+//			this.setMaxSpeed(this.getMaxMovingSpeed());
+//		}	
+		
+		this.setDuck(false);
+		this.setMaxSpeed(this.getMaxMovingSpeed());
+		
 	}		
 	/**
 	 * GEEN formele documentatie nodig
@@ -1286,24 +1293,24 @@ public class Mazub {
 		return tilesUnder;
 	}
 	
-	private int[][] getTilesAbove() {
-		int pixelLeft = (int)(this.getXPos());
-		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
+	private int[][] getTilesAbove(double xPos,double yPos) {
+		int pixelLeft = (int)(xPos);
+		int pixelTop = (int)(yPos) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
 		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+2,pixelTop, pixelRight-2, pixelTop);
 		return tilesUnder;
 	}
 	
-	private int[][] getTilesUnder() {
-		int pixelLeft = (int)(this.getXPos());
-		int pixelBottom = (int)(this.getYPos());
+	private int[][] getTilesUnder(double xPos, double yPos) {
+		int pixelLeft = (int)(xPos);
+		int pixelBottom = (int)(yPos);
 		int pixelRight = pixelLeft + this.getSize()[0];
 		int[][] tilesUnder = world.getTilePositionsIn(pixelLeft+2,pixelBottom, pixelRight-2, pixelBottom);
 		return tilesUnder;
 	}
 	
-	private boolean onFloor() {
-		int[][] tilesUnder = this.getTilesUnder();
+	private boolean onFloor(double xPos, double yPos) {
+		int[][] tilesUnder = this.getTilesUnder(xPos, yPos);
 		for (int[] tile: tilesUnder) {
 			try {
 				if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
@@ -1317,8 +1324,8 @@ public class Mazub {
 		return false;
 	}
 	
-	private boolean isAgainstRoof() {
-		int[][] tilesAbove = this.getTilesAbove();
+	private boolean isAgainstRoof(double xPos, double yPos) {
+		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
 		for (int[] tile: tilesAbove) {
 			try {
 				if (world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0],tile[1])[0],
