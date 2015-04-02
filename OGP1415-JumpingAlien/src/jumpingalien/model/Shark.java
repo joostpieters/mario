@@ -244,7 +244,7 @@ public class Shark extends GameObject {
 	}	
 	
 	private void remove() {
-		this.world.removeShark(this);
+		this.getWorld().removeShark(this);
 		this.setWorld(null);
 	}
 	/**

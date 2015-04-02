@@ -79,8 +79,6 @@ public class Slime extends GameObject {
 	 */
 	private int MAX_AMOUNT_OF_SCHOOLS = 10;	
 	
-	private World world;
-	
 	private School school;
 	
 //	GETTERS	
@@ -88,23 +86,8 @@ public class Slime extends GameObject {
 	private int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
-	private double getXAcc() {
-		return xAcc;
-	}
-	public World getWorld() {
-		return this.world;
-	}
 	private double getMaxXSpeed() {
 		return  MAX_X_SPEED;
-	}
-	/**
-	 * Returns the current location of the given slime.
-	 * 
-	 * @return An array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given slime's bottom left pixel in the world.
-	 */
-	public int[] getLocation(){
-		return new int[]{(int) Position.getXPos(), (int) Position.getYPos()};
 	}
 	
 	/**
@@ -141,9 +124,6 @@ public class Slime extends GameObject {
 
 //	SETTERS
 	
-	public void setWorld(World world) {
-		this.world = world;
-	}
 	private void setSchool(School school) {
 		this.school = school;
 	}
@@ -154,37 +134,13 @@ public class Slime extends GameObject {
 		return sprites.length == 2;
 	}
 	
-	/**
-	 * 	Checks whether the given positions are valid positions for 
-	 *  any slime
-	 * @return 	True if the horizontal position x_pos and 
-	 *			and the vertical position y_pos stay in the 
-	 *			game world.
-	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
-	 */
-	public boolean isValidPosition(int x_pos, int y_pos) {
-		return ((x_pos >= Slime.getMinXValue())
-				&& (x_pos <= Slime.getMaxXValue())
-				 && (y_pos >= Slime.getMinYValue())
-				 && (y_pos <= Slime.getMaxYValue()));
-	}
-	
-	public boolean isValidYSpeed(double ySpeed) {
-		return ( ! Double.isNaN(ySpeed));
-	}
-	
 	
 	public void advanceTime(double dt) {
-		if (this.getNbHitPoints() <= 0) {
+		if (this.getNbHitpoints() <= 0) {
 			this.die();
 		}
 	}
 
-	private int getNbHitPoints() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	/**
 	 * Return the current sprite image for the given slime.
@@ -193,8 +149,8 @@ public class Slime extends GameObject {
 	 *         orientation as defined in the assignment.
 	 */
 	public Sprite getCurrentSprite(){
-		assert isValidSprite(GameObject.getSprite());
-		if (Position.getOrientation() == Orientation.RIGHT) {
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == Orientation.RIGHT) {
 			return sprites[1];
 		}
 		else {
@@ -207,7 +163,7 @@ public class Slime extends GameObject {
 	}
 	
 	public void remove() {
-		this.world.removeSlime(this);
+		this.getWorld().removeSlime(this);
 		this.setWorld(null);
 	}
 }
