@@ -283,11 +283,7 @@ public abstract class GameObject {
 	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
 	 */
 	public boolean isValidPosition(double x, double y) {
-		return true;
-//				((x >= Mazub.getMinXValue())
-//				&& (x <= Mazub.getMaxXValue())
-//				 && (y >= Mazub.getMinYValue())
-//				 && (y <= Mazub.getMaxYValue()));
+		return ((x >= 0) && (y >= 0));
 	}
 	
 	/**
@@ -300,11 +296,31 @@ public abstract class GameObject {
 		return ( dt <= 0.2 && dt > 0);
 	}
 	
+	public boolean isWithinBoundaries(double x, double y) {
+		return ((x >= 0) && (x <= this.getWorld().getX())
+			&& (y >= 0) && (y <= this.getWorld().getY()));
+	}
+	
 	
 	public void die() {
 		this.setXSpeed(0);
 		this.setYSpeed(0);
 		this.setDying();
+	}
+	
+	protected double[] calculateNewPos(double dt) {		
+		double newXPos;
+		if (this.getOrientation() == Orientation.RIGHT) {
+			newXPos = this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);		
+		}
+		else {
+			newXPos = this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
+		}
+		double newYPos = this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+				this.getYAcc() * Math.pow(dt,2);
+		return new double[] {newXPos, newYPos};
 	}
 	
 	

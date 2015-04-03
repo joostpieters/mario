@@ -721,63 +721,44 @@ public class Mazub extends GameObject {
 	 * 			| y_pos == new_y_pos
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
-	private void advanceY(double dt){
-			
+	private void advanceY(double dt){	
 	}
 	
-	private double[] calculatesNewPos(double dt) {		
-		double newXPos;
-		if (this.getOrientation() == Orientation.RIGHT) {
-			newXPos = this.getXPos() + this.getXSpeed()*100*dt
-					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);		
-		}
-		else {
-			newXPos = this.getXPos() - this.getXSpeed()*100*dt
-					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
-		}
-		double newYPos = this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
-				this.getYAcc() * Math.pow(dt,2);
-		return new double[] {newXPos, newYPos};
-	}
-	
-	//TODO deftig maken 
+
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS
 	private double[] checkSurroundings(double newXPos, double newYPos) {
-		if (againstLeftWall() && this.getOrientation() == Orientation.LEFT) {
+		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
-			newXPos = (this.getTilesLeft()[0][1] + 1)* getWorld().getTileLength() - 1;
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][1] + 1) * getWorld().getTileLength();
 		}	
 		
-		if (againstRightWall() && this.getOrientation() == Orientation.RIGHT) {
+		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
-			newXPos = (this.getTilesLeft()[0][1] + 1)* getWorld().getTileLength() - 1;
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
 		}
 		
 		if (isAgainstRoof(newXPos,newYPos)) {
 			this.setYSpeed(0);
 			this.setXSpeed(0);
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) 
-						* getWorld().getTileLength() - this.getSize()[1] -1;
+			this.setXAcc(0);
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+		}
+		
+		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
+			this.endFall();
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 		}
 		
 		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
 			fall();
 		}
 		
-		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
-			this.endFall();
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1)* getWorld().getTileLength() -1);
-		}
-		
-		
 		return new double[] {newXPos, newYPos};
-		
-		
 	}
 
-	private void calculatesNewSpeed(double dt) {
+	private void setNewSpeed(double dt) {
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 		
@@ -807,20 +788,20 @@ public class Mazub extends GameObject {
 	public void advanceTime(double dt) throws IllegalDtException {
 		if (!isValidDt(dt))
 			throw new IllegalDtException(dt);
-//		this.advanceX(dt);
-//		this.advanceY(dt);
+
 		//TODO dis is mss nogal inefficient
-		double newXPos = this.calculatesNewPos(dt)[0];
-		double newYPos = this.calculatesNewPos(dt)[1];
+		double newXPos = this.calculateNewPos(dt)[0];
+		double newYPos = this.calculateNewPos(dt)[1];
 		
-		if(!isValidPosition(newXPos,newYPos)) {
+		if(!isWithinBoundaries(newXPos,newYPos)) {
+			
 			//TODO
 		}
 		double[] newPos = checkSurroundings(newXPos,newYPos);
 		newXPos = newPos[0];
 		newYPos = newPos[1];
 		
-		this.calculatesNewSpeed(dt);
+		this.setNewSpeed(dt);
 		
 		this.setXPos(newXPos);
 		this.setYPos(newYPos);
@@ -955,39 +936,35 @@ public class Mazub extends GameObject {
 		return death;
 	}
 	
-	// TODO xpos en ypos meegeven ipv getters
-	private int[][] getTilesLeft() {
-		int pixelLeft = (int)(this.getXPos());
-		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
-		int pixelBottom = (int)(this.getYPos());
+	private int[][] getTilesLeft(double XPos, double YPos) {
+		int pixelLeft = (int) XPos;
+		int pixelTop = (int) YPos + this.getSize()[1];
+		int pixelBottom = (int) YPos;
 
-		int[][] tilesUnder = getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop -1);
-		return tilesUnder;
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop);
 	}
 	
-	private int[][] getTilesRight() {
-		int pixelRight = (int)(this.getXPos());
-		int pixelTop = (int)(this.getYPos()) + this.getSize()[1];
-		int pixelBottom = (int)(this.getYPos());
+	private int[][] getTilesRight(double XPos, double YPos) {
+		int pixelRight = (int) XPos;
+		int pixelTop = (int) YPos + this.getSize()[1];
+		int pixelBottom = (int) YPos;
 
-		int[][] tilesUnder = getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop -1);
-		return tilesUnder;
+		return getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop);
 	}
 	
 	private int[][] getTilesAbove(double xPos,double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelTop = (int)(yPos) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
-		int[][] tilesUnder = getWorld().getTilePositionsIn(pixelLeft+2,pixelTop, pixelRight-2, pixelTop);
-		return tilesUnder;
+		return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight, pixelTop);
 	}
 	
 	private int[][] getTilesUnder(double xPos, double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelBottom = (int)(yPos);
 		int pixelRight = pixelLeft + this.getSize()[0];
-		int[][] tilesUnder = getWorld().getTilePositionsIn(pixelLeft+2,pixelBottom, pixelRight-2, pixelBottom);
-		return tilesUnder;
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight, pixelBottom);
+		
 	}
 	
 	private boolean onFloor(double xPos, double yPos) {
@@ -1020,8 +997,8 @@ public class Mazub extends GameObject {
 		return false;
 	}
 	
-	private boolean againstLeftWall() {
-		int[][] tilesLeft = this.getTilesLeft();
+	private boolean againstLeftWall(double xPos, double yPos) {
+		int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
 		for (int[] tile: tilesLeft) {
 			try {
 				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
@@ -1035,8 +1012,8 @@ public class Mazub extends GameObject {
 		return false;
 	}
 	
-	private boolean againstRightWall() {
-		int[][] tilesRight = this.getTilesRight();
+	private boolean againstRightWall(double xPos, double yPos) {
+		int[][] tilesRight = this.getTilesRight(xPos, yPos);
 		for (int[] tile: tilesRight) {
 			try {
 				if (getWorld().getGeologicalFeature(getWorld().getBottomRightPixelOfTile(tile[0],tile[1])[0],
