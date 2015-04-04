@@ -296,9 +296,14 @@ public abstract class GameObject {
 		return ( dt <= 0.2 && dt > 0);
 	}
 	
+	protected boolean isWithinBoundariesX(double x) {
+		return ((x >= 0) && (x <= this.getWorld().getX()));
+	}
+	protected boolean isWithinBoundariesY(double y) {
+		return (y >= 0) && (y <= this.getWorld().getY());
+	}
 	public boolean isWithinBoundaries(double x, double y) {
-		return ((x >= 0) && (x <= this.getWorld().getX())
-			&& (y >= 0) && (y <= this.getWorld().getY()));
+		return isWithinBoundariesX(x) && isWithinBoundariesY(y);
 	}
 	
 	
@@ -322,6 +327,26 @@ public abstract class GameObject {
 				this.getYAcc() * Math.pow(dt,2);
 		return new double[] {newXPos, newYPos};
 	}
+	
+	public double computeDt() {
+		double dt;
+		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
+			dt = (Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
+		}
+		else {
+			if (this.getXAcc() != 0) {
+				dt = Math.min(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed())),
+						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
+								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) );
+			}
+			else {
+				dt = Math.min(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed())),
+						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
+								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) );			
+			}
+		}		
+		return dt;
+	} 
 	
 	
 	

@@ -1,0 +1,53 @@
+package jumpingalien.model;
+/**
+ * 
+ * A class to check for an when the given tiles and tiletype are valid * 
+ * 
+ * @version 1.0
+ * @author Pieter Van den Berghe, Ward Romanus
+ * 
+ *
+ */
+@SuppressWarnings("serial")
+public class IllegalTilesException extends Exception {
+	
+	/**
+	 * Variable registering the x-tile evolved in this illegal 
+	 * tile exception.
+	 */
+	private final int tileX;
+	/**
+	 * Variable registering the y-tile evolved in this illegal 
+	 * tile exception.
+	 */
+	private final int tileY;
+	/**
+	 * the geological feature of the tile
+	 */
+	private final int tileType;
+
+	/**
+	 * initialize this new illegal pixel exception with a given pixel
+	 * @param	pixelX
+	 * 			the x pixel
+	 * @param 	pixelY
+	 * 			the y pixel
+	 * @post	the value of the new illegal pixel exception is equal to 
+	 * 			the given positions
+	 * 			| new.getPixelX() = pixelX
+	 * 			| new.getPixelY() = pixelY
+	 */
+	public IllegalPixelException(int tileX, int tileY, int tileType) {
+		this.tileX = tileX;
+		this.tileY = tileY;
+		this.tileType = tileType;
+	}
+	
+	public int gettileX() {
+		return tileX;
+	}
+	public int gettileY() {
+		return tileY;
+	}
+
+}

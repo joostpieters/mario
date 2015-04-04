@@ -35,7 +35,7 @@ public class IllegalPixelException extends Exception {
 	 * 			| new.getPixelX() = pixelX
 	 * 			| new.getPixelY() = pixelY
 	 */
-	public IllegalPixelException(int pixelX, int pixelY){
+	public IllegalPixelException(int pixelX, int pixelY) {
 		this.pixelX = pixelX;
 		this.pixelY = pixelY;
 	}

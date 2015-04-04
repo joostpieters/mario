@@ -196,7 +196,15 @@ public class Mazub extends GameObject {
 	 */
 	private void endFalling() {
 		this.falling = false;
-	}	
+	}
+	
+	private boolean immune = false;
+	private void setImmune() {
+		this.immune = true;
+	}
+	private void setNotImmune() {
+		this.immune = false;
+	}
 	
 //GETTERS
 	
@@ -448,13 +456,8 @@ public class Mazub extends GameObject {
 	/**
 	 * Checks whether the current vertical speed is valid
 	 * for any Mazub
-	 * @return True if the current vertical speed is valid
-	 * 			|  (this.getYSpeed() <= getJUMPSPEED())
+	 * @return True if the current vertical speed isn't equal to NaN 
 	 */
-	private boolean isValidYSpeed() {
-		return (this.getYSpeed() <= getStartJumpSpeed());
-	}
-		
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}
@@ -666,13 +669,8 @@ public class Mazub extends GameObject {
 	 * 			| 						then i += 1
 	 * 			|					 else i==0					
 	 */
-	private void advanceX(double dt) {
-		
-			
-		
-		
-				
-		
+	private void advanceX(double dt) {				
+		//TODO dit is niet meer nodig denk ik, ik heb dit in setNewSpeed gezet
 		
 		if (this.getXSpeed() == 0) {
 			this.setTimeSinceEndMove(this.getTimeSinceEndMove() + dt);
@@ -721,11 +719,12 @@ public class Mazub extends GameObject {
 	 * 			| y_pos == new_y_pos
 	 * 			| y_difference == new_y_pos - y_pos
 	 */
-	private void advanceY(double dt){	
+	private void advanceY(double dt){
+		//TODO deze is ook niet meer nodig zeker?
 	}
 	
 
-	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS
+	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
@@ -766,6 +765,23 @@ public class Mazub extends GameObject {
 			this.setXSpeed(this.getMaxSpeed());
 			this.setXAcc(0);
 		}
+		
+		if (this.getXSpeed() == 0) {
+			this.setTimeSinceEndMove(this.getTimeSinceEndMove() + dt);
+		}
+		else if (this.getXSpeed() > 0) {
+			this.setTimeSinceStartMove(this.getTimeSinceStartMove() + dt);
+			if (this.getTimeSinceStartMove() > Mazub.getTimeDifferentSprite()) {
+				this.setTimeSinceStartMove(this.getTimeSinceStartMove()
+						- Mazub.getTimeDifferentSprite());
+				if (this.getCounterSprites() < this.getNbRunningSprites()-1) {
+					this.setCounterSprites(this.getCounterSprites() +1);
+				}
+				else {
+					this.setCounterSprites(0);
+				}
+			}
+		}
 	}
 
 	/**
@@ -780,31 +796,34 @@ public class Mazub extends GameObject {
 	//TODO  deel van functies naar gameoject verhuizen
 	/*opbouwen als volgt:
 	 * - newpos
-	 * - speed aanpassen
 	 * - boundaries checken
+	 * - speed aanpassen
 	 * - isagainst.... (als hij niet dood is)
 	 * - pos aanpassen
 	 */
 	public void advanceTime(double dt) throws IllegalDtException {
-		if (!isValidDt(dt))
+		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
 
-		//TODO dis is mss nogal inefficient
+		//TODO dis is mss nogal inefficient, waarom?
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
 		
-		if(!isWithinBoundaries(newXPos,newYPos)) {
+		if( ! isWithinBoundaries(newXPos,newYPos)) {
+			if ( ! isWithinBoundariesX(newXPos)) {
+				newXPos = this.getWorld().getX();
+			}
+			if ( ! isWithinBoundariesX(newYPos)) {
+				newYPos = this.getWorld().getY();
+			}
 			
-			//TODO
 		}
 		double[] newPos = checkSurroundings(newXPos,newYPos);
-		newXPos = newPos[0];
-		newYPos = newPos[1];
 		
 		this.setNewSpeed(dt);
 		
-		this.setXPos(newXPos);
-		this.setYPos(newYPos);
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
 		
 		
 		if (this.getNbHitPoints() <= 0) {
@@ -898,10 +917,6 @@ public class Mazub extends GameObject {
 	 */
 	private static int MAX_HIT_POINTS = 500;
 	/**
-	 * a boolean giving true if the alien is death
-	 */
-	private boolean death = false;
-	/**
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
 	 */
@@ -925,15 +940,14 @@ public class Mazub extends GameObject {
 		}		
 	}	
 	
-
+	/**
+	 * Returns whether the given alien is currently immune against enemies
+	 * 
+	 * @return True if the given alien is immune against other enemies (i.e.,
+	 *         there are no interactions between the alien and enemy objects).
+	 */
 	public boolean isImmune() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	// TODO is dit nog nodig? is dat van Facade?
-	public boolean isDeath() {
-		return death;
+		return immune;
 	}
 	
 	private int[][] getTilesLeft(double XPos, double YPos) {

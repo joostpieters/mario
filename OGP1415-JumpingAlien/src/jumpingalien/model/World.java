@@ -28,6 +28,7 @@ public class World {
 	 *            Tile x-coordinate of the target tile of the created world
 	 * @param targetTileY
 	 *            Tile y-coordinate of the target tile of the created world
+	 * @throws IllegalNbTilesException 
 	 * @effect the new game world is created
 	 * 			| setTileSize)
 	 * 			| this.setNbTilesX(nbTilesX)
@@ -38,23 +39,26 @@ public class World {
 	 * 			| this.setTargetTileY(targetTileY)
 	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
 	 *  		| the geological features of the entire world are by default air (0)
-	 *  		
+	 *  //TODO throws in commentaar toevoegen	
 	 */
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
 			int targetTileY) 
 		throws IllegalAmountOfCharactersException,
 				IllegalTileSizeException, IllegalTargetTileException,
-				IllegalVisibleWindowException {
+				IllegalVisibleWindowException, IllegalNbTilesException {
 			if ( ! isValidAmountOfCharacters())
 				throw new  IllegalAmountOfCharactersException();
 			if ( ! isValidTileSize(tileSize))
 				throw new  IllegalTileSizeException(tileSize);
+			if  ( ! isValidNbTiles(nbTilesX))
+				throw new IllegalNbTilesException(nbTilesX);
+			if ( ! isValidNbTiles(nbTilesY))
+				throw new IllegalNbTilesException(nbTilesY);
 			if ( ! isValidTargetTile(targetTileX, targetTileY))
 				throw new  IllegalTargetTileException(targetTileX, targetTileY);
 			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, nbTilesX, nbTilesY))
 				throw new  IllegalVisibleWindowException(visibleWindowWidth, visibleWindowHeight);
-		// TODO illegaltilesizeecxeption, illegalsetarget..., illegalvis... toevoegen
 		this.setTileSize(tileSize);
 		this.setNbTilesX(nbTilesX);
 		this.setNbTilesY(nbTilesY);
@@ -289,10 +293,10 @@ public class World {
 	 * @throw IllegalPixelException if the given position does not correspond to the
 	 *        bottom left pixel of a tile.
 	 */
-//  TODO exception maken
+//  TODO exception maken, is dit niet al klaar?
 	public int getGeologicalFeature(int pixelX, int pixelY)
 			throws IllegalPixelException {
-				if(!isValidBottomLeftPixel(pixelX, pixelY))
+				if ( ! isValidBottomLeftPixel(pixelX, pixelY))
 					throw new IllegalPixelException(pixelX,pixelY);
 		return this.geologicalFeature[pixelY/this.getTileLength()][pixelX/this.getTileLength()];
 	}
@@ -439,9 +443,11 @@ public class World {
 	 *            <li>the value 3 is provided for a <b>magma</b> tile.</li>
 	 *            </ul>
 	 */
-// 	TODO exception toevoegen
-	public void setGeologicalFeature(int tileX, int tileY, int tileType) {
-		
+	public void setGeologicalFeature(int tileX, int tileY, int tileType)
+		throws IllegalTileException {
+		if ( ! isValidTile(tileX, tileY, tileType)) {
+			throw new IllegalTileException(tileX, tileY, tileType);
+		}		
 		this.geologicalFeature[tileY][tileX] = tileType;
 	}
 	
@@ -511,7 +517,7 @@ public class World {
 		return nbTiles > 0;
 	}
 	
-	// TODO
+	// TODO, is deze niet klaar?
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
@@ -529,7 +535,10 @@ public class World {
 	private boolean isValidTargetTile(int x, int y) {
 		return true;
 	}
-
+	private boolean isValidTile(int tileX, int tileY, int tileType) {
+		return (tileX < this.getNbTilesX()) && (tileY < this.getNbTilesY())
+				&& (tileType >= 0) && (tileType <= 4);
+	}
 	
 	
 	/**
@@ -553,7 +562,8 @@ public class World {
 	 * @return true if the game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
-		return (this.getAlien().isDeath() || didPlayerWin());
+		//TODO klopt dit om te checken of het object weg is/dood is?
+		return (this.getAlien() == null || didPlayerWin());
 	}
 	
 	/**
@@ -567,20 +577,49 @@ public class World {
 		return (this.getAlien().getLocation() == new int[] {this.getTargetTileX(),this.getTargetTileY()});
 	}
 	
+	/**
+	 * calculates the dt for every object in the game world
+	 * the maximal value for dt is 0.2
+	 * @return the minimal value for dt
+	 */
+	private double computeMinimalDt() {
+		double dt = 0.2;
+
+		for (Plant plant : this.getPlants()) {
+			if (plant.computeDt() < dt) {
+				dt = plant.computeDt();				
+			}			 
+		}
+		for (Shark shark: this.getSharks()) {
+			if (shark.computeDt() < dt) {
+				dt = shark.computeDt();			
+			}		
+		}
+		for (Slime slime: this.getSlimes()) {
+			if (slime.computeDt() < dt) {
+				dt = slime.computeDt();			
+			}		
+		}
+		dt = alien.computeDt();
+		
+		return dt;
+	}
+	
+	
 	
 	/**
 	 * NO DOCUMENTATION MUST BE WORKED OUT
 	 * @throws IllegalDtException 
 	 */
 // TODO uitzoeken hoe dit moet
-	public void advanceTime(double dt) throws IllegalDtException {
-		alien.advanceTime(dt);
-
+	public void advanceTime() throws IllegalDtException {
+		
 //		Iterator<Plant> plantIter = plants.iterator();
 //		while(plantIter.hasNext()) {
 //			Plant plant = plantIter.next();
 //			plant.advanceTime(dt);
-//		}
+//		}		
+		double dt = computeMinimalDt();
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
@@ -590,6 +629,7 @@ public class World {
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
+		alien.advanceTime(dt);
 	
 		positioningVisibleWindow();
 	}
@@ -628,65 +668,8 @@ public class World {
 		
 	}
 	
-	private double minimalDt;
-	private double getMinimalDt() {
-		return minimalDt;
-	}
-	private void setMinimalDt(double dt) {
-		this.minimalDt = dt;
-	}
-	private double ownDt;
-	private double getOwnDt() {
-		return ownDt;
-	}
-	private void setOwnDt(double dt) {
-		this.ownDt = dt;
-	}
 	
-	/*
-	private double computeOwnDt() {
-		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
-			setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
-		}
-		else {
-			if (this.getXAcc != 0) {
-				setOwnDt(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed()), 
-						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
-								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) ));
-			}
-			else {
-				setOwnDt(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed()), 
-						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
-								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) ));			
-			}
-		}
-	}
-	// TODO dit maken
-	private double computeDt() {
-		this.setMinimalDt(alien.computeOwnDt());
-//		for (Mazub alien : this.getAlien()) {
-//			if (alien.computeOwnDt() < this.getMinimalDt()) {
-//				this.setMinimalDt(alien.computeOwnDt());
-//			}
-//		}
-		for (Plant plant : this.getPlants()) {
-			if (plant.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(plant.getOwnDt());
-			}
-		}
-		for (Shark shark: this.getSharks()) {
-			if (shark.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(shark.getOwnDt());
-			}
-		}
-		for (Slime slime: this.getSlimes()) {
-			if (slime.computeOwnDt() < this.getMinimalDt()) {
-				this.setMinimalDt(slime.getOwnDt());
-			}
-		}
-		return this.getMinimalDt();
-	}	
-	*/
+	
 	
 
 }

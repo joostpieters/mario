@@ -1,0 +1,5 @@
+package jumpingalien.model;
+
+public class IllegalNbTilesException extends Exception {
+
+}
