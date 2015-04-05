@@ -90,6 +90,8 @@ public class Slime extends GameObject {
 		return MAX_HIT_POINTS;
 	}
 	
+	
+	
 //	GETTERS	
 	
 	private int getInitHitpoints() {
@@ -143,9 +145,61 @@ public class Slime extends GameObject {
 		return sprites.length == 2;
 	}
 	
+	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
+	private double[] checkSurroundings(double newXPos, double newYPos) {
+		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][1] + 1) * getWorld().getTileLength();
+		}	
+		
+		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
+		}
+		
+		if (isAgainstRoof(newXPos,newYPos)) {
+			this.setYSpeed(0);
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+		}
+		//TODO nog toepassen op shark, maar ik wil eerst beeld
+		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
+			this.endFall();
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+		}
+		
+		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
+			fall();
+		}
+		
+		return new double[] {newXPos, newYPos};
+	}
+
 	
-	
-	public void advanceTime(double dt) {
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);
+
+		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+		double newXPos = this.calculateNewPos(dt)[0];
+		double newYPos = this.calculateNewPos(dt)[1];
+		
+		// Hier moet hij gewoon sterven als hij buiten gaat -> just!
+		if( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.die();
+			// TODO spel eindigen ofzo -> HOER
+		}
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		
+		this.setNewSpeed(dt);
+		
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
+		
+		
 		if (this.getNbHitpoints() <= 0) {
 			this.die();
 		}

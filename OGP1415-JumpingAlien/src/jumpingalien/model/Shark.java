@@ -70,18 +70,7 @@ public class Shark extends GameObject {
 	private static double getJumpSpeed() {
 		return JUMP_SPEED;
 	}
-	/**
-	 * the vertical acceleration at which mazub falls
-	 */
-	private static double FALL_ACC = -10;
-	/**
-	 * Returns the acceleration when the shark falls
-	 * @return FALL_ACC
-	 */
-	@Basic @Immutable @Raw 
-	private double getFallAcc() {
-		return FALL_ACC;
-	}
+
 	/**
 	 * the minimal duration of a movement period (1s)
 	 */
@@ -109,34 +98,7 @@ public class Shark extends GameObject {
 	private double getRemainingTime() {
 		return this.REMAINING_TIME;
 	}
-	
-	
-	
-	
-	
-	/**
-	 * The boolean to reflect or shark is falling or not
-	 */
-	private boolean falling = false;	
-	
-	private boolean isFalling() {
-		return falling;
-	}
-	/**
-	 * Marks the boolean falling as true
-	 * @post falling == true
-	 */
-	private void setFalling() {
-		this.falling = true;
-	}	
-	/**
-	 * Marks the boolean falling as false
-	 * @post falling == false
-	 */
-	private void endFalling() {
-		this.falling = false;
-	}
-	
+
 
 //	Validations
 	@Override
@@ -209,24 +171,7 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	private void fall() {
-		if (this.getYPos() > 0){
-			this.setYAcc(this.getFallAcc());
-			this.setFalling();
-		}
-	} 
-	/**
-	 * Fall ends
-	 * @effect	the acceleration is set to 0
-	 * 		|	yAcc == 0
-	 * 		|	ySpeed == 0
-	 * 		|	endFalling()
-	 */
-	private void endFall() {
-		this.setYAcc(0);
-		this.setYSpeed(0);
-		this.endFalling();		
-	}
+ 
 	
 	
 	

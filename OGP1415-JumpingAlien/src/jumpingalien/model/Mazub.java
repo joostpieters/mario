@@ -168,31 +168,7 @@ public class Mazub extends GameObject {
 	 * the counter to go over the array of possible sprites
 	 */
 	private int counterSprites;	
-	/**
-	 * The boolean to reflect if Mazub is falling or not
-	 */
-	private boolean falling = false;	
-	/**
-	 * Returns True if Mazub is falling
-	 * @return falling
-	 */
-	private boolean isFalling() {
-		return falling;
-	}	
-	/**
-	 * Marks the boolean falling as true
-	 * @post falling == true
-	 */
-	private void setFalling() {
-		this.falling = true;
-	}	
-	/**
-	 * Marks the boolean falling as false
-	 * @post falling == false
-	 */
-	private void endFalling() {
-		this.falling = false;
-	}
+
 	
 	private boolean immune = false;
 	private void setImmune() {
@@ -534,34 +510,7 @@ public class Mazub extends GameObject {
 			this.setYSpeed(0);
 		}
 	}
-	/**
-	 * Makes mazub fall if he is not on the standing on the ground
-	 * @effect 	mazub accelerates to the ground with an acceleration
-	 * 			of 10 m/s² if was above the ground and he would not fall 
-	 * 			below the ground. If he would end below the ground, he ends
-	 * 			on the ground and his fall ends.
-	 * 			| if (y_pos > 0)
-	 * 			| 	then yAcc == FALL_ACC
-	 * 			|		 setFalling()	
-	 */
-	private void fall() {
-		if (this.getYPos() > 0){
-			this.setYAcc(this.getFallAcc());
-			this.setFalling();
-		}
-	} 
-	/**
-	 * Mazub fall ends
-	 * @effect	the acceleration of Mazub is set to 0
-	 * 		|	yAcc == 0
-	 * 		|	ySpeed == 0
-	 * 		|	endFalling()
-	 */
-	private void endFall() {
-		this.setYAcc(0);
-		this.setYSpeed(0);
-		this.endFalling();		
-	}
+
 	
 	/**
 	 * the alien moves horizontally if the  new speed does not exceed the maximum speed

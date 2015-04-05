@@ -9,6 +9,7 @@ import jumpingalien.model.IllegalPositionException;
 import jumpingalien.model.IllegalSpeedException;
 import jumpingalien.model.IllegalSpriteException;
 import jumpingalien.model.IllegalTargetTileException;
+import jumpingalien.model.IllegalTileException;
 import jumpingalien.model.IllegalTileSizeException;
 import jumpingalien.model.IllegalVisibleWindowException;
 import jumpingalien.model.Mazub;
@@ -119,7 +120,7 @@ public class Facade implements IFacadePart2 {
 	}
 	
 	public int getNbHitPoints(Mazub alien) {
-		return alien.getNbHitPoints();
+		return alien.getNbHitpoints();
 	}
 	
 	

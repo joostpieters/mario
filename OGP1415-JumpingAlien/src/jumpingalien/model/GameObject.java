@@ -312,8 +312,62 @@ public abstract class GameObject {
 	protected void setMaxSpeed(int maxspeed) {
 		this.maxSpeed = maxspeed;
 	}
-	
+	/**
+	 * the vertical acceleration at which a GameObject falls
+	 */
+	private static double FALL_ACC = -10;
+	/**
+	 * Returns the acceleration when the GameObject falls
+	 * @return FALL_ACC
+	 */
+	@Basic @Immutable @Raw 
+	private double getFallAcc() {
+		return FALL_ACC;
+	}
 
+	/**
+	 * The boolean to reflect or a gameObject is falling or not
+	 */
+	private boolean falling = false;	
+	
+	protected boolean isFalling() {
+		return falling;
+	}
+	/**
+	 * Marks the boolean falling as true
+	 * @post falling == true
+	 */
+	protected void setFalling() {
+		this.falling = true;
+	}	
+	/**
+	 * Marks the boolean falling as false
+	 * @post falling == false
+	 */
+	protected void endFalling() {
+		this.falling = false;
+	}
+	
+	protected void fall() {
+		this.setYAcc(this.getFallAcc());
+		this.setFalling();
+	}
+	
+	/**
+	 * Mazub fall ends
+	 * @effect	the acceleration of Mazub is set to 0
+	 * 		|	yAcc == 0
+	 * 		|	ySpeed == 0
+	 * 		|	endFalling()
+	 */
+	protected void endFall() {
+		this.setYAcc(0);
+		this.setYSpeed(0);
+		this.endFalling();		
+	}
+	
+	
+	
 //	Validations
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return (sprites.length % 2 == 0 && sprites != null) ;
