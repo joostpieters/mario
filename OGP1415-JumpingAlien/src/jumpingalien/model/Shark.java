@@ -8,6 +8,7 @@ import jumpingalien.util.Sprite;
 public class Shark extends GameObject {
 	
 
+	
 	/**
 	 * Creates a new shark, located at the provided pixel location (x, y).
 	 * The returned shark should not belong to a world.
@@ -32,13 +33,26 @@ public class Shark extends GameObject {
 	}
 	
 
-
+	public void setNbHitpoints(int number) {
+		if ( ! (number > this.getMaxHitpoints())) {
+			this.hitpoints = number;
+		}		
+	}	
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
 	private static int INIT_HIT_POINTS = 100;
 	private static int getInitHitpoints() {
 		return INIT_HIT_POINTS;
+	}
+	
+	private int MAX_HIT_POINTS;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	private int getMaxHitpoints() {
+		return MAX_HIT_POINTS;
 	}
 	
 	/**
@@ -199,6 +213,38 @@ public class Shark extends GameObject {
 		this.setYPos(this.getNewYPos());	
 	}
 	
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);
+
+		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+		double newXPos = this.calculateNewPos(dt)[0];
+		double newYPos = this.calculateNewPos(dt)[1];
+		
+		// Hier moet hij gewoon sterven als hij buiten gaat
+		if( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.die();
+			// TODO spel eindigen ofzo
+		}
+		
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		
+		this.setNewSpeed(dt);
+		
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
+		
+		if (this.isDying()) {
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
+				this.remove();
+			}
+		}
+		else if (this.getNbHitpoints() <= 0) {
+			this.die();
+		}
+	}
+	
 	private void fall() {
 		if (this.getYPos() > 0){
 			this.setYAcc(this.getFallAcc());
@@ -218,21 +264,7 @@ public class Shark extends GameObject {
 		this.endFalling();		
 	}
 	
-	public void advanceTime(double dt) {
-		
-		this.advanceX(dt);
-		this.advanceY(dt);
-		
-		if (this.isDying()) {
-			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
-				this.remove();
-			}
-		}
-		else if (this.getNbHitpoints() <= 0) {
-			this.die();
-		}
-	}	
+	
 	
 	private void remove() {
 		this.getWorld().removeShark(this);

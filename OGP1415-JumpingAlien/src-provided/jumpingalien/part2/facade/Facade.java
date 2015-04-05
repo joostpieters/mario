@@ -141,6 +141,9 @@ public class Facade implements IFacadePart2 {
 		catch(IllegalVisibleWindowException h) {
 			throw new ModelException(h.getMessage());
 		}
+		catch(IllegalArgumentException i) {
+			throw new ModelException(i.getMessage());
+		}
 	}
 
 	
@@ -193,7 +196,10 @@ public class Facade implements IFacadePart2 {
 	
 	public void setGeologicalFeature(World world, int tileX, int tileY,
 			int tileType) {
-		world.setGeologicalFeature(tileX, tileY, tileType);		
+		try{world.setGeologicalFeature(tileX, tileY, tileType);}
+		catch(IllegalTileException e) {
+			throw new ModelException(e.getMessage());
+		}
 	}
 	
 	public void setMazub(World world, Mazub alien) {

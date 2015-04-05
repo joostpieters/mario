@@ -46,15 +46,15 @@ public class World {
 			int targetTileY) 
 		throws IllegalAmountOfCharactersException,
 				IllegalTileSizeException, IllegalTargetTileException,
-				IllegalVisibleWindowException, IllegalNbTilesException {
+				IllegalVisibleWindowException, IllegalArgumentException {
 			if ( ! isValidAmountOfCharacters())
 				throw new  IllegalAmountOfCharactersException();
 			if ( ! isValidTileSize(tileSize))
 				throw new  IllegalTileSizeException(tileSize);
 			if  ( ! isValidNbTiles(nbTilesX))
-				throw new IllegalNbTilesException(nbTilesX);
+				throw new IllegalArgumentException();
 			if ( ! isValidNbTiles(nbTilesY))
-				throw new IllegalNbTilesException(nbTilesY);
+				throw new IllegalArgumentException();
 			if ( ! isValidTargetTile(targetTileX, targetTileY))
 				throw new  IllegalTargetTileException(targetTileX, targetTileY);
 			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, nbTilesX, nbTilesY))
@@ -612,14 +612,17 @@ public class World {
 	 * @throws IllegalDtException 
 	 */
 // TODO uitzoeken hoe dit moet
-	public void advanceTime() throws IllegalDtException {
+	public void advanceTime(double dt) throws IllegalDtException {
+				
+		double minDt = computeMinimalDt();
+		double timePassed;
+		for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
+			advanceEveryGameObject(minDt);
+		}
+		advanceEveryGameObject(dt - timePassed);
+	}
 		
-//		Iterator<Plant> plantIter = plants.iterator();
-//		while(plantIter.hasNext()) {
-//			Plant plant = plantIter.next();
-//			plant.advanceTime(dt);
-//		}		
-		double dt = computeMinimalDt();
+	private void advanceEveryGameObject(double dt) throws IllegalDtException {
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
@@ -629,7 +632,7 @@ public class World {
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
-		alien.advanceTime(dt);
+		this.getAlien().advanceTime(dt);
 	
 		positioningVisibleWindow();
 	}

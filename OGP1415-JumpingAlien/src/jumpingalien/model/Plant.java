@@ -47,6 +47,15 @@ public class Plant extends GameObject {
 	private double REMAINING_TIME = 0.6;
 	
 	private double timeSinceDeath = 0;
+	
+	private int MAX_HIT_POINTS;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	private int getMaxHitpoints() {
+		return MAX_HIT_POINTS;
+	}
 
 // GETTERS
 	
@@ -57,6 +66,11 @@ public class Plant extends GameObject {
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
+	public void setNbHitpoints(int number) {
+		if ( ! (number > this.getMaxHitpoints())) {
+			this.hitpoints = number;
+		}		
+	}	
 	private int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
@@ -125,7 +139,6 @@ public class Plant extends GameObject {
 		
 	}
 	
-	// TODO hier een getter of niet
 	private void remove() {
 		this.getWorld().removePlant(this);
 		this.setWorld(null);

@@ -1,6 +1,7 @@
 package jumpingalien.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
@@ -213,12 +214,15 @@ public abstract class GameObject {
 	/**
 	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
-	private int hitpoints;
+	protected int hitpoints;
 	public int getNbHitpoints() {
 		return this.hitpoints;
 	}
 	public void setNbHitpoints(int nb) {
 		this.hitpoints = nb;
+	}
+	protected int getNbHitpoints(int nb) {
+		return this.hitpoints;
 	}
 	private double timeSinceDeath = 0;
 	public double getTimeSinceDeath() {
@@ -261,6 +265,53 @@ public abstract class GameObject {
 		return new double[] {this.getXAcc(),this.getYAcc()};
 	}
 	
+	/**
+	 * Returns the horizontal dimension of mazub (width)
+	 * @return the horizontal dimension of mazub (width)
+	 * 			| this.getCurrentSprite().getWidth()
+	 */
+	@Basic @Raw 
+	private int getXDim() {
+		return this.getCurrentSprite().getWidth();
+	}
+	/**
+	 * Returns the vertical dimension of mazub (height)
+	 * @return the vertical dimension of mazub (height)
+	 * 			| this.getCurrentSprite().getHeight()
+	 */
+	@Basic @Raw 
+	private int getYDim() {
+		return this.getCurrentSprite().getHeight();
+	}	
+	/**
+	 * Returns an array consisting of the width and height of mazub
+	 * @return an array consisting of the width and height of mazub
+	 * 			| {XDim,YDim}
+	 */
+	@Basic @Raw 
+	public int[] getSize() {
+		return new int[] {this.getXDim(),this.getYDim()};
+	}
+	
+	private int maxSpeed; 
+	/**
+	 * Returns the maximum speed
+	 * @return the maximum speed
+	 * 			| maxSpeed
+	 */
+	@Basic @Immutable @Raw
+	protected int getMaxSpeed() {
+		return maxSpeed;
+	}
+	/**
+	 * Sets the maximum horizontal speed to a new value maxspeed
+	 * @param maxspeed
+	 * 			the new maximum horizontal speed of mazub
+	 */
+	@Raw
+	protected void setMaxSpeed(int maxspeed) {
+		this.maxSpeed = maxspeed;
+	}
 	
 
 //	Validations
@@ -313,6 +364,8 @@ public abstract class GameObject {
 		this.setDying();
 	}
 	
+	
+	
 	protected double[] calculateNewPos(double dt) {		
 		double newXPos;
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -349,7 +402,116 @@ public abstract class GameObject {
 	} 
 	
 	
+	protected int[][] getTilesLeft(double XPos, double YPos) {
+		int pixelLeft = (int) XPos;
+		int pixelTop = (int) YPos + this.getSize()[1];
+		int pixelBottom = (int) YPos;
+
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop);
+	}
 	
+	protected int[][] getTilesRight(double XPos, double YPos) {
+		int pixelRight = (int) XPos;
+		int pixelTop = (int) YPos + this.getSize()[1];
+		int pixelBottom = (int) YPos;
+
+		return getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop);
+	}
+	
+	protected int[][] getTilesAbove(double xPos,double yPos) {
+		int pixelLeft = (int)(xPos);
+		int pixelTop = (int)(yPos) + this.getSize()[1];
+		int pixelRight = pixelLeft + this.getSize()[0];
+		return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight, pixelTop);
+	}
+	
+	protected int[][] getTilesUnder(double xPos, double yPos) {
+		int pixelLeft = (int)(xPos);
+		int pixelBottom = (int)(yPos);
+		int pixelRight = pixelLeft + this.getSize()[0];
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight, pixelBottom);
+	}
+	
+	protected boolean onFloor(double xPos, double yPos) {
+		int[][] tilesUnder = this.getTilesUnder(xPos, yPos);
+		for (int[] tile: tilesUnder) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean isAgainstRoof(double xPos, double yPos) {
+		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
+		for (int[] tile: tilesAbove) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean againstLeftWall(double xPos, double yPos) {
+		int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
+		for (int[] tile: tilesLeft) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean againstRightWall(double xPos, double yPos) {
+		int[][] tilesRight = this.getTilesRight(xPos, yPos);
+		for (int[] tile: tilesRight) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomRightPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomRightPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+
+	public Sprite getCurrentSprite(){
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == Orientation.RIGHT) {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
+	}
+	
+	protected void setNewSpeed(double dt) {
+		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
+		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
+		
+		if (this.getXSpeed() >= this.getMaxSpeed()){
+			this.setXSpeed(this.getMaxSpeed());
+			this.setXAcc(0);
+		}
+	}
 	
 	
 }

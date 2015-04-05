@@ -81,6 +81,15 @@ public class Slime extends GameObject {
 	
 	private School school;
 	
+	private int MAX_HIT_POINTS;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	private int getMaxHitpoints() {
+		return MAX_HIT_POINTS;
+	}
+	
 //	GETTERS	
 	
 	private int getInitHitpoints() {
