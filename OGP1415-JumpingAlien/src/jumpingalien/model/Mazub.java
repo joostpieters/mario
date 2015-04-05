@@ -627,7 +627,7 @@ public class Mazub extends GameObject {
 
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
-	protected double[] checkSurroundings(double newXPos, double newYPos) {
+	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
@@ -792,7 +792,7 @@ public class Mazub extends GameObject {
 	/**
 	 * the amount of hitpoints mazub possesses
 	 */
-	private int NbHitPoints = this.getInitHitPoints();
+	private int hitpoints = this.getInitHitPoints();
 	/**
 	 * the amount of hitpoints mazub possesses in the beginning of a game
 	 */

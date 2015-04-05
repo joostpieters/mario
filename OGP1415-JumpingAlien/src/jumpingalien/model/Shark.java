@@ -144,74 +144,40 @@ public class Shark extends GameObject {
 		return sprites.length == 2;
 	}
 	
-
+	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
+		private double[] checkSurroundings(double newXPos, double newYPos) {
+			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][1] + 1) * getWorld().getTileLength();
+			}	
+			
+			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
+			}
+			
+			if (isAgainstRoof(newXPos,newYPos)) {
+				this.setYSpeed(0);
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+			}
+			//TODO nog toepassen op shark, maar ik wil eerst beeld
+			if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
+				this.endFall();
+				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+			}
+			
+			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
+				fall();
+			}
+			
+			return new double[] {newXPos, newYPos};
+		}
 	
-	private void advanceX(double dt) {
-		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setNewXPos(this.getXPos() + this.getXSpeed()*100*dt);	
-		}
-		else if (this.getOrientation() == Orientation.LEFT) {
-			this.setNewXPos(this.getXPos() - this.getXSpeed()*100*dt);
-		}
-		
-		if ((this.getNewXPos() < Shark.getMinXValue()) || 
-				(this.getNewXPos() > Shark.getMaxXValue())){
-			this.remove();
-		}
-		
-		this.setXPos(this.getNewXPos());
-	}
 	
-	/**
-	 * Changes the vertival position of Mazub with the current speed and accelleration
-	 * and with a given time interval dt. The method will keep Mazub between the boundaries
-	 * of the game world by setting his speed to zero if he jumps too high.
-	 * Changes the vertical speed of Mazub. If Mazub comes on the ground, his fall will ends.
-	 * @param dt: A small time interval
-	 * @effect	The new vertical position is changed
-	 * 			| new_y_pos == this.getYPos() +  this.getYSpeed()*100*dt + 0.5 * 100 *
-	 * 			| 				this.getYAcc() * Math.pow(dt,2) + this.getYDifference()
-	 * @effect 	The ySpeed is changed given the acceleration and the time interval
-	 * 			| ySpeed += dt * this.getYAcc()
-	 * @effect	If the new speed is not valid (greater then the jumpspeed), the speed
-	 * 			is set to JUMP_SPEED
-	 * 			| if ( ! isValidSpeed())
-	 * 			| 	then ySpeed = JUMP_SPEED
-	 * @effect 	If the new position is the ground or lower, his fall will end and
-	 * 			his vertical position will be 0
-	 * 			| if new_y_pos == 0
-	 * 			| 	then endfall()
-	 * 			| 		 new_y_pos == 0
-	 * @effect  If the vertical position of Mazub would exceed the upper boundary, 
-	 * 			Mazubs speed is set to zero and het new vertical position to MAX_Y_VALUE
-	 * 			| if new_y_pos > MAX_Y_VALUE
-	 * 			| 	then new_y_pos == MAX_Y_VALUE
-	 * 			| 		 ySpeed == 0
-	 * @effect the current vertical position is changed to the rounded down new position
-	 * 			and the difference between the two values is stored in y_difference
-	 * 			| y_pos == new_y_pos
-	 * 			| y_difference == new_y_pos - y_pos
-	 */
-	private void advanceY(double dt){	
-		if ((this.getYPos() > 0) && (!this.isFalling())){
-			fall();
-		}
-		this.setNewYPos(this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
-				this.getYAcc() * Math.pow(dt,2));
-		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
-		if ( ! this.isValidYSpeed()) {
-			this.setYSpeed(Shark.getJumpSpeed());
-		}
-		if (this.getNewYPos() <= 0) {
-			this.endFall();
-			this.setNewYPos(0);
-		}
-		if (this.getNewYPos() > Shark.getMaxYValue()) {
-			this.setNewYPos(Shark.getMaxYValue());
-			this.setYSpeed(0);
-		}
-		this.setYPos(this.getNewYPos());	
-	}
 	
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
@@ -221,10 +187,8 @@ public class Shark extends GameObject {
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
 		
-		// Hier moet hij gewoon sterven als hij buiten gaat
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
-			this.die();
-			// TODO spel eindigen ofzo
+			this.remove();
 		}
 		
 		double[] newPos = checkSurroundings(newXPos,newYPos);

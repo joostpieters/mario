@@ -144,6 +144,7 @@ public class Slime extends GameObject {
 	}
 	
 	
+	
 	public void advanceTime(double dt) {
 		if (this.getNbHitpoints() <= 0) {
 			this.die();
