@@ -126,7 +126,6 @@ public class Plant extends GameObject {
 			}
 		}
 		
-		// TODO dees fixen
 		if ((newXPos < this.getMinXValue()) || 
 				(newXPos > this.getMaxXValue())){
 			this.remove();

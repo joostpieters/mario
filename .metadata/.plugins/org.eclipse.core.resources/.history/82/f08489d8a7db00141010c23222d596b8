@@ -110,23 +110,12 @@ public class Plant extends GameObject {
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
 		if (this.getOrientation() == Orientation.RIGHT) {
-			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
-				newXPos = (this.getXPos() + this.getXSpeed()*100*dt);
-			}
-			else {
-				newXPos = this.getXPos();
-			}
+			newXPos = (this.getXPos() + this.getXSpeed()*100*dt);	
 		}
-		else if (this.getOrientation() == Orientation.LEFT) {
-			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
-				newXPos = (this.getXPos() - this.getXSpeed()*100*dt);
-			}
-			else {
-				newXPos = this.getXPos();
-			}
+		else if (this.getOrientation() == Orientation.RIGHT) {
+			newXPos = (this.getXPos() - this.getXSpeed()*100*dt);
 		}
 		
-		// TODO dees fixen
 		if ((newXPos < this.getMinXValue()) || 
 				(newXPos > this.getMaxXValue())){
 			this.remove();

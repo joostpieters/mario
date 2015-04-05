@@ -697,10 +697,10 @@ public class Mazub extends GameObject {
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
 		
-		// Hier moet hij gewoon sterven als hij buiten gaat -> just!
+		// Hier moet hij gewoon sterven als hij buiten gaat
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.die();
-			// TODO spel eindigen ofzo -> HOER
+			// TODO spel eindigen ofzo
 		}
 		double[] newPos = checkSurroundings(newXPos,newYPos);
 		
@@ -736,7 +736,7 @@ public class Mazub extends GameObject {
 	 * 			| maxSpeed == MAX_SPEED
 	 */
 	public void endDuck()  {
-//		if ( ! this.isAgainstRoof()){
+//		if (! this.isAgainstRoof()){
 //			this.setDuck(false);
 //			this.setMaxSpeed(this.getMaxMovingSpeed());
 //		}	

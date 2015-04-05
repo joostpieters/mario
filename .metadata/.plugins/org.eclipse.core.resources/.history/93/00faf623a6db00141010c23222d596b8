@@ -342,9 +342,6 @@ public class World {
 	private int getNbSlimes() {
 		return slimes.size();
 	}
-	private int getNbAliens() {
-		return 1;
-	}
 	
 
 	
@@ -532,7 +529,7 @@ public class World {
 	
 	private boolean isValidAmountOfCharacters() {
 		return ((this.getNbPlants() + this.getNbSharks() + 
-				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );
+				this.getNbSlimes() <= 100) && (this.getNbAliens >= 1) );
 			//	((alien.getNbOfMazubs() > 1) && (plant.getNbOfPlants() + 
 				//slime.getNbOfSlimes() + shark.getNbOfSharks() <= 100));
 	}

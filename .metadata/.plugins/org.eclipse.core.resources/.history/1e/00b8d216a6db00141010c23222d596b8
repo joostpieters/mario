@@ -83,8 +83,7 @@ public class World {
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
 	
-	// private List<Mazub> mazubs = new CopyOnWriteArrayList<Mazub>(); 
-	//	TODO			-> blz 3 onderaan: at least one player character mazub
+
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
 	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();
@@ -342,9 +341,6 @@ public class World {
 	private int getNbSlimes() {
 		return slimes.size();
 	}
-	private int getNbAliens() {
-		return 1;
-	}
 	
 
 	
@@ -531,8 +527,7 @@ public class World {
 	}
 	
 	private boolean isValidAmountOfCharacters() {
-		return ((this.getNbPlants() + this.getNbSharks() + 
-				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );
+		return true;
 			//	((alien.getNbOfMazubs() > 1) && (plant.getNbOfPlants() + 
 				//slime.getNbOfSlimes() + shark.getNbOfSharks() <= 100));
 	}
