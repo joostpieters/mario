@@ -1,5 +1,7 @@
 package jumpingalien.model;
 
+import java.util.Arrays;
+
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -156,7 +158,7 @@ public abstract class GameObject {
 	/**
 	 * the horizontal acceleration 
 	 */
-	private double xAcc = 1.5;
+	private double xAcc;
 	public double getXAcc() {
 		return xAcc;
 	}
@@ -214,7 +216,7 @@ public abstract class GameObject {
 	/**
 	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
-	protected int hitpoints;
+	protected int hitpoints =100;
 	public int getNbHitpoints() {
 		return this.hitpoints;
 	}
@@ -465,11 +467,11 @@ public abstract class GameObject {
 	}
 	
 	protected int[][] getTilesRight(double XPos, double YPos) {
-		int pixelRight = (int) XPos;
+		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
-
 		return getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop);
+		
 	}
 	
 	protected int[][] getTilesAbove(double xPos,double yPos) {
@@ -503,6 +505,7 @@ public abstract class GameObject {
 	
 	protected boolean isAgainstRoof(double xPos, double yPos) {
 		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
+		//System.out.println(Arrays.deepToString(tilesAbove));
 		for (int[] tile: tilesAbove) {
 			try {
 				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
@@ -533,6 +536,7 @@ public abstract class GameObject {
 	
 	protected boolean againstRightWall(double xPos, double yPos) {
 		int[][] tilesRight = this.getTilesRight(xPos, yPos);
+		System.out.println("tilesRight");System.out.println(Arrays.deepToString(tilesRight));
 		for (int[] tile: tilesRight) {
 			try {
 				if (getWorld().getGeologicalFeature(getWorld().getBottomRightPixelOfTile(tile[0],tile[1])[0],

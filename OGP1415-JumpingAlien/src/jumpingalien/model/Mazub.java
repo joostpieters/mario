@@ -577,6 +577,7 @@ public class Mazub extends GameObject {
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
+
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setXAcc(0);
@@ -588,14 +589,14 @@ public class Mazub extends GameObject {
 			this.setXAcc(0);
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
 		}
-		
+		System.out.println("newposnarightwall");System.out.println(newXPos);System.out.println(newYPos);
 		if (isAgainstRoof(newXPos,newYPos)) {
 			this.setYSpeed(0);
 			this.setXSpeed(0);
 			this.setXAcc(0);
 			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 		}
-		
+		System.out.println("newposnaroof");System.out.println(newXPos);System.out.println(newYPos);
 		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
 			this.endFall();
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
@@ -645,6 +646,7 @@ public class Mazub extends GameObject {
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
+		System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
 		
 		// Hier moet hij gewoon sterven als hij buiten gaat -> just!
 		if( ! isWithinBoundaries(newXPos,newYPos)) {

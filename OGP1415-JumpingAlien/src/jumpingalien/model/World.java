@@ -245,11 +245,15 @@ public class World {
 	 */
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
+	//	System.out.println(pixelLeft); System.out.println(pixelBottom); System.out.println(pixelRight);
+	//	System.out.println(pixelTop);
 		int posLeft = this.getTileOfPixels(pixelLeft,pixelBottom)[0];
 		int posBottom = this.getTileOfPixels(pixelLeft,pixelBottom)[1];
 		int posRight = this.getTileOfPixels(pixelRight,pixelTop)[0];
 		int posTop = this.getTileOfPixels(pixelRight,pixelTop)[1];
-		
+	//	System.out.println(posLeft); System.out.println(posBottom); System.out.println(posRight);
+	//	System.out.println(posTop);
+
 		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];
 		
 		int counter = 0;
@@ -620,9 +624,11 @@ public class World {
 	public void advanceTime(double dt) throws IllegalDtException {
 				
 		double minDt = computeMinimalDt();
-		double timePassed;
-		for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
-			advanceEveryGameObject(minDt);
+		double timePassed = 0;
+		if(minDt < dt) {
+			for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
+				advanceEveryGameObject(minDt);
+			}
 		}
 		advanceEveryGameObject(dt - timePassed);
 	}
@@ -631,9 +637,9 @@ public class World {
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
-		for (Shark shark: this.getSharks()) {
-			shark.advanceTime(dt);
-		}
+		//for (Shark shark: this.getSharks()) {
+		//	shark.advanceTime(dt);
+		//}
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
