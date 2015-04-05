@@ -604,9 +604,7 @@ public class World {
 				dt = slime.computeDt();			
 			}		
 		}
-		if (alien.computeDt() < dt) {
-			dt = alien.computeDt();
-		}		
+		dt = alien.computeDt();
 		
 		return dt;
 	}
