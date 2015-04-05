@@ -607,6 +607,7 @@ public class World {
 		if (alien.computeDt() < dt) {
 			dt = alien.computeDt();
 		}		
+		
 		return dt;
 	}
 	
