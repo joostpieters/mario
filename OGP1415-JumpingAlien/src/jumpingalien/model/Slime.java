@@ -32,10 +32,32 @@ public class Slime extends GameObject {
 		super(xPos, yPos, sprites);
 		this.setSchool(school);
 		this.setHitpoints(Slime.getInitHitpoints());
+		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
 
 	
-	private int movementDuration;
+	private double movementDuration = 0;
+	private double getMovementDuration() {
+		return movementDuration;
+	}
+	private void setMovementDuration(double time) {
+		this.movementDuration = time;
+	}
+	
+	private double timeSinceMove = 0;
+	/**
+	 * @return the timeSinceMove
+	 */
+	private double getTimeSinceMove() {
+		return timeSinceMove;
+	}
+	/**
+	 * @param timeSinceMove the timeSinceMove to set
+	 */
+	private void setTimeSinceMove(double time) {
+		this.timeSinceMove = time;
+	}
+
 
 	private static int INIT_HITPOINTS = 100;
 	private static int getInitHitpoints() {
@@ -45,10 +67,14 @@ public class Slime extends GameObject {
 	 * the horizontal acceleration of a slime
 	 */
 	private double xAcc = 0.7;
+	@Override
+	public double getXAcc() {
+		return xAcc;
+	}
 	/**
 	 * the maximum horizontal speed a slime can reach
 	 */
-	private double MAX_X_SPEED = 2.5;
+	private static double MAX_X_SPEED = 2.5;
 	/**
 	 * the minimal duration of a movement period (2s)
 	 */
@@ -93,14 +119,11 @@ public class Slime extends GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
-
-	
-	
 	
 //	GETTERS	
 	
 
-	private double getMaxXSpeed() {
+	private static double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}
 	
@@ -116,9 +139,7 @@ public class Slime extends GameObject {
 		return this.school;
 	}
 
-	private int getMovementDuration() {
-		return movementDuration;
-	}
+
 	private int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}
@@ -149,43 +170,50 @@ public class Slime extends GameObject {
 	}
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
-	private double[] checkSurroundings(double newXPos, double newYPos) {
-		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][1] + 1) * getWorld().getTileLength();
-		}	
-		
-		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
+		private double[] checkSurroundings(double newXPos, double newYPos) {
+
+			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}	
+
+			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (isAgainstRoof(newXPos,newYPos)) {
+				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+				this.setYSpeed(0);
+			}
+			
+			if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
+				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+				this.endFall();
+			}
+			
+			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
+				fall();
+			}
+			
+			return new double[] {newXPos, newYPos};
 		}
 		
-		if (isAgainstRoof(newXPos,newYPos)) {
-			this.setYSpeed(0);
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
-		}
-		//TODO nog toepassen op shark, maar ik wil eerst beeld
-		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
-			this.endFall();
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-		}
-		
-		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
-			fall();
-		}
-		
-		return new double[] {newXPos, newYPos};
-	}
 
 	
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
-
+		
+		randomMovement(dt);
+		
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
@@ -201,6 +229,7 @@ public class Slime extends GameObject {
 		
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
+		
 		
 		
 		if (this.getHitpoints() <= 0) {
@@ -229,5 +258,45 @@ public class Slime extends GameObject {
 		this.getWorld().removeSlime(this);
 		this.setWorld(null);
 	}
+	
+	private void randomMovement(double dt) {
+		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
+			this.setMovementDuration(Math.random() * 4 + 2);
+			this.setTimeSinceMove(dt);
+			if(Math.random()>=0.5) {
+				this.moveRight();
+			}
+			else {
+				this.moveLeft();
+			}
+		}
+		else {
+			this.setTimeSinceMove(this.getTimeSinceMove() + dt);
+		}
+		
+	}
+	
+
+	/**
+	 * Mazub starts moving to the right
+	 * @effect 	| 
+	 */
+	public void moveRight(){
+		if(this.getOrientation() == Orientation.LEFT) {
+			this.setXSpeed(0);
+			this.setOrientationRight();
+		}
+	}
+	/**
+	 * Mazub starts moving to the left
+	 * @effect 	|
+	 */
+	public void moveLeft(){
+		if(this.getOrientation() == Orientation.RIGHT) {
+			this.setXSpeed(0);
+			this.setOrientationLeft();
+		}
+	}	
+	
 }
 	

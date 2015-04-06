@@ -305,24 +305,24 @@ public abstract class GameObject {
 		return new int[] {this.getXDim(),this.getYDim()};
 	}
 	
-	private int maxSpeed; 
+	private double maxSpeed; 
 	/**
 	 * Returns the maximum speed
 	 * @return the maximum speed
 	 * 			| maxSpeed
 	 */
 	@Basic @Immutable @Raw
-	protected int getMaxSpeed() {
+	protected double getMaxSpeed() {
 		return maxSpeed;
 	}
 	/**
 	 * Sets the maximum horizontal speed to a new value maxspeed
-	 * @param maxspeed
+	 * @param d
 	 * 			the new maximum horizontal speed of mazub
 	 */
 	@Raw
-	protected void setMaxSpeed(int maxspeed) {
-		this.maxSpeed = maxspeed;
+	protected void setMaxSpeed(double d) {
+		this.maxSpeed = d;
 	}
 	/**
 	 * the vertical acceleration at which a GameObject falls
@@ -592,7 +592,7 @@ public abstract class GameObject {
 		return false;
 	}	
 	
-
+	
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
 		if (this.getOrientation() == Orientation.RIGHT) {

@@ -372,8 +372,8 @@ public class Mazub extends GameObject {
 	 * 			| ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed() 
 	 * 			|	>= this.getInitStartSpeed()))
 	 */
-	private boolean isValidSpeed(int initStartSpeed,int maxSpeed) {
-		return ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed));
+	private boolean isValidSpeed(int initStartSpeed,double d) {
+		return ((initStartSpeed >= 1) && (d >= initStartSpeed));
 	}
 	/**
 	 * Checks whether the current horizontal speed is valid
@@ -587,7 +587,6 @@ public class Mazub extends GameObject {
 				this.setYSpeed(0);
 			}
 		}	
-		System.out.println("newposnaleftwall");System.out.println(newXPos);System.out.println(newYPos);
 
 		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
@@ -597,12 +596,10 @@ public class Mazub extends GameObject {
 				this.setYSpeed(0);
 			}
 		}
-		System.out.println("newposnarightwall");System.out.println(newXPos);System.out.println(newYPos);
 		if (isAgainstRoof(newXPos,newYPos)) {
 			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			this.setYSpeed(0);
 		}
-		System.out.println("newposnaroof");System.out.println(newXPos);System.out.println(newYPos);
 		
 		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
