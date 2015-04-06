@@ -31,7 +31,6 @@ public class Slime extends GameObject {
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
 		this.setSchool(school);
-		this.setHitpoints(100);
 	}
 
 	
@@ -82,8 +81,14 @@ public class Slime extends GameObject {
 	
 	private School school;
 	
-	private int MAX_HITPOINTS = 100;
-
+	private int MAX_HIT_POINTS;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	private int getMaxHitpoints() {
+		return MAX_HIT_POINTS;
+	}
 	
 	
 	
@@ -195,7 +200,7 @@ public class Slime extends GameObject {
 		this.setYPos(newPos[1]);
 		
 		
-		if (this.getHitpoints() <= 0) {
+		if (this.getNbHitpoints() <= 0) {
 			this.die();
 		}
 	}

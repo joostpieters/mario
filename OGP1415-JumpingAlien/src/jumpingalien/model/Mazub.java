@@ -56,7 +56,7 @@ public class Mazub extends GameObject {
 		super(xPos,yPos,sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_MOVING_SPEED);
-		this.setHitpoints(100);
+		
 	}
 	
 
@@ -104,7 +104,6 @@ public class Mazub extends GameObject {
 			super(xPos, yPos, sprites);
 			this.setInitStartSpeed(initStartSpeed);
 			this.setMaxSpeed(maxSpeed);
-			this.setHitpoints(100);
 	}
 	
 	
@@ -667,12 +666,12 @@ public class Mazub extends GameObject {
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);	
 		
-		if (this.getHitpoints() <= 0) {
+		if (this.getNbHitpoints() <= 0) {
 			this.die();
 		}
 		
 		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setHitpoints(this.getHitpoints() + touchedPlants);
+		this.setNbHitpoints(this.getHitpoints() + touchedPlants);
 		
 	}
 	
@@ -752,8 +751,10 @@ public class Mazub extends GameObject {
 	/**
 	 * the amount of hitpoints mazub possesses
 	 */
-//	private int hitpoints = this.getInitHitPoints();
-	
+	private int hitpoints = this.getInitHitPoints();
+	private int getHitpoints() {
+		return this.hitpoints;
+	}
 	/**
 	 * the amount of hitpoints mazub possesses in the beginning of a game
 	 */
@@ -762,6 +763,13 @@ public class Mazub extends GameObject {
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
 	private static int MAX_HIT_POINTS = 500;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	private int getMaxHitpoints() {
+		return MAX_HIT_POINTS;
+	}
 	/**
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
@@ -772,7 +780,7 @@ public class Mazub extends GameObject {
 	
 
 	
-	public void setHitpoints(int number) {
+	public void setNbHitpoints(int number) {
 		if ( ! (number > this.getMaxHitpoints())) {
 			this.hitpoints = number;
 		}
