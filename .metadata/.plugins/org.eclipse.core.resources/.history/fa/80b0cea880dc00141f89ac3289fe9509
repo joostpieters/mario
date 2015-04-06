@@ -721,7 +721,7 @@ public class World {
 		for (Shark shark : this.getSharks()) {
 			 if (this.touches(xPos, xDim, yPos, yDim, shark.getXPos(),
 					 shark.getXDim(), shark.getYPos(), shark.getYDim())) {
-				 shark.setNbHitpoints(shark.getNbHitpoints() - shark.getContactDamage());
+				 shark.die();
 				 nbTouchedSharks += 1;
 			 }
 		}
@@ -738,15 +738,6 @@ public class World {
 			 }
 		}
 		return nbTouchedSlimes;
-	}
-	
-	public int touchedAliens(double xPos, double yPos, double xDim, double yDim) {
-		int nbTouchedAliens = 0;
-		if (this.touches(xPos, xDim, yPos, yDim, alien.getXPos(),
-				alien.getXDim(), alien.getYPos(), alien.getYDim())) {
-			nbTouchedAliens += 1;
-		}
-		return nbTouchedAliens;
 	}
 	
 	

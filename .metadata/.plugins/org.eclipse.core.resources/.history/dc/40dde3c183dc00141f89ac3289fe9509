@@ -672,7 +672,6 @@ public class Mazub extends GameObject {
 		
 		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setNbHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
-		
 		if ( ! this.isImmune()) {
 			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 			this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Mazub.getTouchEnemy() );

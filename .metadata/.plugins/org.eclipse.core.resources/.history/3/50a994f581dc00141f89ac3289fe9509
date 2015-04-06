@@ -672,13 +672,10 @@ public class Mazub extends GameObject {
 		
 		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setNbHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
-		
-		if ( ! this.isImmune()) {
-			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
-			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setNbHitpoints(this.getNbHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
-		}		
+		int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+		this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
+		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+		this.setNbHitpoints(this.getNbHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
 		
 	}
 	
@@ -691,6 +688,7 @@ public class Mazub extends GameObject {
 	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
 	public void startDuck() {
+		this.die();
 		this.setDuck(true);
 		this.setMaxSpeed(this.getMaxSpeedDuck());
 	}	

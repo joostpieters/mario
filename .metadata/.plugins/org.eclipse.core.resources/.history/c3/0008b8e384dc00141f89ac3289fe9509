@@ -58,8 +58,7 @@ public class Slime extends GameObject {
 	 * the amount of hitpoints a slime loses when touching 
 	 * a shark or mazub.
 	 */
-	private static int CONTACT_DAMAGE = 50;
-
+	private int CONTACT_DAMAGE = 50;
 	/**
 	 * the damage every slime in the school looses when a single
 	 * slime looses some hitpoints
@@ -117,7 +116,7 @@ public class Slime extends GameObject {
 	private int getMovementDuration() {
 		return movementDuration;
 	}
-	public static int getContactDamage() {
+	public int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}
 	private int getSchoolDamage() {
@@ -200,8 +199,6 @@ public class Slime extends GameObject {
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 		
-		int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Slime.getContactDamage() );
 		
 		if (this.getNbHitpoints() <= 0) {
 			this.die();

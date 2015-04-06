@@ -740,15 +740,6 @@ public class World {
 		return nbTouchedSlimes;
 	}
 	
-	public int touchedAliens(double xPos, double yPos, double xDim, double yDim) {
-		int nbTouchedAliens = 0;
-		if (this.touches(xPos, xDim, yPos, yDim, alien.getXPos(),
-				alien.getXDim(), alien.getYPos(), alien.getYDim())) {
-			nbTouchedAliens += 1;
-		}
-		return nbTouchedAliens;
-	}
-	
 	
 	
 	

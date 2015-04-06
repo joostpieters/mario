@@ -671,14 +671,7 @@ public class Mazub extends GameObject {
 		}
 		
 		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setNbHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
-		
-		if ( ! this.isImmune()) {
-			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
-			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setNbHitpoints(this.getNbHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
-		}		
+		this.setNbHitpoints(this.getHitpoints() + touchedPlants);
 		
 	}
 	
@@ -766,15 +759,6 @@ public class Mazub extends GameObject {
 	 * the amount of hitpoints mazub possesses in the beginning of a game
 	 */
 	private static int INIT_HIT_POINTS = 100;
-	
-	private static int TOUCH_PLANT_HITPOINTS;
-	private static int getTouchPlantHitpoints() {
-		return TOUCH_PLANT_HITPOINTS;
-	}
-	private static int TOUCH_ENEMY = 50;
-	private static int getTouchEnemy() {
-		return TOUCH_ENEMY;
-	}
 	/**
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
@@ -792,7 +776,8 @@ public class Mazub extends GameObject {
 	 */
 	private int getInitHitPoints() {
 		return INIT_HIT_POINTS;
-	}	
+	}
+	
 
 	
 	public void setNbHitpoints(int number) {

@@ -519,10 +519,6 @@ public abstract class GameObject {
 		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight, pixelBottom);
 	}
 	
-	protected int[][] getTiles(double xPos, double yPos) {
-		//TODO dit maken
-	}
-	
 	protected boolean onFloor(double xPos, double yPos) {
 		int[][] tilesUnder = this.getTilesUnder(xPos, yPos);
 		for (int[] tile: tilesUnder) {
@@ -583,33 +579,7 @@ public abstract class GameObject {
 		return false;
 	}
 	
-	//TODO dit fixen want nadenken gaat echt ni meer #ohgodwhy
 	protected boolean isUnderWater(double xPos, double yPos) {
-		int[][] tiles = this.getTiles(xPos,yPos);
-		for (int[] tile: tiles) {
-			try {
-				if (this.getWorld().getGeologicalFeature(pixelX, pixelY) == 2) {
-					return true;
-				}
-			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
-			}
-		}
-		
-	}
-	
-	//TODO dit fixen want nadenken gaat echt ni meer #ohgodwhy
-	protected boolean isInMagma(double xPos, double yPos) {
-		int[][] tiles = this.getTiles(xPos,yPos);
-		for (int[] tile: tiles) {
-			try {
-				if (this.getWorld().getGeologicalFeature(pixelX, pixelY) == 3) {
-					return true;
-				}
-			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
-			}
-		}
 		
 	}
 	

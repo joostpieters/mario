@@ -87,10 +87,7 @@ public class Shark extends GameObject {
 	 * the amount of hitpoints a shark loses when touching 
 	 * a mazub or a slime
 	 */
-	private static int CONTACT_DAMAGE = 50;
-	public static int getContactDamage() {
-		return CONTACT_DAMAGE;
-	}
+	private int CONTACT_DAMAGE = 50;
 	
 	private int HIT_POINTS = 1;
 
@@ -162,16 +159,12 @@ public class Shark extends GameObject {
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 		
-		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setNbHitpoints(this.getNbHitpoints() - touchedSlimes * Shark.getContactDamage() );
-		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
 				this.remove();
 			}
-		}		
-		
+		}
 		else if (this.getNbHitpoints() <= 0) {
 			this.die();
 		}

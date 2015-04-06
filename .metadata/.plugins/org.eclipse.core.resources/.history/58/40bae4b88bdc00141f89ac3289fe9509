@@ -598,7 +598,6 @@ public abstract class GameObject {
 		
 	}
 	
-	//TODO dit fixen want nadenken gaat echt ni meer #ohgodwhy
 	protected boolean isInMagma(double xPos, double yPos) {
 		int[][] tiles = this.getTiles(xPos,yPos);
 		for (int[] tile: tiles) {
