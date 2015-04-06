@@ -638,7 +638,7 @@ public class World {
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
-		//TODO waarom staat dit uitgecomment?
+		//TODO waarom staat dit uitgecomment? Dat gaf een fout die ik toen niet wilde oplossen
 //		for (Shark shark: this.getSharks()) {
 //			shark.advanceTime(dt);
 //		}
@@ -704,6 +704,7 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
+	//voor wat hebben we dit aantal eigenlijk nodig?
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {
@@ -727,6 +728,8 @@ public class World {
 		}
 		return nbTouchedSharks;
 	}
+	
+	// MUILEN MET LAURA
 	
 	
 	
