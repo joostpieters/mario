@@ -670,7 +670,7 @@ public class Mazub extends GameObject {
 			this.die();
 		}
 		
-		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+		int touchedPlants = World.touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setNbHitpoints(this.getHitpoints() + touchedPlants);
 		
 	}

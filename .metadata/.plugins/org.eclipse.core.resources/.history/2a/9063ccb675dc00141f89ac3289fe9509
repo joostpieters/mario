@@ -223,6 +223,10 @@ public abstract class GameObject {
 	public void setNbHitpoints(int nb) {
 		this.hitpoints = nb;
 	}
+	//TODO waarom heeft dit een argument? (dit staat hierboven toch al?)
+	protected int getNbHitpoints(int nb) {
+		return this.hitpoints;
+	}
 	private double timeSinceDeath = 0;
 	public double getTimeSinceDeath() {
 		return this.timeSinceDeath;

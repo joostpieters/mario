@@ -716,16 +716,16 @@ public class World {
 		return amountOfDeadPlants;
 	}
 	
-	public int touchedsharks(double xPos, double yPos, double xDim, double yDim) {
-		int nbTouchedSharks = 0;
-		for (Shark shark : this.getSharks()) {
-			 if (this.touches(xPos, xDim, yPos, yDim, shark.getXPos(),
-					 shark.getXDim(), shark.getYPos(), shark.getYDim())) {
-				 shark.die();
-				 nbTouchedSharks += 1;
+	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
+		int amountOfDeadPlants = 0;
+		for (Plant plant : this.getPlants()) {
+			 if (this.touches(xPos, xDim, yPos, yDim, plant.getXPos(),
+					 plant.getXDim(), plant.getYPos(), plant.getYDim())) {
+				 plant.die();
+				 amountOfDeadPlants += 1;
 			 }
 		}
-		return nbTouchedSharks;
+		return amountOfDeadPlants;
 	}
 	
 	
