@@ -139,7 +139,7 @@ public abstract class GameObject {
 		this.world = world;
 	}
 	
-	private double xSpeed;
+	protected double xSpeed;
 	public double getXSpeed() {
 		return this.xSpeed;
 	}
@@ -239,10 +239,10 @@ public abstract class GameObject {
 	 */
 	public void changeOrientation() {
 		if (this.getOrientation() == Orientation.LEFT) {
-			this.setOrientationLeft();
+			this.setOrientationRight();
 		}
 		else {
-			this.setOrientationRight();
+			this.setOrientationLeft();
 		}
 	}
 	

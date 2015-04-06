@@ -28,8 +28,11 @@ public class Plant extends GameObject {
 	public Plant(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
+		this.setXSpeed(1.5);
 	}
 	
+//	@Override
+//	protected double xSpeed = 1.5;
 
 	/**
 	 * the initial amount of hitpoints a plant possesses
@@ -110,19 +113,13 @@ public class Plant extends GameObject {
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
 		if (this.getOrientation() == Orientation.RIGHT) {
-			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
+			if ( !this.againstRightWall(this.getXPos(), this.getYPos())) {
 				newXPos = (this.getXPos() + this.getXSpeed()*100*dt);
-			}
-			else {
-				newXPos = this.getXPos();
 			}
 		}
 		else if (this.getOrientation() == Orientation.LEFT) {
-			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
+			if ( !this.againstRightWall(this.getXPos(), this.getYPos())) {
 				newXPos = (this.getXPos() - this.getXSpeed()*100*dt);
-			}
-			else {
-				newXPos = this.getXPos();
 			}
 		}
 		

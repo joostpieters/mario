@@ -106,6 +106,7 @@ public class Shark extends GameObject {
 		return sprites.length == 2;
 	}
 	
+	// Deze is nog helemaal mis
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 		private double[] checkSurroundings(double newXPos, double newYPos) {
 			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
