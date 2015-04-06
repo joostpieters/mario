@@ -223,6 +223,7 @@ public abstract class GameObject {
 	public void setNbHitpoints(int nb) {
 		this.hitpoints = nb;
 	}
+	//TODO waarom heeft dit een argument? (dit staat hierboven toch al?)
 	protected int getNbHitpoints(int nb) {
 		return this.hitpoints;
 	}
@@ -273,7 +274,7 @@ public abstract class GameObject {
 	 * 			| this.getCurrentSprite().getWidth()
 	 */
 	@Basic @Raw 
-	private int getXDim() {
+	protected int getXDim() {
 		return this.getCurrentSprite().getWidth();
 	}
 	/**
@@ -282,7 +283,7 @@ public abstract class GameObject {
 	 * 			| this.getCurrentSprite().getHeight()
 	 */
 	@Basic @Raw 
-	private int getYDim() {
+	protected int getYDim() {
 		return this.getCurrentSprite().getHeight();
 	}	
 	/**
@@ -580,7 +581,7 @@ public abstract class GameObject {
 			}
 		}
 		return false;
-	}
+	}	
 	
 
 	public Sprite getCurrentSprite(){

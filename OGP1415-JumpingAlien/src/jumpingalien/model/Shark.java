@@ -7,8 +7,6 @@ import jumpingalien.util.Sprite;
 
 public class Shark extends GameObject {
 	
-
-	
 	/**
 	 * Creates a new shark, located at the provided pixel location (x, y).
 	 * The returned shark should not belong to a world.
@@ -171,9 +169,6 @@ public class Shark extends GameObject {
 			this.die();
 		}
 	}
-	
- 
-	
 	
 	
 	private void remove() {

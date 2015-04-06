@@ -87,10 +87,7 @@ public class Plant extends GameObject {
 	}
 	
 
-//	SETTERS
-	
-	
-	
+//	SETTERS	
 	/**
 	 * 
 	 */
@@ -151,8 +148,6 @@ public class Plant extends GameObject {
 		this.getWorld().removePlant(this);
 		this.setWorld(null);
 	}
-	
-
 	
 	/**
 	 * Return the current sprite image for the given plant.

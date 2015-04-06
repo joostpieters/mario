@@ -638,9 +638,11 @@ public class World {
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
-		//for (Shark shark: this.getSharks()) {
-		//	shark.advanceTime(dt);
-		//}
+		//TODO waarom staat dit uitgecomment?
+//		for (Shark shark: this.getSharks()) {
+//			shark.advanceTime(dt);
+//		}
+		
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
@@ -681,6 +683,37 @@ public class World {
 								- this.getVisibleWindowHeight() + 200);
 		}
 		
+	}
+	
+	/**
+	 * returns true if the objects touch each other
+	 * @param x1
+	 * @param xDim1
+	 * @param y1
+	 * @param yDim1
+	 * @return
+	 */
+	private boolean touches(double x1, double xDim1, double y1, double yDim1,
+			double x2, double xDim2, double y2, double yDim2) {
+		
+		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
+				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
+		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
+				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
+		
+		return ((xStatement) && (yStatement));
+	}
+	
+	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
+		int amountOfDeadPlants = 0;
+		for (Plant plant : this.getPlants()) {
+			 if (this.touches(xPos, xDim, yPos, yDim, plant.getXPos(),
+					 plant.getXDim(), plant.getYPos(), plant.getYDim())) {
+				 plant.die();
+				 amountOfDeadPlants += 1;
+			 }
+		}
+		return amountOfDeadPlants;
 	}
 	
 	
