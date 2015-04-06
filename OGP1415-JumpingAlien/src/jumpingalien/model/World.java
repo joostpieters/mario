@@ -639,9 +639,9 @@ public class World {
 			 plant.advanceTime(dt);
 		}
 		//TODO waarom staat dit uitgecomment? Dat gaf een fout die ik toen niet wilde oplossen
-//		for (Shark shark: this.getSharks()) {
-//			shark.advanceTime(dt);
-//		}
+		for (Shark shark: this.getSharks()) {
+			shark.advanceTime(dt);
+		}
 		
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
@@ -704,7 +704,7 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
-	//voor wat hebben we dit aantal eigenlijk nodig?
+	//voor wat hebben we dit aantal eigenlijk nodig? Dat kan trouwens ook algemeen geschreven worden met een argument Collection
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {
@@ -731,7 +731,7 @@ public class World {
 	
 	// MUILEN MET LAURA
 	
-	
+
 	
 	
 

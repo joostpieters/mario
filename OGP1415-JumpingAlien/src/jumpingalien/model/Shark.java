@@ -27,15 +27,11 @@ public class Shark extends GameObject {
 	public Shark(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
-		this.setNbHitpoints(INIT_HIT_POINTS);
+		this.setHitpoints(INIT_HIT_POINTS);
 	}
 	
 
-	public void setNbHitpoints(int number) {
-		if ( ! (number > this.getMaxHitpoints())) {
-			this.hitpoints = number;
-		}		
-	}	
+
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
@@ -44,14 +40,8 @@ public class Shark extends GameObject {
 		return INIT_HIT_POINTS;
 	}
 	
-	private int MAX_HIT_POINTS;
-	/**
-	 * the maximum amount of hitpoints
-	 * @returnMAXHITPOINTS
-	 */
-	private int getMaxHitpoints() {
-		return MAX_HIT_POINTS;
-	}
+	private int MAX_HIT_POINTS = 1000;
+	
 	
 	/**
 	 * the maximum horizontal speed a shark can reach
@@ -165,7 +155,7 @@ public class Shark extends GameObject {
 				this.remove();
 			}
 		}
-		else if (this.getNbHitpoints() <= 0) {
+		else if (this.getHitpoints() <= 0) {
 			this.die();
 		}
 	}

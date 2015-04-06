@@ -28,7 +28,8 @@ public class Plant extends GameObject {
 	public Plant(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
-		this.setXSpeed(1.5);
+		this.setXSpeed(0.5);
+		this.setHitpoints(1);
 	}
 	
 //	@Override
@@ -51,14 +52,8 @@ public class Plant extends GameObject {
 	
 	private double timeSinceDeath = 0;
 	
-	private int MAX_HIT_POINTS;
-	/**
-	 * the maximum amount of hitpoints
-	 * @returnMAXHITPOINTS
-	 */
-	private int getMaxHitpoints() {
-		return MAX_HIT_POINTS;
-	}
+	private int MAX_HIT_POINTS = 1000;
+
 
 // GETTERS
 	
@@ -69,11 +64,11 @@ public class Plant extends GameObject {
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
-	public void setNbHitpoints(int number) {
+	public void setHitpoints(int number) {
 		if ( ! (number > this.getMaxHitpoints())) {
 			this.hitpoints = number;
 		}		
-	}	
+	}
 	private int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
@@ -138,10 +133,10 @@ public class Plant extends GameObject {
 				this.remove();
 			}
 		}
-		else if (this.getNbHitpoints() <= 0) {
+		else if (this.getHitpoints() <= 0) {
 			this.die();
 		}
-		
+		System.out.println(this.getHitpoints());
 	}
 	
 	private void remove() {
