@@ -579,27 +579,33 @@ public class Mazub extends GameObject {
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
 			this.setXSpeed(0);
 			this.setXAcc(0);
-			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][1] + 1) * getWorld().getTileLength();
+			if (this.getYSpeed()>0) {
+				this.setYSpeed(0);
+			}
 		}	
-		
+		System.out.println("newposnaleftwall");System.out.println(newXPos);System.out.println(newYPos);
+
 		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
 			this.setXSpeed(0);
 			this.setXAcc(0);
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
+			if (this.getYSpeed()>0) {
+				this.setYSpeed(0);
+			}
 		}
 		System.out.println("newposnarightwall");System.out.println(newXPos);System.out.println(newYPos);
 		if (isAgainstRoof(newXPos,newYPos)) {
-			this.setYSpeed(0);
-			this.setXSpeed(0);
-			this.setXAcc(0);
 			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+			this.setYSpeed(0);
 		}
 		System.out.println("newposnaroof");System.out.println(newXPos);System.out.println(newYPos);
+		
 		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
-			this.endFall();
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+			this.endFall();
 		}
 		
 		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){

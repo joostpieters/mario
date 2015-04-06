@@ -437,24 +437,58 @@ public abstract class GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
-	public double computeDt() {
-		double dt;
-		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
-			dt = (Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
+	public double computeDt(double dt) {
+		double dtX;
+		double dtY;
+		
+		if (this.getXAcc() == 0) {
+			dtX = 0.01 / Math.abs(this.getXSpeed());
 		}
 		else {
-			if (this.getXAcc() != 0) {
-				dt = Math.min(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed())),
-						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
-								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) );
-			}
-			else {
-				dt = Math.min(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed())),
-						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
-								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) );			
-			}
-		}		
-		return dt;
+			dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt);
+			
+//			dtX = 0.01 * (-10 * Math.abs(this.getXSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getXSpeed()),2) 
+//					+ 2 * Math.abs(this.getXAcc())))/ Math.abs(this.getXAcc());
+		}
+		
+		if (this.getYAcc() == 0) {
+			dtY = 0.01 / Math.abs(this.getYSpeed());
+		}
+		else {
+			dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt);
+//			dtY = 0.01 * (-10 * Math.abs(this.getYSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getYSpeed()),2) 
+//					+ 2 * Math.abs(this.getYAcc())))/ Math.abs(this.getYAcc());
+		}
+		
+		
+		
+		if (dtX <= 0 || dtY <= 0) {
+			System.out.println("de dt formule geeft iets negatief");
+		}
+		return Math.min(dtX,dtY);
+		
+				
+				
+				
+				
+				
+				
+//		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
+//			dt = (Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
+//		}
+//		else {
+//			if (this.getXAcc() != 0) {
+//				dt = Math.min(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed())),
+//						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
+//								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) );
+//			}
+//			else {
+//				dt = Math.min(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed())),
+//						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
+//								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) );			
+//			}
+//		}		
+//		return dt;
 	} 
 	
 	
@@ -463,14 +497,14 @@ public abstract class GameObject {
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
 
-		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop);
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop - 1);
 	}
 	
 	protected int[][] getTilesRight(double XPos, double YPos) {
 		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
-		return getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop);
+		return getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop - 1);
 		
 	}
 	
@@ -505,7 +539,6 @@ public abstract class GameObject {
 	
 	protected boolean isAgainstRoof(double xPos, double yPos) {
 		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
-		//System.out.println(Arrays.deepToString(tilesAbove));
 		for (int[] tile: tilesAbove) {
 			try {
 				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
@@ -536,11 +569,10 @@ public abstract class GameObject {
 	
 	protected boolean againstRightWall(double xPos, double yPos) {
 		int[][] tilesRight = this.getTilesRight(xPos, yPos);
-		System.out.println("tilesRight");System.out.println(Arrays.deepToString(tilesRight));
 		for (int[] tile: tilesRight) {
 			try {
-				if (getWorld().getGeologicalFeature(getWorld().getBottomRightPixelOfTile(tile[0],tile[1])[0],
-							getWorld().getBottomRightPixelOfTile(tile[0],tile[1])[1]) == 1) {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
