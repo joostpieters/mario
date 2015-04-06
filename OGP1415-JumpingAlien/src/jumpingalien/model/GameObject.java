@@ -224,8 +224,11 @@ public abstract class GameObject {
 		if ( ! (number > this.getMaxHitpoints())) {
 			this.hitpoints = number;
 		}		
+		else {
+			this.hitpoints = this.getMaxHitpoints();
+		}
 	}
-	private int MAX_HITPOINTS;
+	private int MAX_HITPOINTS = 100;
 	/**
 	 * the maximum amount of hitpoints
 	 * @returnMAXHITPOINTS

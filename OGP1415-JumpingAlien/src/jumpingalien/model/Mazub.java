@@ -56,7 +56,7 @@ public class Mazub extends GameObject {
 		super(xPos,yPos,sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_MOVING_SPEED);
-		this.setHitpoints(100);
+		this.setHitpoints(Mazub.getInitHitPoints());
 	}
 	
 
@@ -749,37 +749,33 @@ public class Mazub extends GameObject {
 	}
 	
 // PART 2
-	/**
-	 * the amount of hitpoints mazub possesses
-	 */
-//	private int hitpoints = this.getInitHitPoints();
+	
 	
 	/**
 	 * the amount of hitpoints mazub possesses in the beginning of a game
 	 */
-	private static int INIT_HIT_POINTS = 100;
-	/**
-	 * the maximum amount of hitpoints a mazub can reach
-	 */
-	private static int MAX_HIT_POINTS = 500;
+	private static int INIT_HITPOINTS = 100;
 	/**
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
 	 */
-	private int getInitHitPoints() {
-		return INIT_HIT_POINTS;
+	private static int getInitHitPoints() {
+		return INIT_HITPOINTS;
 	}
-	
+	/**
+	 * the maximum amount of hitpoints a mazub can reach
+	 */
+	private int MAX_HITPOINTS = 500;
+	@Override
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	protected int getMaxHitpoints() {
+		return MAX_HITPOINTS;
+	}
 
 	
-	public void setHitpoints(int number) {
-		if ( ! (number > this.getMaxHitpoints())) {
-			this.hitpoints = number;
-		}
-		else {
-			this.hitpoints = this.getMaxHitpoints();
-		}
-	}	
 	
 	/**
 	 * Returns whether the given alien is currently immune against enemies

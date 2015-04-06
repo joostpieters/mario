@@ -29,16 +29,16 @@ public class Plant extends GameObject {
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
 		this.setXSpeed(0.5);
-		this.setHitpoints(1);
+		this.setHitpoints(Plant.getInitHitpoints());
 	}
-	
-//	@Override
-//	protected double xSpeed = 1.5;
 
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
-	private int INIT_HITPOINTS = 1;
+	private static int INIT_HITPOINTS = 1;
+	private static int getInitHitpoints() {
+		return INIT_HITPOINTS;
+	}
 	/**
 	 * every 0.5 seconds the orientation of the plant changes
 	 */
@@ -52,7 +52,16 @@ public class Plant extends GameObject {
 	
 	private double timeSinceDeath = 0;
 	
-	private int MAX_HIT_POINTS = 1000;
+	private int MAX_HITPOINTS = 1;  
+	
+	@Override
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	protected int getMaxHitpoints() {
+		return this.MAX_HITPOINTS;
+	}
 
 
 // GETTERS
@@ -64,19 +73,9 @@ public class Plant extends GameObject {
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
-	public void setHitpoints(int number) {
-		if ( ! (number > this.getMaxHitpoints())) {
-			this.hitpoints = number;
-		}		
-	}
-	private int getInitHitpoints() {
-		return INIT_HITPOINTS;
-	}
 	private double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
 	}
-
-	
 	private double getRemainingTime() {
 		return this.REMAINING_TIME;
 	}
