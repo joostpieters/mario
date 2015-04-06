@@ -200,6 +200,7 @@ public class World {
 	 * @return An array which contains the x-coordinate and y-coordinate of the
 	 *         bottom right pixel of the given tile, in that order.
 	 */
+	// TODO ik denk dat we die niet nodig hebben
 	public int[] getBottomRightPixelOfTile(int tileX, int tileY) {
 		return new int[] {tileX * this.getTileLength() + this.getTileLength(),
 				tileY * this.getTileLength()};
@@ -590,26 +591,26 @@ public class World {
 	 * the maximal value for dt is 0.2
 	 * @return the minimal value for dt
 	 */
-	private double computeMinimalDt() {
-		double dt = 0.2;
-
+	private double computeMinimalDt(double dt) {
+	//	double dt = 0.2;
+		double dtGiven = dt;
 		for (Plant plant : this.getPlants()) {
-			if (plant.computeDt() < dt) {
-				dt = plant.computeDt();				
+			if (plant.computeDt(dtGiven) < dt) {
+				dt = plant.computeDt(dtGiven);				
 			}			 
 		}
 		for (Shark shark: this.getSharks()) {
-			if (shark.computeDt() < dt) {
-				dt = shark.computeDt();			
+			if (shark.computeDt(dtGiven) < dt) {
+				dt = shark.computeDt(dtGiven);			
 			}		
 		}
 		for (Slime slime: this.getSlimes()) {
-			if (slime.computeDt() < dt) {
-				dt = slime.computeDt();			
+			if (slime.computeDt(dtGiven) < dt) {
+				dt = slime.computeDt(dtGiven);			
 			}		
 		}
-		if (alien.computeDt() < dt) {
-			dt = alien.computeDt();
+		if (alien.computeDt(dtGiven) < dt) {
+			dt = alien.computeDt(dtGiven);
 		}		
 		return dt;
 	}
@@ -623,7 +624,7 @@ public class World {
 // TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
 				
-		double minDt = computeMinimalDt();
+		double minDt = computeMinimalDt(dt);
 		double timePassed = 0;
 		if(minDt < dt) {
 			for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
