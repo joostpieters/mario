@@ -216,12 +216,22 @@ public abstract class GameObject {
 	/**
 	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
-	protected int hitpoints =100;
-	public int getNbHitpoints() {
+	protected int hitpoints;
+	public int getHitpoints() {
 		return this.hitpoints;
 	}
-	public void setNbHitpoints(int nb) {
-		this.hitpoints = nb;
+	public void setHitpoints(int number) {
+		if ( ! (number > this.getMaxHitpoints())) {
+			this.hitpoints = number;
+		}		
+	}
+	private int MAX_HITPOINTS;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	protected int getMaxHitpoints() {
+		return MAX_HITPOINTS;
 	}
 	private double timeSinceDeath = 0;
 	public double getTimeSinceDeath() {
