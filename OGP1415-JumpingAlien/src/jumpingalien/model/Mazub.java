@@ -143,10 +143,6 @@ public class Mazub extends GameObject {
 	 */
 	private static int JUMP_SPEED = 8;
 	/**
-	 * the vertical acceleration at which mazub falls
-	 */
-	private static double FALL_ACC = -10;
-	/**
 	 * the acceleration when mazub starts moving horizontally
 	 */
 	private static double MOVE_ACC = 0.9;
@@ -271,14 +267,6 @@ public class Mazub extends GameObject {
 	@Basic @Immutable @Raw
 	private double getMoveAcc() {
 		return MOVE_ACC;
-	}
-	/**
-	 * Returns the acceleration when Mazub falls
-	 * @return FALL_ACC
-	 */
-	@Basic @Immutable @Raw 
-	private double getFallAcc() {
-		return FALL_ACC;
 	}
 	/**
 	 * Returns the time between endMove and an change of sprites

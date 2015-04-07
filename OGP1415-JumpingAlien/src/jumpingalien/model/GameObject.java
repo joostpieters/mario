@@ -333,7 +333,7 @@ public abstract class GameObject {
 	 * @return FALL_ACC
 	 */
 	@Basic @Immutable @Raw 
-	private double getFallAcc() {
+	protected double getFallAcc() {
 		return FALL_ACC;
 	}
 
@@ -507,14 +507,14 @@ public abstract class GameObject {
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
 
-		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelLeft, pixelTop - 1);
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1);
 	}
 	
 	protected int[][] getTilesRight(double XPos, double YPos) {
 		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
-		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 1, pixelRight -1, pixelTop - 1);
+		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1);
 		
 	}
 	

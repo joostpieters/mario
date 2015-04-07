@@ -158,53 +158,63 @@ public class Shark extends GameObject {
 	// Deze is nog helemaal mis
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 		private double[] checkSurroundings(double newXPos, double newYPos) {
-
+			System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
+			System.out.println(this.getXAcc());
 			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-				System.out.println("godverdomme hij komt hier terecht");
 				this.setXSpeed(0);
 				this.setXAcc(0);
 				if (this.getYSpeed()>0) {
 					this.setYSpeed(0);
 				}
 			}	
+			System.out.println("newposleftwall");System.out.println(newXPos);System.out.println(newYPos);
+			System.out.println(this.getXAcc());
 
 			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
 				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-				System.out.println("verdorie hij komt hier terecht");
-
 				this.setXSpeed(0);
 				this.setXAcc(0);
 				if (this.getYSpeed()>0) {
 					this.setYSpeed(0);
 				}
 			}
+			System.out.println("newposrightwall");System.out.println(newXPos);System.out.println(newYPos);
+			System.out.println(this.getXAcc());
 			if (isAgainstRoof(newXPos,newYPos)) {
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 				this.setYSpeed(0);
 			}
+			
 			if (this.isMoving() && this.isInWater() && !this.isSubmergedInWater(newXPos, newYPos)) {
 				this.setYSpeed(0);
 				this.setYAcc(0);
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			}
-			
-			
-			if ((this.onFloor(newXPos,newYPos) || this.isSubmergedInWater(newXPos, newYPos)) && this.isFalling()) {
+			System.out.println("newposmoving");System.out.println(newXPos);System.out.println(newYPos);
+			System.out.println(this.getXAcc());
+			if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+				this.endFall();
+			}
+			
+			if (this.isFalling() && this.isSubmergedInWater(newXPos, newYPos)) {
 				this.endFall();
 			}
 			
 			if (this.onFloor(newXPos,newYPos)) {
 				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-				this.setYAcc(0);
-				this.setYSpeed(0);
+				if(this.getYAcc() <0 ) {
+					this.setYAcc(0);
+					this.setYSpeed(0);
+				}
 			}
 			
 			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isSubmergedInWater(newXPos, newYPos)) && ( ! this.isFalling())){
 				fall();
 			}
-			
+			System.out.println("newposend");System.out.println(newXPos);System.out.println(newYPos);
+			System.out.println(this.getXAcc());
 			return new double[] {newXPos, newYPos};
 		}	
 	
@@ -217,18 +227,17 @@ public class Shark extends GameObject {
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
-		System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
-		System.out.println(this.getXAcc());
+//		System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
+//		System.out.println(this.getXAcc());
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
 		
 		double[] newPos = checkSurroundings(newXPos,newYPos);
-		System.out.println("newposnasur");System.out.println(newPos[0]);System.out.println(newPos[1]);
-		System.out.println(this.getXAcc());
+	
 		this.setNewSpeed(dt);
-		System.out.println("newposnaspeed");System.out.println(newXPos);System.out.println(newYPos);
-		System.out.println(this.getXAcc());
+//		System.out.println("newposnaspeed");System.out.println(newXPos);System.out.println(newYPos);
+//		System.out.println(this.getXAcc());
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 
