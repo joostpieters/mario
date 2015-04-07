@@ -769,7 +769,7 @@ public class Mazub extends GameObject {
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
 	 */
-	private static int getInitHitPoints() {
+	private int getInitHitPoints() {
 		return INIT_HIT_POINTS;
 	}
 	

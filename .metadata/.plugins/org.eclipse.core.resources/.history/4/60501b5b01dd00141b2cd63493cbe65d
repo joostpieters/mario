@@ -88,6 +88,8 @@ public class World {
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
 	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();
+
+
 	
 	
 //	GETTERS

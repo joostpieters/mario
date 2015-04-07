@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="isImmune" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="getMovementDuration"/>
 			<item value="isImmune"/>
 			<item value="NaN"/>
 			<item value="getDt"/>
@@ -15,7 +16,6 @@
 			<item value="tilesLeft"/>
 			<item value="hitpoints"/>
 			<item value="0.9"/>
-			<item value="PIEMELS"/>
 		</list>
 		<list key="replacehistory">
 		</list>

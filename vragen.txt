@@ -2,6 +2,7 @@
 2. wat is abstract eig???? :o:o:o xoxoxoxoxo
 3. wanneer protected of public gebruiken?
 4. bij advanceTime in world: kunnen er meerdere mazubs zijn? dus moeten we daar een forloop gebruiken?
+5. Als mazub op plant komt en maximum aantal hitpoints heeft, gaat plant dan weg of niet?
 
 
 TODO: overal @override in facade

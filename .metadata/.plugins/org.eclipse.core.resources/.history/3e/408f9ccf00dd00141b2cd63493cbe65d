@@ -88,6 +88,8 @@ public class World {
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
 	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();
+
+
 	
 	
 //	GETTERS
@@ -296,6 +298,7 @@ public class World {
 	 * @throw IllegalPixelException if the given position does not correspond to the
 	 *        bottom left pixel of a tile.
 	 */
+//  TODO exception maken, is dit niet al klaar?
 	public int getGeologicalFeature(int pixelX, int pixelY)
 			throws IllegalPixelException {
 				if ( ! isValidBottomLeftPixel(pixelX, pixelY))
@@ -347,6 +350,8 @@ public class World {
 	private int getNbAliens() {
 		return 1;
 	}
+	
+
 	
 	/**
 	 * @return the xVisibleWindow
@@ -743,6 +748,11 @@ public class World {
 	}
 	
 
-	// MUILEN MET LAURA -> is dit echt noodzakelijk voor de werking van world?	
+	// MUILEN MET LAURA
+
+	
+
+	
+	
 
 }

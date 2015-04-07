@@ -596,6 +596,7 @@ public abstract class GameObject {
 		return false;
 	}
 	
+	//TODO dit fixen want nadenken gaat echt ni meer #ohgodwhy
 	protected boolean isUnderWater(double xPos, double yPos) {
 		int[][] tiles = this.getTiles(xPos,yPos);
 		for (int[] tile: tiles) {
@@ -612,6 +613,7 @@ public abstract class GameObject {
 		
 	}
 	
+	//TODO dit fixen want nadenken gaat echt ni meer #ohgodwhy
 	protected boolean isInMagma(double xPos, double yPos) {
 		int[][] tiles = this.getTiles(xPos,yPos);
 		for (int[] tile: tiles) {

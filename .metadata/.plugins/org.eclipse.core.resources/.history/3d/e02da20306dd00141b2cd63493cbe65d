@@ -184,22 +184,22 @@ public class Shark extends GameObject {
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 				
-		if (this.isInAir(this.getXPos(), this.getYPos())) {
-			if (this.isInWater()) {
-				this.setNotInWater();
-				this.setTimeInAir(dt);
-			}
-			else {
-				this.setTimeInAir(this.getTimeInAir() + dt);
-			}
-			if (this.getTimeInAir() >= Shark.getTimeUntilChoke()) {
-				this.setHitpoints(this.getHitpoints() - Shark.getLossHitpointsInAir());
-				this.setTimeInAir(0);
-			}
-		}
-		if ((this.isUnderWater(this.getXPos(), this.getYPos())) && ( ! this.isInWater())) {
-			this.setInWater();			
-		}
+//		if (this.isInAir(this.getXPos(), this.getYPos())) {
+//			if (this.isInWater()) {
+//				this.setNotInWater();
+//				this.setTimeInAir(dt);
+//			}
+//			else {
+//				this.setTimeInAir(this.getTimeInAir() + dt);
+//			}
+//			if (this.getTimeInAir() >= Shark.getTimeUntilChoke()) {
+//				this.setHitpoints(this.getHitpoints() - Shark.getLossHitpointsInAir());
+//				this.setTimeInAir(0);
+//			}
+//		}
+//		if ((this.isUnderWater(this.getXPos(), this.getYPos())) && ( ! this.isInWater())) {
+//			this.setInWater();			
+//		}
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);

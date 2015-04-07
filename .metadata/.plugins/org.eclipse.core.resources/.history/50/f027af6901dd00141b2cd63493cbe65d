@@ -63,7 +63,9 @@ public class Plant extends GameObject {
 		return this.MAX_HITPOINTS;
 	}
 
-// GETTERS	
+
+// GETTERS
+	
 	
 	/**
 	 * 
