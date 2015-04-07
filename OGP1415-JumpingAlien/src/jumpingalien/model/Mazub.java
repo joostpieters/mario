@@ -649,7 +649,7 @@ public class Mazub extends GameObject {
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
-		System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
+	//	System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
 		
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.die();
@@ -773,7 +773,7 @@ public class Mazub extends GameObject {
 		return INIT_HIT_POINTS;
 	}
 	
-	private static int TOUCH_PLANT_HITPOINTS;
+	private static int TOUCH_PLANT_HITPOINTS = 50;
 	private static int getTouchPlantHitpoints() {
 		return TOUCH_PLANT_HITPOINTS;
 	}

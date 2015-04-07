@@ -133,7 +133,6 @@ public class Plant extends GameObject {
 		else if (this.getHitpoints() <= 0) {
 			this.die();
 		}
-		System.out.println(this.getHitpoints());
 	}
 	
 	private void remove() {

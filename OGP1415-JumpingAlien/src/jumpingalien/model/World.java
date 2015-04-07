@@ -7,7 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
-
 public class World {
 	
 

@@ -28,6 +28,7 @@ public class Shark extends GameObject {
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
 		this.setHitpoints(Shark.getInitHitpoints());
+		this.setMaxSpeed(Shark.getMaxXSpeed());
 	}
 	
 	/**
@@ -37,7 +38,6 @@ public class Shark extends GameObject {
 	private static int getInitHitpoints() {
 		return INIT_HIT_POINTS;
 	}
-	
 		
 	/**
 	 * the maximum horizontal speed a shark can reach
@@ -54,21 +54,11 @@ public class Shark extends GameObject {
 	private static double getJumpSpeed() {
 		return JUMP_SPEED;
 	}
-
-	/**
-	 * the minimal duration of a movement period (1s)
-	 */
-	private static int MIN_MOVEMENT_DURATION = 1;
-	private static int getMinMovementDuration() {
-		return MIN_MOVEMENT_DURATION;
-	}	
-	/**
-	 * the maximal duration of a movement period (4s)
-	 */
-	private static int MAX_MOVEMENT_DURATION = 4;
-	private static int getMaxMovementDuration() {
-		return MAX_MOVEMENT_DURATION;
+	private static double MOVE_ACC = 1.5;
+	private static double getMoveAcc() {
+		return MOVE_ACC;
 	}
+
 	/**
 	 * the amount of hitpoints a shark loses when touching 
 	 * a mazub or a slime
@@ -121,7 +111,44 @@ public class Shark extends GameObject {
 	private void setTimeInAir(double time) {
 		this.timeInAir = time;
 	}
-
+	private double movementDuration = 0;
+	private double getMovementDuration() {
+		return movementDuration;
+	}
+	private void setMovementDuration(double time) {
+		this.movementDuration = time;
+	}
+	
+	private double timeSinceMove = 0;
+	/**
+	 * @return the timeSinceMove
+	 */
+	private double getTimeSinceMove() {
+		return timeSinceMove;
+	}
+	/**
+	 * @param timeSinceMove the timeSinceMove to set
+	 */
+	private void setTimeSinceMove(double time) {
+		this.timeSinceMove = time;
+	}
+	
+	private int jumpCounter = 0;
+	private int getJumpCounter() {
+		return this.jumpCounter;
+	}
+	private void setJumpCounter(int count) {
+		this.jumpCounter = count;
+		
+	}
+	private boolean moving = true;
+	private boolean isMoving() {
+		return this.moving;
+	}
+	private void setMoving(boolean move) {
+		this.moving = move;
+	}
+	
 //	Validations
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
@@ -131,31 +158,50 @@ public class Shark extends GameObject {
 	// Deze is nog helemaal mis
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 		private double[] checkSurroundings(double newXPos, double newYPos) {
+
 			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+				System.out.println("godverdomme hij komt hier terecht");
 				this.setXSpeed(0);
 				this.setXAcc(0);
-				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][1] + 1) * getWorld().getTileLength();
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
 			}	
-			
+
 			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
+				System.out.println("verdorie hij komt hier terecht");
+
 				this.setXSpeed(0);
 				this.setXAcc(0);
-				newXPos = (this.getTilesRight(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[0] -1;
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
 			}
-			
 			if (isAgainstRoof(newXPos,newYPos)) {
+				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 				this.setYSpeed(0);
-				this.setXSpeed(0);
-				this.setXAcc(0);
+			}
+			if (this.isMoving() && this.isInWater() && !this.isSubmergedInWater(newXPos, newYPos)) {
+				this.setYSpeed(0);
+				this.setYAcc(0);
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			}
-			//TODO nog toepassen op shark, maar ik wil eerst beeld
-			if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
-				this.endFall();
+			
+			
+			if ((this.onFloor(newXPos,newYPos) || this.isSubmergedInWater(newXPos, newYPos)) && this.isFalling()) {
 				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+				this.endFall();
 			}
 			
-			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
+			if (this.onFloor(newXPos,newYPos)) {
+				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+				this.setYAcc(0);
+				this.setYSpeed(0);
+			}
+			
+			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isSubmergedInWater(newXPos, newYPos)) && ( ! this.isFalling())){
 				fall();
 			}
 			
@@ -166,25 +212,31 @@ public class Shark extends GameObject {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
 
+		randomMovement(dt);
+		
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
-		
+		System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
+		System.out.println(this.getXAcc());
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
 		
 		double[] newPos = checkSurroundings(newXPos,newYPos);
-		
+		System.out.println("newposnasur");System.out.println(newPos[0]);System.out.println(newPos[1]);
+		System.out.println(this.getXAcc());
 		this.setNewSpeed(dt);
-		
+		System.out.println("newposnaspeed");System.out.println(newXPos);System.out.println(newYPos);
+		System.out.println(this.getXAcc());
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
+
 		
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 				
-		if (this.isInAir(this.getXPos(), this.getYPos())) {
+		if (this.isInContactWithAir(this.getXPos(), this.getYPos())) {
 			if (this.isInWater()) {
 				this.setNotInWater();
 				this.setTimeInAir(dt);
@@ -197,7 +249,7 @@ public class Shark extends GameObject {
 				this.setTimeInAir(0);
 			}
 		}
-		if ((this.isUnderWater(this.getXPos(), this.getYPos())) && ( ! this.isInWater())) {
+		if ((this.isSubmergedInWater(this.getXPos(), this.getYPos())) && ( ! this.isInWater())) {
 			this.setInWater();			
 		}
 		
@@ -233,5 +285,90 @@ public class Shark extends GameObject {
 		}
 	}
 
+	/**
+	 * Mazub starts moving to the right
+	 * @effect 	| 
+	 */
+	public void moveRight(){
+		this.setXAcc(Shark.getMoveAcc());
+		this.setOrientationRight();
+		if (isInWater()) {
+			this.setYAcc(Math.random() * 4 -2);
+		}
+	}
+	/**
+	 * Mazub starts moving to the left
+	 * @effect 	|
+	 */
+	public void moveLeft(){
+		this.setXAcc(Shark.getMoveAcc());
+		this.setOrientationLeft();
+		if (isInWater()) {
+			this.setYAcc(Math.random() * 4 -2);
+		}
+	}
+	/**
+	 * Mazub starts moving to the right
+	 * @effect 	| 
+	 */
+	public void jumpRight(){
+		this.setXAcc(Shark.getMoveAcc());
+		this.setYSpeed(Shark.getJumpSpeed());
+		this.setOrientationRight();
+	}
+	/**
+	 * Mazub starts moving to the left
+	 * @effect 	|
+	 */
+	public void jumpLeft(){
+		this.setXAcc(Shark.getMoveAcc());
+		this.setYSpeed(Shark.getJumpSpeed());
+		this.setOrientationLeft();
+	}
 	
+	public void stopMove() {
+		this.setXSpeed(0);
+		if (!isFalling()) {
+			this.setYAcc(0);
+		}
+	}
+	
+	private void randomMovement(double dt) {
+		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
+			this.stopMove();
+			this.setMovementDuration(Math.random() * 3 + 1);
+			this.setTimeSinceMove(dt);
+			double randomNb;
+			if((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(),this.getYPos()) || this.isInWater())) {
+				randomNb = Math.random() * 4;
+			}
+			else {
+				randomNb = Math.random() * 2;
+			}
+			if(randomNb < 1) {
+				this.moveRight();
+				this.setJumpCounter(this.getJumpCounter() + 1);
+				this.setMoving(true);
+			}
+			else if(randomNb < 2){
+				this.moveLeft();
+				this.setJumpCounter(this.getJumpCounter() + 1);
+				this.setMoving(true);
+			}
+			else if(randomNb < 3){
+				this.jumpRight();
+				this.setJumpCounter(0);
+				this.setMoving(false);
+			}
+			else {
+				this.jumpRight();
+				this.setJumpCounter(0);
+				this.setMoving(false);
+			}
+			
+		}
+		else {
+			this.setTimeSinceMove(this.getTimeSinceMove() + dt);
+		}
+	}
 }

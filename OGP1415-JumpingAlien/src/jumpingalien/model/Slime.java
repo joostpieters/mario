@@ -266,19 +266,19 @@ public class Slime extends GameObject {
 	
 	private void randomMovement(double dt) {
 		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
+			this.stopMove();
 			this.setMovementDuration(Math.random() * 4 + 2);
 			this.setTimeSinceMove(dt);
 			if(Math.random()>=0.5) {
-				this.moveRight();
+				this.startMoveRight();
 			}
 			else {
-				this.moveLeft();
+				this.startMoveLeft();
 			}
 		}
 		else {
 			this.setTimeSinceMove(this.getTimeSinceMove() + dt);
 		}
-		
 	}
 	
 
@@ -286,7 +286,7 @@ public class Slime extends GameObject {
 	 * Mazub starts moving to the right
 	 * @effect 	| 
 	 */
-	public void moveRight(){
+	public void startMoveRight(){
 		if(this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setOrientationRight();
@@ -296,12 +296,14 @@ public class Slime extends GameObject {
 	 * Mazub starts moving to the left
 	 * @effect 	|
 	 */
-	public void moveLeft(){
-		if(this.getOrientation() == Orientation.RIGHT) {
-			this.setXSpeed(0);
-			this.setOrientationLeft();
-		}
+	public void startMoveLeft(){
+		this.setOrientationLeft();
 	}	
+	
+	public void stopMove() {
+		this.setXSpeed(0);
+	}
+	
 	
 }
 	
