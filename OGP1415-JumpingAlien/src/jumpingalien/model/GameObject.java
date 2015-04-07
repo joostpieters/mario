@@ -514,7 +514,7 @@ public abstract class GameObject {
 		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
-		return getWorld().getTilePositionsIn(pixelRight, pixelBottom + 1, pixelRight, pixelTop - 1);
+		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 1, pixelRight -1, pixelTop - 1);
 		
 	}
 	
@@ -522,14 +522,14 @@ public abstract class GameObject {
 		int pixelLeft = (int)(xPos);
 		int pixelTop = (int)(yPos) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
-		return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight, pixelTop);
+		return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop);
 	}
 	
 	protected int[][] getTilesUnder(double xPos, double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelBottom = (int)(yPos);
 		int pixelRight = pixelLeft + this.getSize()[0];
-		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight, pixelBottom);
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom);
 	}
 	
 	protected int[][] getTiles(double xPos, double yPos) {
@@ -604,6 +604,23 @@ public abstract class GameObject {
 				try {
 					if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
 							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != 2) {
+						return false;
+					}
+				} catch (IllegalPixelException e) {
+					System.out.println("oei twerkt niet");
+				}
+			}
+		}
+		return true;
+	}
+	
+	protected boolean isFullyInAir(double xPos, double yPos) {
+		int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
+		for (int[][] tiles: tileFamilies) {	
+			for (int[] tile: tiles) {
+				try {
+					if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != 0) {
 						return false;
 					}
 				} catch (IllegalPixelException e) {

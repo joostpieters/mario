@@ -185,7 +185,7 @@ public class Slime extends GameObject {
 			}	
 
 			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
+				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 				this.setXSpeed(0);
 				this.setXAcc(0);
 				if (this.getYSpeed()>0) {

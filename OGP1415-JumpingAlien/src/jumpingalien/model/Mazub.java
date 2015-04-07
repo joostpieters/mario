@@ -116,6 +116,13 @@ public class Mazub extends GameObject {
 	 * a boolean saying if the mazub is ducked
 	 */
 	private boolean duck = false;
+	private boolean duckShouldEnd = false;
+	private boolean getDuckShouldEnd() {
+		return this.duckShouldEnd;
+	}
+	private void setDuckShouldEnd(boolean bool) {
+		this.duckShouldEnd = bool;
+	}
 	/**
 	 * the static int giving the starting speed of mazub
 	 * when startMove() is initiated
@@ -588,7 +595,7 @@ public class Mazub extends GameObject {
 		}	
 
 		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 			this.setXSpeed(0);
 			this.setXAcc(0);
 			if (this.getYSpeed()>0) {
@@ -662,6 +669,11 @@ public class Mazub extends GameObject {
 		
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);	
+		if(this.getDuckShouldEnd()) {
+			this.setDuckShouldEnd(false);
+			this.endDuck();
+			
+		}
 		
 		if (this.getHitpoints() <= 0) {
 			this.die();
@@ -677,6 +689,8 @@ public class Mazub extends GameObject {
 			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 			this.setHitpoints(this.getHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
 		}
+		
+		
 		
 	}
 	
@@ -700,14 +714,12 @@ public class Mazub extends GameObject {
 	 * 			| maxSpeed == MAX_SPEED
 	 */
 	public void endDuck()  {
-//		if ( ! this.isAgainstRoof()){
-//			this.setDuck(false);
-//			this.setMaxSpeed(this.getMaxMovingSpeed());
-//		}	
-		
 		this.setDuck(false);
 		this.setMaxSpeed(this.getMaxMovingSpeed());
-		
+		if (!this.isFullyInAir(this.getXPos(), this.getYPos())) {
+			this.startDuck();
+			this.setDuckShouldEnd(true);
+			}		
 	}		
 	/**
 	 * GEEN formele documentatie nodig

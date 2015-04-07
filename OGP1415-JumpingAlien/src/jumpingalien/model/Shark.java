@@ -170,7 +170,7 @@ public class Shark extends GameObject {
 			}	
 
 			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0] -1;
+				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 				System.out.println("verdorie hij komt hier terecht");
 
 				this.setXSpeed(0);
