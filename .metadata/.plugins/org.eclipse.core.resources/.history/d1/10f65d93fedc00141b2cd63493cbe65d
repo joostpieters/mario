@@ -133,7 +133,9 @@ public class Shark extends GameObject {
 			}
 			
 			return new double[] {newXPos, newYPos};
-		}	
+		}
+	
+	
 	
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
@@ -155,16 +157,21 @@ public class Shark extends GameObject {
 		this.setYPos(newPos[1]);
 		
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
+		this.setNbHitpoints(this.getNbHitpoints() - touchedSlimes * Shark.getContactDamage() );
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
 				this.remove();
 			}
+<<<<<<< HEAD
 		}		
 		
+		else if (this.getNbHitpoints() <= 0) {
+=======
+		}
 		else if (this.getHitpoints() <= 0) {
+>>>>>>> c86be0eeb6bee74e29c752847e1b4aee0e52c0f1
 			this.die();
 		}
 	}

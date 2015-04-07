@@ -141,11 +141,17 @@ public class Slime extends GameObject {
 	}
 
 
-	
+	private int getMovementDuration() {
+		return movementDuration;
+	}
 	public static int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}
-	
+
+
+	private int getContactDamageSlime() {
+		return CONTACT_DAMAGE;
+	}
 	private int getSchoolDamage() {
 		return SCHOOL_DAMAGE;
 	}
@@ -234,7 +240,7 @@ public class Slime extends GameObject {
 		this.setYPos(newPos[1]);
 		
 		int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setHitpoints(this.getHitpoints() - touchedSharks * Slime.getContactDamage() );
+		this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Slime.getContactDamage() );
 		
 		
 		if (this.getHitpoints() <= 0) {

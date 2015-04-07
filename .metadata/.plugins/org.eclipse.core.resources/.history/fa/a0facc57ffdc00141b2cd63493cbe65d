@@ -673,10 +673,13 @@ public class Mazub extends GameObject {
 		
 		if ( ! this.isImmune()) {
 			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setHitpoints(this.getHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
+			this.setNbHitpoints(this.getNbHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
 			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setHitpoints(this.getHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
-		}
+			this.setNbHitpoints(this.getNbHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
+		}		
+=======
+		this.setHitpoints(this.getHitpoints() + touchedPlants);
+>>>>>>> c86be0eeb6bee74e29c752847e1b4aee0e52c0f1
 		
 	}
 	
@@ -763,15 +766,8 @@ public class Mazub extends GameObject {
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
 	 */
-	
+<<<<<<< HEAD
 	private static int INIT_HIT_POINTS = 100;
-	/**
-	 * the initial amount of hitpoints
-	 * @return INITHITPOINTS
-	 */
-	private int getInitHitPoints() {
-		return INIT_HIT_POINTS;
-	}
 	
 	private static int TOUCH_PLANT_HITPOINTS;
 	private static int getTouchPlantHitpoints() {
@@ -780,6 +776,10 @@ public class Mazub extends GameObject {
 	private static int TOUCH_ENEMY = 50;
 	private static int getTouchEnemy() {
 		return TOUCH_ENEMY;
+=======
+	private static int getInitHitPoints() {
+		return INIT_HITPOINTS;
+>>>>>>> c86be0eeb6bee74e29c752847e1b4aee0e52c0f1
 	}
 	/**
 	 * the maximum amount of hitpoints a mazub can reach
@@ -788,11 +788,23 @@ public class Mazub extends GameObject {
 	@Override
 	/**
 	 * the maximum amount of hitpoints
-	 * @return MAXHITPOINTS
+	 * @returnMAXHITPOINTS
 	 */
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
+	}
+<<<<<<< HEAD
+	/**
+	 * the initial amount of hitpoints
+	 * @return INITHITPOINTS
+	 */
+	private int getInitHitPoints() {
+		return INIT_HIT_POINTS;
 	}	
+=======
+>>>>>>> c86be0eeb6bee74e29c752847e1b4aee0e52c0f1
+
+	
 	
 	/**
 	 * Returns whether the given alien is currently immune against enemies

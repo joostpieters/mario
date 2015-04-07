@@ -155,7 +155,7 @@ public class Shark extends GameObject {
 		this.setYPos(newPos[1]);
 		
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
+		this.setNbHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);

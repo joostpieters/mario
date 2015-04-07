@@ -216,12 +216,25 @@ public abstract class GameObject {
 	/**
 	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
-	protected int hitpoints =100;
-	public int getNbHitpoints() {
+	protected int hitpoints;
+	public int getHitpoints() {
 		return this.hitpoints;
 	}
-	public void setNbHitpoints(int nb) {
-		this.hitpoints = nb;
+	public void setHitpoints(int number) {
+		if ( ! (number > this.getMaxHitpoints())) {
+			this.hitpoints = number;
+		}		
+		else {
+			this.hitpoints = this.getMaxHitpoints();
+		}
+	}
+	private int MAX_HITPOINTS = 100;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	protected int getMaxHitpoints() {
+		return MAX_HITPOINTS;
 	}
 	private double timeSinceDeath = 0;
 	public double getTimeSinceDeath() {
@@ -292,24 +305,24 @@ public abstract class GameObject {
 		return new int[] {this.getXDim(),this.getYDim()};
 	}
 	
-	private int maxSpeed; 
+	private double maxSpeed; 
 	/**
 	 * Returns the maximum speed
 	 * @return the maximum speed
 	 * 			| maxSpeed
 	 */
 	@Basic @Immutable @Raw
-	protected int getMaxSpeed() {
+	protected double getMaxSpeed() {
 		return maxSpeed;
 	}
 	/**
 	 * Sets the maximum horizontal speed to a new value maxspeed
-	 * @param maxspeed
+	 * @param d
 	 * 			the new maximum horizontal speed of mazub
 	 */
 	@Raw
-	protected void setMaxSpeed(int maxspeed) {
-		this.maxSpeed = maxspeed;
+	protected void setMaxSpeed(double d) {
+		this.maxSpeed = d;
 	}
 	/**
 	 * the vertical acceleration at which a GameObject falls
@@ -613,7 +626,7 @@ public abstract class GameObject {
 		
 	}
 	
-
+	
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
 		if (this.getOrientation() == Orientation.RIGHT) {

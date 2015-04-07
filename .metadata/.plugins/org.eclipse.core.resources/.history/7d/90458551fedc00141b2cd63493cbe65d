@@ -141,7 +141,9 @@ public class Slime extends GameObject {
 	}
 
 
-	
+	private double getMovementDuration() {
+		return movementDuration;
+	}
 	public static int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}

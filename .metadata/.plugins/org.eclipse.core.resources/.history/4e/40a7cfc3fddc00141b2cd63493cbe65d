@@ -582,7 +582,7 @@ public class World {
 	 * @return true if the game is over and the player has won; false otherwise.
 	 */
 	public boolean didPlayerWin() {
-		//TODO klopt dit?
+		
 		return (this.getAlien().getLocation() == new int[] {this.getTargetTileX(),this.getTargetTileY()});
 	}
 	
@@ -613,7 +613,9 @@ public class World {
 			dt = alien.computeDt(dtGiven);
 		}		
 		return dt;
-	}	
+	}
+	
+	
 	
 	/**
 	 * NO DOCUMENTATION MUST BE WORKED OUT
@@ -636,9 +638,11 @@ public class World {
 		for (Plant plant : this.getPlants()) {
 			 plant.advanceTime(dt);
 		}
+		//TODO waarom staat dit uitgecomment? Dat gaf een fout die ik toen niet wilde oplossen
 		for (Shark shark: this.getSharks()) {
 			shark.advanceTime(dt);
 		}
+		
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
@@ -718,20 +722,20 @@ public class World {
 		for (Shark shark : this.getSharks()) {
 			 if (this.touches(xPos, xDim, yPos, yDim, shark.getXPos(),
 					 shark.getXDim(), shark.getYPos(), shark.getYDim())) {
-				 shark.setHitpoints(shark.getHitpoints() - Shark.getContactDamage());
+				 shark.setNbHitpoints(shark.getNbHitpoints() - shark.getContactDamage());
 				 nbTouchedSharks += 1;
 			 }
 		}
 		return nbTouchedSharks;
 	}
 	
-	
+<<<<<<< HEAD
 	public int touchedSlimes(double xPos, double yPos, double xDim, double yDim) {
 		int nbTouchedSlimes = 0;
 		for (Slime slime : this.getSlimes()) {
 			 if (this.touches(xPos, xDim, yPos, yDim, slime.getXPos(),
 					 slime.getXDim(), slime.getYPos(), slime.getYDim())) {
-				 slime.setHitpoints(slime.getHitpoints() - Slime.getContactDamage());
+				 slime.setNbHitpoints(slime.getNbHitpoints() - slime.getContactDamage());
 				 nbTouchedSlimes += 1;
 			 }
 		}
@@ -747,9 +751,9 @@ public class World {
 		return nbTouchedAliens;
 	}
 	
-
+=======
 	// MUILEN MET LAURA
-
+>>>>>>> c86be0eeb6bee74e29c752847e1b4aee0e52c0f1
 	
 
 	

@@ -765,13 +765,6 @@ public class Mazub extends GameObject {
 	 */
 	
 	private static int INIT_HIT_POINTS = 100;
-	/**
-	 * the initial amount of hitpoints
-	 * @return INITHITPOINTS
-	 */
-	private int getInitHitPoints() {
-		return INIT_HIT_POINTS;
-	}
 	
 	private static int TOUCH_PLANT_HITPOINTS;
 	private static int getTouchPlantHitpoints() {
@@ -780,6 +773,9 @@ public class Mazub extends GameObject {
 	private static int TOUCH_ENEMY = 50;
 	private static int getTouchEnemy() {
 		return TOUCH_ENEMY;
+
+	private static int getInitHitPoints() {
+		return INIT_HITPOINTS;
 	}
 	/**
 	 * the maximum amount of hitpoints a mazub can reach
@@ -788,11 +784,23 @@ public class Mazub extends GameObject {
 	@Override
 	/**
 	 * the maximum amount of hitpoints
-	 * @return MAXHITPOINTS
+	 * @returnMAXHITPOINTS
 	 */
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
+	}
+<<<<<<< HEAD
+	/**
+	 * the initial amount of hitpoints
+	 * @return INITHITPOINTS
+	 */
+	private int getInitHitPoints() {
+		return INIT_HIT_POINTS;
 	}	
+=======
+>>>>>>> c86be0eeb6bee74e29c752847e1b4aee0e52c0f1
+
+	
 	
 	/**
 	 * Returns whether the given alien is currently immune against enemies

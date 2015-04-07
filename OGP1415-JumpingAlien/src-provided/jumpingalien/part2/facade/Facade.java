@@ -120,7 +120,7 @@ public class Facade implements IFacadePart2 {
 	}
 	
 	public int getNbHitPoints(Mazub alien) {
-		return alien.getNbHitpoints();
+		return alien.getHitpoints();
 	}
 	
 	
