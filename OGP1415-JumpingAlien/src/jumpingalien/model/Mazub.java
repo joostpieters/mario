@@ -704,7 +704,7 @@ public class Mazub extends GameObject {
 	public void endDuck()  {
 		this.setDuck(false);
 		this.setMaxSpeed(this.getMaxMovingSpeed());
-		if (!this.isFullyInAir(this.getXPos(), this.getYPos())) {
+		if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
 			this.startDuck();
 			this.setDuckShouldEnd(true);
 			}		
