@@ -48,10 +48,6 @@ public class Plant extends GameObject {
 	 */
 	private double timeSameOrientation = 0;
 
-	private double REMAINING_TIME = 0.6;
-	
-	private double timeSinceDeath = 0;
-	
 	private int MAX_HITPOINTS = 1;  
 	
 	@Override
@@ -74,9 +70,7 @@ public class Plant extends GameObject {
 	private double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
 	}
-	private double getRemainingTime() {
-		return this.REMAINING_TIME;
-	}
+
 	
 
 //	SETTERS	

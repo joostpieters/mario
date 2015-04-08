@@ -79,11 +79,7 @@ public class Shark extends GameObject {
 	}
 
 	
-	private double REMAINING_TIME = 0.6;
-	private double getRemainingTime() {
-		return this.REMAINING_TIME;
-	}
-	
+
 	private static int LOSS_HITPOINTS_IN_AIR = 6;
 	private static int getLossHitpointsInAir() {
 		return LOSS_HITPOINTS_IN_AIR;
@@ -155,11 +151,9 @@ public class Shark extends GameObject {
 		return sprites.length == 2;
 	}
 	
-	// Deze is nog helemaal mis
+	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 		private double[] checkSurroundings(double newXPos, double newYPos) {
-			System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
-			System.out.println(this.getXAcc());
 			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
 				this.setXSpeed(0);
@@ -168,8 +162,6 @@ public class Shark extends GameObject {
 					this.setYSpeed(0);
 				}
 			}	
-			System.out.println("newposleftwall");System.out.println(newXPos);System.out.println(newYPos);
-			System.out.println(this.getXAcc());
 
 			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
 				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
@@ -179,26 +171,20 @@ public class Shark extends GameObject {
 					this.setYSpeed(0);
 				}
 			}
-			System.out.println("newposrightwall");System.out.println(newXPos);System.out.println(newYPos);
-			System.out.println(this.getXAcc());
 			if (isAgainstRoof(newXPos,newYPos)) {
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 				this.setYSpeed(0);
 			}
-			
-			if (this.isMoving() && this.isInWater() && !this.isSubmergedInWater(newXPos, newYPos)) {
+			if (this.isMoving() && this.isInWater() && !this.isFullyInFeature(newXPos, newYPos, 2)) {
 				this.setYSpeed(0);
 				this.setYAcc(0);
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			}
-			System.out.println("newposmoving");System.out.println(newXPos);System.out.println(newYPos);
-			System.out.println(this.getXAcc());
 			if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 				this.endFall();
 			}
-			
-			if (this.isFalling() && this.isSubmergedInWater(newXPos, newYPos)) {
+			if (this.isFalling() && this.isFullyInFeature(newXPos, newYPos, 2)) {
 				this.endFall();
 			}
 			
@@ -210,11 +196,9 @@ public class Shark extends GameObject {
 				}
 			}
 			
-			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isSubmergedInWater(newXPos, newYPos)) && ( ! this.isFalling())){
+			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isFalling())){
 				fall();
 			}
-			System.out.println("newposend");System.out.println(newXPos);System.out.println(newYPos);
-			System.out.println(this.getXAcc());
 			return new double[] {newXPos, newYPos};
 		}	
 	
@@ -227,8 +211,6 @@ public class Shark extends GameObject {
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
-//		System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
-//		System.out.println(this.getXAcc());
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
@@ -236,8 +218,6 @@ public class Shark extends GameObject {
 		double[] newPos = checkSurroundings(newXPos,newYPos);
 	
 		this.setNewSpeed(dt);
-//		System.out.println("newposnaspeed");System.out.println(newXPos);System.out.println(newYPos);
-//		System.out.println(this.getXAcc());
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 
@@ -245,7 +225,7 @@ public class Shark extends GameObject {
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 				
-		if (this.isInContactWithAir(this.getXPos(), this.getYPos())) {
+		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 0)) {
 			if (this.isInWater()) {
 				this.setNotInWater();
 				this.setTimeInAir(dt);
@@ -258,7 +238,7 @@ public class Shark extends GameObject {
 				this.setTimeInAir(0);
 			}
 		}
-		if ((this.isSubmergedInWater(this.getXPos(), this.getYPos())) && ( ! this.isInWater())) {
+		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
 		}
 		

@@ -3,9 +3,10 @@
 3. wanneer protected of public gebruiken?
 4. bij advanceTime in world: kunnen er meerdere mazubs zijn? dus moeten we daar een forloop gebruiken?
 5. Als mazub op plant komt en maximum aantal hitpoints heeft, gaat plant dan weg of niet?
+Ik denk van niet
+6. moet een stervende slime nog vallen?
 
 
 TODO: overal @override in facade
 
-ward is een verkeerd ding
-
+Pieter heeft gemuild met Laura

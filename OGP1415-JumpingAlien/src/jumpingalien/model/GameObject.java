@@ -243,6 +243,11 @@ public abstract class GameObject {
 	public void setTimeSinceDeath(double t) {
 		this.timeSinceDeath += t;
 	}
+	protected double REMAINING_TIME = 0.6;
+	protected double getRemainingTime() {
+		return this.REMAINING_TIME;
+	}
+	
 	
 	/**
 	 * changes the orientation of the plant
@@ -426,7 +431,9 @@ public abstract class GameObject {
 	
 	public void die() {
 		this.setXSpeed(0);
+		this.setXAcc(0);
 		this.setYSpeed(0);
+		this.setYAcc(0);
 		this.setDying();
 	}
 	
@@ -597,13 +604,14 @@ public abstract class GameObject {
 		return false;
 	}
 	
-	protected boolean isSubmergedInWater(double xPos, double yPos) {
+	protected boolean isFullyInFeature(double xPos, double yPos,int feature) {
+		assert(feature <= 3);
 		int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
 		for (int[][] tiles: tileFamilies) {	
 			for (int[] tile: tiles) {
 				try {
 					if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != 2) {
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != feature) {
 						return false;
 					}
 				} catch (IllegalPixelException e) {
@@ -614,44 +622,13 @@ public abstract class GameObject {
 		return true;
 	}
 	
-	protected boolean isFullyInAir(double xPos, double yPos) {
-		int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
-		for (int[][] tiles: tileFamilies) {	
-			for (int[] tile: tiles) {
-				try {
-					if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != 0) {
-						return false;
-					}
-				} catch (IllegalPixelException e) {
-					System.out.println("oei twerkt niet");
-				}
-			}
-		}
-		return true;
-	}
-	
-	protected boolean isInMagma(double xPos, double yPos) {
+	protected boolean isInContactWithFeature(double xPos, double yPos,int feature) {
+		assert(feature <= 3);
 		int[][] tiles = this.getTiles(xPos,yPos);
 		for (int[] tile: tiles) {
 			try {
 				if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-						getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 3) {
-					return true;
-				}
-			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
-			}
-		}	
-		return false;
-	}
-	
-	protected boolean isInContactWithAir(double xPos, double yPos) {
-		int[][] tiles = this.getTiles(xPos,yPos);
-		for (int[] tile: tiles) {
-			try {
-				if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-						getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 0) {
+						getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == feature) {
 					return true;
 				}
 			} catch (IllegalPixelException e) {

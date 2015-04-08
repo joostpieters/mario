@@ -31,15 +31,48 @@ public class Slime extends GameObject {
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
 		this.setSchool(school);
+		this.getSchool().newSlime(this);
 		this.setHitpoints(Slime.getInitHitpoints());
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
-
 	
+	private static int LOSS_HITPOINTS_IN_MAGMA = 50;
+	private static int getLossHitpointsInMagma() {
+		return LOSS_HITPOINTS_IN_MAGMA;
+	}
+	private static double BURN_TIME = 0.2;
+	private static double getBurnTime() {
+		return BURN_TIME;
+	}
+	private static int LOSS_HITPOINTS_IN_WATER = 6;
+	private static int getLossHitpointsInWater() {
+		return LOSS_HITPOINTS_IN_WATER;
+	}
+	private static double DROWN_TIME = 0.2;
+	private static double getDrownTime() {
+		return DROWN_TIME;
+	}
+
+	private double timeInMagma = 0;
+	private double getTimeInMagma() {
+		return this.timeInMagma;
+	}
+	private void setTimeInMagma(double dt) {
+		this.timeInMagma = dt;
+	}
+	
+	private double timeInWater = 0;
+	private double getTimeInWater() {
+		return this.timeInWater;
+	}
+	private void setTimeInWater(double dt) {
+		this.timeInWater = dt;
+	} 
 	private double movementDuration = 0;
 	private double getMovementDuration() {
 		return movementDuration;
 	}
+	
 	private void setMovementDuration(double time) {
 		this.movementDuration = time;
 	}
@@ -76,14 +109,6 @@ public class Slime extends GameObject {
 	 */
 	private static double MAX_X_SPEED = 2.5;
 	/**
-	 * the minimal duration of a movement period (2s)
-	 */
-	private static int MIN_MOVEMENT_DURATION = 2;
-	/**
-	 * the maximal duration of a movement period (6s)
-	 */
-	private static int MAX_MOVEMENT_DURATION = 6;
-	/**
 	 * the amount of hitpoints a slime loses when touching 
 	 * a shark or mazub.
 	 */
@@ -94,16 +119,6 @@ public class Slime extends GameObject {
 	 * slime looses some hitpoints
 	 */
 	private int SCHOOL_DAMAGE = 1;
-	/**
-	 * the amount of hitpoints a slime hands over to the members of 
-	 * the old school when joining a school
-	 */
-	private int JOINING_HITPOINTS_GIVE = 1;
-	/**
-	 * the amount of hitpoints a slime receives when from every
-	 * member of the new group when joining
-	 */
-	private int JOINING_HITPOINTS_RECIEVE = 1;
 	/**
 	 * the maximum amount of slime schools in a game world
 	 */
@@ -125,6 +140,7 @@ public class Slime extends GameObject {
 		this.school = school;
 	}
 	
+	// TODO ik kan niet vinden dat dit echt maar 100 mag zijn, waar staat dat in de opgave (mss heb ik dat zelfs geschreven eigenlijk :) )
 	private int MAX_HITPOINTS = 100;
 	@Override
 	/**
@@ -153,12 +169,7 @@ public class Slime extends GameObject {
 	private int getSchoolDamage() {
 		return SCHOOL_DAMAGE;
 	}
-	private int getJoiningHitpointsGive() {
-		return JOINING_HITPOINTS_GIVE;
-	}
-	private int getJoiningHitpointsRecieve() {
-		return JOINING_HITPOINTS_RECIEVE;
-	}
+
 	private int getMaxAmountOfSchools() {
 		return MAX_AMOUNT_OF_SCHOOLS;
 	}
@@ -253,7 +264,12 @@ public class Slime extends GameObject {
 				}
 				
 				if (touched) {
-					
+					if(this.getSchool().getLength() > other.getSchool().getLength()) {
+						this.getSchool().addSlime(other);
+					}
+					else if (this.getSchool().getLength() < other.getSchool().getLength()) {
+						other.getSchool().addSlime(this);
+					}
 				}
 			}
 		}
@@ -266,32 +282,64 @@ public class Slime extends GameObject {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
 		
-		randomMovement(dt);
 		
-		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
-		double newXPos = this.calculateNewPos(dt)[0];
-		double newYPos = this.calculateNewPos(dt)[1];
-		
-		// Hier moet hij gewoon sterven als hij buiten gaat -> just!
-		if( ! isWithinBoundaries(newXPos,newYPos)) {
+		if (!this.isDying()) {
+			randomMovement(dt);
+			
+			//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+			double newXPos = this.calculateNewPos(dt)[0];
+			double newYPos = this.calculateNewPos(dt)[1];
+			
+			// Hier moet hij gewoon sterven als hij buiten gaat -> just!
+			if( ! isWithinBoundaries(newXPos,newYPos)) {
+				this.die();
+				// TODO spel eindigen ofzo -> HOER
+			}
+			
+			double[] newPos = checkSurroundings(newXPos,newYPos);
+			newPos = colliding(newPos[0],newPos[1]);
+			this.setNewSpeed(dt);
+			
+			this.setXPos(newPos[0]);
+			this.setYPos(newPos[1]);
+			
+			// TODO eigenlijk moet dit in een aparte functie, maar ik vond gene goeie naam
+			if(this.isInContactWithFeature(newXPos,newYPos,3)){
+				this.setTimeInMagma(this.getTimeInMagma() + dt);
+				if(this.getTimeInMagma() >= Slime.getBurnTime()) {
+					this.loseHitpoints(Slime.getLossHitpointsInMagma());
+					this.setTimeInMagma(this.getTimeInMagma() - dt);
+				}
+			}
+			if(this.isInContactWithFeature(newXPos,newYPos,2)){
+				this.setTimeInWater(this.getTimeInWater() + dt);
+				if(this.getTimeInWater() >= Slime.getDrownTime()) {
+					this.loseHitpoints(Slime.getLossHitpointsInWater());
+					this.setTimeInWater(this.getTimeInWater() - dt);
+				}
+				
+			}
+			else {
+				this.setTimeInWater(0);
+			}
+			System.out.println(this.getHitpoints());
+			System.out.println(this.getSchool().getLength());
+//			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//			this.setHitpoints(this.getHitpoints() - touchedSharks * Slime.getContactDamage() );
+			if (this.getHitpoints() <= 0) {
 			this.die();
-			// TODO spel eindigen ofzo -> HOER
+			
+
+			}
 		}
-		
-		double[] newPos = checkSurroundings(newXPos,newYPos);
-		newPos = colliding(newPos[0],newPos[1]);
-		this.setNewSpeed(dt);
-		
-		this.setXPos(newPos[0]);
-		this.setYPos(newPos[1]);
-		
-		int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-		this.setHitpoints(this.getHitpoints() - touchedSharks * Slime.getContactDamage() );
-		
-		
-		if (this.getHitpoints() <= 0) {
-			this.die();
+		else {
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
+				this.remove();
+			}
 		}
+	
+		
 	}
 
 
@@ -312,8 +360,11 @@ public class Slime extends GameObject {
 	}
 	
 	public void remove() {
+		this.getSchool().removeSlime(this);
+		this.setSchool(null);
 		this.getWorld().removeSlime(this);
 		this.setWorld(null);
+		
 	}
 	
 	private void randomMovement(double dt) {
@@ -354,6 +405,15 @@ public class Slime extends GameObject {
 	
 	public void stopMove() {
 		this.setXSpeed(0);
+	}
+	
+	public void loseHitpoints(int nb) {
+		this.setHitpoints(this.getHitpoints() - nb);
+		for (Slime other: this.getSchool().getMembers()) {
+			if (other != this) {
+				other.setHitpoints(other.getHitpoints() - 1);
+			}
+		}
 	}
 	
 	

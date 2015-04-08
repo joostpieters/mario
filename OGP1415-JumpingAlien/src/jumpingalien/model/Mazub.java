@@ -674,11 +674,10 @@ public class Mazub extends GameObject {
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
-	//	System.out.println("newpos");System.out.println(newXPos);System.out.println(newYPos);
 		
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.die();
-			// TODO spel eindigen ofzo -> HOER
+			// TODO spel eindigen ofzo
 		}
 		double[] newPos = checkSurroundings(newXPos,newYPos);
 		
