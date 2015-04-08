@@ -110,6 +110,20 @@ public class Slime extends GameObject {
 	private int MAX_AMOUNT_OF_SCHOOLS = 10;	
 	
 	private School school;
+	/**
+	 * Returns the current school to which the given slime belongs.
+	 * 
+	 * @param slime
+	 *            The slime for which to retrieve the school.
+	 * 
+	 * @return The current school of the given slime.
+	 */
+	public School getSchool() {
+		return this.school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
 	
 	private int MAX_HITPOINTS = 100;
 	@Override
@@ -128,17 +142,7 @@ public class Slime extends GameObject {
 		return  MAX_X_SPEED;
 	}
 	
-	/**
-	 * Returns the current school to which the given slime belongs.
-	 * 
-	 * @param slime
-	 *            The slime for which to retrieve the school.
-	 * 
-	 * @return The current school of the given slime.
-	 */
-	public School getSchool() {
-		return this.school;
-	}
+
 
 
 	
@@ -160,11 +164,7 @@ public class Slime extends GameObject {
 	}
 	
 
-//	SETTERS
-	
-	private void setSchool(School school) {
-		this.school = school;
-	}
+
 	
 //	VALIDATIONS
 	@Override
@@ -172,43 +172,94 @@ public class Slime extends GameObject {
 		return sprites.length == 2;
 	}
 	
-	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
-		private double[] checkSurroundings(double newXPos, double newYPos) {
+	private double[] checkSurroundings(double newXPos, double newYPos) {
 
-			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
-				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				if (this.getYSpeed()>0) {
-					this.setYSpeed(0);
-				}
-			}	
-
-			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				if (this.getYSpeed()>0) {
-					this.setYSpeed(0);
-				}
-			}
-			if (isAgainstRoof(newXPos,newYPos)) {
-				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			if (this.getYSpeed()>0) {
 				this.setYSpeed(0);
 			}
-			
-			if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
-				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-				this.endFall();
+		}	
+
+		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
+			this.setXSpeed(0);
+			this.setXAcc(0);
+			if (this.getYSpeed()>0) {
+				this.setYSpeed(0);
 			}
-			
-			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
-				fall();
-			}
-			
-			return new double[] {newXPos, newYPos};
+		}
+		if (isAgainstRoof(newXPos,newYPos)) {
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+			this.setYSpeed(0);
 		}
 		
+		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+			this.endFall();
+		}
+		
+		if (( ! this.isFalling()) && ( ! onFloor(newXPos,newYPos))){
+			fall();
+		}
+		
+		return new double[] {newXPos, newYPos};
+	}
+	
+	public double[] colliding(double newXPos, double newYPos) {		
+		for(Slime other: this.getWorld().getSlimes()) {
+			if(other != this) {
+				double x1 = newXPos;
+				double xDim1 = this.getXDim();
+				double y1 = newYPos;
+				double yDim1 = this.getYDim();
+				double x2 = other.getXPos();
+				double xDim2 = other.getXDim();
+				double y2 = other.getYPos();
+				double yDim2 = other.getYDim();
+				boolean touched = false;
+				if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newXPos = x2 - xDim1;
+					this.setXSpeed(0);
+					this.setXAcc(0);
+					if (this.getYSpeed()>0) {
+						this.setYSpeed(0);
+					}
+					touched = true;
+				}
+				if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newXPos = x2 + xDim2;
+					this.setXSpeed(0);
+					this.setXAcc(0);
+					if (this.getYSpeed()>0) {
+						this.setYSpeed(0);
+					}
+					touched = true;
+				}
+				if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newYPos = y2 - yDim1;
+					this.setYSpeed(0);
+					touched = true;
+				}
+				if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newYPos = y2 + yDim2;
+					this.endFall();
+					touched = true;
+				}
+				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2))){
+					fall();
+				}
+				
+				if (touched) {
+					
+				}
+			}
+		}
+		return new double[] {newXPos, newYPos};
+	}
+	
 
 	
 	public void advanceTime(double dt) throws IllegalDtException {
@@ -226,8 +277,9 @@ public class Slime extends GameObject {
 			this.die();
 			// TODO spel eindigen ofzo -> HOER
 		}
-		double[] newPos = checkSurroundings(newXPos,newYPos);
 		
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = colliding(newPos[0],newPos[1]);
 		this.setNewSpeed(dt);
 		
 		this.setXPos(newPos[0]);

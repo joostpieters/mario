@@ -56,7 +56,7 @@ public class Mazub extends GameObject {
 		super(xPos,yPos,sprites);
 		this.setInitStartSpeed(START_SPEED);
 		this.setMaxSpeed(MAX_MOVING_SPEED);
-		this.setHitpoints(Mazub.getInitHitPoints());
+		this.setHitpoints(Mazub.getInitHitpoints());
 	}
 	
 
@@ -569,11 +569,51 @@ public class Mazub extends GameObject {
 	private void advanceX(double dt) {				
 	}
 
+	public double[] colliding(double newXPos, double newYPos) {		
+		for(Slime other: this.getWorld().getSlimes()) {
+			double x1 = this.getXPos();
+			double xDim1 = this.getXDim();
+			double y1 = this.getYPos();
+			double yDim1 = this.getYDim();
+			double x2 = other.getXPos();
+			double xDim2 = other.getXDim();
+			double y2 = other.getYPos();
+			double yDim2 = other.getYDim();
+			if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newXPos = x2 - xDim1;
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newXPos = x2 + xDim2;
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newYPos = y2 - yDim1;
+				this.setYSpeed(0);
+			}
+			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newYPos = y2 + yDim2;
+				this.endFall();
+			}
+			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2))){
+				fall();
+			}
+		}
+		return new double[] {newXPos, newYPos};
+	}
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 
-		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
 			this.setXSpeed(0);
 			this.setXAcc(0);
@@ -582,7 +622,7 @@ public class Mazub extends GameObject {
 			}
 		}	
 
-		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 			this.setXSpeed(0);
 			this.setXAcc(0);
@@ -595,12 +635,12 @@ public class Mazub extends GameObject {
 			this.setYSpeed(0);
 		}
 		
-		if (this.onFloor(newXPos,newYPos) && this.isFalling()) {
+		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
 		}
 		
-		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFalling())){
+		if (( ! this.isFalling()) && ( ! onFloor(newXPos,newYPos))){
 			fall();
 		}
 		
@@ -627,16 +667,6 @@ public class Mazub extends GameObject {
 		}
 	}
 
-	
-	
-	//TODO  deel van functies naar gameoject verhuizen
-	/*opbouwen als volgt:
-	 * - newpos
-	 * - boundaries checken
-	 * - speed aanpassen
-	 * - isagainst.... (als hij niet dood is)
-	 * - pos aanpassen
-	 */
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
@@ -660,23 +690,22 @@ public class Mazub extends GameObject {
 		if(this.getDuckShouldEnd()) {
 			this.setDuckShouldEnd(false);
 			this.endDuck();
-			
 		}
 		
 		if (this.getHitpoints() <= 0) {
 			this.die();
 		}
 		
-		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-
-		this.setHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
-		
-		if ( ! this.isImmune()) {
-			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setHitpoints(this.getHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
-			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-			this.setHitpoints(this.getHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
-		}
+//		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//
+//		this.setHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
+//		
+//		if ( ! this.isImmune()) {
+//			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//			this.setHitpoints(this.getHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
+//			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//			this.setHitpoints(this.getHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
+//		}
 		
 		
 		
@@ -764,14 +793,8 @@ public class Mazub extends GameObject {
 	 * the initial amount of hitpoints
 	 * @return INITHITPOINTS
 	 */
-	
-	private static int INIT_HIT_POINTS = 100;
-	/**
-	 * the initial amount of hitpoints
-	 * @return INITHITPOINTS
-	 */
-	private static int getInitHitPoints() {
-		return INIT_HIT_POINTS;
+	private static int getInitHitpoints() {
+		return INIT_HITPOINTS;
 	}
 	
 	private static int TOUCH_PLANT_HITPOINTS = 50;
@@ -804,6 +827,8 @@ public class Mazub extends GameObject {
 	public boolean isImmune() {
 		return immune;
 	}
+	
+
 	
 	
 	

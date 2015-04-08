@@ -682,5 +682,53 @@ public abstract class GameObject {
 		}
 	}
 	
+	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
+			double x2, double xDim2, double y2, double yDim2) {
+		
+		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
+				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
+		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
+				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
+		
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesRight(double x1, double xDim1, double y1, double yDim1,
+									double x2, double xDim2, double y2, double yDim2) {
+		boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1);
+		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesLeft(double x1, double xDim1, double y1, double yDim1,
+									double x2, double xDim2, double y2, double yDim2) {
+		boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1);
+		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesAbove(double x1, double xDim1, double y1, double yDim1,
+									double x2, double xDim2, double y2, double yDim2) {
+		boolean xStatement = ( (x2 + 1 >= x1 + 1) && (x2 + 1<= x1 + xDim1 - 1) ) 
+				|| ( (x2 + xDim2 - 1>= x1 + 1) && (x2 + xDim2 - 1<= x1 + xDim1 - 1) );
+		boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1);
+				
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
+								double x2, double xDim2, double y2, double yDim2) {
+		
+		boolean xStatement = ( (x2 + 1 >= x1 + 1) && (x2 + 1<= x1 + xDim1 - 1) ) 
+				|| ( (x2 + xDim2 - 1>= x1 + 1) && (x2 + xDim2 - 1<= x1 + xDim1 - 1) );
+		boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1);
+		
+		return ((xStatement) && (yStatement));
+	}
+	
+	
+	
 	
 }
