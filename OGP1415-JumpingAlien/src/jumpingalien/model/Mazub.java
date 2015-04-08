@@ -692,6 +692,7 @@ public class Mazub extends GameObject {
 	 */
 	public void startDuck() {
 		this.setDuck(true);
+		this.setDuckShouldEnd(false);
 		this.setMaxSpeed(this.getMaxSpeedDuck());
 	}	
 	/**
