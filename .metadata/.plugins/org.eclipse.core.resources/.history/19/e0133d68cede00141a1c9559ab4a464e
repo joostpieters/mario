@@ -696,6 +696,7 @@ public class Mazub extends GameObject {
 			this.setDuckShouldEnd(false);
 			this.endDuck();
 		}
+		this.colliding(newXPos, newYPos);
 		
 		if (this.getHitpoints() <= 0) {
 			this.die();

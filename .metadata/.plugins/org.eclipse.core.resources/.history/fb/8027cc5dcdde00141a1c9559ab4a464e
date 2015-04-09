@@ -596,23 +596,6 @@ public class Mazub extends GameObject {
 				fall();
 			}
 		}
-		for(Plant other: this.getWorld().getPlants()) {
-			double x1 = this.getXPos();
-			double xDim1 = this.getXDim();
-			double y1 = this.getYPos();
-			double yDim1 = this.getYDim();
-			double x2 = other.getXPos();
-			double xDim2 = other.getXDim();
-			double y2 = other.getYPos();
-			double yDim2 = other.getYDim();
-			if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
-				if (this.isValidAmountOfHitpoints(newHitpoints)) {
-					other.die();
-					this.setHitpoints(newHitpoints);
-				}				
-			}
-		}			
 		return new double[] {newXPos, newYPos};
 	}
 	

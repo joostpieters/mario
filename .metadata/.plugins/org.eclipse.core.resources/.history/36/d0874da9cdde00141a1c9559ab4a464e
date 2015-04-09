@@ -606,13 +606,29 @@ public class Mazub extends GameObject {
 			double y2 = other.getYPos();
 			double yDim2 = other.getYDim();
 			if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
-				if (this.isValidAmountOfHitpoints(newHitpoints)) {
-					other.die();
-					this.setHitpoints(newHitpoints);
-				}				
+				other.die()
+				this.setHitpoints(this.getHitpoints() + Mazub.getTouchPlantHitpoints() );
 			}
-		}			
+			if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newXPos = x2 + xDim2;
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newYPos = y2 - yDim1;
+				this.setYSpeed(0);
+			}
+			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newYPos = y2 + yDim2;
+				this.endFall();
+			}
+			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2))){
+				fall();
+			}
+		}
 		return new double[] {newXPos, newYPos};
 	}
 	
