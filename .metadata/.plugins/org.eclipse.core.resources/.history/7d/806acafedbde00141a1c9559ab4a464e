@@ -534,6 +534,7 @@ public abstract class GameObject {
 	}
 	
 	protected int[][] getTiles(double xPos, double yPos) {
+		//TODO dit maken: volgens mij bestaat die al namelijk in world: getTilePositions -> handig ^^
 		return this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim());
 	}
 	

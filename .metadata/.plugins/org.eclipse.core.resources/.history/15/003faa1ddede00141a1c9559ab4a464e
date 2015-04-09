@@ -690,7 +690,7 @@ public class World {
 	}
 	
 	//voor wat hebben we dit aantal eigenlijk nodig? Dat kan trouwens ook algemeen geschreven worden met een argument Collection
-	// 		-> da klinkt zo moeilijk :p
+	// 		-> da klinkt zo moeilijk dan ...
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {
@@ -713,7 +713,8 @@ public class World {
 			 }
 		}
 		return nbTouchedSharks;
-	}	
+	}
+	
 	
 	public int touchedSlimes(double xPos, double yPos, double xDim, double yDim) {
 		int nbTouchedSlimes = 0;

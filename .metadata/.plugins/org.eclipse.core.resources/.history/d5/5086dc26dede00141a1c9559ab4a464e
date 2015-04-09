@@ -713,7 +713,8 @@ public class World {
 			 }
 		}
 		return nbTouchedSharks;
-	}	
+	}
+	
 	
 	public int touchedSlimes(double xPos, double yPos, double xDim, double yDim) {
 		int nbTouchedSlimes = 0;

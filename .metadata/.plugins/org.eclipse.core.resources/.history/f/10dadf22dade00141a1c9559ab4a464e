@@ -296,7 +296,7 @@ public class Shark extends GameObject {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
 		if (isInWater()) {
-			this.setYAcc(Math.random() * 4 -  2);
+			this.setYAcc(Math.random() * 4 - 2);
 		}
 	}
 	/**

@@ -84,11 +84,12 @@ public class Shark extends GameObject {
 		return MAX_HITPOINTS;
 	}
 
+	
+
 	private static int LOSS_HITPOINTS_IN_AIR = 6;
 	private static int getLossHitpointsInAir() {
 		return LOSS_HITPOINTS_IN_AIR;
 	}
-	
 	private static double TIME_UNTIL_CHOKE = 0.2;
 	private static double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
@@ -166,7 +167,8 @@ public class Shark extends GameObject {
 				if (this.getYSpeed()>0) {
 					this.setYSpeed(0);
 				}
-			}
+			}	
+
 			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
 				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 				this.setXSpeed(0);
@@ -198,7 +200,8 @@ public class Shark extends GameObject {
 					this.setYAcc(0);
 					this.setYSpeed(0);
 				}
-			}			
+			}
+			
 			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isFalling())){
 				fall();
 			}
@@ -211,7 +214,7 @@ public class Shark extends GameObject {
 
 		randomMovement(dt);
 		
-		//TODO dis is mss nogal inefficient
+		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
 		double newYPos = this.calculateNewPos(dt)[1];
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
@@ -254,13 +257,13 @@ public class Shark extends GameObject {
 		else if (this.getHitpoints() <= 0) {
 			this.die();
 		}
-	}	
+	}
+	
 	
 	private void remove() {
 		this.getWorld().removeShark(this);
 		this.setWorld(null);
 	}
-	
 	/**
 	 * Return the current sprite image for the given shark.
 	 * 
@@ -285,7 +288,7 @@ public class Shark extends GameObject {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationRight();
 		if (isInWater()) {
-			this.setYAcc(Math.random() * 4 - 2);
+			this.setYAcc(Math.random() * 4 -2);
 		}
 	}
 	/**
@@ -296,7 +299,7 @@ public class Shark extends GameObject {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
 		if (isInWater()) {
-			this.setYAcc(Math.random() * 4 -  2);
+			this.setYAcc(Math.random() * 4 -2);
 		}
 	}
 	/**

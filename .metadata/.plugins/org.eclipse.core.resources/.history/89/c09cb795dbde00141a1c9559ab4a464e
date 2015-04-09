@@ -290,7 +290,6 @@ public class Slime extends GameObject {
 			this.setYPos(newPos[1]);
 			
 			// TODO eigenlijk moet dit in een aparte functie, maar ik vond gene goeie naam
-			//			-> burnSlime fzo?
 			if(this.isInContactWithFeature(newXPos,newYPos,3)){
 				this.setTimeInMagma(this.getTimeInMagma() + dt);
 				if(this.getTimeInMagma() >= Slime.getBurnTime()) {
@@ -299,7 +298,6 @@ public class Slime extends GameObject {
 				}
 			}
 			if(this.isInContactWithFeature(newXPos,newYPos,2)){
-				// drownSlime fzo?
 				this.setTimeInWater(this.getTimeInWater() + dt);
 				if(this.getTimeInWater() >= Slime.getDrownTime()) {
 					this.loseHitpoints(Slime.getLossHitpointsInWater());
@@ -315,7 +313,9 @@ public class Slime extends GameObject {
 //			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 //			this.setHitpoints(this.getHitpoints() - touchedSharks * Slime.getContactDamage() );
 			if (this.getHitpoints() <= 0) {
-				this.die();
+			this.die();
+			
+
 			}
 		}
 		else {
@@ -324,9 +324,11 @@ public class Slime extends GameObject {
 				this.remove();
 			}
 		}
+	
 		
 	}
-	
+
+
 	/**
 	 * Return the current sprite image for the given slime.
 	 * 

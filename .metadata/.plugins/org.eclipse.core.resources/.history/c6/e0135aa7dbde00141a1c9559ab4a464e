@@ -326,7 +326,7 @@ public class Slime extends GameObject {
 		}
 		
 	}
-	
+
 	/**
 	 * Return the current sprite image for the given slime.
 	 * 

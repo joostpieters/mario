@@ -87,6 +87,7 @@ public class Slime extends GameObject {
 		this.timeSinceMove = time;
 	}
 
+
 	private static int INIT_HITPOINTS = 100;
 	private static int getInitHitpoints() {
 		return INIT_HITPOINTS;
@@ -135,12 +136,8 @@ public class Slime extends GameObject {
 		this.school = school;
 	}
 	
-	// TODO ik kan niet vinden dat dit echt maar 100 mag zijn,
-	// waar staat dat in de opgave (mss heb ik dat zelfs geschreven eigenlijk :) )
-	// -> sharks beginnen met 100 hitpoints en kunnen er geen bijkrijgen
+	// TODO ik kan niet vinden dat dit echt maar 100 mag zijn, waar staat dat in de opgave (mss heb ik dat zelfs geschreven eigenlijk :) )
 	private int MAX_HITPOINTS = 100;
-	// waarom moet dit @override zijn? kunnen we dit niet gewoon weglaten aangezien 
-	// MAX_POINTS in GameObject ook al 100 is?
 	@Override
 	/**
 	 * the maximum amount of hitpoints
@@ -151,10 +148,15 @@ public class Slime extends GameObject {
 	}
 	
 //	GETTERS	
+	
 
 	private static double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}
+	
+
+
+
 	
 	public static int getContactDamage() {
 		return CONTACT_DAMAGE;
@@ -167,6 +169,9 @@ public class Slime extends GameObject {
 	private int getMaxAmountOfSchools() {
 		return MAX_AMOUNT_OF_SCHOOLS;
 	}
+	
+
+
 	
 //	VALIDATIONS
 	@Override
@@ -183,7 +188,8 @@ public class Slime extends GameObject {
 			if (this.getYSpeed()>0) {
 				this.setYSpeed(0);
 			}
-		}
+		}	
+
 		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 			this.setXSpeed(0);
@@ -200,7 +206,8 @@ public class Slime extends GameObject {
 		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
-		}		
+		}
+		
 		if (( ! this.isFalling()) && ( ! onFloor(newXPos,newYPos))){
 			fall();
 		}
@@ -263,20 +270,23 @@ public class Slime extends GameObject {
 			}
 		}
 		return new double[] {newXPos, newYPos};
-	}	
+	}
+	
 
 	
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
 		
-		if ( ! this.isDying()) {
+		
+		if (!this.isDying()) {
 			randomMovement(dt);
 			
 			//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 			double newXPos = this.calculateNewPos(dt)[0];
 			double newYPos = this.calculateNewPos(dt)[1];
 			
+			// Hier moet hij gewoon sterven als hij buiten gaat -> just!
 			if( ! isWithinBoundaries(newXPos,newYPos)) {
 				this.die();
 				// TODO spel eindigen ofzo -> HOER
@@ -290,7 +300,6 @@ public class Slime extends GameObject {
 			this.setYPos(newPos[1]);
 			
 			// TODO eigenlijk moet dit in een aparte functie, maar ik vond gene goeie naam
-			//			-> burnSlime fzo?
 			if(this.isInContactWithFeature(newXPos,newYPos,3)){
 				this.setTimeInMagma(this.getTimeInMagma() + dt);
 				if(this.getTimeInMagma() >= Slime.getBurnTime()) {
@@ -299,7 +308,6 @@ public class Slime extends GameObject {
 				}
 			}
 			if(this.isInContactWithFeature(newXPos,newYPos,2)){
-				// drownSlime fzo?
 				this.setTimeInWater(this.getTimeInWater() + dt);
 				if(this.getTimeInWater() >= Slime.getDrownTime()) {
 					this.loseHitpoints(Slime.getLossHitpointsInWater());
@@ -315,7 +323,9 @@ public class Slime extends GameObject {
 //			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 //			this.setHitpoints(this.getHitpoints() - touchedSharks * Slime.getContactDamage() );
 			if (this.getHitpoints() <= 0) {
-				this.die();
+			this.die();
+			
+
 			}
 		}
 		else {
@@ -324,9 +334,11 @@ public class Slime extends GameObject {
 				this.remove();
 			}
 		}
+	
 		
 	}
-	
+
+
 	/**
 	 * Return the current sprite image for the given slime.
 	 * 

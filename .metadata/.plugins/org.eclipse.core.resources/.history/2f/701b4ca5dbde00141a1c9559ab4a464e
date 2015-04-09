@@ -323,10 +323,10 @@ public class Slime extends GameObject {
 			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
 				this.remove();
 			}
-		}
-		
+		}		
 	}
-	
+
+
 	/**
 	 * Return the current sprite image for the given slime.
 	 * 

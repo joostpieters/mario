@@ -701,11 +701,11 @@ public class Mazub extends GameObject {
 			this.die();
 		}
 		
-		// waarom stond/staat dit weggecomment? -> er is nog wel iets mis met de hitpoints :(
-//		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(),
-//				this.getXDim(), this.getYDim());
-//		this.setHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
-//		
+		// waarom stond dit weggecomment?
+		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+
+		this.setHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
+		
 //		if ( ! this.isImmune()) {
 //			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 //			this.setHitpoints(this.getHitpoints() - touchedSharks * Mazub.getTouchEnemy() );

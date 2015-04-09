@@ -315,7 +315,9 @@ public class Slime extends GameObject {
 //			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 //			this.setHitpoints(this.getHitpoints() - touchedSharks * Slime.getContactDamage() );
 			if (this.getHitpoints() <= 0) {
-				this.die();
+			this.die();
+			
+
 			}
 		}
 		else {
@@ -324,9 +326,11 @@ public class Slime extends GameObject {
 				this.remove();
 			}
 		}
+	
 		
 	}
-	
+
+
 	/**
 	 * Return the current sprite image for the given slime.
 	 * 

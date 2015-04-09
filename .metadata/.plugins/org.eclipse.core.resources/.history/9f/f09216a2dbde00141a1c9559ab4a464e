@@ -324,9 +324,11 @@ public class Slime extends GameObject {
 				this.remove();
 			}
 		}
+	
 		
 	}
-	
+
+
 	/**
 	 * Return the current sprite image for the given slime.
 	 * 

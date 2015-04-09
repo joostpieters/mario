@@ -254,13 +254,13 @@ public class Shark extends GameObject {
 		else if (this.getHitpoints() <= 0) {
 			this.die();
 		}
-	}	
+	}
+	
 	
 	private void remove() {
 		this.getWorld().removeShark(this);
 		this.setWorld(null);
 	}
-	
 	/**
 	 * Return the current sprite image for the given shark.
 	 * 
@@ -285,7 +285,7 @@ public class Shark extends GameObject {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationRight();
 		if (isInWater()) {
-			this.setYAcc(Math.random() * 4 - 2);
+			this.setYAcc(Math.random() * 4 -2);
 		}
 	}
 	/**
@@ -296,7 +296,7 @@ public class Shark extends GameObject {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
 		if (isInWater()) {
-			this.setYAcc(Math.random() * 4 -  2);
+			this.setYAcc(Math.random() * 4 -2);
 		}
 	}
 	/**
