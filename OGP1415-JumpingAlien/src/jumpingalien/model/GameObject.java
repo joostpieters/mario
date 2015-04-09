@@ -383,6 +383,32 @@ public abstract class GameObject {
 		this.endFalling();		
 	}	
 	
+	protected boolean immune = false;
+	protected boolean isImmune() {
+		return this.immune;
+	}
+	protected void setImmune() {
+		this.immune = true;
+	}
+	protected void setNotImmune() {
+		this.immune = false;
+	}
+	protected double timeSinceImmune = 0;
+	protected double getTimeSinceImmune() {
+		return this.timeSinceImmune;
+	}
+	protected void setTimeSinceImmune(double dt) {
+		this.timeSinceImmune = dt;
+	}
+	protected double IMMUNE_TIME = 0.6;
+	protected double getImmuneTime() {
+		return this.IMMUNE_TIME;
+	}
+	private static int TOUCH_ENEMY = 50;
+	private static int getTouchEnemy() {
+		return TOUCH_ENEMY;
+	}
+	
 //	Validations
 	
 	protected boolean isValidSprite(Sprite[] sprites) {
@@ -697,6 +723,27 @@ public abstract class GameObject {
 		return ((xStatement) && (yStatement));
 	}
 	
+	protected void loseHitpoints(int nb) {
+		this.setHitpoints(this.getHitpoints() - nb);
+	}
+	
+	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos
+	protected void contactDamage(double dt) {
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setTimeSinceImmune(0);
+				this.setNotImmune();
+			}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			}
+		}
+		if(!this.isImmune()) {
+			this.setImmune();
+			this.loseHitpoints(GameObject.getTouchEnemy());
+			this.setTimeSinceImmune(dt);
+		}
+	}
 	
 	
 	

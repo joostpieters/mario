@@ -1,5 +1,7 @@
 package jumpingalien.model;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
@@ -174,13 +176,7 @@ public class Mazub extends GameObject {
 	private int counterSprites;	
 
 	
-	private boolean immune = false;
-	private void setImmune() {
-		this.immune = true;
-	}
-	private void setNotImmune() {
-		this.immune = false;
-	}
+
 	
 //GETTERS	
 	
@@ -558,42 +554,56 @@ public class Mazub extends GameObject {
 //	private void advanceX(double dt) {				
 //	}
 
-	public double[] colliding(double newXPos, double newYPos) {		
-		for(Slime other: this.getWorld().getSlimes()) {
-			double x1 = newXPos;
-			double xDim1 = this.getXDim();
-			double y1 = newYPos;
-			double yDim1 = this.getYDim();
-			double x2 = other.getXPos();
-			double xDim2 = other.getXDim();
-			double y2 = other.getYPos();
-			double yDim2 = other.getYDim();
-			if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newXPos = x2 - xDim1;
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				if (this.getYSpeed()>0) {
-					this.setYSpeed(0);
+	public double[] colliding(double newXPos, double newYPos,double dt) {	
+		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharks.addAll(this.getWorld().getSlimes());
+		for(GameObject other: allSlimesSharks) {
+			if( ! other.isDying()) {
+				double x1 = newXPos;
+				double xDim1 = this.getXDim();
+				double y1 = newYPos;
+				double yDim1 = this.getYDim();
+				double x2 = other.getXPos();
+				double xDim2 = other.getXDim();
+				double y2 = other.getYPos();
+				double yDim2 = other.getYDim();
+				boolean touched = false;
+				if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newXPos = x2 - xDim1;
+					this.setXSpeed(0);
+					this.setXAcc(0);
+					if (this.getYSpeed()>0) {
+						this.setYSpeed(0);
+					}
+					touched = true;
 				}
-			}
-			if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newXPos = x2 + xDim2;
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				if (this.getYSpeed()>0) {
-					this.setYSpeed(0);
+				if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newXPos = x2 + xDim2;
+					this.setXSpeed(0);
+					this.setXAcc(0);
+					if (this.getYSpeed()>0) {
+						this.setYSpeed(0);
+					}
+					touched = true;
 				}
-			}
-			if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newYPos = y2 - yDim1;
-				this.setYSpeed(0);
-			}
-			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newYPos = y2 + yDim2;
-				this.endFall();
-			}
-			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-				fall();
+				if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newYPos = y2 - yDim1;
+					this.setYSpeed(0);
+					touched = true;
+				}
+				if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newYPos = y2 + yDim2;
+					this.endFall();
+					touched = true;
+				}
+				//TODO nadenken of volgende 3 regels niet overbodig zijn
+				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
+					fall();
+				}
+	
+				if (touched) {
+					this.contactDamage(dt);
+				}
 			}
 		}
 		
@@ -618,6 +628,8 @@ public class Mazub extends GameObject {
 		}			
 		return new double[] {newXPos, newYPos};
 	}
+	
+
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
@@ -645,6 +657,7 @@ public class Mazub extends GameObject {
 			this.setYSpeed(0);
 		}
 		
+		// of mss zijn deze wel overbodig
 		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
@@ -689,7 +702,7 @@ public class Mazub extends GameObject {
 			// TODO spel eindigen ofzo
 		}
 		double[] newPos = checkSurroundings(newXPos,newYPos);
-		newPos = colliding(newPos[0],newPos[1]);
+		newPos = colliding(newPos[0],newPos[1], dt);
 		
 		this.setNewSpeed(dt);
 		this.changeMovingTimes(dt);
@@ -811,10 +824,7 @@ public class Mazub extends GameObject {
 	private static int getTouchPlantHitpoints() {
 		return TOUCH_PLANT_HITPOINTS;
 	}
-	private static int TOUCH_ENEMY = 50;
-	private static int getTouchEnemy() {
-		return TOUCH_ENEMY;
-	}
+	
 	/**
 	 * the maximum amount of hitpoints a mazub can reach
 	 */

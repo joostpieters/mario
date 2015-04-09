@@ -138,7 +138,7 @@ public class Slime extends GameObject {
 	// TODO ik kan niet vinden dat dit echt maar 100 mag zijn,
 	// waar staat dat in de opgave (mss heb ik dat zelfs geschreven eigenlijk :) )
 	// -> sharks beginnen met 100 hitpoints en kunnen er geen bijkrijgen
-	private int MAX_HITPOINTS = 100;
+	private int MAX_HITPOINTS = 500;
 	// waarom moet dit @override zijn? kunnen we dit niet gewoon weglaten aangezien 
 	// MAX_POINTS in GameObject ook al 100 is?
 	@Override
@@ -273,13 +273,13 @@ public class Slime extends GameObject {
 		if ( ! this.isDying()) {
 			randomMovement(dt);
 			
-			//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+			//TODO dis is mss nogal inefficient
 			double newXPos = this.calculateNewPos(dt)[0];
 			double newYPos = this.calculateNewPos(dt)[1];
 			
 			if( ! isWithinBoundaries(newXPos,newYPos)) {
 				this.die();
-				// TODO spel eindigen ofzo -> HOER
+				// TODO spel eindigen ofzo 
 			}
 			
 			double[] newPos = checkSurroundings(newXPos,newYPos);
@@ -391,6 +391,7 @@ public class Slime extends GameObject {
 		this.setXSpeed(0);
 	}
 	
+	@Override
 	public void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);
 		for (Slime other: this.getSchool().getMembers()) {
