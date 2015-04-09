@@ -689,8 +689,6 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
-	//voor wat hebben we dit aantal eigenlijk nodig? Dat kan trouwens ook algemeen geschreven worden met een argument Collection
-	// 		-> da klinkt zo moeilijk :p
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {

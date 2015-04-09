@@ -6,6 +6,7 @@
 	Ik denk van niet -> oke
 6. moet een stervende slime nog vallen?
 7. wat doen als mazub gewonnen is? (didPlayerWin())
+8. Wat is het maximum aantal hitpoints van een slime?
 
 
 TODO: overal @override in facade

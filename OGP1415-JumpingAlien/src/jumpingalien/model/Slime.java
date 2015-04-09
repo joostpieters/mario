@@ -248,7 +248,7 @@ public class Slime extends GameObject {
 					this.endFall();
 					touched = true;
 				}
-				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2))){
+				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
 					fall();
 				}
 				

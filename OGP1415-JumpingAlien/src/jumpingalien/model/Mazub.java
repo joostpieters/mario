@@ -560,9 +560,9 @@ public class Mazub extends GameObject {
 
 	public double[] colliding(double newXPos, double newYPos) {		
 		for(Slime other: this.getWorld().getSlimes()) {
-			double x1 = this.getXPos();
+			double x1 = newXPos;
 			double xDim1 = this.getXDim();
-			double y1 = this.getYPos();
+			double y1 = newYPos;
 			double yDim1 = this.getYDim();
 			double x2 = other.getXPos();
 			double xDim2 = other.getXDim();
@@ -592,25 +592,28 @@ public class Mazub extends GameObject {
 				newYPos = y2 + yDim2;
 				this.endFall();
 			}
-			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2))){
+			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
 				fall();
 			}
 		}
+		
 		for(Plant other: this.getWorld().getPlants()) {
-			double x1 = this.getXPos();
-			double xDim1 = this.getXDim();
-			double y1 = this.getYPos();
-			double yDim1 = this.getYDim();
-			double x2 = other.getXPos();
-			double xDim2 = other.getXDim();
-			double y2 = other.getYPos();
-			double yDim2 = other.getYDim();
-			if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
-				if (this.isValidAmountOfHitpoints(newHitpoints)) {
-					other.die();
-					this.setHitpoints(newHitpoints);
-				}				
+			if( ! other.isDying()) {
+				double x1 = newXPos;
+				double xDim1 = this.getXDim();
+				double y1 = newYPos;
+				double yDim1 = this.getYDim();
+				double x2 = other.getXPos();
+				double xDim2 = other.getXDim();
+				double y2 = other.getYPos();
+				double yDim2 = other.getYDim();
+				if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
+					if (this.isValidAmountOfHitpoints(newHitpoints)) {
+						other.die();
+						this.setHitpoints(newHitpoints);
+					}				
+				}
 			}
 		}			
 		return new double[] {newXPos, newYPos};
@@ -686,6 +689,7 @@ public class Mazub extends GameObject {
 			// TODO spel eindigen ofzo
 		}
 		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = colliding(newPos[0],newPos[1]);
 		
 		this.setNewSpeed(dt);
 		this.changeMovingTimes(dt);
