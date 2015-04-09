@@ -302,7 +302,6 @@ public class Mazub extends GameObject {
 		return (this.duck);
 	}	
 	
-	
 //Setters	
 	/**
 	 * Sets the initial starting speed to a new value
@@ -377,14 +376,6 @@ public class Mazub extends GameObject {
 	private boolean isValidXSpeed() {
 		return ((this.getXSpeed() >= 0) && (this.getXSpeed() <= this.getMaxSpeed()));
 	}
-	/**
-	 * Checks whether the current vertical speed is valid
-	 * for any Mazub
-	 * @return True if the current vertical speed isn't equal to NaN 
-	 */
-	public boolean isValidYSpeed(double ySpeed) {
-		return ( ! Double.isNaN(ySpeed));
-	}
 	
 	/**
 	 * Checks whether the given sprites are valid for any Mazub
@@ -396,7 +387,6 @@ public class Mazub extends GameObject {
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return ((sprites.length >= 8) && (sprites.length % 2 == 0));
 	}
-
 
 	/**
 	 * Method to make the Mazub start moving
@@ -505,7 +495,6 @@ public class Mazub extends GameObject {
 			this.setYSpeed(0);
 		}
 	}
-
 	
 	/**
 	 * the alien moves horizontally if the  new speed does not exceed the maximum speed
@@ -566,8 +555,8 @@ public class Mazub extends GameObject {
 	 * 			| 						then i += 1
 	 * 			|					 else i==0					
 	 */
-	private void advanceX(double dt) {				
-	}
+//	private void advanceX(double dt) {				
+//	}
 
 	public double[] colliding(double newXPos, double newYPos) {		
 		for(Slime other: this.getWorld().getSlimes()) {
@@ -630,6 +619,7 @@ public class Mazub extends GameObject {
 				this.setYSpeed(0);
 			}
 		}
+		
 		if (isAgainstRoof(newXPos,newYPos)) {
 			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			this.setYSpeed(0);
@@ -645,8 +635,7 @@ public class Mazub extends GameObject {
 		}
 		
 		return new double[] {newXPos, newYPos};
-	}
-	
+	}	
 	
 	private void changeMovingTimes(double dt) {
 		if (this.getXSpeed() == 0) {
@@ -704,12 +693,9 @@ public class Mazub extends GameObject {
 //			this.setHitpoints(this.getHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
 //			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 //			this.setHitpoints(this.getHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
-//		}
+//		}		
 		
-		
-		
-	}
-	
+	}	
 	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
@@ -722,7 +708,8 @@ public class Mazub extends GameObject {
 		this.setDuck(true);
 		this.setDuckShouldEnd(false);
 		this.setMaxSpeed(this.getMaxSpeedDuck());
-	}	
+	}
+	
 	/**
 	 * Ends the ducking of Mazub by setting the boolean duck on false 
 	 * and the maxSpeed back to MAX_SPEED
@@ -737,7 +724,8 @@ public class Mazub extends GameObject {
 			this.startDuck();
 			this.setDuckShouldEnd(true);
 			}		
-	}		
+	}
+	
 	/**
 	 * GEEN formele documentatie nodig
 	 */
@@ -781,8 +769,7 @@ public class Mazub extends GameObject {
 		}
 	}
 	
-// PART 2
-	
+// PART 2	
 	
 	/**
 	 * the amount of hitpoints mazub possesses in the beginning of a game
@@ -795,7 +782,9 @@ public class Mazub extends GameObject {
 	private static int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
-	
+	/**
+	 * the amount of hitpoints a mazub recieves when eating a plant
+	 */
 	private static int TOUCH_PLANT_HITPOINTS = 50;
 	private static int getTouchPlantHitpoints() {
 		return TOUCH_PLANT_HITPOINTS;

@@ -167,8 +167,7 @@ public class World {
 	
 	private Mazub getAlien() {
 		return this.alien;
-	}
-	
+	}	
 	
 	/**
 	 * Returns the bottom left pixel coordinate of the tile at the given tile
@@ -214,8 +213,8 @@ public class World {
 	 *          given tile, in that order.
 	 */
 	private int[] getTileOfPixels(int pixelX, int pixelY) {
-		return new int[] {(pixelX - pixelX % this.getTileLength())/this.getTileLength(),
-				(pixelY - pixelY % this.getTileLength())/this.getTileLength()};
+		return new int[] {(pixelX - pixelX % this.getTileLength()) / this.getTileLength(),
+				(pixelY - pixelY % this.getTileLength()) / this.getTileLength()};
 	}
 	
 	
@@ -329,8 +328,7 @@ public class World {
 	}
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
-	}
-	
+	}	
 //	private int getNbMazubs() {
 //		return mazubs.size();
 //	}
@@ -506,8 +504,7 @@ public class World {
 	
 	private boolean hasSlime(Slime slime) {
 		return this.slimes.contains(slime);
-	}
-	
+	}	
 	
 //	VALIDATIONS
 	
@@ -541,8 +538,7 @@ public class World {
 	private boolean isValidTile(int tileX, int tileY, int tileType) {
 		return (tileX < this.getNbTilesX()) && (tileY < this.getNbTilesY())
 				&& (tileType >= 0) && (tileType <= 4);
-	}
-	
+	}	
 	
 	/**
 	 * Starts the game that is played in the given world.
@@ -671,8 +667,7 @@ public class World {
 				this.getYVisibleWindow() + this.getVisibleWindowHeight()){
 			this.setYVisibleWindow(this.getAlien().getLocation()[1] + this.getAlien().getSize()[1]
 								- this.getVisibleWindowHeight() + 200);
-		}
-		
+		}		
 	}
 	
 	/**
@@ -695,6 +690,7 @@ public class World {
 	}
 	
 	//voor wat hebben we dit aantal eigenlijk nodig? Dat kan trouwens ook algemeen geschreven worden met een argument Collection
+	// 		-> da klinkt zo moeilijk dan ...
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {

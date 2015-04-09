@@ -9,7 +9,7 @@ import jumpingalien.util.Sprite;
 
 /**
  * 
- * @author Pieter
+ * @author Pieter Van den Berghe, Ward Romanus
  *
  */
 public abstract class GameObject {
@@ -381,16 +381,19 @@ public abstract class GameObject {
 		this.setYAcc(0);
 		this.setYSpeed(0);
 		this.endFalling();		
-	}
-	
-	
+	}	
 	
 //	Validations
+	
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return (sprites.length % 2 == 0 && sprites != null) ;
-	}
+	}	
 	
-	
+	/**
+	 * Checks whether the current vertical speed is valid
+	 * for any game object except for plant
+	 * @return True if the current vertical speed isn't equal to NaN 
+	 */
 	public boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}
@@ -418,6 +421,10 @@ public abstract class GameObject {
 		return ( dt <= 0.2 && dt > 0);
 	}
 	
+	protected boolean isValidAmountOfHitpoints(int hitpoints) {
+		return (hitpoints <= this.getMaxHitpoints() && hitpoints >= 0);
+	}
+	
 	protected boolean isWithinBoundariesX(double x) {
 		return ((x >= 0) && (x <= this.getWorld().getX()));
 	}
@@ -426,8 +433,7 @@ public abstract class GameObject {
 	}
 	public boolean isWithinBoundaries(double x, double y) {
 		return isWithinBoundariesX(x) && isWithinBoundariesY(y);
-	}
-	
+	}	
 	
 	public void die() {
 		this.setXSpeed(0);
@@ -435,9 +441,7 @@ public abstract class GameObject {
 		this.setYSpeed(0);
 		this.setYAcc(0);
 		this.setDying();
-	}
-	
-	
+	}	
 	
 	protected double[] calculateNewPos(double dt) {		
 		double newXPos;
@@ -475,21 +479,13 @@ public abstract class GameObject {
 			dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt);
 //			dtY = 0.01 * (-10 * Math.abs(this.getYSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getYSpeed()),2) 
 //					+ 2 * Math.abs(this.getYAcc())))/ Math.abs(this.getYAcc());
-		}
-		
-		
+		}		
 		
 		if (dtX <= 0 || dtY <= 0) {
 			System.out.println("de dt formule geeft iets negatief");
 		}
 		return Math.min(dtX,dtY);
 		
-				
-				
-				
-				
-				
-				
 //		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
 //			dt = (Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
 //		}
@@ -506,8 +502,7 @@ public abstract class GameObject {
 //			}
 //		}		
 //		return dt;
-	} 
-	
+	}	
 	
 	protected int[][] getTilesLeft(double XPos, double YPos) {
 		int pixelLeft = (int) XPos;
@@ -521,8 +516,7 @@ public abstract class GameObject {
 		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
-		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1);
-		
+		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1);		
 	}
 	
 	protected int[][] getTilesAbove(double xPos,double yPos) {
@@ -540,7 +534,7 @@ public abstract class GameObject {
 	}
 	
 	protected int[][] getTiles(double xPos, double yPos) {
-		//TODO dit maken: volgens mij bestaat die al namelijk in world: getTilePositions
+		//TODO dit maken: volgens mij bestaat die al namelijk in world: getTilePositions -> handig ^^
 		return this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim());
 	}
 	
@@ -636,8 +630,7 @@ public abstract class GameObject {
 			}
 		}	
 		return false;
-	}
-	
+	}	
 	
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
