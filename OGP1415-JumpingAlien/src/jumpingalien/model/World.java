@@ -65,8 +65,7 @@ public class World {
 		this.setVisibleWindowHeight(visibleWindowHeight);
 		this.setTargetTileX(targetTileX);
 		this.setTargetTileY(targetTileY);
-		this.geologicalFeature = new int[nbTilesY][nbTilesX];
-		
+		this.geologicalFeature = new int[nbTilesY][nbTilesX];		
 	}	
 	
 
@@ -90,6 +89,7 @@ public class World {
 	
 	
 //	GETTERS
+	
 	/**
 	 * Returns the size of the given game world, in number of pixels.
 	 * 
@@ -215,9 +215,7 @@ public class World {
 	private int[] getTileOfPixels(int pixelX, int pixelY) {
 		return new int[] {(pixelX - pixelX % this.getTileLength()) / this.getTileLength(),
 				(pixelY - pixelY % this.getTileLength()) / this.getTileLength()};
-	}
-	
-	
+	}	
 	
 	/**
 	 * Returns the tile positions of all tiles within the given rectangular
@@ -263,7 +261,6 @@ public class World {
 		}
 		return array;
 	}
-
 	
 	/**
 	 * Returns the geological feature of the tile with its bottom left pixel at

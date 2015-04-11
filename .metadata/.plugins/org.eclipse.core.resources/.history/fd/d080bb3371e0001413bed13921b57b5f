@@ -1,0 +1,740 @@
+package jumpingalien.model;
+
+import java.util.List;
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.part2.facade.IFacadePart2;
+
+public class World {
+	
+
+	/**
+	 * Create a new world with the given parameters.
+	 * 
+	 * @param tileSize
+	 *            Length (in pixels) of a side of each square tile in the world
+	 * @param nbTilesX
+	 *            Number of tiles in the horizontal direction
+	 * @param nbTilesY
+	 *            Number of tiles in the vertical direction
+	 * @param visibleWindowWidth
+	 *            Width of the visible window, in pixels
+	 * @param visibleWindowHeight
+	 *            Height of the visible window, in pixels
+	 * @param targetTileX
+	 *            Tile x-coordinate of the target tile of the created world
+	 * @param targetTileY
+	 *            Tile y-coordinate of the target tile of the created world
+	 * @throws IllegalNbTilesException 
+	 * @effect the new game world is created
+	 * 			| setTileSize)
+	 * 			| this.setNbTilesX(nbTilesX)
+	 * 			| this.setNbTilesY(nbTilesY)
+	 * 			| this.setVisibleWindowWidth(visibleWindowWidth)
+	 * 			| this.setVisibleWindowHeight(visibleWindowHeight)
+	 * 			| this.setTargetTileX(targetTileX)
+	 * 			| this.setTargetTileY(targetTileY)
+	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
+	 *  		| the geological features of the entire world are by default air (0)
+	 *  //TODO throws in commentaar toevoegen	
+	 */
+	public World(int tileSize, int nbTilesX, int nbTilesY,
+			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
+			int targetTileY) 
+		throws IllegalAmountOfCharactersException,
+				IllegalTileSizeException, IllegalTargetTileException,
+				IllegalVisibleWindowException, IllegalArgumentException {
+			if ( ! isValidAmountOfCharacters())
+				throw new  IllegalAmountOfCharactersException();
+			if ( ! isValidTileSize(tileSize))
+				throw new  IllegalTileSizeException(tileSize);
+			if  ( ! isValidNbTiles(nbTilesX))
+				throw new IllegalArgumentException();
+			if ( ! isValidNbTiles(nbTilesY))
+				throw new IllegalArgumentException();
+			if ( ! isValidTargetTile(targetTileX, targetTileY))
+				throw new  IllegalTargetTileException(targetTileX, targetTileY);
+			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, nbTilesX, nbTilesY))
+				throw new  IllegalVisibleWindowException(visibleWindowWidth, visibleWindowHeight);
+		this.setTileSize(tileSize);
+		this.setNbTilesX(nbTilesX);
+		this.setNbTilesY(nbTilesY);
+		this.setVisibleWindowWidth(visibleWindowWidth);
+		this.setVisibleWindowHeight(visibleWindowHeight);
+		this.setTargetTileX(targetTileX);
+		this.setTargetTileY(targetTileY);
+		this.geologicalFeature = new int[nbTilesY][nbTilesX];		
+	}	
+	
+
+	private int tileSize;
+	private int nbTilesX;
+	private int nbTilesY;
+	private int visibleWindowWidth;
+	private int visibleWindowHeight;
+	private int targetTileX;
+	private int targetTileY;
+	private int XVisibleWindow;
+	private int YVisibleWindow;
+	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
+	private Mazub alien;
+	
+	// private List<Mazub> mazubs = new CopyOnWriteArrayList<Mazub>(); 
+	//	TODO			-> blz 3 onderaan: at least one player character mazub
+	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
+	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
+	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();
+	
+	
+//	GETTERS
+	
+	/**
+	 * Returns the size of the given game world, in number of pixels.
+	 * 
+	 * @return The size of the game world, in pixels, as an array of two
+	 *         elements: width (X) and height (Y), in that order.
+	 */
+	public int[] getWorldSizeInPixels() {
+		return new int[] {getX(),getY()};
+	}
+	
+	/**
+	 * Returns the length of a square tile side in the given world.
+	 * 
+	 * @return The length of a square tile side, expressed as a number of
+	 *         pixels.
+	 */
+	public int getTileLength() {
+		return this.tileSize;
+	}
+		
+	/**
+	 * @return the nbTilesX
+	 */
+	public int getNbTilesX() {
+		return nbTilesX;
+	}
+
+	/**
+	 * @return the nbTilesY
+	 */
+	private int getNbTilesY() {
+		return nbTilesY;
+	}
+
+	/**
+	 * @return the visibleWindowWidth
+	 */
+	private int getVisibleWindowWidth() {
+		return visibleWindowWidth;
+	}
+
+	/**
+	 * @return the visibleWindowHeight
+	 */
+	private int getVisibleWindowHeight() {
+		return visibleWindowHeight;
+	}
+
+	/**
+	 * @return the targetTileX
+	 */
+	private int getTargetTileX() {
+		return targetTileX;
+	}
+
+	/**
+	 * @return the targetTileY
+	 */
+	private int getTargetTileY() {
+		return targetTileY;
+	}
+
+	/**
+	 * Return the coordinates of the rectangular visible window that moves
+	 * together with Mazub.
+	 * 
+	 * @return The pixel coordinates of the visible window, in the order
+	 *         <b>left, bottom, right, top</b>.
+	 */
+	public int[] getVisibleWindow() {
+		return new int[] {this.getXVisibleWindow(), this.getYVisibleWindow(),
+				this.getXVisibleWindow() + this.getVisibleWindowWidth(),
+				this.getYVisibleWindow() + this.getVisibleWindowHeight()};
+	}
+	
+	public Mazub getAlien() {
+		return this.alien;
+	}	
+	
+	/**
+	 * Returns the bottom left pixel coordinate of the tile at the given tile
+	 * position.
+	 * 
+	 * @param tileX
+	 *            The x-position x_T of the tile
+	 * @param tileY
+	 *            The y-position y_T of the tile
+	 * @return An array which contains the x-coordinate and y-coordinate of the
+	 *         bottom left pixel of the given tile, in that order.
+	 */
+	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
+		return new int[] {tileX * this.getTileLength(),
+				tileY * this.getTileLength()};
+	}
+	
+	/**
+	 * Returns the bottom right pixel coordinate of the tile at the given tile
+	 * position.
+	 * 
+	 * @param tileX
+	 *            The x-position x_T of the tile
+	 * @param tileY
+	 *            The y-position y_T of the tile
+	 * @return An array which contains the x-coordinate and y-coordinate of the
+	 *         bottom right pixel of the given tile, in that order.
+	 */
+	// TODO ik denk dat we die niet nodig hebben
+	public int[] getBottomRightPixelOfTile(int tileX, int tileY) {
+		return new int[] {tileX * this.getTileLength() + this.getTileLength(),
+				tileY * this.getTileLength()};
+	}
+		
+	/**
+	 * Returns the tile coordinate of the tile at the given pixels.
+	 * 
+	 * @param pixelX
+	 *            The x-pixel
+	 * @param pixelY
+	 *            The y-pixel
+	 * @return An array which contains the x-coordinate and y-coordinate of the
+	 *          given tile, in that order.
+	 */
+	private int[] getTileOfPixels(int pixelX, int pixelY) {
+		return new int[] {(pixelX - pixelX % this.getTileLength()) / this.getTileLength(),
+				(pixelY - pixelY % this.getTileLength()) / this.getTileLength()};
+	}
+	
+	
+	
+	/**
+	 * Returns the tile positions of all tiles within the given rectangular
+	 * region.
+	 * 
+	 * @param pixelLeft
+	 *            The x-coordinate of the left side of the rectangular region.
+	 * @param pixelBottom
+	 *            The y-coordinate of the bottom side of the rectangular region.
+	 * @param pixelRight
+	 *            The x-coordinate of the right side of the rectangular region.
+	 * @param pixelTop
+	 *            The y-coordinate of the top side of the rectangular region.
+	 * 
+	 * @return An array of tile positions, where each position (x_T, y_T) is
+	 *         represented as an array of 2 elements, containing the horizontal
+	 *         (x_T) and vertical (y_T) coordinate of a tile in that order.
+	 *         The returned array is ordered from left to right,
+	 *         bottom to top: all positions of the bottom row (ordered from
+	 *         small to large x_T) precede the positions of the row above that.
+	 * 
+	 */
+	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
+			int pixelRight, int pixelTop) {
+	//	System.out.println(pixelLeft); System.out.println(pixelBottom); System.out.println(pixelRight);
+	//	System.out.println(pixelTop);
+		int posLeft = this.getTileOfPixels(pixelLeft,pixelBottom)[0];
+		int posBottom = this.getTileOfPixels(pixelLeft,pixelBottom)[1];
+		int posRight = this.getTileOfPixels(pixelRight,pixelTop)[0];
+		int posTop = this.getTileOfPixels(pixelRight,pixelTop)[1];
+	//	System.out.println(posLeft); System.out.println(posBottom); System.out.println(posRight);
+	//	System.out.println(posTop);
+
+		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];
+		
+		int counter = 0;
+		for (int i=posBottom;i <= posTop;i++ ) {
+			for (int j=posLeft;j <= posRight;j++){
+				array[counter][0] = j;
+				array[counter][1] = i;
+				counter++;
+			}
+		}
+		return array;
+	}
+
+	
+	/**
+	 * Returns the geological feature of the tile with its bottom left pixel at
+	 * the given position.
+	 * 
+	 * @param world
+	 *            The world containing the tile for which the
+	 *            geological feature should be returned.
+	 * 
+	 * @param pixelX
+	 *            The x-position of the pixel at the bottom left of the tile for
+	 *            which the geological feature should be returned.
+	 * @param pixelY
+	 *            The y-position of the pixel at the bottom left of the tile for
+	 *            which the geological feature should be returned.
+	 * 
+	 * @return The type of the tile with the given bottom left pixel position,
+	 *         where
+	 *         <ul>
+	 *         <li>the value 0 is returned for an <b>air</b> tile;</li>
+	 *         <li>the value 1 is returned for a <b>solid ground</b> tile;</li>
+	 *         <li>the value 2 is returned for a <b>water</b> tile;</li>
+	 *         <li>the value 3 is returned for a <b>magma</b> tile.</li>
+	 *         </ul>
+	 * 
+	 * @note This method must return its result in constant time.
+	 * 
+	 * @throw IllegalPixelException if the given position does not correspond to the
+	 *        bottom left pixel of a tile.
+	 */
+	public int getGeologicalFeature(int pixelX, int pixelY)
+			throws IllegalPixelException {
+				if ( ! isValidBottomLeftPixel(pixelX, pixelY))
+					throw new IllegalPixelException(pixelX,pixelY);
+		return this.geologicalFeature[pixelY/this.getTileLength()][pixelX/this.getTileLength()];
+	}
+	
+	/**
+	 * 
+	 * @return nbTilesX * tileLength
+	 */
+	public int getX() {
+		return this.getNbTilesX() * this.getTileLength();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getY() {
+		return this.getNbTilesY() * this.getTileLength();
+	}
+	
+//	public Collection<Mazub> getMazubs() {
+//		return this.mazubs;
+//	}
+	public Collection<Plant> getPlants() {
+		return this.plants;
+	}
+	public Collection<Shark> getSharks() {
+		return this.sharks;
+	}
+	public Collection<Slime> getSlimes() {
+		return this.slimes;
+	}	
+//	private int getNbMazubs() {
+//		return mazubs.size();
+//	}
+	private int getNbPlants() {
+		return plants.size();
+	}
+	private int getNbSharks() {
+		return sharks.size();
+	}
+	private int getNbSlimes() {
+		return slimes.size();
+	}
+	private int getNbAliens() {
+		return 1;
+	}
+	
+	/**
+	 * @return the xVisibleWindow
+	 */
+	private int getXVisibleWindow() {
+		return XVisibleWindow;
+	}
+
+	/**
+	 * @return the yVisibleWindow
+	 */
+	private int getYVisibleWindow() {
+		return YVisibleWindow;
+	}
+	
+//	SETTERS	
+	
+	/**
+	 * @param tileSize the tileSize to set
+	 */
+	private void setTileSize(int tileSize) {
+		this.tileSize = tileSize;
+	}
+
+	/**
+	 * @param nbTilesX the nbTilesX to set
+	 */
+	private void setNbTilesX(int nbTilesX) {
+		this.nbTilesX = nbTilesX;
+	}
+
+	/**
+	 * @param nbTilesY the nbTilesY to set
+	 */
+	private void setNbTilesY(int nbTilesY) {
+		this.nbTilesY = nbTilesY;
+	}
+
+	/**
+	 * @param visibleWindowWidth the visibleWindowWidth to set
+	 */
+	private void setVisibleWindowWidth(int visibleWindowWidth) {
+		this.visibleWindowWidth = visibleWindowWidth;
+	}
+
+	/**
+	 * @param visibleWindowHeight the visibleWindowHeight to set
+	 */
+	private void setVisibleWindowHeight(int visibleWindowHeight) {
+		this.visibleWindowHeight = visibleWindowHeight;
+	}
+
+	/**
+	 * @param targetTileX the targetTileX to set
+	 */
+	private void setTargetTileX(int targetTileX) {
+		this.targetTileX = targetTileX;
+	}
+
+	/**
+	 * @param targetTileY the targetTileY to set
+	 */
+	private void setTargetTileY(int targetTileY) {
+		this.targetTileY = targetTileY;
+	}
+	
+	/**
+	 * @param xVisibleWindow the xVisibleWindow to set
+	 */
+	private void setXVisibleWindow(int xVisibleWindow) {
+		XVisibleWindow = xVisibleWindow;
+	}
+
+	/**
+	 * @param yVisibleWindow the yVisibleWindow to set
+	 */
+	private void setYVisibleWindow(int yVisibleWindow) {
+		YVisibleWindow = yVisibleWindow;
+	}
+
+	/**
+	 * Modify the geological type of a specific tile in the given world to a
+	 * given type.
+	 * 
+	 * @param tileX
+	 *            The x-position x_T of the tile for which the type needs to be
+	 *            modified
+	 * @param tileY
+	 *            The y-position y_T of the tile for which the type needs to be
+	 *            modified
+	 * @param tileType
+	 *            The new type for the given tile, where
+	 *            <ul>
+	 *            <li>the value 0 is provided for an <b>air</b> tile;</li>
+	 *            <li>the value 1 is provided for a <b>solid ground</b> tile;</li>
+	 *            <li>the value 2 is provided for a <b>water</b> tile;</li>
+	 *            <li>the value 3 is provided for a <b>magma</b> tile.</li>
+	 *            </ul>
+	 */
+	public void setGeologicalFeature(int tileX, int tileY, int tileType)
+		throws IllegalTileException {
+		if ( ! isValidTile(tileX, tileY, tileType)) {
+			throw new IllegalTileException(tileX, tileY, tileType);
+		}		
+		this.geologicalFeature[tileY][tileX] = tileType;
+	}
+	
+	public void setAlien(Mazub alien) {
+		this.alien = alien;
+	}
+	
+	public void removeSlime(@Raw Slime slime) {
+		assert this.hasSlime(slime);
+		assert slime != null;
+		this.slimes.remove(slime);
+	}
+	
+	public void removePlant(@Raw Plant plant) {
+		assert this.hasPlant(plant);
+		assert plant != null;
+		this.plants.remove(plant);
+	}
+	
+	public void removeShark(@Raw Shark shark) {
+		assert this.hasShark(shark);
+		assert shark != null;
+		this.sharks.remove(shark);
+	}
+	
+	public void addSlime(Slime slime) {
+		assert slime != null;
+	    assert slime.getWorld() == this;
+	    assert !this.hasSlime(slime);
+		this.slimes.add(slime);
+	}
+	
+	public void addShark(Shark shark) {
+		assert shark != null;
+	    assert shark.getWorld() == this;
+	    assert !this.hasShark(shark);
+		this.sharks.add(shark);
+	}
+
+	public void addPlant(Plant plant) {
+//		assert plant != null;
+//	    assert plant.getWorld() == this;
+//	    assert !this.hasPlant(plant);
+		this.plants.add(plant);
+	}
+	
+	private boolean hasPlant(Plant plant) {
+		return this.plants.contains(plant);
+	}
+	
+	private boolean hasShark(Shark shark) {
+		return this.sharks.contains(shark);
+	}
+	
+	private boolean hasSlime(Slime slime) {
+		return this.slimes.contains(slime);
+	}	
+	
+//	VALIDATIONS
+	
+	private boolean isValidTileSize(int tileSize){
+		return tileSize > 0;
+	}
+	
+	private boolean isValidNbTiles(int nbTiles){
+		return nbTiles > 0;
+	}
+	
+	// TODO, is deze niet klaar?
+	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
+				int tileSize, int nbTilesX, int nbTilesY){
+		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
+				<=  tileSize * nbTilesY));
+	}
+	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
+		return ((pixelX%this.getTileLength() == 0) && (pixelY%this.getTileLength() ==0));
+	}
+	
+	private boolean isValidAmountOfCharacters() {
+		return ((this.getNbPlants() + this.getNbSharks() + 
+				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );
+			//	((alien.getNbOfMazubs() > 1) && (plant.getNbOfPlants() + 
+				//slime.getNbOfSlimes() + shark.getNbOfSharks() <= 100));
+	}
+	private boolean isValidTargetTile(int x, int y) {
+		return true;
+	}
+	private boolean isValidTile(int tileX, int tileY, int tileType) {
+		return (tileX < this.getNbTilesX()) && (tileY < this.getNbTilesY())
+				&& (tileType >= 0) && (tileType <= 4);
+	}	
+	
+	/**
+	 * Starts the game that is played in the given world.
+	 * After this method has been invoked, no further game objects will be added
+	 * via {@link IFacadePart2#addPlant(World, Plant)},
+	 * {@link IFacadePart2#addShark(World, Shark)},
+	 * {@link IFacadePart2#addSlime(World, Slime)}, or
+	 * {@link IFacadePart2#setMazub(World, Mazub)}), and no geological features
+	 * will be changed via
+	 * {@link IFacadePart2#setGeologicalFeature(World, int, int, int)}.
+	 */
+	public void startGame() {
+		
+	}
+	
+	/**
+	 * Returns whether the game, played in the given game world, is over.
+	 * The game is over when Mazub has died, or has reached the target tile.
+	 * 
+	 * @return true if the game is over, false otherwise.
+	 */
+	public boolean isGameOver() {
+		//TODO klopt dit om te checken of het object weg is/dood is?
+		return (this.getAlien() == null || didPlayerWin());
+	}
+	
+	/**
+	 * Returns whether the game played in the given world has finished and the
+	 * player has won. The player wins when Mazub has reached the target tile.
+	 * 
+	 * @return true if the game is over and the player has won; false otherwise.
+	 */
+	public boolean didPlayerWin() {
+		//TODO klopt dit?
+		return (this.getAlien().getLocation() == new int[] {this.getTargetTileX(),this.getTargetTileY()});
+	}
+	
+	/**
+	 * calculates the dt for every object in the game world
+	 * the maximal value for dt is 0.2
+	 * @return the minimal value for dt
+	 */
+	private double computeMinimalDt(double dt) {
+	//	double dt = 0.2;
+		double dtGiven = dt;
+		for (Plant plant : this.getPlants()) {
+			if (plant.computeDt(dtGiven) < dt) {
+				dt = plant.computeDt(dtGiven);				
+			}			 
+		}
+		for (Shark shark: this.getSharks()) {
+			if (shark.computeDt(dtGiven) < dt) {
+				dt = shark.computeDt(dtGiven);			
+			}		
+		}
+		for (Slime slime: this.getSlimes()) {
+			if (slime.computeDt(dtGiven) < dt) {
+				dt = slime.computeDt(dtGiven);			
+			}		
+		}
+		if (alien.computeDt(dtGiven) < dt) {
+			dt = alien.computeDt(dtGiven);
+		}		
+		return dt;
+	}	
+	
+	/**
+	 * NO DOCUMENTATION MUST BE WORKED OUT
+	 * @throws IllegalDtException 
+	 */
+// TODO uitzoeken hoe dit moet
+	public void advanceTime(double dt) throws IllegalDtException {
+				
+		double minDt = computeMinimalDt(dt);
+		double timePassed = 0;
+		if(minDt < dt) {
+			for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
+				advanceEveryGameObject(minDt);
+			}
+		}
+		advanceEveryGameObject(dt - timePassed);
+	}
+		
+	private void advanceEveryGameObject(double dt) throws IllegalDtException {
+		for (Plant plant : this.getPlants()) {
+			 plant.advanceTime(dt);
+		}
+		for (Shark shark: this.getSharks()) {
+			shark.advanceTime(dt);
+		}
+		for (Slime slime: this.getSlimes()) {
+			slime.advanceTime(dt);
+		}
+		this.getAlien().advanceTime(dt);
+	
+		positioningVisibleWindow();
+	}
+	
+	private void positioningVisibleWindow() {
+		//x
+		if (this.getAlien().getLocation()[0] < 200) {
+			this.setXVisibleWindow(0);
+		}
+		else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] > this.getX() - 200) {
+			this.setXVisibleWindow(this.getX() - this.getVisibleWindowWidth());
+		}
+		else if (this.getAlien().getLocation()[0] - 200 < this.getXVisibleWindow()) {
+			this.setXVisibleWindow(this.getAlien().getLocation()[0] - 200);
+		}
+		else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] + 200 >
+				this.getXVisibleWindow() + this.getVisibleWindowWidth()){
+			this.setXVisibleWindow(this.getAlien().getLocation()[0] +this.getAlien().getSize()[0]
+								- this.getVisibleWindowWidth() + 200);
+		}
+		//y
+		if (this.getAlien().getLocation()[1] < 200) {
+			this.setYVisibleWindow(0);
+		}
+		else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] > this.getY() - 200) {
+			this.setYVisibleWindow(this.getY() - this.getVisibleWindowHeight());
+		}
+		else if (this.getAlien().getLocation()[1] - 200 < this.getYVisibleWindow()) {
+			this.setYVisibleWindow(this.getAlien().getLocation()[1] - 200);
+		}
+		else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] + 200 >
+				this.getYVisibleWindow() + this.getVisibleWindowHeight()){
+			this.setYVisibleWindow(this.getAlien().getLocation()[1] + this.getAlien().getSize()[1]
+								- this.getVisibleWindowHeight() + 200);
+		}		
+	}
+	
+	/**
+	 * returns true if the objects touch each other
+	 * @param x1
+	 * @param xDim1
+	 * @param y1
+	 * @param yDim1
+	 * @return
+	 */
+	private boolean touches(double x1, double xDim1, double y1, double yDim1,
+			double x2, double xDim2, double y2, double yDim2) {
+		
+		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
+				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
+		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
+				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
+		
+		return ((xStatement) && (yStatement));
+	}
+	
+	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
+		int amountOfDeadPlants = 0;
+		for (Plant plant : this.getPlants()) {
+			 if (this.touches(xPos, xDim, yPos, yDim, plant.getXPos(),
+					 plant.getXDim(), plant.getYPos(), plant.getYDim())) {
+				 plant.die();
+				 amountOfDeadPlants += 1;
+			 }
+		}
+		return amountOfDeadPlants;
+	}
+	
+	public int touchedSharks(double xPos, double yPos, double xDim, double yDim) {
+		int nbTouchedSharks = 0;
+		for (Shark shark : this.getSharks()) {
+			 if (this.touches(xPos, xDim, yPos, yDim, shark.getXPos(),
+					 shark.getXDim(), shark.getYPos(), shark.getYDim())) {
+				 shark.setHitpoints(shark.getHitpoints() - Shark.getContactDamage());
+				 nbTouchedSharks += 1;
+			 }
+		}
+		return nbTouchedSharks;
+	}	
+	
+	public int touchedSlimes(double xPos, double yPos, double xDim, double yDim) {
+		int nbTouchedSlimes = 0;
+		for (Slime slime : this.getSlimes()) {
+			 if (this.touches(xPos, xDim, yPos, yDim, slime.getXPos(),
+					 slime.getXDim(), slime.getYPos(), slime.getYDim())) {
+				 slime.setHitpoints(slime.getHitpoints() - Slime.getContactDamage());
+				 nbTouchedSlimes += 1;
+			 }
+		}
+		return nbTouchedSlimes;
+	}
+	
+	public int touchedAliens(double xPos, double yPos, double xDim, double yDim) {
+		int nbTouchedAliens = 0;
+		if (this.touches(xPos, xDim, yPos, yDim, alien.getXPos(),
+				alien.getXDim(), alien.getYPos(), alien.getYDim())) {
+			nbTouchedAliens += 1;
+		}
+		return nbTouchedAliens;
+	}
+	
+
+	// MUILEN MET LAURA -> is dit echt noodzakelijk voor de werking van world??
+
+}

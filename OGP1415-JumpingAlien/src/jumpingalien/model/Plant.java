@@ -70,19 +70,18 @@ public class Plant extends GameObject {
 	private double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
 	}
-
 	
-
 //	SETTERS	
+	
 	/**
 	 * 
 	 */
 	private void setTimeSameOrientation(double t) {
 		this.timeSameOrientation = t;
-	}
-	
+	}	
 	
 // VALIDATIONS
+	
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;

@@ -157,8 +157,7 @@ public class Shark extends GameObject {
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
-	}
-	
+	}	
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 		private double[] checkSurroundings(double newXPos, double newYPos) {
@@ -182,7 +181,7 @@ public class Shark extends GameObject {
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 				this.setYSpeed(0);
 			}
-			if (this.isMoving() && this.isInWater() && !this.isFullyInFeature(newXPos, newYPos, 2)) {
+			if (this.isMoving() && this.isInWater() && ( ! this.isFullyInFeature(newXPos, newYPos, 2))) {
 				this.setYSpeed(0);
 				this.setYAcc(0);
 				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
@@ -415,7 +414,7 @@ public class Shark extends GameObject {
 					fall();
 				}
 	
-				if (! other.isDying() && touched && (other instanceof Slime)) {
+				if ( ! other.isDying() && touched && (other instanceof Slime)) {
 					this.contactDamage(dt);
 					other.contactDamage(dt);
 				}

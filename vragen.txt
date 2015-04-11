@@ -3,7 +3,7 @@
 3. wanneer protected of public gebruiken?
 4. bij advanceTime in world: kunnen er meerdere mazubs zijn? dus moeten we daar een forloop gebruiken?
 5. Als mazub op plant komt en maximum aantal hitpoints heeft, gaat plant dan weg of niet?
-	Ik denk van niet -> oke
+	Ik denk van niet -> oke -> we moeten het niet meer vragen, het staat id opgave!
 6. moet een stervende slime nog vallen?
 7. wat doen als mazub gewonnen is? (didPlayerWin())
 8. Wat is het maximum aantal hitpoints van een slime?

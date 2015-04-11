@@ -408,6 +408,32 @@ public abstract class GameObject {
 	private static int getTouchEnemy() {
 		return TOUCH_ENEMY;
 	}
+	protected double timeInMagma = 0;
+	protected double getTimeInMagma() {
+		return this.timeInMagma;
+	}
+	protected void setTimeInMagma(double dt) {
+		this.timeInMagma = dt;
+	}	
+	protected double timeInWater = 0;
+	protected double getTimeInWater() {
+		return this.timeInWater;
+	}
+	protected void setTimeInWater(double dt) {
+		this.timeInWater = dt;
+	}
+	protected static double DROWN_TIME = 0.2;
+	protected static double getDrownTime() {
+		return DROWN_TIME;
+	}
+	protected static double LOSS_HITPOINTS_IN_MAGMA = 50;
+	protected static double getLossHitpointsInMagma() {
+		return LOSS_HITPOINTS_IN_MAGMA;
+	}
+	protected static double BURN_TIME = 0.2;
+	protected static double getBurnTime() {
+		return BURN_TIME;
+	}
 	
 //	Validations
 	
@@ -727,7 +753,7 @@ public abstract class GameObject {
 		this.setHitpoints(this.getHitpoints() - nb);
 	}
 	
-	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos
+	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos -> fight anders?:p
 	protected void contactDamage(double dt) {
 		if (this.isImmune()) {
 			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
@@ -738,7 +764,7 @@ public abstract class GameObject {
 				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
 			}
 		}
-		if(!this.isImmune()) {
+		if( ! this.isImmune()) {
 			this.setImmune();
 			this.loseHitpoints(GameObject.getTouchEnemy());
 			this.setTimeSinceImmune(dt);

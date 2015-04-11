@@ -174,8 +174,17 @@ public class Mazub extends GameObject {
 	 * the counter to go over the array of possible sprites
 	 */
 	private int counterSprites;	
-
-	
+	/**
+	 * the time mazub needs to be in water until hitpoints are lost
+	 * 2 hitpoints shall be deducted per 0.2 seconds in water
+	 */
+	private static int LOSS_HITPOINTS_IN_WATER = 2;
+	/**
+	 * when mazub is in touch with magma, it imediatly loses hitpoints,
+	 * this variable counts the difference between the double value 
+	 * of the hitpoints which are to lose and the int value
+	 */
+	private double hitpointsDifference = 0;
 
 	
 //GETTERS	
@@ -296,9 +305,18 @@ public class Mazub extends GameObject {
 	 */
 	private boolean isDucked(){
 		return (this.duck);
-	}	
+	}
+	
+	private static int getLossHitpointsInWater() {
+		return LOSS_HITPOINTS_IN_WATER;
+	}
+	
+	private double getHitpointsDifference() {
+		return hitpointsDifference;
+	}
 	
 //Setters	
+	
 	/**
 	 * Sets the initial starting speed to a new value
 	 * @param initstartspeed
@@ -350,6 +368,10 @@ public class Mazub extends GameObject {
 	@Raw 
 	private void setTimeSinceStartMove(double time_since_startMove) {
 		this.timeSinceStartMove = time_since_startMove;
+	}
+	
+	private void setHitpointsDifference(double diff) {
+		this.hitpointsDifference = diff;
 	}
 	
 //VALIDATIONS	
@@ -563,6 +585,7 @@ public class Mazub extends GameObject {
 			double y1 = newYPos;
 			double yDim1 = this.getYDim();
 			double x2 = other.getXPos();
+			
 			double xDim2 = other.getXDim();
 			double y2 = other.getYPos();
 			double yDim2 = other.getYDim();
@@ -712,7 +735,19 @@ public class Mazub extends GameObject {
 			this.setDuckShouldEnd(false);
 			this.endDuck();
 		}
-		
+		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 2)) {
+			this.setTimeInWater(this.getTimeInWater() + dt);
+			if (this.getTimeInWater() >= GameObject.getDrownTime()) {
+				this.loseHitpoints(Mazub.getLossHitpointsInWater());
+				this.setTimeInWater(0);
+			}			
+		}
+		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
+			double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
+								+ this.getHitpointsDifference();
+			this.setHitpointsDifference(toLose - (int) toLose);
+			this.loseHitpoints( (int) toLose);
+		}
 		if (this.getHitpoints() <= 0) {
 			this.die();
 		}

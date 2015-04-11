@@ -39,36 +39,11 @@ public class Slime extends GameObject {
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
 	
-	private static int LOSS_HITPOINTS_IN_MAGMA = 50;
-	private static int getLossHitpointsInMagma() {
-		return LOSS_HITPOINTS_IN_MAGMA;
-	}
-	private static double BURN_TIME = 0.2;
-	private static double getBurnTime() {
-		return BURN_TIME;
-	}
+	
 	private static int LOSS_HITPOINTS_IN_WATER = 6;
 	private static int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
-	}
-	private static double DROWN_TIME = 0.2;
-	private static double getDrownTime() {
-		return DROWN_TIME;
-	}
-	private double timeInMagma = 0;
-	private double getTimeInMagma() {
-		return this.timeInMagma;
-	}
-	private void setTimeInMagma(double dt) {
-		this.timeInMagma = dt;
-	}	
-	private double timeInWater = 0;
-	private double getTimeInWater() {
-		return this.timeInWater;
-	}
-	private void setTimeInWater(double dt) {
-		this.timeInWater = dt;
-	} 
+	}	 
 	private double movementDuration = 0;
 	private double getMovementDuration() {
 		return movementDuration;
@@ -342,7 +317,7 @@ public class Slime extends GameObject {
 			if(this.isInContactWithFeature(newXPos,newYPos,3)){
 				this.setTimeInMagma(this.getTimeInMagma() + dt);
 				if(this.getTimeInMagma() >= Slime.getBurnTime()) {
-					this.loseHitpoints(Slime.getLossHitpointsInMagma());
+					this.loseHitpoints( (int) GameObject.getLossHitpointsInMagma());
 					this.setTimeInMagma(this.getTimeInMagma() - dt);
 				}
 			}
