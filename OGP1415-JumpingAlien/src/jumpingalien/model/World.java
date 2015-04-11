@@ -165,7 +165,7 @@ public class World {
 				this.getYVisibleWindow() + this.getVisibleWindowHeight()};
 	}
 	
-	private Mazub getAlien() {
+	public Mazub getAlien() {
 		return this.alien;
 	}	
 	

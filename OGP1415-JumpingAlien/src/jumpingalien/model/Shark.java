@@ -1,5 +1,8 @@
 package jumpingalien.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -362,5 +365,62 @@ public class Shark extends GameObject {
 		else {
 			this.setTimeSinceMove(this.getTimeSinceMove() + dt);
 		}
+	}
+	
+	public double[] colliding(double newXPos, double newYPos,double dt) {	
+		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
+		allSlimesSharksMazub.add(this.getWorld().getAlien());
+		for(GameObject other: allSlimesSharksMazub) {
+			if(this != other) {
+				double x1 = newXPos;
+				double xDim1 = this.getXDim();
+				double y1 = newYPos;
+				double yDim1 = this.getYDim();
+				double x2 = other.getXPos();
+				double xDim2 = other.getXDim();
+				double y2 = other.getYPos();
+				double yDim2 = other.getYDim();
+				boolean touched = false;
+				if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newXPos = x2 - xDim1;
+					this.setXSpeed(0);
+					this.setXAcc(0);
+					if (this.getYSpeed()>0) {
+						this.setYSpeed(0);
+					}
+					touched = true;
+				}
+				if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newXPos = x2 + xDim2;
+					this.setXSpeed(0);
+					this.setXAcc(0);
+					if (this.getYSpeed()>0) {
+						this.setYSpeed(0);
+					}
+					touched = true;
+				}
+				if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newYPos = y2 - yDim1;
+					this.setYSpeed(0);
+					touched = true;
+				}
+				if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					newYPos = y2 + yDim2;
+					this.endFall();
+					touched = true;
+				}
+				//TODO nadenken of volgende 3 regels niet overbodig zijn
+				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
+					fall();
+				}
+	
+				if (! other.isDying() && touched && (other instanceof Slime)) {
+					this.contactDamage(dt);
+					other.contactDamage(dt);
+				}
+			}
+		}
+		return new double[] {newXPos, newYPos};
 	}
 }

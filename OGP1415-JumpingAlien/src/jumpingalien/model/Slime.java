@@ -1,5 +1,8 @@
 package jumpingalien.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -208,7 +211,7 @@ public class Slime extends GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
-	public double[] colliding(double newXPos, double newYPos) {		
+	public double[] collidingSlimes(double newXPos, double newYPos) {		
 		for(Slime other: this.getWorld().getSlimes()) {
 			if(other != this) {
 				double x1 = newXPos;
@@ -263,7 +266,51 @@ public class Slime extends GameObject {
 			}
 		}
 		return new double[] {newXPos, newYPos};
-	}	
+	}
+	
+	public double[] collidingSharksMazub(double newXPos, double newYPos) {		
+		List<GameObject> allSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
+		allSharksMazub.add(this.getWorld().getAlien());
+		for(GameObject other: allSharksMazub) {
+			double x1 = newXPos;
+			double xDim1 = this.getXDim();
+			double y1 = newYPos;
+			double yDim1 = this.getYDim();
+			double x2 = other.getXPos();
+			double xDim2 = other.getXDim();
+			double y2 = other.getYPos();
+			double yDim2 = other.getYDim();
+			if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newXPos = x2 - xDim1;
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newXPos = x2 + xDim2;
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newYPos = y2 - yDim1;
+				this.setYSpeed(0);
+			}
+			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				newYPos = y2 + yDim2;
+				this.endFall();
+			}
+			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
+				fall();
+			}
+		}
+		return new double[] {newXPos, newYPos};
+	}
+
 
 	
 	public void advanceTime(double dt) throws IllegalDtException {
@@ -283,7 +330,8 @@ public class Slime extends GameObject {
 			}
 			
 			double[] newPos = checkSurroundings(newXPos,newYPos);
-			newPos = colliding(newPos[0],newPos[1]);
+			newPos = collidingSlimes(newPos[0],newPos[1]);
+			newPos = collidingSharksMazub(newPos[0],newPos[1]);
 			this.setNewSpeed(dt);
 			
 			this.setXPos(newPos[0]);
