@@ -713,11 +713,17 @@ public class Mazub extends GameObject {
 
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
-			throw new IllegalDtException(dt);		
+			throw new IllegalDtException(dt);
 		
-		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
-		double newXPos = this.calculateNewPos(dt)[0];
-		double newYPos = this.calculateNewPos(dt)[1];		
+		if ( ! this.isDying()) {
+			//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+			double newXPos = this.calculateNewPos(dt)[0];
+			double newYPos = this.calculateNewPos(dt)[1];
+		}
+		else {
+			double newXPos = this.getXPos();
+			double newYPos = this.getYPos();
+		}
 		
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.die();

@@ -713,11 +713,11 @@ public class Mazub extends GameObject {
 
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
-			throw new IllegalDtException(dt);		
-		
+			throw new IllegalDtException(dt);
+
 		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
 		double newXPos = this.calculateNewPos(dt)[0];
-		double newYPos = this.calculateNewPos(dt)[1];		
+		double newYPos = this.calculateNewPos(dt)[1];
 		
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.die();
@@ -801,45 +801,40 @@ public class Mazub extends GameObject {
 	@Raw
 	public Sprite getCurrentSprite() {
 		assert isValidSprite(this.getSprite());
-		if ( ! this.isDying()) { 
-			this.setNbRunningSprites(((this.getSprite()).length-8)/2);
-			if ((this.getXSpeed()==0) && (! this.isDucked()) &&
-					(this.getTimeSinceEndMove() > this.getNotMovingTime())){
-				return sprites[0];
-			}
-			else if ((this.getXSpeed()==0) &&
-					(this.getTimeSinceEndMove() > this.getNotMovingTime())){
-				return sprites[1];
-			}
-			else if ((this.getXSpeed()==0) &&
-					(!this.isDucked()) && (this.getOrientation() == Orientation.RIGHT )){
-				return sprites[2];
-			}		
-			else if ((this.getXSpeed()==0) && (!this.isDucked())){
-				return sprites[3];
-			}
-			else if ((this.getXSpeed() > 0) && (this.getOrientation() == Orientation.RIGHT ) 
-					&& (this.isFalling()) && (!this.isDucked())){
-				return sprites[4];
-			}
-			else if ((this.getXSpeed() > 0) && (this.isFalling()) && (!this.isDucked())){
-				return sprites[5];
-			}
-			else if ((this.getOrientation() == Orientation.RIGHT) && (this.isDucked())){
-				return sprites[6];
-			}
-			else if (this.isDucked()){
-				return sprites[7];
-			}
-			else if (this.getOrientation() == Orientation.RIGHT){
-				return sprites[8 + this.getCounterSprites()];
-			}
-			else {
-				return sprites[8 + this.getNbRunningSprites() + this.getCounterSprites()]; 
-			}
+		this.setNbRunningSprites(((this.getSprite()).length-8)/2);
+		if ((this.getXSpeed()==0) && (! this.isDucked()) &&
+				(this.getTimeSinceEndMove() > this.getNotMovingTime())){
+			return sprites[0];
+		}
+		else if ((this.getXSpeed()==0) &&
+				(this.getTimeSinceEndMove() > this.getNotMovingTime())){
+			return sprites[1];
+		}
+		else if ((this.getXSpeed()==0) &&
+				(!this.isDucked()) && (this.getOrientation() == Orientation.RIGHT )){
+			return sprites[2];
+		}		
+		else if ((this.getXSpeed()==0) && (!this.isDucked())){
+			return sprites[3];
+		}
+		else if ((this.getXSpeed() > 0) && (this.getOrientation() == Orientation.RIGHT ) 
+				&& (this.isFalling()) && (!this.isDucked())){
+			return sprites[4];
+		}
+		else if ((this.getXSpeed() > 0) && (this.isFalling()) && (!this.isDucked())){
+			return sprites[5];
+		}
+		else if ((this.getOrientation() == Orientation.RIGHT) && (this.isDucked())){
+			return sprites[6];
+		}
+		else if (this.isDucked()){
+			return sprites[7];
+		}
+		else if (this.getOrientation() == Orientation.RIGHT){
+			return sprites[8 + this.getCounterSprites()];
 		}
 		else {
-			return sprites[0];
+			return sprites[8 + this.getNbRunningSprites() + this.getCounterSprites()]; 
 		}
 	}
 	
