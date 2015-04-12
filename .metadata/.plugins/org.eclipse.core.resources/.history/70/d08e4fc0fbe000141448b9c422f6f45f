@@ -747,7 +747,5 @@ public class World {
 		return false;
 	}
 	
-	
-	// SPELSPELSPELSPELSPEL
-	
+
 }
