@@ -211,7 +211,7 @@ public class Shark extends GameObject {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
 
-		randomMovement(dt);
+		this.randomMovement(dt);
 		
 		//TODO dis is mss nogal inefficient
 		double newXPos = this.calculateNewPos(dt)[0];
@@ -258,7 +258,7 @@ public class Shark extends GameObject {
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
+			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 				this.remove();
 			}
 		}
@@ -364,11 +364,11 @@ public class Shark extends GameObject {
 				this.setMoving(false);
 			}
 			else {
+				// TODO moet dit niet jumpLeft() zijn?
 				this.jumpRight();
 				this.setJumpCounter(0);
 				this.setMoving(false);
-			}
-			
+			}			
 		}
 		else {
 			this.setTimeSinceMove(this.getTimeSinceMove() + dt);

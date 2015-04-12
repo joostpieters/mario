@@ -7,8 +7,11 @@
 6. moet een stervende slime nog vallen?
 7. wat doen als mazub gewonnen is? (didPlayerWin())
 8. Wat is het maximum aantal hitpoints van een slime?
+9. als mazub op een shark springt, moet de shark (en mazub) dan naar beneden gaan ofzo?
 
 
+algemene opmerking: blz 4 vd opgave: the outer layer of a game object's pixels is allowed to overlap
+			with impassable terrain and game objects: hebben wij dit gedaan? #geenzinomtezoekenofnatedenken
 TODO: overal @override in facade
 
 Pieter heeft gemuild met Laura

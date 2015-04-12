@@ -731,7 +731,21 @@ public class World {
 		return nbTouchedAliens;
 	}
 	
-
-	// MUILEN MET LAURA -> is dit echt noodzakelijk voor de werking van world??
+	public boolean mazubCollidesAboveWithSharkOrSlime() {
+		for (Shark shark: this.getSharks()) {
+			if (alien.collidesAbove(alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim(),
+					shark.getXPos(), shark.getXDim(), shark.getYPos(), shark.getYDim())) {
+				return true;
+			}
+		}
+		for (Slime slime: this.getSlimes()) {
+			if (alien.collidesAbove(alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim(),
+					slime.getXPos(), slime.getXDim(), slime.getYPos(), slime.getYDim())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 }

@@ -1,0 +1,21 @@
+package jumpingalien.model;
+
+/**
+ * a class to check an illegal operation concerning a duck
+ * 
+ * @version 1.0
+ * @author Pieter Van den Berghe, Ward Romanus
+ *
+ */
+@SuppressWarnings("serial")
+public class IllegalDuckException extends Exception {
+	
+	private boolean duck;
+	public boolean getDuck() {
+		return duck;
+	}
+	
+	public IllegalDuckException(boolean duck) {
+		this.duck = duck;
+	}
+}

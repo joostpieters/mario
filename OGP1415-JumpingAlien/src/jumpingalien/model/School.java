@@ -23,7 +23,7 @@ public class School {
 	}
 	
 	public void addSlime(Slime slime) {
-		assert !this.getMembers().contains(slime);
+		assert ( ! this.getMembers().contains(slime));
 		slime.setHitpoints(slime.getHitpoints() + slime.getSchool().getLength() - this.getLength());
 		for (Slime oldMember: slime.getSchool().getMembers()) {
 			oldMember.setHitpoints(oldMember.getHitpoints() - 1);

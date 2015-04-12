@@ -293,7 +293,7 @@ public class Slime extends GameObject {
 			throw new IllegalDtException(dt);
 		
 		if ( ! this.isDying()) {
-			randomMovement(dt);
+			this.randomMovement(dt);
 			
 			//TODO dis is mss nogal inefficient
 			double newXPos = this.calculateNewPos(dt)[0];
@@ -352,7 +352,7 @@ public class Slime extends GameObject {
 		}
 		else {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
+			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 				this.remove();
 			}
 		}

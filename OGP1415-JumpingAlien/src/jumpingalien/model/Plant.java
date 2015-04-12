@@ -119,7 +119,7 @@ public class Plant extends GameObject {
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= this.getRemainingTime()) {
+			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 				this.remove();
 			}
 		}
