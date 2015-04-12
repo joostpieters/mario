@@ -733,8 +733,8 @@ public class World {
 	
 	public boolean mazubCollidesAboveWithSharkOrSlime() {
 		for (Shark shark: this.getSharks()) {
-			if (alien.collidesAbove(shark.getXPos(), shark.getXDim(), shark.getYPos(), shark.getYDim(),
-					alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim())) {
+			if (alien.collidesAbove(alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim(),
+					shark.getXPos(), shark.getXDim(), shark.getYPos(), shark.getYDim())) {
 				return true;
 			}
 		}

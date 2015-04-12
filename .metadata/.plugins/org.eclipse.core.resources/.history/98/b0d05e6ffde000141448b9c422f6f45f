@@ -499,7 +499,7 @@ public class Mazub extends GameObject {
 	 */
 	public void startJump() {
 		// TODO ook kunnen springen als mazub op shark of slime staat -> werkt precies nog niet :/
-		if (this.onFloor(this.getXPos(),this.getYPos())) { // || this.getWorld().mazubCollidesAboveWithSharkOrSlime()) {
+		if (this.onFloor(this.getXPos(),this.getYPos()) || this.getWorld().mazubCollidesAboveWithSharkOrSlime()) {
 			this.setYSpeed(this.getStartJumpSpeed());	
 		}
 	}
