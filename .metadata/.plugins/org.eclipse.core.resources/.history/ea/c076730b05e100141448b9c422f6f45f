@@ -793,7 +793,8 @@ public class Mazub extends GameObject {
 	public void endDuck() {
 		// zoiets fzo? kweet eig ni echt zo goed hoe...
 //		if ( ! this.isDucked())
-//			throw eenofandereexception -> dit werkte bij mij wel niet 		
+//			throw eenofandereexception -> dit werkte bij mij wel niet 
+		
 		this.setDuck(false);
 		this.setMaxSpeed(this.getMaxMovingSpeed());
 		if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
@@ -895,7 +896,6 @@ public class Mazub extends GameObject {
 	}
 	
 	private void remove() {
-		// TODO
 		this.setWorld(null);
 	}
 	

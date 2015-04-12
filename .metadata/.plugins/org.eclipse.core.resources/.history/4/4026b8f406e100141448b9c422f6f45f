@@ -38,8 +38,7 @@ public class Slime extends GameObject {
 		this.setHitpoints(Slime.getInitHitpoints());
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
-
-	// TODO alle veel te lange functies in slime is opsplitsen
+	
 	
 	private static int LOSS_HITPOINTS_IN_WATER = 6;
 	private static int getLossHitpointsInWater() {

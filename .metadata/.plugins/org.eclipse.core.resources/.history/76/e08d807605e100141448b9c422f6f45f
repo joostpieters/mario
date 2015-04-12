@@ -245,7 +245,8 @@ public class World {
 			}
 		}
 		return array;
-	}	
+	}
+	
 	/**
 	 * Returns the geological feature of the tile with its bottom left pixel at
 	 * the given position.
@@ -280,21 +281,24 @@ public class World {
 				if ( ! isValidBottomLeftPixel(pixelX, pixelY))
 					throw new IllegalPixelException(pixelX,pixelY);
 		return this.geologicalFeature[pixelY/this.getTileLength()][pixelX/this.getTileLength()];
-	}	
+	}
+	
 	/**
 	 * 
 	 * @return nbTilesX * tileLength
 	 */
 	public int getX() {
 		return this.getNbTilesX() * this.getTileLength();
-	}	
+	}
+	
 	/**
 	 * 
 	 * @return
 	 */
 	public int getY() {
 		return this.getNbTilesY() * this.getTileLength();
-	}	
+	}
+	
 //	public Collection<Mazub> getMazubs() {
 //		return this.mazubs;
 //	}
@@ -321,13 +325,15 @@ public class World {
 	}
 	private int getNbAliens() {
 		return 1;
-	}	
+	}
+	
 	/**
 	 * @return the xVisibleWindow
 	 */
 	private int getXVisibleWindow() {
 		return XVisibleWindow;
 	}
+
 	/**
 	 * @return the yVisibleWindow
 	 */
@@ -343,54 +349,63 @@ public class World {
 	private void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
 	}
+
 	/**
 	 * @param nbTilesX the nbTilesX to set
 	 */
 	private void setNbTilesX(int nbTilesX) {
 		this.nbTilesX = nbTilesX;
 	}
+
 	/**
 	 * @param nbTilesY the nbTilesY to set
 	 */
 	private void setNbTilesY(int nbTilesY) {
 		this.nbTilesY = nbTilesY;
 	}
+
 	/**
 	 * @param visibleWindowWidth the visibleWindowWidth to set
 	 */
 	private void setVisibleWindowWidth(int visibleWindowWidth) {
 		this.visibleWindowWidth = visibleWindowWidth;
 	}
+
 	/**
 	 * @param visibleWindowHeight the visibleWindowHeight to set
 	 */
 	private void setVisibleWindowHeight(int visibleWindowHeight) {
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
+
 	/**
 	 * @param targetTileX the targetTileX to set
 	 */
 	private void setTargetTileX(int targetTileX) {
 		this.targetTileX = targetTileX;
 	}
+
 	/**
 	 * @param targetTileY the targetTileY to set
 	 */
 	private void setTargetTileY(int targetTileY) {
 		this.targetTileY = targetTileY;
-	}	
+	}
+	
 	/**
 	 * @param xVisibleWindow the xVisibleWindow to set
 	 */
 	private void setXVisibleWindow(int xVisibleWindow) {
 		XVisibleWindow = xVisibleWindow;
 	}
+
 	/**
 	 * @param yVisibleWindow the yVisibleWindow to set
 	 */
 	private void setYVisibleWindow(int yVisibleWindow) {
 		YVisibleWindow = yVisibleWindow;
 	}
+
 	/**
 	 * Modify the geological type of a specific tile in the given world to a
 	 * given type.
@@ -416,49 +431,59 @@ public class World {
 			throw new IllegalTileException(tileX, tileY, tileType);
 		}		
 		this.geologicalFeature[tileY][tileX] = tileType;
-	}	
+	}
+	
 	public void setAlien(Mazub alien) {
 		this.alien = alien;
-	}	
+	}
+	
 	public void removeSlime(@Raw Slime slime) {
 		assert this.hasSlime(slime);
 		assert slime != null;
 		this.slimes.remove(slime);
-	}	
+	}
+	
 	public void removePlant(@Raw Plant plant) {
 		assert this.hasPlant(plant);
 		assert plant != null;
 		this.plants.remove(plant);
-	}	
+	}
+	
 	public void removeShark(@Raw Shark shark) {
 		assert this.hasShark(shark);
 		assert shark != null;
 		this.sharks.remove(shark);
-	}	
+	}
+	
 	public void addSlime(Slime slime) {
 		assert slime != null;
 	    assert slime.getWorld() == this;
 	    assert !this.hasSlime(slime);
 		this.slimes.add(slime);
-	}	
+	}
+	
 	public void addShark(Shark shark) {
 		assert shark != null;
 	    assert shark.getWorld() == this;
 	    assert !this.hasShark(shark);
 		this.sharks.add(shark);
 	}
+
 	public void addPlant(Plant plant) {
 //		assert plant != null;
 //	    assert plant.getWorld() == this;
 //	    assert !this.hasPlant(plant);
 		this.plants.add(plant);
-	}	
+	}
+	
 	private boolean hasPlant(Plant plant) {
 		return this.plants.contains(plant);
-	}	
+	}
+	
 	private boolean hasShark(Shark shark) {
 		return this.sharks.contains(shark);
-	}	
+	}
+	
 	private boolean hasSlime(Slime slime) {
 		return this.slimes.contains(slime);
 	}	
@@ -467,10 +492,12 @@ public class World {
 	
 	private boolean isValidTileSize(int tileSize){
 		return tileSize > 0;
-	}	
+	}
+	
 	private boolean isValidNbTiles(int nbTiles){
 		return nbTiles > 0;
-	}	
+	}
+	
 	// TODO, is deze niet klaar?
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
@@ -479,7 +506,8 @@ public class World {
 	}
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
 		return ((pixelX%this.getTileLength() == 0) && (pixelY%this.getTileLength() ==0));
-	}	
+	}
+	
 	private boolean isValidAmountOfCharacters() {
 		return ((this.getNbPlants() + this.getNbSharks() + 
 				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );

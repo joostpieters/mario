@@ -85,7 +85,8 @@ public class Plant extends GameObject {
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
-	}	
+	}
+	
 
 	public void advanceTime(double dt) {
 		

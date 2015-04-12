@@ -574,8 +574,7 @@ public class Mazub extends GameObject {
 	 */
 //	private void advanceX(double dt) {				
 //	}
-	
-	// TODO misschien dit opsplitsen want das redelijk lang...
+
 	public double[] colliding(double newXPos, double newYPos,double dt) {	
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharks.addAll(this.getWorld().getSharks());
@@ -656,7 +655,7 @@ public class Mazub extends GameObject {
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
-		
+
 		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
 			this.setXSpeed(0);
@@ -711,8 +710,31 @@ public class Mazub extends GameObject {
 			}
 		}
 	}
-	
-	private void loseHitpointsBecauseOfFeature(double dt) {
+
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);		
+		
+		//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+		double newXPos = this.calculateNewPos(dt)[0];
+		double newYPos = this.calculateNewPos(dt)[1];		
+		
+		if( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.die();
+			// TODO spel eindigen ofzo
+		}
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = colliding(newPos[0],newPos[1], dt);
+		
+		this.setNewSpeed(dt);
+		this.changeMovingTimes(dt);
+		
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);	
+		if(this.getDuckShouldEnd()) {
+			this.setDuckShouldEnd(false);
+			this.endDuck();
+		}
 		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 2)) {
 			this.setTimeInWater(this.getTimeInWater() + dt);
 			if (this.getTimeInWater() >= GameObject.getDrownTime()) {
@@ -726,46 +748,37 @@ public class Mazub extends GameObject {
 			this.setHitpointsDifference(toLose - (int) toLose);
 			this.loseHitpoints( (int) toLose);
 		}
-	}
-
-	public void advanceTime(double dt) throws IllegalDtException {
-		if ( ! isValidDt(dt))
-			throw new IllegalDtException(dt);		
-		if ( ! this.isDying()) {
-			//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
-			double newXPos = this.calculateNewPos(dt)[0];
-			double newYPos = this.calculateNewPos(dt)[1];		
-			
-			if( ! isWithinBoundaries(newXPos,newYPos)) {
-				this.die();
-				// TODO spel eindigen ofzo
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setNotImmune();
+				this.setTimeSinceImmune(0);				
 			}
-			double[] newPos = checkSurroundings(newXPos,newYPos);
-			newPos = colliding(newPos[0],newPos[1], dt);
-			
-			this.setNewSpeed(dt);
-			this.changeMovingTimes(dt);
-			
-			this.setXPos(newPos[0]);
-			this.setYPos(newPos[1]);	
-			if(this.getDuckShouldEnd()) {
-				this.setDuckShouldEnd(false);
-				this.endDuck();
-			}
-			
-			this.loseHitpointsBecauseOfFeature(dt);
-			this.updateImmunity(dt);		
-			
-			if (this.getHitpoints() <= 0) {
-				this.die();
-			}
-			if (this.isDying()) {
-				this.setCounterUntilRemove(this.getCounterUntilRemove() + dt);
-				if (this.getCounterUntilRemove() > GameObject.getTimeUntilRemove()) {
-					// this.remove(); TODO dit laten werken
-				}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
 			}
 		}
+		if (this.getHitpoints() <= 0) {
+			this.die();
+		}
+		if (this.isDying()) {
+			this.setCounterUntilRemove(this.getCounterUntilRemove() + dt);
+			if (this.getCounterUntilRemove() > GameObject.getTimeUntilRemove()) {
+				// this.remove(); TODO dit laten werken
+			}
+		}
+		
+		// waarom stond/staat dit weggecomment? -> er is nog wel iets mis met de hitpoints :(
+//		int touchedPlants = this.getWorld().touchedPlants(this.getXPos(), this.getYPos(),
+//				this.getXDim(), this.getYDim());
+//		this.setHitpoints(this.getHitpoints() + touchedPlants * Mazub.getTouchPlantHitpoints());
+//		
+//		if ( ! this.isImmune()) {
+//			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//			this.setHitpoints(this.getHitpoints() - touchedSharks * Mazub.getTouchEnemy() );
+//			int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//			this.setHitpoints(this.getHitpoints() - touchedSlimes * Mazub.getTouchEnemy() );
+//		}		
+		
 	}	
 	
 	/**
@@ -793,7 +806,8 @@ public class Mazub extends GameObject {
 	public void endDuck() {
 		// zoiets fzo? kweet eig ni echt zo goed hoe...
 //		if ( ! this.isDucked())
-//			throw eenofandereexception -> dit werkte bij mij wel niet 		
+//			throw eenofandereexception -> dit werkte bij mij wel niet 
+		
 		this.setDuck(false);
 		this.setMaxSpeed(this.getMaxMovingSpeed());
 		if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
@@ -895,7 +909,6 @@ public class Mazub extends GameObject {
 	}
 	
 	private void remove() {
-		// TODO
 		this.setWorld(null);
 	}
 	

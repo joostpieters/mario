@@ -895,7 +895,6 @@ public class Mazub extends GameObject {
 	}
 	
 	private void remove() {
-		// TODO
 		this.setWorld(null);
 	}
 	

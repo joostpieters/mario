@@ -209,10 +209,6 @@ public class Shark extends GameObject {
 				this.setTimeInAir(0);
 			}
 		}
-		// TODO ook in magma hitpoints laten verliezen?
-//		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
-//			
-//		}
 	}
 	
 	public void advanceTime(double dt) throws IllegalDtException {
@@ -238,12 +234,20 @@ public class Shark extends GameObject {
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 		
-		this.loseHitpointsBecauseOfFeature(dt);
-		this.updateImmunity(dt);
+		this.loseHitpointsBecauseOfFeature(dt)
 		
 		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
-		}			
+		}
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setNotImmune();
+				this.setTimeSinceImmune(0);				
+			}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			}
+		}
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
@@ -288,7 +292,6 @@ public class Shark extends GameObject {
 			this.setYAcc(Math.random() * 4 - 2);
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|
@@ -300,7 +303,6 @@ public class Shark extends GameObject {
 			this.setYAcc(Math.random() * 4 -  2);
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the right
 	 * @effect 	| 
@@ -310,7 +312,6 @@ public class Shark extends GameObject {
 		this.setYSpeed(Shark.getJumpSpeed());
 		this.setOrientationRight();
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|

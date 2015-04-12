@@ -239,11 +239,19 @@ public class Shark extends GameObject {
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 		
 		this.loseHitpointsBecauseOfFeature(dt);
-		this.updateImmunity(dt);
 		
 		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
-		}			
+		}
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setNotImmune();
+				this.setTimeSinceImmune(0);				
+			}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			}
+		}
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
@@ -288,7 +296,6 @@ public class Shark extends GameObject {
 			this.setYAcc(Math.random() * 4 - 2);
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|
@@ -300,7 +307,6 @@ public class Shark extends GameObject {
 			this.setYAcc(Math.random() * 4 -  2);
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the right
 	 * @effect 	| 
@@ -310,7 +316,6 @@ public class Shark extends GameObject {
 		this.setYSpeed(Shark.getJumpSpeed());
 		this.setOrientationRight();
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|

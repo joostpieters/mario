@@ -38,8 +38,7 @@ public class Slime extends GameObject {
 		this.setHitpoints(Slime.getInitHitpoints());
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
-
-	// TODO alle veel te lange functies in slime is opsplitsen
+	
 	
 	private static int LOSS_HITPOINTS_IN_WATER = 6;
 	private static int getLossHitpointsInWater() {
@@ -348,7 +347,8 @@ public class Slime extends GameObject {
 			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 				this.remove();
 			}
-		}		
+		}
+		
 	}
 	
 	/**
@@ -371,7 +371,8 @@ public class Slime extends GameObject {
 		this.getSchool().removeSlime(this);
 		this.setSchool(null);
 		this.getWorld().removeSlime(this);
-		this.setWorld(null);		
+		this.setWorld(null);
+		
 	}
 	
 	private void randomMovement(double dt) {
@@ -389,7 +390,8 @@ public class Slime extends GameObject {
 		else {
 			this.setTimeSinceMove(this.getTimeSinceMove() + dt);
 		}
-	}	
+	}
+	
 
 	/**
 	 * Mazub starts moving to the right
@@ -401,7 +403,6 @@ public class Slime extends GameObject {
 			this.setOrientationRight();
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|

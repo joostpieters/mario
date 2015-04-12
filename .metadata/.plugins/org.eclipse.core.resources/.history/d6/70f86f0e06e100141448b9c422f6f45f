@@ -41,7 +41,8 @@ public class Shark extends GameObject {
 	@Immutable
 	private static int getInitHitpoints() {
 		return INIT_HIT_POINTS;
-	}		
+	}
+		
 	/**
 	 * the maximum horizontal speed a shark can reach
 	 */
@@ -64,6 +65,7 @@ public class Shark extends GameObject {
 	private static double getMoveAcc() {
 		return MOVE_ACC;
 	}
+
 	/**
 	 * the amount of hitpoints a shark loses when touching 
 	 * a mazub or a slime
@@ -72,7 +74,8 @@ public class Shark extends GameObject {
 	@Immutable
 	public static int getContactDamage() {
 		return CONTACT_DAMAGE;
-	}	
+	}
+	
 	private int MAX_HITPOINTS = 100;
 	@Override
 	/**
@@ -83,14 +86,18 @@ public class Shark extends GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
+
 	private static int LOSS_HITPOINTS_IN_AIR = 6;
 	private static int getLossHitpointsInAir() {
 		return LOSS_HITPOINTS_IN_AIR;
-	}	
+	}
+	
 	private static double TIME_UNTIL_CHOKE = 0.2;
 	private static double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
-	}	
+	}
+	
+	
 	private boolean inWater = true;
 	private boolean isInWater() {
 		return inWater;
@@ -114,7 +121,8 @@ public class Shark extends GameObject {
 	}
 	private void setMovementDuration(double time) {
 		this.movementDuration = time;
-	}	
+	}
+	
 	private double timeSinceMove = 0;
 	/**
 	 * @return the timeSinceMove
@@ -127,13 +135,15 @@ public class Shark extends GameObject {
 	 */
 	private void setTimeSinceMove(double time) {
 		this.timeSinceMove = time;
-	}	
+	}
+	
 	private int jumpCounter = 0;
 	private int getJumpCounter() {
 		return this.jumpCounter;
 	}
 	private void setJumpCounter(int count) {
-		this.jumpCounter = count;		
+		this.jumpCounter = count;
+		
 	}
 	private boolean moving = true;
 	private boolean isMoving() {
@@ -141,7 +151,8 @@ public class Shark extends GameObject {
 	}
 	private void setMoving(boolean move) {
 		this.moving = move;
-	}	
+	}
+	
 //	Validations
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
@@ -149,71 +160,52 @@ public class Shark extends GameObject {
 	}	
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
-	private double[] checkSurroundings(double newXPos, double newYPos) {
-		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
-			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
+		private double[] checkSurroundings(double newXPos, double newYPos) {
+			if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
+				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
+				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
+				this.setXSpeed(0);
+				this.setXAcc(0);
+				if (this.getYSpeed()>0) {
+					this.setYSpeed(0);
+				}
+			}
+			if (isAgainstRoof(newXPos,newYPos)) {
+				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 				this.setYSpeed(0);
 			}
-		}
-		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
+			if (this.isMoving() && this.isInWater() && ( ! this.isFullyInFeature(newXPos, newYPos, 2))) {
 				this.setYSpeed(0);
-			}
-		}
-		if (isAgainstRoof(newXPos,newYPos)) {
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
-			this.setYSpeed(0);
-		}
-		if (this.isMoving() && this.isInWater() && ( ! this.isFullyInFeature(newXPos, newYPos, 2))) {
-			this.setYSpeed(0);
-			this.setYAcc(0);
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
-		}
-		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-			this.endFall();
-		}
-		if (this.isFalling() && this.isFullyInFeature(newXPos, newYPos, 2)) {
-			this.endFall();
-		}
-		if (this.onFloor(newXPos,newYPos)) {
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-			if(this.getYAcc() <0 ) {
 				this.setYAcc(0);
-				this.setYSpeed(0);
+				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			}
-		}			
-		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isFalling())){
-			fall();
-		}
-		return new double[] {newXPos, newYPos};
-	}
-	
-	private void loseHitpointsBecauseOfFeature(double dt) {
-		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 0)) {
-			if (this.isInWater()) {
-				this.setNotInWater();
-				this.setTimeInAir(dt);
+			if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
+				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+				this.endFall();
 			}
-			else {
-				this.setTimeInAir(this.getTimeInAir() + dt);
+			if (this.isFalling() && this.isFullyInFeature(newXPos, newYPos, 2)) {
+				this.endFall();
 			}
-			if (this.getTimeInAir() >= Shark.getTimeUntilChoke()) {
-				this.setHitpoints(this.getHitpoints() - Shark.getLossHitpointsInAir());
-				this.setTimeInAir(0);
+			
+			if (this.onFloor(newXPos,newYPos)) {
+				newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+				if(this.getYAcc() <0 ) {
+					this.setYAcc(0);
+					this.setYSpeed(0);
+				}
+			}			
+			if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isFalling())){
+				fall();
 			}
-		}
-		// TODO ook in magma hitpoints laten verliezen?
-//		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
-//			
-//		}
-	}
+			return new double[] {newXPos, newYPos};
+		}	
 	
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
@@ -237,13 +229,32 @@ public class Shark extends GameObject {
 		
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
-		
-		this.loseHitpointsBecauseOfFeature(dt);
-		this.updateImmunity(dt);
-		
+				
+		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 0)) {
+			if (this.isInWater()) {
+				this.setNotInWater();
+				this.setTimeInAir(dt);
+			}
+			else {
+				this.setTimeInAir(this.getTimeInAir() + dt);
+			}
+			if (this.getTimeInAir() >= Shark.getTimeUntilChoke()) {
+				this.setHitpoints(this.getHitpoints() - Shark.getLossHitpointsInAir());
+				this.setTimeInAir(0);
+			}
+		}
 		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
-		}			
+		}
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setNotImmune();
+				this.setTimeSinceImmune(0);				
+			}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			}
+		}
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
@@ -288,7 +299,6 @@ public class Shark extends GameObject {
 			this.setYAcc(Math.random() * 4 - 2);
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|
@@ -300,7 +310,6 @@ public class Shark extends GameObject {
 			this.setYAcc(Math.random() * 4 -  2);
 		}
 	}
-	
 	/**
 	 * Mazub starts moving to the right
 	 * @effect 	| 
@@ -310,7 +319,6 @@ public class Shark extends GameObject {
 		this.setYSpeed(Shark.getJumpSpeed());
 		this.setOrientationRight();
 	}
-	
 	/**
 	 * Mazub starts moving to the left
 	 * @effect 	|
