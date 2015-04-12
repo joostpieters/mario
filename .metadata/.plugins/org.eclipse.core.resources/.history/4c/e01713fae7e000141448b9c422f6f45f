@@ -748,15 +748,6 @@ public class Mazub extends GameObject {
 			this.setHitpointsDifference(toLose - (int) toLose);
 			this.loseHitpoints( (int) toLose);
 		}
-		if (this.isImmune()) {
-			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-				this.setNotImmune();
-				this.setTimeSinceImmune(0);				
-			}
-			else {
-				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-			}
-		}
 		if (this.getHitpoints() <= 0) {
 			this.die();
 		}
@@ -895,8 +886,6 @@ public class Mazub extends GameObject {
 	public boolean isImmune() {
 		return immune;
 	}
-	
-	
 	
 
 	

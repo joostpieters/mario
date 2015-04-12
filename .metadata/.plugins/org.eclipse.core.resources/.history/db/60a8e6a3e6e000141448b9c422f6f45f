@@ -112,7 +112,6 @@ public class Facade implements IFacadePart2 {
 		alien.endDuck();
 	}
 	
-	
 	public void advanceTime(Mazub alien, double dt) {
 		try {alien.advanceTime(dt);}
 		catch(IllegalDtException e) {

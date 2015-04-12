@@ -246,15 +246,6 @@ public class Shark extends GameObject {
 		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
 		}
-		if (this.isImmune()) {
-			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-				this.setNotImmune();
-				this.setTimeSinceImmune(0);				
-			}
-			else {
-				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-			}
-		}
 		
 		if (this.isDying()) {
 			setTimeSinceDeath(this.getTimeSinceDeath() + dt);

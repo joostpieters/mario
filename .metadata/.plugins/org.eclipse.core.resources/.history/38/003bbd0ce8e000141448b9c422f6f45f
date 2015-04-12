@@ -755,24 +755,22 @@ public abstract class GameObject {
 	
 	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos -> fight anders?:p
 	protected void contactDamage(double dt) {
-//		if (this.isImmune()) {
-//			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-//				this.setNotImmune();
-//				this.setTimeSinceImmune(0);
-//				
-//			}
-//			else {
-//				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-//			}
-//		}
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setNotImmune();
+				this.setTimeSinceImmune(0);
+				
+			}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			}
+		}
 		if( ! this.isImmune()) {
 			this.setImmune();
 			this.loseHitpoints(GameObject.getTouchEnemy());
 			this.setTimeSinceImmune(dt);
 		}
 	}
-	
-	
 	
 	
 	

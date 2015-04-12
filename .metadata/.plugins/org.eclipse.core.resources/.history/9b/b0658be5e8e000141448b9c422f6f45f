@@ -333,15 +333,6 @@ public class Slime extends GameObject {
 			else {
 				this.setTimeInWater(0);
 			}
-			if (this.isImmune()) {
-				if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-					this.setNotImmune();
-					this.setTimeSinceImmune(0);				
-				}
-				else {
-					this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-				}
-			}
 			System.out.println(this.getHitpoints());
 			System.out.println(this.getSchool().getLength());
 //			int touchedSharks = this.getWorld().touchedSharks(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());

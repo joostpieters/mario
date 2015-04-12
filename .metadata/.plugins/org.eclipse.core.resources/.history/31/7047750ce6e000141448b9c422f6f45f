@@ -623,7 +623,7 @@ public class Mazub extends GameObject {
 				fall();
 			}
 
-			if ( touched && ( ! other.isDying()))  {
+			if (touched && ! other.isDying())  {
 				this.contactDamage(dt);
 				other.contactDamage(dt);
 			}
@@ -748,13 +748,13 @@ public class Mazub extends GameObject {
 			this.setHitpointsDifference(toLose - (int) toLose);
 			this.loseHitpoints( (int) toLose);
 		}
-		if (this.isImmune()) {
-			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-				this.setNotImmune();
-				this.setTimeSinceImmune(0);				
+		
+		if (world.isGameOver()) {
+			if (this.getAlien() == null) {
+				system.exit;
 			}
-			else {
-				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			else { // player is on target tile
+				
 			}
 		}
 		if (this.getHitpoints() <= 0) {
@@ -895,8 +895,6 @@ public class Mazub extends GameObject {
 	public boolean isImmune() {
 		return immune;
 	}
-	
-	
 	
 
 	
