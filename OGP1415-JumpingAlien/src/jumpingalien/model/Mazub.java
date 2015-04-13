@@ -496,8 +496,24 @@ public class Mazub extends GameObject {
 	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
 	 */
 	public void startJump() {
-		// TODO ook kunnen springen als mazub op shark of slime staat -> werkt precies nog niet :/
-		if (this.onFloor(this.getXPos(),this.getYPos())) { // || this.getWorld().mazubCollidesAboveWithSharkOrSlime()) {
+		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharks.addAll(this.getWorld().getSharks());
+		boolean onGameObject = false;
+		for(GameObject other: allSlimesSharks) {
+			double x1 = this.getXPos();
+			double xDim1 = this.getXDim();
+			double y1 = this.getYPos();
+			double yDim1 = this.getYDim();
+			double x2 = other.getXPos();
+			double xDim2 = other.getXDim();
+			double y2 = other.getYPos();
+			double yDim2 = other.getYDim();
+			if  (this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+				onGameObject = true;
+			}
+		}	
+		
+		if ( !this.isFalling()) {//this.onFloor(this.getXPos(),this.getYPos()) || onGameObject) { 
 			this.setYSpeed(this.getStartJumpSpeed());	
 		}
 	}
@@ -579,13 +595,13 @@ public class Mazub extends GameObject {
 	public double[] colliding(double newXPos, double newYPos,double dt) {	
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharks.addAll(this.getWorld().getSharks());
+		boolean onGameObject = false;
 		for(GameObject other: allSlimesSharks) {
 			double x1 = newXPos;
 			double xDim1 = this.getXDim();
 			double y1 = newYPos;
 			double yDim1 = this.getYDim();
 			double x2 = other.getXPos();
-			
 			double xDim2 = other.getXDim();
 			double y2 = other.getYPos();
 			double yDim2 = other.getYDim();
@@ -605,7 +621,7 @@ public class Mazub extends GameObject {
 				this.setXSpeed(0);
 				this.setXAcc(0);
 				// TODO moet dit? ziet er een beetje onnatuurlijk uit
-
+				// jep opgave pagina 8, lijn 7 ev
 				if (this.getYSpeed() > 0) {
 					this.setYSpeed(0);
 				}
@@ -616,22 +632,32 @@ public class Mazub extends GameObject {
 				this.setYSpeed(0);
 				touched = true;
 			}
-			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+//			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+//				newYPos = y2 + yDim2;
+//				this.endFall();
+//				touched = true;
+//			}
+//			//TODO nadenken of volgende 3 regels niet overbodig zijn -> miss wel...
+//			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
+//				fall();
+//			}
+			if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 				newYPos = y2 + yDim2;
-				this.endFall();
+				onGameObject = true;
 				touched = true;
 			}
-			//TODO nadenken of volgende 3 regels niet overbodig zijn -> miss wel...
-			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-				fall();
-			}
-
 			if ( touched && ( ! other.isDying()))  {
 				this.contactDamage(dt);
 				other.contactDamage(dt);
 			}
-		}
 		
+		}
+		if (this.isFalling() && onGameObject) {
+			this.endFall();
+		}
+		else if (!this.isFalling() && !onGameObject && !this.onFloor(newXPos,newYPos)) {
+			fall();
+		}
 		for(Plant other: this.getWorld().getPlants()) {
 			if( ! other.isDying()) {
 				double x1 = newXPos;
@@ -684,10 +710,6 @@ public class Mazub extends GameObject {
 		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
-		}
-		
-		if (( ! this.isFalling()) && ( ! onFloor(newXPos,newYPos))){
-			fall();
 		}
 		
 		return new double[] {newXPos, newYPos};
@@ -900,9 +922,118 @@ public class Mazub extends GameObject {
 	}
 	
 	
-	
+	//eventueel nieuwe checksurroundings, nee hij is toch niet zo goed. Problemen als hij 2 keer touched denk ik. Mss niet. Not sure. Maar ik heb denk ik een andere oplossing gevonden.
+//	private void checkSurroundings(double newXPos, double newYPos, double dt) {
+//		double xDim1 = this.getXDim();
+//		double yDim1 = this.getYDim();
+//		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+//		allSlimesSharks.addAll(this.getWorld().getSharks());
+//		boolean touched = false;
+//		
+//		if (newXPos > this.getXPos()) {
+//			
+//			if (againstRightWall(newXPos, newYPos)) {
+//				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
+//				this.setXSpeed(0);
+//				this.setXAcc(0);
+//				if (this.getYSpeed()>0) {
+//					this.setYSpeed(0);
+//				}
+//			}
+//			else {
+//				for(GameObject other: allSlimesSharks) {
+//					double x2 = other.getXPos();
+//					double xDim2 = other.getXDim();
+//					double y2 = other.getYPos();
+//					double yDim2 = other.getYDim();
+//					if (this.collidesRight(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
+//						newXPos = x2 - xDim1;
+//						this.setXSpeed(0);
+//						this.setXAcc(0);
+//						if (this.getYSpeed() > 0) {
+//							this.setYSpeed(0);
+//						}
+//						this.contactDamage(dt);
+//						other.contactDamage(dt);
+//					}
+//				}
+//			}
+//		}
+//		else if (newXPos < this.getXPos()) {
+//			if (againstLeftWall(newXPos,newYPos)) {
+//				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+//				this.setXSpeed(0);
+//				this.setXAcc(0);
+//				if (this.getYSpeed()>0) {
+//					this.setYSpeed(0);
+//				}
+//			}
+//			else {
+//				for(GameObject other: allSlimesSharks) {
+//					double x2 = other.getXPos();
+//					double xDim2 = other.getXDim();
+//					double y2 = other.getYPos();
+//					double yDim2 = other.getYDim();
+//					if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
+//						newXPos = x2 + xDim2;
+//						this.setXSpeed(0);
+//						this.setXAcc(0);
+//						if (this.getYSpeed() > 0) {
+//							this.setYSpeed(0);
+//						}
+//						this.contactDamage(dt);
+//						other.contactDamage(dt);
+//					}
+//				}
+//			}
+//		}
+//		if (newYPos > this.getYPos()) {
+//			if (isAgainstRoof(newXPos,newYPos)) {
+//				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+//				this.setYSpeed(0);
+//			}
+//			else {
+//				for(GameObject other: allSlimesSharks) {
+//					double x2 = other.getXPos();
+//					double xDim2 = other.getXDim();
+//					double y2 = other.getYPos();
+//					double yDim2 = other.getYDim();
+//					if (this.collidesAbove(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
+//						newYPos = y2 - yDim1;
+//						this.setYSpeed(0);
+//						this.contactDamage(dt);
+//						other.contactDamage(dt);
+//					}
+//				}
+//			}	
+//		}
+//		if(this.isFalling() && this.onFloor(newXPos, newYPos)) {
+//			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+//			this.endFall();
+//		}
+//		else {
+//			boolean onGameObject = false;
+//			for(GameObject other: allSlimesSharks) {
+//				double x2 = other.getXPos();
+//				double xDim2 = other.getXDim();
+//				double y2 = other.getYPos();
+//				double yDim2 = other.getYDim();
+//				if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
+//					newYPos = y2 + yDim2;
+//					this.contactDamage(dt);
+//					other.contactDamage(dt);
+//					onGameObject = true;
+//					if (this.isFalling()) {
+//						this.endFall();
+//					}
+//				}
+//			}
+//			if (!onGameObject && !this.isFalling() && !this.onFloor(newXPos,newYPos)) {
+//				fall();
+//			}
+//		}
+//	}
 
-	
 	
 	
 }

@@ -229,7 +229,7 @@ public class Shark extends GameObject {
 		}
 		
 		double[] newPos = checkSurroundings(newXPos,newYPos);
-	
+		newPos = colliding(newPos[0],newPos[1], dt);
 		this.setNewSpeed(dt);
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
