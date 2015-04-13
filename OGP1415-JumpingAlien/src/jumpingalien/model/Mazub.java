@@ -496,24 +496,7 @@ public class Mazub extends GameObject {
 	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
 	 */
 	public void startJump() {
-		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-		allSlimesSharks.addAll(this.getWorld().getSharks());
-		boolean onGameObject = false;
-		for(GameObject other: allSlimesSharks) {
-			double x1 = this.getXPos();
-			double xDim1 = this.getXDim();
-			double y1 = this.getYPos();
-			double yDim1 = this.getYDim();
-			double x2 = other.getXPos();
-			double xDim2 = other.getXDim();
-			double y2 = other.getYPos();
-			double yDim2 = other.getYDim();
-			if  (this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				onGameObject = true;
-			}
-		}	
-		
-		if ( !this.isFalling()) {//this.onFloor(this.getXPos(),this.getYPos()) || onGameObject) { 
+		if ( !this.isFalling()) {
 			this.setYSpeed(this.getStartJumpSpeed());	
 		}
 	}
