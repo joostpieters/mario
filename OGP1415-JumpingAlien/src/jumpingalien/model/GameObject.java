@@ -736,7 +736,7 @@ public abstract class GameObject {
 	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos -> fight anders?:p
 	protected void contactDamage(double dt) {
 		// dit klopte niet denk ik, timeSinceImmune moet bij elke advance time 
-		// aangepast worden
+		// aangepast worden -- jep inderdaad
 //		if (this.isImmune()) {
 //			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
 //				this.setNotImmune();
@@ -784,6 +784,11 @@ public abstract class GameObject {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.die();
 			// TODO spel eindigen ofzo 
+			// this.remove();
+			// Nee spel eindigen kan niet, want dit telt voor alle gameObjects. Die moet dan gewoon 
+			// direct verwijderd worden uit het spel
+			// staat ergens in de opgave, maar geen idee waar. Ik zou deze functie dus gewoon in de dingen apart laten
+			// omdat remove() hier niet bestaat en niet algemeen is
 		}
 	}
 	

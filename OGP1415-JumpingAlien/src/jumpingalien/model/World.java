@@ -419,7 +419,12 @@ public class World {
 	}	
 	public void setAlien(Mazub alien) {
 		this.alien = alien;
-	}	
+	}
+	public void removeAlien(@Raw Mazub alien) {
+		//assert this.hasAlien(alien);
+		assert alien != null;
+		this.alien = null;
+	}
 	public void removeSlime(@Raw Slime slime) {
 		assert this.hasSlime(slime);
 		assert slime != null;
@@ -515,7 +520,7 @@ public class World {
 	 * @return true if the game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
-		//TODO klopt dit om te checken of het object weg is/dood is?
+		//TODO klopt dit om te checken of het object weg is/dood is? Jep
 		return (this.getAlien() == null || didPlayerWin());
 	}
 	
@@ -526,8 +531,15 @@ public class World {
 	 * @return true if the game is over and the player has won; false otherwise.
 	 */
 	public boolean didPlayerWin() {
-		//TODO klopt dit?
-		return (this.getAlien().getLocation() == new int[] {this.getTargetTileX(),this.getTargetTileY()});
+		//TODO klopt dit? Nu wel
+		for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
+				(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),
+				(int) this.getAlien().getYPos() + this.getAlien().getYDim())) {
+			if (tile[0] == this.getTargetTileX() && tile[1] == this.getTargetTileY()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -536,7 +548,6 @@ public class World {
 	 * @return the minimal value for dt
 	 */
 	private double computeMinimalDt(double dt) {
-	//	double dt = 0.2;
 		double dtGiven = dt;
 		for (Plant plant : this.getPlants()) {
 			if (plant.computeDt(dtGiven) < dt) {
@@ -563,7 +574,6 @@ public class World {
 	 * NO DOCUMENTATION MUST BE WORKED OUT
 	 * @throws IllegalDtException 
 	 */
-// TODO uitzoeken hoe dit moet
 	public void advanceTime(double dt) throws IllegalDtException {
 				
 		double minDt = computeMinimalDt(dt);
@@ -587,41 +597,43 @@ public class World {
 			slime.advanceTime(dt);
 		}
 		this.getAlien().advanceTime(dt);
-	
+
 		positioningVisibleWindow();
 	}
 	
 	private void positioningVisibleWindow() {
 		//x
-		if (this.getAlien().getLocation()[0] < 200) {
-			this.setXVisibleWindow(0);
-		}
-		else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] > this.getX() - 200) {
-			this.setXVisibleWindow(this.getX() - this.getVisibleWindowWidth());
-		}
-		else if (this.getAlien().getLocation()[0] - 200 < this.getXVisibleWindow()) {
-			this.setXVisibleWindow(this.getAlien().getLocation()[0] - 200);
-		}
-		else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] + 200 >
-				this.getXVisibleWindow() + this.getVisibleWindowWidth()){
-			this.setXVisibleWindow(this.getAlien().getLocation()[0] +this.getAlien().getSize()[0]
-								- this.getVisibleWindowWidth() + 200);
-		}
-		//y
-		if (this.getAlien().getLocation()[1] < 200) {
-			this.setYVisibleWindow(0);
-		}
-		else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] > this.getY() - 200) {
-			this.setYVisibleWindow(this.getY() - this.getVisibleWindowHeight());
-		}
-		else if (this.getAlien().getLocation()[1] - 200 < this.getYVisibleWindow()) {
-			this.setYVisibleWindow(this.getAlien().getLocation()[1] - 200);
-		}
-		else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] + 200 >
-				this.getYVisibleWindow() + this.getVisibleWindowHeight()){
-			this.setYVisibleWindow(this.getAlien().getLocation()[1] + this.getAlien().getSize()[1]
-								- this.getVisibleWindowHeight() + 200);
-		}		
+		if (this.getAlien() != null) {
+			if (this.getAlien().getLocation()[0] < 200) {
+				this.setXVisibleWindow(0);
+			}
+			else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] > this.getX() - 200) {
+				this.setXVisibleWindow(this.getX() - this.getVisibleWindowWidth());
+			}
+			else if (this.getAlien().getLocation()[0] - 200 < this.getXVisibleWindow()) {
+				this.setXVisibleWindow(this.getAlien().getLocation()[0] - 200);
+			}
+			else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] + 200 >
+					this.getXVisibleWindow() + this.getVisibleWindowWidth()){
+				this.setXVisibleWindow(this.getAlien().getLocation()[0] +this.getAlien().getSize()[0]
+									- this.getVisibleWindowWidth() + 200);
+			}
+			//y
+			if (this.getAlien().getLocation()[1] < 200) {
+				this.setYVisibleWindow(0);
+			}
+			else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] > this.getY() - 200) {
+				this.setYVisibleWindow(this.getY() - this.getVisibleWindowHeight());
+			}
+			else if (this.getAlien().getLocation()[1] - 200 < this.getYVisibleWindow()) {
+				this.setYVisibleWindow(this.getAlien().getLocation()[1] - 200);
+			}
+			else if (this.getAlien().getLocation()[1] + this.getAlien().getSize()[1] + 200 >
+					this.getYVisibleWindow() + this.getVisibleWindowHeight()){
+				this.setYVisibleWindow(this.getAlien().getLocation()[1] + this.getAlien().getSize()[1]
+									- this.getVisibleWindowHeight() + 200);
+			}
+		}	
 	}
 	
 	/**

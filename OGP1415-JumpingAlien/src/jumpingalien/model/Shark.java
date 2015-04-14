@@ -148,7 +148,6 @@ public class Shark extends GameObject {
 		return sprites.length == 2;
 	}	
 	
-	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
@@ -201,7 +200,7 @@ public class Shark extends GameObject {
 				this.setTimeInAir(0);
 			}
 		}
-		// TODO ook in magma hitpoints laten verliezen?
+		// TODO ook in magma hitpoints laten verliezen? Ja ik geloof dat dat wel de bedoeling is
 //		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
 //			
 //		}
@@ -214,7 +213,7 @@ public class Shark extends GameObject {
 		double newXPos = newCalculatedPos[0];
 		double newYPos = newCalculatedPos[1];
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
-			// TODO moet dit niet eerst this.die() zijn en daarna pas removen?
+			// TODO moet dit niet eerst this.die() zijn en daarna pas removen? Nope direct weg
 			this.remove();
 		}
 		
@@ -357,8 +356,7 @@ public class Shark extends GameObject {
 				this.setMoving(false);
 			}
 			else {
-				// TODO moet dit niet jumpLeft() zijn?
-				this.jumpRight();
+				this.jumpLeft();
 				this.setJumpCounter(0);
 				this.setMoving(false);
 			}			

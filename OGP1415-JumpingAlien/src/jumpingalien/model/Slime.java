@@ -29,7 +29,7 @@ public class Slime extends GameObject {
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
-// TODO school nog toewijzen	
+// TODO school nog toewijzen. Is dat al niet gebeurd? Dat is kapot :(	
 	public Slime(int xPos,int yPos, Sprite[] sprites,School school) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
@@ -113,6 +113,7 @@ public class Slime extends GameObject {
 	// TODO ik kan niet vinden dat dit echt maar 100 mag zijn,
 	// waar staat dat in de opgave (mss heb ik dat zelfs geschreven eigenlijk :) )
 	// -> sharks beginnen met 100 hitpoints en kunnen er geen bijkrijgen
+	// Ja maar das is wel ne slime e en die erft dat van Mazub
 	private int MAX_HITPOINTS = 500;
 	// waarom moet dit @override zijn? kunnen we dit niet gewoon weglaten aangezien 
 	// MAX_POINTS in GameObject ook al 100 is?
@@ -183,12 +184,11 @@ public class Slime extends GameObject {
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				boolean touched = false;
 				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
 						yDim2, newXPos, newYPos);
 				newXPos = newPos[0];
 				newYPos = newPos[1];
-				if (touched) {
+				if (newPos[2] == 1) {
 					if(this.getSchool().getLength() > other.getSchool().getLength()) {
 						this.getSchool().addSlime(other);
 					}
@@ -260,9 +260,6 @@ public class Slime extends GameObject {
 		
 		this.loseHitpointsBecauseOfFeature(dt, newXPos, newYPos);			
 		this.updateImmunity(dt);
-		
-		System.out.println(this.getHitpoints());
-		System.out.println(this.getSchool().getLength());
 		
 		if (this.getHitpoints() <= 0) {
 			this.die();
@@ -349,6 +346,8 @@ public class Slime extends GameObject {
 	
 	// TODO mag de acc hier ook 0 worden? dan kan dit vervangen worden door 
 	//		stopMovingX in gameobject
+	// Nee want die acceleration wordt nooit aangepast bij slimes, of daar moet nog 
+	// een variabele + getters voor aangemaakt worden
 	public void stopMove() {
 		this.setXSpeed(0);
 	}

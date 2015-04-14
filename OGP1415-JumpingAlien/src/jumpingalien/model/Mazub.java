@@ -655,7 +655,6 @@ public class Mazub extends GameObject {
 			this.setYSpeed(0);
 		}
 		
-		// of mss zijn deze wel overbodig
 		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
@@ -727,12 +726,14 @@ public class Mazub extends GameObject {
 			
 			if (this.getHitpoints() <= 0) {
 				this.die();
+				System.out.println("sterf");
 			}
-			if (this.isDying()) {
+		}
+		else {
 				this.setCounterUntilRemove(this.getCounterUntilRemove() + dt);
 				if (this.getCounterUntilRemove() > GameObject.getTimeUntilRemove()) {
-					// this.remove(); TODO dit laten werken
-				}
+					 this.remove();
+					 System.out.println("hij zou dood moeten gaan");
 			}
 		}
 	}	
@@ -864,8 +865,9 @@ public class Mazub extends GameObject {
 	}
 	
 	private void remove() {
-		// TODO
+		this.getWorld().removeAlien(this);
 		this.setWorld(null);
+		System.out.println("hij is dood");
 	}
 	
 	
