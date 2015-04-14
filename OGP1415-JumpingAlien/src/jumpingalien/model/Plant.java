@@ -104,7 +104,8 @@ public class Plant extends GameObject {
 			}
 		}
 		
-		if (! this.isWithinBoundaries(newXPos, this.getYPos())){
+		if (! this.isWithinBoundaries(newXPos, this.getYPos())) {
+			//TODO moet deze niet eerst die() doen en daarna pas removen?
 			this.remove();
 		}
 		

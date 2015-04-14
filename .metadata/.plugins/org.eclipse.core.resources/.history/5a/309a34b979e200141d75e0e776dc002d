@@ -1,0 +1,774 @@
+package jumpingalien.model;
+
+import java.util.Arrays;
+
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.util.Sprite;
+
+/**
+ * 
+ * @author Pieter Van den Berghe, Ward Romanus
+ *
+ */
+public abstract class GameObject {
+	
+	/**
+	 * Creates a new gameObject, located at the provided pixel location (x, y).
+	 * The returned gameObject should not belong to a world.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the gameObject's initial position
+	 * @param y
+	 *            The y-coordinate of the gameObject's initial position
+	 * @param sprites
+	 *            An array of sprites for the new gameObject
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the gameObject
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
+	 */
+	protected GameObject(int xPos,int yPos, Sprite[] sprites ) 
+			throws IllegalPositionException, IllegalSpriteException {
+				if(!isValidPosition(xPos,yPos))
+					throw new IllegalPositionException(xPos,yPos); 
+				if (!isValidSprite(sprites))
+					throw new IllegalSpriteException(sprites);
+		this.setXPos(xPos);
+		this.setYPos(yPos);
+		this.setSprite(sprites);
+	}
+		
+	
+	/**
+	 * the horizontal position of the object
+	 */
+	private double xPos = 0;
+	/**
+	 * Returns the horizontal position
+	 * @return xPos
+	 */
+	@Basic @Raw 
+	public double getXPos() {
+		return xPos;
+	}	
+	/**
+	 * Sets the horizontal position of mazub to the rounded down value of x
+	 * @param x
+	 * 			The new value for the horizontal position
+	 */
+	@Raw 
+	public void setXPos(double x) {
+		this.xPos = x;
+	}	
+	/**
+	 * the vertical position of the object
+	 */
+	private double yPos = 0;
+	/**
+	 * Returns the vertical position
+	 * @return yPos
+	 */
+	@Basic @Raw 
+	public double getYPos() {
+		return yPos;
+	}		
+	/**
+	 * Sets the vertical position of mazub to the rounded down value of y
+	 * @param y
+	 * 			The new value for the vertical position
+	 */	
+	@Raw 
+	public void setYPos(double y) {
+		this.yPos = y;
+	}	
+	/**
+	 * the orientation of Mazub
+	 */
+	private Orientation orientation  = Orientation.RIGHT;	
+	/**
+	 * Returns the orientation of Mazub
+	 * @return orientation
+	 */
+	@Basic @Raw 
+	public Orientation getOrientation() {
+		return orientation;
+	}
+	/**
+	 * Sets the orientation of Mazub to right
+	 * @post orientation == "right"
+	 */
+	@Raw 
+	public void setOrientationRight() {
+		this.orientation = Orientation.RIGHT;
+	}
+	/**
+	 * Sets the orientation of Mazub to left
+	 * @post orientation == "left"
+	 */
+	@Raw 
+	public void setOrientationLeft() {
+		this.orientation = Orientation.LEFT;
+	}	
+	protected Sprite[] sprites;
+	/**
+	 * @return the sprites
+	 */
+	public Sprite[] getSprite() {
+		return sprites;
+	}
+	/**
+	 * @param sprites the sprites to set
+	 */
+	private void setSprite(Sprite[] sprites) {
+		this.sprites = sprites;
+	}	
+	private World world;
+	public World getWorld() {
+		return this.world;
+	}
+	public void setWorld(World world) {
+		this.world = world;
+	}	
+	protected double xSpeed;
+	public double getXSpeed() {
+		return this.xSpeed;
+	}
+	protected void setXSpeed(double speed) {
+		this.xSpeed = speed;
+	}	
+	private double ySpeed;
+	public double getYSpeed() {
+		return this.ySpeed;
+	}
+	public void setYSpeed(double speed) {
+		this.ySpeed = speed;
+	}	
+	/**
+	 * the horizontal acceleration 
+	 */
+	private double xAcc;
+	public double getXAcc() {
+		return xAcc;
+	}
+	/**
+	 * Sets the horizontal acceleration to a new value
+	 * @param xAcc
+	 * 			the new value of the horizontal acceleration
+	 */
+	@Raw 
+	public void setXAcc(double xAcc) {
+		this.xAcc = xAcc;
+	}
+	/**
+	 * the vertical acceleration 
+	 */
+	private double yAcc;
+	/**
+	 *  Returns the vertical acceleration 
+	 * @return the vertical acceleration
+	 * 			| YAcc
+	 */
+	@Basic @Raw 
+	public double getYAcc() {
+		return yAcc;
+	}
+	/**
+	 * Sets the vertical acceleration to a new value
+	 * @param yAcc
+	 * 			the new value of the vertical acceleration
+	 */
+	@Raw 
+	public void setYAcc(double yAcc) {
+		this.yAcc = yAcc;
+	}	
+	private boolean dying = false;	
+	public boolean isDying() {
+		return this.dying;
+	}
+	public void setDying() {
+		this.dying = true;
+	}	
+	/**
+	 * Returns the current location of the given shark.
+	 * 
+	 * @return An array, consisting of 2 integers {x, y}, that represents the
+	 *         coordinates of the given shark's bottom left pixel in the world.
+	 */
+	public int[] getLocation(){
+		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
+	}	
+	/**
+	 * a variable containing the amount of hitpoints a Shark possesses
+	 */
+	protected int hitpoints;
+	public int getHitpoints() {
+		return this.hitpoints;
+	}
+	public void setHitpoints(int number) {
+		if ( ! (number > this.getMaxHitpoints())) {
+			this.hitpoints = number;
+		}		
+		else {
+			this.hitpoints = this.getMaxHitpoints();
+		}
+	}
+	private int MAX_HITPOINTS = 100;
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	protected int getMaxHitpoints() {
+		return MAX_HITPOINTS;
+	}
+	private double timeSinceDeath = 0;
+	public double getTimeSinceDeath() {
+		return this.timeSinceDeath;
+	}
+	public void setTimeSinceDeath(double t) {
+		this.timeSinceDeath += t;
+	}	
+	/**
+	 * changes the orientation of the plant
+	 */
+	public void changeOrientation() {
+		if (this.getOrientation() == Orientation.LEFT) {
+			this.setOrientationRight();
+		}
+		else {
+			this.setOrientationLeft();
+		}
+	}	
+	/**
+	 * Returns the horizontal and vertical velocity
+	 * @return {xSpeed,ySpeed}
+	 */
+	@Basic @Raw 
+	public double[] getVelocity(){
+		return new double[] {this.getXSpeed(),this.getYSpeed()};
+	}	
+	/**
+	 * Returns an array consisting of the horizontal and 
+	 * vertical acceleration.
+	 * @return an array consisting of the horizontal and 
+	 * vertical acceleration.
+	 * 			| {xAcc,YAcc}
+	 */
+	@Basic @Raw 
+	public double[] getAcceleration(){
+		return new double[] {this.getXAcc(),this.getYAcc()};
+	}	
+	/**
+	 * Returns the horizontal dimension of mazub (width)
+	 * @return the horizontal dimension of mazub (width)
+	 * 			| this.getCurrentSprite().getWidth()
+	 */
+	@Basic @Raw 
+	protected int getXDim() {
+		return this.getCurrentSprite().getWidth();
+	}
+	/**
+	 * Returns the vertical dimension of mazub (height)
+	 * @return the vertical dimension of mazub (height)
+	 * 			| this.getCurrentSprite().getHeight()
+	 */
+	@Basic @Raw 
+	protected int getYDim() {
+		return this.getCurrentSprite().getHeight();
+	}	
+	/**
+	 * Returns an array consisting of the width and height of mazub
+	 * @return an array consisting of the width and height of mazub
+	 * 			| {XDim,YDim}
+	 */
+	@Basic @Raw 
+	public int[] getSize() {
+		return new int[] {this.getXDim(),this.getYDim()};
+	}	
+	private double maxSpeed; 
+	/**
+	 * Returns the maximum speed
+	 * @return the maximum speed
+	 * 			| maxSpeed
+	 */
+	@Basic @Immutable @Raw
+	protected double getMaxSpeed() {
+		return maxSpeed;
+	}
+	/**
+	 * Sets the maximum horizontal speed to a new value maxspeed
+	 * @param d
+	 * 			the new maximum horizontal speed of mazub
+	 */
+	@Raw
+	protected void setMaxSpeed(double d) {
+		this.maxSpeed = d;
+	}
+	/**
+	 * the vertical acceleration at which a GameObject falls
+	 */
+	private static double FALL_ACC = -10;
+	/**
+	 * Returns the acceleration when the GameObject falls
+	 * @return FALL_ACC
+	 */
+	@Basic @Immutable @Raw 
+	protected double getFallAcc() {
+		return FALL_ACC;
+	}
+	/**
+	 * The boolean to reflect or a gameObject is falling or not
+	 */
+	private boolean falling = false;		
+	protected boolean isFalling() {
+		return falling;
+	}
+	/**
+	 * Marks the boolean falling as true
+	 * @post falling == true
+	 */
+	protected void setFalling() {
+		this.falling = true;
+	}	
+	/**
+	 * Marks the boolean falling as false
+	 * @post falling == false
+	 */
+	protected void endFalling() {
+		this.falling = false;
+	}	
+	protected void fall() {
+		this.setYAcc(this.getFallAcc());
+		this.setFalling();
+	}	
+	/**
+	 * Mazub fall ends
+	 * @effect	the acceleration of Mazub is set to 0
+	 * 		|	yAcc == 0
+	 * 		|	ySpeed == 0
+	 * 		|	endFalling()
+	 */
+	protected void endFall() {
+		this.setYAcc(0);
+		this.setYSpeed(0);
+		this.endFalling();		
+	}	
+	protected boolean immune = false;
+	protected boolean isImmune() {
+		return this.immune;
+	}
+	protected void setImmune() {
+		this.immune = true;
+	}
+	protected void setNotImmune() {
+		this.immune = false;
+	}
+	protected double timeSinceImmune = 0;
+	protected double getTimeSinceImmune() {
+		return this.timeSinceImmune;
+	}
+	protected void setTimeSinceImmune(double dt) {
+		this.timeSinceImmune = dt;
+	}
+	protected double IMMUNE_TIME = 0.6;
+	protected double getImmuneTime() {
+		return this.IMMUNE_TIME;
+	}
+	private static int TOUCH_ENEMY = 50;
+	private static int getTouchEnemy() {
+		return TOUCH_ENEMY;
+	}
+	protected double timeInMagma = 0;
+	protected double getTimeInMagma() {
+		return this.timeInMagma;
+	}
+	protected void setTimeInMagma(double dt) {
+		this.timeInMagma = dt;
+	}	
+	protected double timeInWater = 0;
+	protected double getTimeInWater() {
+		return this.timeInWater;
+	}
+	protected void setTimeInWater(double dt) {
+		this.timeInWater = dt;
+	}
+	protected static double DROWN_TIME = 0.2;
+	protected static double getDrownTime() {
+		return DROWN_TIME;
+	}
+	protected static double LOSS_HITPOINTS_IN_MAGMA = 50;
+	protected static double getLossHitpointsInMagma() {
+		return LOSS_HITPOINTS_IN_MAGMA;
+	}
+	protected static double BURN_TIME = 0.2;
+	protected static double getBurnTime() {
+		return BURN_TIME;
+	}
+	protected static double TIME_UNTIL_REMOVE = 0.6;
+	protected static double getTimeUntilRemove() {
+		return TIME_UNTIL_REMOVE;
+	}
+	protected double counterUntilRemove = 0;
+	protected double getCounterUntilRemove() {
+		return counterUntilRemove;
+	}
+	protected void setCounterUntilRemove(double time) {
+		this.counterUntilRemove = time;
+	}
+	
+//	Validations
+	
+	protected boolean isValidSprite(Sprite[] sprites) {
+		return (sprites.length % 2 == 0 && sprites != null) ;
+	}	
+	/**
+	 * Checks whether the current vertical speed is valid
+	 * for any game object except for plant
+	 * @return True if the current vertical speed isn't equal to NaN 
+	 */
+	public boolean isValidYSpeed(double ySpeed) {
+		return ( ! Double.isNaN(ySpeed));
+	}
+		/**
+	 * 	Checks whether the given positions are valid positions for 
+	 *  any Mazub.
+	 * @return 	True if the horizontal position x_pos and 
+	 *			and the vertical position y_pos stay in the 
+	 *			game world.
+	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
+	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	 */
+	public boolean isValidPosition(double x, double y) {
+		return ((x >= 0) && (y >= 0));
+	}	
+	/**
+	 * Checks if dt has a proper value between 0 and 0.2.
+	 * @param dt
+	 * @return True if dt is a value between 0 and 0.2 otherwise false.
+	 * 		| (dt <= 0.2 && dt > 0)
+	 */
+	protected boolean isValidDt(double dt) {
+		return ( dt <= 0.2 && dt > 0);
+	}	
+	protected boolean isValidAmountOfHitpoints(int hitpoints) {
+		return (hitpoints <= this.getMaxHitpoints() && hitpoints >= 0);
+	}	
+	protected boolean isWithinBoundariesX(double x) {
+		return ((x >= 0) && (x <= this.getWorld().getX()));
+	}
+	protected boolean isWithinBoundariesY(double y) {
+		return (y >= 0) && (y <= this.getWorld().getY());
+	}
+	public boolean isWithinBoundaries(double x, double y) {
+		return isWithinBoundariesX(x) && isWithinBoundariesY(y);
+	}	
+	
+	public void die() {
+		this.setXSpeed(0);
+		this.setXAcc(0);
+		this.setYSpeed(0);
+		this.setYAcc(0);
+		this.setDying();
+	}	
+	
+	protected double[] calculateNewPos(double dt) {		
+		double newXPos;
+		if (this.getOrientation() == Orientation.RIGHT) {
+			newXPos = this.getXPos() + this.getXSpeed()*100*dt
+					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);		
+		}
+		else {
+			newXPos = this.getXPos() - this.getXSpeed()*100*dt
+					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
+		}
+		double newYPos = this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+				this.getYAcc() * Math.pow(dt,2);
+		return new double[] {newXPos, newYPos};
+	}
+	
+	public double computeDt(double dt) {
+		double dtX;
+		double dtY;
+		
+		if (this.getXAcc() == 0) {
+			dtX = 0.01 / Math.abs(this.getXSpeed());
+		}
+		else {
+			dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt);
+			
+//			dtX = 0.01 * (-10 * Math.abs(this.getXSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getXSpeed()),2) 
+//					+ 2 * Math.abs(this.getXAcc())))/ Math.abs(this.getXAcc());
+		}
+		
+		if (this.getYAcc() == 0) {
+			dtY = 0.01 / Math.abs(this.getYSpeed());
+		}
+		else {
+			dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt);
+//			dtY = 0.01 * (-10 * Math.abs(this.getYSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getYSpeed()),2) 
+//					+ 2 * Math.abs(this.getYAcc())))/ Math.abs(this.getYAcc());
+		}		
+		
+		if (dtX <= 0 || dtY <= 0) {
+			System.out.println("de dt formule geeft iets negatief");
+		}
+		return Math.min(dtX,dtY);
+		
+//		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
+//			dt = (Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
+//		}
+//		else {
+//			if (this.getXAcc() != 0) {
+//				dt = Math.min(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed())),
+//						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
+//								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) );
+//			}
+//			else {
+//				dt = Math.min(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed())),
+//						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
+//								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) );			
+//			}
+//		}		
+//		return dt;
+	}	
+	
+	protected int[][] getTilesLeft(double XPos, double YPos) {
+		int pixelLeft = (int) XPos;
+		int pixelTop = (int) YPos + this.getSize()[1];
+		int pixelBottom = (int) YPos;
+
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1);
+	}
+	
+	protected int[][] getTilesRight(double XPos, double YPos) {
+		int pixelRight = (int) XPos + this.getSize()[0];
+		int pixelTop = (int) YPos + this.getSize()[1];
+		int pixelBottom = (int) YPos;
+		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1);		
+	}
+	
+	protected int[][] getTilesAbove(double xPos,double yPos) {
+		int pixelLeft = (int)(xPos);
+		int pixelTop = (int)(yPos) + this.getSize()[1];
+		int pixelRight = pixelLeft + this.getSize()[0];
+		return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop);
+	}
+	
+	protected int[][] getTilesUnder(double xPos, double yPos) {
+		int pixelLeft = (int)(xPos);
+		int pixelBottom = (int)(yPos);
+		int pixelRight = pixelLeft + this.getSize()[0];
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom);
+	}
+	
+	protected int[][] getTiles(double xPos, double yPos) {
+		return this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim());
+	}
+	
+	protected boolean onFloor(double xPos, double yPos) {
+		int[][] tilesUnder = this.getTilesUnder(xPos, yPos);
+		for (int[] tile: tilesUnder) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean isAgainstRoof(double xPos, double yPos) {
+		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
+		for (int[] tile: tilesAbove) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean againstLeftWall(double xPos, double yPos) {
+		int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
+		for (int[] tile: tilesLeft) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean againstRightWall(double xPos, double yPos) {
+		int[][] tilesRight = this.getTilesRight(xPos, yPos);
+		for (int[] tile: tilesRight) {
+			try {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}
+		return false;
+	}
+	
+	protected boolean isFullyInFeature(double xPos, double yPos,int feature) {
+		assert(feature <= 3);
+		int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
+		for (int[][] tiles: tileFamilies) {	
+			for (int[] tile: tiles) {
+				try {
+					if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != feature) {
+						return false;
+					}
+				} catch (IllegalPixelException e) {
+					System.out.println("oei twerkt niet");
+				}
+			}
+		}
+		return true;
+	}
+	
+	protected boolean isInContactWithFeature(double xPos, double yPos,int feature) {
+		assert(feature <= 3);
+		int[][] tiles = this.getTiles(xPos,yPos);
+		for (int[] tile: tiles) {
+			try {
+				if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+						getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == feature) {
+					return true;
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("oei twerkt niet");
+			}
+		}	
+		return false;
+	}	
+	
+	public Sprite getCurrentSprite(){
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == Orientation.RIGHT) {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
+	}
+	
+	protected void setNewSpeed(double dt) {
+		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
+		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
+		
+		if (this.getXSpeed() >= this.getMaxSpeed()){
+			this.setXSpeed(this.getMaxSpeed());
+			this.setXAcc(0);
+		}
+	}
+	
+	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
+			double x2, double xDim2, double y2, double yDim2) {
+		
+		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
+				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
+		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
+				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
+		
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesRight(double x1, double xDim1, double y1, double yDim1,
+									double x2, double xDim2, double y2, double yDim2) {
+		boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1);
+		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesLeft(double x1, double xDim1, double y1, double yDim1,
+									double x2, double xDim2, double y2, double yDim2) {
+		boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1);
+		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesAbove(double x1, double xDim1, double y1, double yDim1,
+									double x2, double xDim2, double y2, double yDim2) {
+		boolean xStatement = ( (x2 + 1 >= x1 + 1) && (x2 + 1<= x1 + xDim1 - 1) ) 
+				|| ( (x2 + xDim2 - 1>= x1 + 1) && (x2 + xDim2 - 1<= x1 + xDim1 - 1) );
+		boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1);
+				
+		return ((xStatement) && (yStatement));
+	}
+	
+	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
+								double x2, double xDim2, double y2, double yDim2) {
+		
+		boolean xStatement = ( (x2 + 1 >= x1 + 1) && (x2 + 1<= x1 + xDim1 - 1) ) 
+				|| ( (x2 + xDim2 - 1>= x1 + 1) && (x2 + xDim2 - 1<= x1 + xDim1 - 1) );
+		boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1);
+		
+		return ((xStatement) && (yStatement));
+	}	
+	
+	
+	protected void loseHitpoints(int nb) {
+		this.setHitpoints(this.getHitpoints() - nb);
+	}
+	
+	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos -> fight anders?:p
+	protected void contactDamage(double dt) {
+		// dit klopte niet denk ik, timeSinceImmune moet bij elke advance time 
+		// aangepast worden
+//		if (this.isImmune()) {
+//			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+//				this.setNotImmune();
+//				this.setTimeSinceImmune(0);
+//				
+//			}
+//			else {
+//				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+//			}
+//		}
+		if( ! this.isImmune()) {
+			this.setImmune();
+			this.loseHitpoints(GameObject.getTouchEnemy());
+			this.setTimeSinceImmune(dt);
+		}
+	}
+	
+	protected void updateImmunity(double dt) {
+		if (this.isImmune()) {
+			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+				this.setNotImmune();
+				this.setTimeSinceImmune(0);				
+			}
+			else {
+				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+}

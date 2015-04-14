@@ -589,41 +589,15 @@ public class Mazub extends GameObject {
 			double y2 = other.getYPos();
 			double yDim2 = other.getYDim();
 			boolean touched = false;
-			if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newXPos = x2 - xDim1;
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				// TODO moet dit? ziet er een beetje onnatuurlijk uit
-				if (this.getYSpeed() > 0) {
-					this.setYSpeed(0);
-				}
+			
+			double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
+					yDim2, newXPos, newYPos);
+			newXPos = newPos[0];
+			newYPos = newPos[1];
+			if (newPos[2] == 1) {
 				touched = true;
 			}
-			if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newXPos = x2 + xDim2;
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				// TODO moet dit? ziet er een beetje onnatuurlijk uit
-				// jep opgave pagina 8, lijn 7 ev
-				if (this.getYSpeed() > 0) {
-					this.setYSpeed(0);
-				}
-				touched = true;
-			}
-			if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newYPos = y2 - yDim1;
-				this.setYSpeed(0);
-				touched = true;
-			}
-//			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-//				newYPos = y2 + yDim2;
-//				this.endFall();
-//				touched = true;
-//			}
-//			//TODO nadenken of volgende 3 regels niet overbodig zijn -> miss wel...
-//			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-//				fall();
-//			}
+			
 			if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 				newYPos = y2 + yDim2;
 				onGameObject = true;
@@ -638,7 +612,7 @@ public class Mazub extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		else if (!this.isFalling() && !onGameObject && !this.onFloor(newXPos,newYPos)) {
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}
 		for(Plant other: this.getWorld().getPlants()) {
@@ -668,20 +642,12 @@ public class Mazub extends GameObject {
 		
 		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
-				this.setYSpeed(0);
-			}
+			this.stopMoving();
 		}	
 
 		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
-				this.setYSpeed(0);
-			}
+			this.stopMoving();
 		}
 		
 		if (isAgainstRoof(newXPos,newYPos)) {
@@ -717,15 +683,15 @@ public class Mazub extends GameObject {
 		}
 	}
 	
-	private void loseHitpointsBecauseOfFeature(double dt) {
-		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 2)) {
+	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
+		if (this.isInContactWithFeature(newXPos, newYPos, 2)) {
 			this.setTimeInWater(this.getTimeInWater() + dt);
 			if (this.getTimeInWater() >= GameObject.getDrownTime()) {
 				this.loseHitpoints(Mazub.getLossHitpointsInWater());
 				this.setTimeInWater(0);
 			}			
 		}
-		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
+		if (this.isInContactWithFeature(newXPos, newYPos, 3)) {
 			double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
 								+ this.getHitpointsDifference();
 			this.setHitpointsDifference(toLose - (int) toLose);
@@ -741,10 +707,8 @@ public class Mazub extends GameObject {
 			double newXPos = this.calculateNewPos(dt)[0];
 			double newYPos = this.calculateNewPos(dt)[1];		
 			
-			if( ! isWithinBoundaries(newXPos,newYPos)) {
-				this.die();
-				// TODO spel eindigen ofzo
-			}
+			this.checkIfWithinBoundaries(newXPos, newYPos);
+			
 			double[] newPos = checkSurroundings(newXPos,newYPos);
 			newPos = colliding(newPos[0],newPos[1], dt);
 			
@@ -758,7 +722,7 @@ public class Mazub extends GameObject {
 				this.endDuck();
 			}
 			
-			this.loseHitpointsBecauseOfFeature(dt);
+			this.loseHitpointsBecauseOfFeature(dt, newXPos, newYPos);
 			this.updateImmunity(dt);		
 			
 			if (this.getHitpoints() <= 0) {

@@ -766,6 +766,58 @@ public abstract class GameObject {
 		}
 	}
 	
+	protected void stopMovingX() {
+		this.setXSpeed(0);
+		this.setXAcc(0);
+	}
+	protected void stopMovingY() {
+		if (this.getYSpeed() > 0) {
+			this.setYSpeed(0);
+		}
+	}
+	protected void stopMoving() {
+		this.stopMovingX();
+		this.stopMovingY();
+	}
+	
+	protected void checkIfWithinBoundaries(double newXPos, double newYPos) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.die();
+			// TODO spel eindigen ofzo 
+		}
+	}
+	
+	// TODO betere naam zoeken
+	protected double [] collidesSomewhere(double x1, double xDim1, double y1, double yDim1, 
+			double x2, double xDim2, double y2, double yDim2, double newXPos, double newYPos) {
+		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1
+		if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+			newXPos = x2 - xDim1;
+			this.stopMoving();
+			touched = 1;
+		}
+		if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+			newXPos = x2 + xDim2;
+			this.stopMoving();
+			touched = 1;
+		}
+		if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+			newYPos = y2 - yDim1;
+			this.setYSpeed(0);
+			touched = 1;
+		}
+		// deze 2 laatste if statements moeten eigenlijk niet bij mazub
+		if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+			newYPos = y2 + yDim2;
+			this.endFall();
+			touched = 1;
+		}
+		if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
+			this.fall();
+		}
+		return new double[] {newXPos, newYPos, touched};
+	}
+	
 	
 	
 	

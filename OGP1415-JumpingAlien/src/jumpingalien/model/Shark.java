@@ -152,19 +152,11 @@ public class Shark extends GameObject {
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
-				this.setYSpeed(0);
-			}
+			this.stopMoving();
 		}
 		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
-				this.setYSpeed(0);
-			}
+			this.stopMoving();
 		}
 		if (isAgainstRoof(newXPos,newYPos)) {
 			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
@@ -184,7 +176,7 @@ public class Shark extends GameObject {
 		}
 		if (this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-			if(this.getYAcc() <0 ) {
+			if(this.getYAcc() < 0 ) {
 				this.setYAcc(0);
 				this.setYSpeed(0);
 			}
@@ -215,16 +207,14 @@ public class Shark extends GameObject {
 //		}
 	}
 	
-	public void advanceTime(double dt) throws IllegalDtException {
-		if ( ! isValidDt(dt))
-			throw new IllegalDtException(dt);
-
+	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);
 		
-		//TODO dis is mss nogal inefficient
-		double newXPos = this.calculateNewPos(dt)[0];
-		double newYPos = this.calculateNewPos(dt)[1];
+		double[] newCalculatedPos = this.calculateNewPos(dt);
+		double newXPos = newCalculatedPos[0];
+		double newYPos = newCalculatedPos[1];
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
+			// TODO moet dit niet eerst this.die() zijn en daarna pas removen?
 			this.remove();
 		}
 		
@@ -233,7 +223,6 @@ public class Shark extends GameObject {
 		this.setNewSpeed(dt);
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
-
 		
 		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
 		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
@@ -243,16 +232,28 @@ public class Shark extends GameObject {
 		
 		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
-		}			
-		
-		if (this.isDying()) {
-			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
-				this.remove();
-			}
 		}
-		else if (this.getHitpoints() <= 0) {
+		if (this.getHitpoints() <= 0) {
 			this.die();
+		}
+	}
+	
+	private void advanceTimeWhileDeath(double dt) {
+		setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
+			this.remove();
+		}
+	}
+	
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);
+		
+		if (! this.isDying()) { 
+			this.advanceTimeWhileLiving(dt);
+		}		
+		else {
+			this.advanceTimeWhileDeath(dt);
 		}
 	}	
 	
@@ -381,38 +382,13 @@ public class Shark extends GameObject {
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				boolean touched = false;
-				if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newXPos = x2 - xDim1;
-					this.setXSpeed(0);
-					this.setXAcc(0);
-					if (this.getYSpeed()>0) {
-						this.setYSpeed(0);
-					}
+				boolean touched =  false;
+				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
+						yDim2, newXPos, newYPos);
+				newXPos = newPos[0];
+				newYPos = newPos[1];
+				if (newPos[2] == 1) {
 					touched = true;
-				}
-				if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newXPos = x2 + xDim2;
-					this.setXSpeed(0);
-					this.setXAcc(0);
-					if (this.getYSpeed()>0) {
-						this.setYSpeed(0);
-					}
-					touched = true;
-				}
-				if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newYPos = y2 - yDim1;
-					this.setYSpeed(0);
-					touched = true;
-				}
-				if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newYPos = y2 + yDim2;
-					this.endFall();
-					touched = true;
-				}
-				//TODO nadenken of volgende 3 regels niet overbodig zijn
-				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-					fall();
 				}
 	
 				if ( ! other.isDying() && touched && (other instanceof Slime)) {

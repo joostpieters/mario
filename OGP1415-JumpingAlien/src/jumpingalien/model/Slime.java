@@ -38,8 +38,7 @@ public class Slime extends GameObject {
 		this.setHitpoints(Slime.getInitHitpoints());
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
-
-	// TODO alle veel te lange functies in slime is opsplitsen
+	
 	
 	private static int LOSS_HITPOINTS_IN_WATER = 6;
 	private static int getLossHitpointsInWater() {
@@ -152,25 +151,16 @@ public class Slime extends GameObject {
 
 		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
-				this.setYSpeed(0);
-			}
+			this.stopMoving();
 		}
 		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-			this.setXSpeed(0);
-			this.setXAcc(0);
-			if (this.getYSpeed()>0) {
-				this.setYSpeed(0);
-			}
+			this.stopMoving();
 		}
 		if (isAgainstRoof(newXPos,newYPos)) {
 			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			this.setYSpeed(0);
-		}
-		
+		}		
 		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
 			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
@@ -180,7 +170,7 @@ public class Slime extends GameObject {
 		}
 		
 		return new double[] {newXPos, newYPos};
-	}
+	}	
 	
 	public double[] collidingSlimes(double newXPos, double newYPos) {		
 		for(Slime other: this.getWorld().getSlimes()) {
@@ -194,38 +184,10 @@ public class Slime extends GameObject {
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
 				boolean touched = false;
-				if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newXPos = x2 - xDim1;
-					this.setXSpeed(0);
-					this.setXAcc(0);
-					if (this.getYSpeed()>0) {
-						this.setYSpeed(0);
-					}
-					touched = true;
-				}
-				if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newXPos = x2 + xDim2;
-					this.setXSpeed(0);
-					this.setXAcc(0);
-					if (this.getYSpeed()>0) {
-						this.setYSpeed(0);
-					}
-					touched = true;
-				}
-				if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newYPos = y2 - yDim1;
-					this.setYSpeed(0);
-					touched = true;
-				}
-				if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					newYPos = y2 + yDim2;
-					this.endFall();
-					touched = true;
-				}
-				if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-					fall();
-				}
-				
+				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
+						yDim2, newXPos, newYPos);
+				newXPos = newPos[0];
+				newYPos = newPos[1];
 				if (touched) {
 					if(this.getSchool().getLength() > other.getSchool().getLength()) {
 						this.getSchool().addSlime(other);
@@ -251,35 +213,67 @@ public class Slime extends GameObject {
 			double xDim2 = other.getXDim();
 			double y2 = other.getYPos();
 			double yDim2 = other.getYDim();
-			if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newXPos = x2 - xDim1;
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				if (this.getYSpeed()>0) {
-					this.setYSpeed(0);
-				}
-			}
-			if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newXPos = x2 + xDim2;
-				this.setXSpeed(0);
-				this.setXAcc(0);
-				if (this.getYSpeed()>0) {
-					this.setYSpeed(0);
-				}
-			}
-			if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newYPos = y2 - yDim1;
-				this.setYSpeed(0);
-			}
-			if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-				newYPos = y2 + yDim2;
-				this.endFall();
-			}
-			if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-				fall();
-			}
+			
+			double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
+					yDim2, newXPos, newYPos);
+			newXPos = newPos[0];
+			newYPos = newPos[1];
 		}
 		return new double[] {newXPos, newYPos};
+	}
+	
+	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
+		if (this.isInContactWithFeature(newXPos,newYPos,3)) {
+			this.setTimeInMagma(this.getTimeInMagma() + dt);
+			if(this.getTimeInMagma() >= Slime.getBurnTime()) {
+				this.loseHitpoints( (int) GameObject.getLossHitpointsInMagma());
+				this.setTimeInMagma(this.getTimeInMagma() - dt);
+			}
+		}
+		if (this.isInContactWithFeature(newXPos,newYPos,2)) {
+			this.setTimeInWater(this.getTimeInWater() + dt);
+			if(this.getTimeInWater() >= Slime.getDrownTime()) {
+				this.loseHitpoints(Slime.getLossHitpointsInWater());
+				this.setTimeInWater(this.getTimeInWater() - dt);
+			}			
+		}
+		else {
+			this.setTimeInWater(0);
+		}
+	}
+	
+	private void advanceTimeWhileLiving(double dt) {
+		this.randomMovement(dt);			
+		double[] newCalculatedPos = this.calculateNewPos(dt);
+		double newXPos = newCalculatedPos[0];
+		double newYPos = newCalculatedPos[1];
+		
+		this.checkIfWithinBoundaries(newXPos, newYPos);
+				
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = collidingSlimes(newPos[0],newPos[1]);
+		newPos = collidingSharksMazub(newPos[0],newPos[1]);
+		this.setNewSpeed(dt);
+		
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
+		
+		this.loseHitpointsBecauseOfFeature(dt, newXPos, newYPos);			
+		this.updateImmunity(dt);
+		
+		System.out.println(this.getHitpoints());
+		System.out.println(this.getSchool().getLength());
+		
+		if (this.getHitpoints() <= 0) {
+			this.die();
+		}
+	}
+	
+	private void advanceTimeWhileDeath(double dt) {
+		setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
+			this.remove();
+		}
 	}
 	
 	public void advanceTime(double dt) throws IllegalDtException {
@@ -287,67 +281,10 @@ public class Slime extends GameObject {
 			throw new IllegalDtException(dt);
 		
 		if ( ! this.isDying()) {
-			this.randomMovement(dt);
-			
-			//TODO dis is mss nogal inefficient
-			double newXPos = this.calculateNewPos(dt)[0];
-			double newYPos = this.calculateNewPos(dt)[1];
-			
-			if( ! isWithinBoundaries(newXPos,newYPos)) {
-				this.die();
-				// TODO spel eindigen ofzo 
-			}
-			
-			double[] newPos = checkSurroundings(newXPos,newYPos);
-			newPos = collidingSlimes(newPos[0],newPos[1]);
-			newPos = collidingSharksMazub(newPos[0],newPos[1]);
-			this.setNewSpeed(dt);
-			
-			this.setXPos(newPos[0]);
-			this.setYPos(newPos[1]);
-			
-			// TODO eigenlijk moet dit in een aparte functie, maar ik vond gene goeie naam
-			//			-> burnSlime fzo?
-			if(this.isInContactWithFeature(newXPos,newYPos,3)){
-				this.setTimeInMagma(this.getTimeInMagma() + dt);
-				if(this.getTimeInMagma() >= Slime.getBurnTime()) {
-					this.loseHitpoints( (int) GameObject.getLossHitpointsInMagma());
-					this.setTimeInMagma(this.getTimeInMagma() - dt);
-				}
-			}
-			if(this.isInContactWithFeature(newXPos,newYPos,2)){
-				// drownSlime fzo?
-				this.setTimeInWater(this.getTimeInWater() + dt);
-				if(this.getTimeInWater() >= Slime.getDrownTime()) {
-					this.loseHitpoints(Slime.getLossHitpointsInWater());
-					this.setTimeInWater(this.getTimeInWater() - dt);
-				}
-				
-			}
-			else {
-				this.setTimeInWater(0);
-			}
-			if (this.isImmune()) {
-				if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-					this.setNotImmune();
-					this.setTimeSinceImmune(0);				
-				}
-				else {
-					this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-				}
-			}
-			System.out.println(this.getHitpoints());
-			System.out.println(this.getSchool().getLength());
-			
-			if (this.getHitpoints() <= 0) {
-				this.die();
-			}
+			this.advanceTimeWhileLiving(dt);
 		}
 		else {
-			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
-			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
-				this.remove();
-			}
+			this.advanceTimeWhileDeath(dt);
 		}		
 	}
 	
@@ -410,6 +347,8 @@ public class Slime extends GameObject {
 		this.setOrientationLeft();
 	}	
 	
+	// TODO mag de acc hier ook 0 worden? dan kan dit vervangen worden door 
+	//		stopMovingX in gameobject
 	public void stopMove() {
 		this.setXSpeed(0);
 	}
