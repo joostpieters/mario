@@ -7,6 +7,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
+// TODO alles final maken wat final moet zijn
+// TODO checkers toevoegen in elke getter / setter
+// TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
+// TODO Commentaren
+// TODO aparte testfiles
+// TODO invariant van binnen grenzen
+
+
 public class World {	
 
 	/**
