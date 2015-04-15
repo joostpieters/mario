@@ -5,15 +5,16 @@
 5. Als mazub op plant komt en maximum aantal hitpoints heeft, gaat plant dan weg of niet?
 	Ik denk van niet -> oke -> we moeten het niet meer vragen, het staat id opgave!
 6. moet een stervende slime nog vallen?
-7. wat doen als mazub gewonnen is? (didPlayerWin())
+7. wat doen als mazub gewonnen is? (didPlayerWin()) -> als mazub de target tile aanraakt of helemaal erop staat?
 8. Wat is het maximum aantal hitpoints van een slime?
 9. als mazub op een shark springt, moet de shark (en mazub) dan naar beneden gaan ofzo?
 10. testfiles: voor elke uitzondering test maken? en alle tests in 1 bestand of verschillende bestanden?
 11. hoelang mogen functies ongeveer zijn?
+12. kunnen er meerdere mazubs zij?
 
 
 algemene opmerking: blz 4 vd opgave: the outer layer of a game object's pixels is allowed to overlap
 			with impassable terrain and game objects: hebben wij dit gedaan? #geenzinomtezoekenofnatedenken
 TODO: overal @override in facade
 
-Pieter heeft gemuild met Laura
+Pieter heeft gemuild met Laura -> moest da hier ook staan -_-

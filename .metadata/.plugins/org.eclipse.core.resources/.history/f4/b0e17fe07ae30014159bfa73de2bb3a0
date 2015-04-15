@@ -530,6 +530,7 @@ public class World {
 	 * @return true if the game is over and the player has won; false otherwise.
 	 */
 	public boolean didPlayerWin() {
+		//TODO klopt dit? Nu wel
 		for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
 				(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),
 				(int) this.getAlien().getYPos() + this.getAlien().getYDim())) {

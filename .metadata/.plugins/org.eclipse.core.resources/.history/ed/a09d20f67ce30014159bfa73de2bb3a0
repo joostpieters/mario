@@ -114,8 +114,9 @@ public class Slime extends GameObject {
 	// waar staat dat in de opgave (mss heb ik dat zelfs geschreven eigenlijk :) )
 	// -> sharks beginnen met 100 hitpoints en kunnen er geen bijkrijgen
 	// Ja maar das is wel ne slime e en die erft dat van Mazub
-	// ge hebt gelijk! maar waarom moet die da erven van mazub?
 	private int MAX_HITPOINTS = 500;
+	// waarom moet dit @override zijn? kunnen we dit niet gewoon weglaten aangezien 
+	// MAX_POINTS in GameObject ook al 100 is?
 	@Override
 	/**
 	 * the maximum amount of hitpoints
@@ -343,6 +344,10 @@ public class Slime extends GameObject {
 		this.setOrientationLeft();
 	}	
 	
+	// TODO mag de acc hier ook 0 worden? dan kan dit vervangen worden door 
+	//		stopMovingX in gameobject
+	// Nee want die acceleration wordt nooit aangepast bij slimes, of daar moet nog 
+	// een variabele + getters voor aangemaakt worden
 	public void stopMove() {
 		this.setXSpeed(0);
 	}

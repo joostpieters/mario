@@ -91,6 +91,7 @@ public class Shark extends GameObject {
 	private static double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
 	}
+	
 	private boolean inWater = true;
 	private boolean isInWater() {
 		return inWater;

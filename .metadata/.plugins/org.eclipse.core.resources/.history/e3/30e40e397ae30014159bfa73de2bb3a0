@@ -10,7 +10,7 @@ import jumpingalien.util.Sprite;
 
 
 /**
- * Second part of the jumping alien project for OGP
+ * First part of the jumping alien project for OGP
  * made by: Ward Romanus (2e bach ELT-CW) and Pieter Van den Berghe (2e bach ELT-CW)
  * github: https://github.com/pietervdb/mario
  */
@@ -179,7 +179,13 @@ public class Mazub extends GameObject {
 	 * 2 hitpoints shall be deducted per 0.2 seconds in water
 	 */
 	private static int LOSS_HITPOINTS_IN_WATER = 2;
-		
+	/**
+	 * when mazub is in touch with magma, it imediatly loses hitpoints,
+	 * this variable counts the difference between the double value 
+	 * of the hitpoints which are to lose and the int value
+	 */
+	private double hitpointsDifference = 0;
+	
 //GETTERS	
 	
 	/**
@@ -303,6 +309,10 @@ public class Mazub extends GameObject {
 		return LOSS_HITPOINTS_IN_WATER;
 	}
 	
+	private double getHitpointsDifference() {
+		return hitpointsDifference;
+	}
+	
 //Setters	
 	
 	/**
@@ -356,6 +366,10 @@ public class Mazub extends GameObject {
 	@Raw 
 	private void setTimeSinceStartMove(double time_since_startMove) {
 		this.timeSinceStartMove = time_since_startMove;
+	}
+	
+	private void setHitpointsDifference(double diff) {
+		this.hitpointsDifference = diff;
 	}
 	
 //VALIDATIONS	
@@ -688,9 +702,9 @@ public class Mazub extends GameObject {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
 		if ( ! this.isDying()) {
-			double[] newCalculatedPos = this.calculateNewPos(dt);
-			double newXPos = newCalculatedPos[0];
-			double newYPos = newCalculatedPos[1];
+			//TODO dis is mss nogal inefficient, waarom?, omdat 2 keer newpos wordt uitgerekend
+			double newXPos = this.calculateNewPos(dt)[0];
+			double newYPos = this.calculateNewPos(dt)[1];		
 			
 			this.checkIfWithinBoundaries(newXPos, newYPos);
 			

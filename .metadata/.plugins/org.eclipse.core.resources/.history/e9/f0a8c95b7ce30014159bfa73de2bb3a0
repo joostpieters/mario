@@ -179,7 +179,13 @@ public class Mazub extends GameObject {
 	 * 2 hitpoints shall be deducted per 0.2 seconds in water
 	 */
 	private static int LOSS_HITPOINTS_IN_WATER = 2;
-		
+	/**
+	 * when mazub is in touch with magma, it imediatly loses hitpoints,
+	 * this variable counts the difference between the double value 
+	 * of the hitpoints which are to lose and the int value
+	 */
+	private double hitpointsDifference = 0;
+	
 //GETTERS	
 	
 	/**
@@ -303,6 +309,10 @@ public class Mazub extends GameObject {
 		return LOSS_HITPOINTS_IN_WATER;
 	}
 	
+	private double getHitpointsDifference() {
+		return hitpointsDifference;
+	}
+	
 //Setters	
 	
 	/**
@@ -356,6 +366,10 @@ public class Mazub extends GameObject {
 	@Raw 
 	private void setTimeSinceStartMove(double time_since_startMove) {
 		this.timeSinceStartMove = time_since_startMove;
+	}
+	
+	private void setHitpointsDifference(double diff) {
+		this.hitpointsDifference = diff;
 	}
 	
 //VALIDATIONS	

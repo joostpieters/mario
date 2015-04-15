@@ -90,7 +90,7 @@ public class Shark extends GameObject {
 	private static double TIME_UNTIL_CHOKE = 0.2;
 	private static double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
-	}
+	}	
 	private boolean inWater = true;
 	private boolean isInWater() {
 		return inWater;
@@ -200,12 +200,10 @@ public class Shark extends GameObject {
 				this.setTimeInAir(0);
 			}
 		}
-		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
-			double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
-								+ this.getHitpointsDifference();
-			this.setHitpointsDifference(toLose - (int) toLose);
-			this.loseHitpoints( (int) toLose);
-		}
+		// TODO ook in magma hitpoints laten verliezen? Ja ik geloof dat dat wel de bedoeling is
+//		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
+//			
+//		}
 	}
 	
 	private void advanceTimeWhileLiving(double dt) {
@@ -215,6 +213,7 @@ public class Shark extends GameObject {
 		double newXPos = newCalculatedPos[0];
 		double newYPos = newCalculatedPos[1];
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
+			// TODO moet dit niet eerst this.die() zijn en daarna pas removen? Nope direct weg
 			this.remove();
 		}
 		
@@ -247,7 +246,8 @@ public class Shark extends GameObject {
 	
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
-			throw new IllegalDtException(dt);		
+			throw new IllegalDtException(dt);
+		
 		if (! this.isDying()) { 
 			this.advanceTimeWhileLiving(dt);
 		}		
