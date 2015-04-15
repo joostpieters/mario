@@ -530,7 +530,7 @@ public class World {
 	 * @return true if the game is over and the player has won; false otherwise.
 	 */
 	public boolean didPlayerWin() {
-		if ( ! this.getAlien().isDying()) {
+		if (this.getAlien() != null) {
 			for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
 					(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),
 					(int) this.getAlien().getYPos() + this.getAlien().getYDim())) {
@@ -587,20 +587,21 @@ public class World {
 	}
 		
 	private void advanceEveryGameObject(double dt) throws IllegalDtException {
-		for (Plant plant : this.getPlants()) {
-			 plant.advanceTime(dt);
-		}
-		for (Shark shark: this.getSharks()) {
-			shark.advanceTime(dt);
-		}
-		for (Slime slime: this.getSlimes()) {
-			slime.advanceTime(dt);
-		}
-		if ( ! this.getAlien().isDying()) {
+		if(this.getAlien() != null) {
+			for (Plant plant : this.getPlants()) {
+				 plant.advanceTime(dt);
+			}
+			for (Shark shark: this.getSharks()) {
+				shark.advanceTime(dt);
+			}
+			for (Slime slime: this.getSlimes()) {
+				slime.advanceTime(dt);
+			}
 			this.getAlien().advanceTime(dt);
+			
+	
+			positioningVisibleWindow();
 		}
-
-		positioningVisibleWindow();
 	}
 	
 	private void positioningVisibleWindow() {
@@ -717,8 +718,5 @@ public class World {
 		}
 		return false;
 	}
-	
-	
-	// SPELSPELSPELSPELSPEL
 	
 }
