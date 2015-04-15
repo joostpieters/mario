@@ -627,9 +627,9 @@ public class Mazub extends GameObject {
 	}
 	
 	public double[] colliding(double newXPos, double newYPos,double dt) {	
-		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
+		this.collidingSlimesSharks(newXPos, newYPos, dt);
 		this.collidingPlants(newXPos, newYPos);
-		return new double[] {newPos[0], newPos[1]};
+		return new double[] {newXPos, newYPos};
 	}
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 

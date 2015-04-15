@@ -560,30 +560,8 @@ public class Mazub extends GameObject {
 //	private void advanceX(double dt) {				
 //	}
 	
-	private void collidingPlants(double newXPos, double newYPos) {
-		for(Plant other: this.getWorld().getPlants()) {
-			if( ! other.isDying()) {
-				double x1 = newXPos;
-				double xDim1 = this.getXDim();
-				double y1 = newYPos;
-				double yDim1 = this.getYDim();
-				double x2 = other.getXPos();
-				double xDim2 = other.getXDim();
-				double y2 = other.getYPos();
-				double yDim2 = other.getYDim();
-				if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-					int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
-					if (this.isValidAmountOfHitpoints(newHitpoints)) {
-						other.die();
-						this.setHitpoints(newHitpoints);
-					}				
-				}
-			}
-		}			
-	}
-	
 	// TODO misschien dit opsplitsen want das redelijk lang...
-	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
+	public double[] colliding(double newXPos, double newYPos,double dt) {	
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharks.addAll(this.getWorld().getSharks());
 		boolean onGameObject = false;
@@ -614,22 +592,36 @@ public class Mazub extends GameObject {
 			if ( touched && ( ! other.isDying()))  {
 				this.contactDamage(dt);
 				other.contactDamage(dt);
-			}		
+			}
+		
 		}
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		// TODO kunnen we hetgeen hieronder niet weglaten?
+		// TODO is hetgeen hieronder echt nodig?
 		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}
+		for(Plant other: this.getWorld().getPlants()) {
+			if( ! other.isDying()) {
+				double x1 = newXPos;
+				double xDim1 = this.getXDim();
+				double y1 = newYPos;
+				double yDim1 = this.getYDim();
+				double x2 = other.getXPos();
+				double xDim2 = other.getXDim();
+				double y2 = other.getYPos();
+				double yDim2 = other.getYDim();
+				if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+					int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
+					if (this.isValidAmountOfHitpoints(newHitpoints)) {
+						other.die();
+						this.setHitpoints(newHitpoints);
+					}				
+				}
+			}
+		}			
 		return new double[] {newXPos, newYPos};
-	}
-	
-	public double[] colliding(double newXPos, double newYPos,double dt) {	
-		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
-		this.collidingPlants(newXPos, newYPos);
-		return new double[] {newPos[0], newPos[1]};
 	}
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 

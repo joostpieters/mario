@@ -582,7 +582,6 @@ public class Mazub extends GameObject {
 		}			
 	}
 	
-	// TODO misschien dit opsplitsen want das redelijk lang...
 	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharks.addAll(this.getWorld().getSharks());
@@ -614,7 +613,8 @@ public class Mazub extends GameObject {
 			if ( touched && ( ! other.isDying()))  {
 				this.contactDamage(dt);
 				other.contactDamage(dt);
-			}		
+			}
+		
 		}
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
@@ -623,13 +623,13 @@ public class Mazub extends GameObject {
 		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}
-		return new double[] {newXPos, newYPos};
 	}
 	
+	// TODO misschien dit opsplitsen want das redelijk lang...
 	public double[] colliding(double newXPos, double newYPos,double dt) {	
-		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
+		this.collidingSlimesSharks(newXPos, newYPos, dt)
 		this.collidingPlants(newXPos, newYPos);
-		return new double[] {newPos[0], newPos[1]};
+		return new double[] {newXPos, newYPos};
 	}
 	
 	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
