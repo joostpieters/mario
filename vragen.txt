@@ -9,6 +9,8 @@
 10. testfiles: voor elke uitzondering test maken? en alle tests in 1 bestand of verschillende bestanden?
 11. hoelang mogen functies ongeveer zijn?
 12. Hoe moeten die overlappingen?
+13. start- en endDuck in mazub: hoe defensief maken
+
 
 
 
