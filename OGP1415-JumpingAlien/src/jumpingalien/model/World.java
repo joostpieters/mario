@@ -453,9 +453,9 @@ public class World {
 		this.sharks.add(shark);
 	}
 	public void addPlant(Plant plant) {
-//		assert plant != null;
-//	    assert plant.getWorld() == this;
-//	    assert !this.hasPlant(plant);
+		assert plant != null;
+	    assert plant.getWorld() == this;
+	    assert !this.hasPlant(plant);
 		this.plants.add(plant);
 	}	
 	private boolean hasPlant(Plant plant) {
@@ -488,8 +488,6 @@ public class World {
 	private boolean isValidAmountOfCharacters() {
 		return ((this.getNbPlants() + this.getNbSharks() + 
 				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );
-			//	((alien.getNbOfMazubs() > 1) && (plant.getNbOfPlants() + 
-				//slime.getNbOfSlimes() + shark.getNbOfSharks() <= 100));
 	}
 	private boolean isValidTargetTile(int x, int y) {
 		return true;
