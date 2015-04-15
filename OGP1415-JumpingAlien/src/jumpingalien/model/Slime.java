@@ -40,8 +40,8 @@ public class Slime extends GameObject {
 	}
 	
 	
-	private static int LOSS_HITPOINTS_IN_WATER = 6;
-	private static int getLossHitpointsInWater() {
+	private static final int LOSS_HITPOINTS_IN_WATER = 6;
+	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
 	}	 
 	private double movementDuration = 0;
@@ -64,36 +64,36 @@ public class Slime extends GameObject {
 	private void setTimeSinceMove(double time) {
 		this.timeSinceMove = time;
 	}
-	private static int INIT_HITPOINTS = 100;
-	private static int getInitHitpoints() {
+	private static final int INIT_HITPOINTS = 100;
+	private static final int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
 	/**
 	 * the horizontal acceleration of a slime
 	 */
-	private double xAcc = 0.7;
+	private static final double xAcc = 0.7;
 	@Override
-	public double getXAcc() {
+	public final double getXAcc() {
 		return xAcc;
 	}
 	/**
 	 * the maximum horizontal speed a slime can reach
 	 */
-	private static double MAX_X_SPEED = 2.5;
+	private static final double MAX_X_SPEED = 2.5;
 	/**
 	 * the amount of hitpoints a slime loses when touching 
 	 * a shark or mazub.
 	 */
-	private static int CONTACT_DAMAGE = 50;
+	private static final int CONTACT_DAMAGE = 50;
 	/**
 	 * the damage every slime in the school looses when a single
 	 * slime looses some hitpoints
 	 */
-	private int SCHOOL_DAMAGE = 1;
+	private static final int SCHOOL_DAMAGE = 1;
 	/**
 	 * the maximum amount of slime schools in a game world
 	 */
-	private int MAX_AMOUNT_OF_SCHOOLS = 10;		
+	private static final int MAX_AMOUNT_OF_SCHOOLS = 10;		
 	private School school;
 	/**
 	 * Returns the current school to which the given slime belongs.
@@ -115,28 +115,28 @@ public class Slime extends GameObject {
 	// -> sharks beginnen met 100 hitpoints en kunnen er geen bijkrijgen
 	// Ja maar das is wel ne slime e en die erft dat van Mazub
 	// ge hebt gelijk! maar waarom moet die da erven van mazub?
-	private int MAX_HITPOINTS = 500;
+	private static final int MAX_HITPOINTS = 500;
 	@Override
 	/**
 	 * the maximum amount of hitpoints
 	 * @returnMAXHITPOINTS
 	 */
-	protected int getMaxHitpoints() {
+	protected final int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
 	
 //	GETTERS	
 
-	private static double getMaxXSpeed() {
+	private static final double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}	
-	public static int getContactDamage() {
+	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}	
-	private int getSchoolDamage() {
+	private static final int getSchoolDamage() {
 		return SCHOOL_DAMAGE;
 	}
-	private int getMaxAmountOfSchools() {
+	private static final int getMaxAmountOfSchools() {
 		return MAX_AMOUNT_OF_SCHOOLS;
 	}
 	

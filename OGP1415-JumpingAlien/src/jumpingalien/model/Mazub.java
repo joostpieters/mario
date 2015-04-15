@@ -129,25 +129,25 @@ public class Mazub extends GameObject {
 	 * the static int giving the starting speed of mazub
 	 * when startMove() is initiated
 	 */
-	private static int START_SPEED = 1;
+	private static final int START_SPEED = 1;
 	/**
 	 * the maximal horizontal speed mazub can reach
 	 */
-	private static int MAX_MOVING_SPEED = 3;
+	private static final int MAX_MOVING_SPEED = 3;
 	/**
 	 * the maximal horizontal speed mazub can reach
 	 * when mazub is ducked
 	 */
-	private static int MAX_SPEED_DUCK = 1;
+	private static final int MAX_SPEED_DUCK = 1;
 	/**
 	 * the vertical speed at which mazub moves when 
 	 * startJump() is initiated
 	 */
-	private static int JUMP_SPEED = 8;
+	private static final int JUMP_SPEED = 8;
 	/**
 	 * the acceleration when mazub starts moving horizontally
 	 */
-	private static double MOVE_ACC = 0.9;
+	private static final double MOVE_ACC = 0.9;
 	/**
 	 * the time passed after endMove was invoced for the
 	 * last time
@@ -161,11 +161,11 @@ public class Mazub extends GameObject {
 	/**
 	 * the time that mazub should not move before sprite 0 is displayed
 	 */
-	private static double NOT_MOVING_TIME = 1;
+	private static final double NOT_MOVING_TIME = 1;
 	/**
 	 * the time every image is displayed when mazub is running
 	 */
-	private static double TIME_DIFFERENT_SPRITE = 0.075;
+	private static final double TIME_DIFFERENT_SPRITE = 0.075;
 	/**
 	 * the amount of running sprites with a certain orientation
 	 */
@@ -178,7 +178,7 @@ public class Mazub extends GameObject {
 	 * the time mazub needs to be in water until hitpoints are lost
 	 * 2 hitpoints shall be deducted per 0.2 seconds in water
 	 */
-	private static int LOSS_HITPOINTS_IN_WATER = 2;
+	private static final int LOSS_HITPOINTS_IN_WATER = 2;
 		
 //GETTERS	
 	
@@ -230,7 +230,7 @@ public class Mazub extends GameObject {
 	 * @return JUMP_SPEED
 	 */
 	@Basic @Immutable @Raw 
-	private int getStartJumpSpeed() {
+	private static final int getStartJumpSpeed() {
 		return JUMP_SPEED;
 	}
 	/**
@@ -238,7 +238,7 @@ public class Mazub extends GameObject {
 	 * @return MAX_SPEED
 	 */
 	@Basic @Immutable @Raw 
-	private int getMaxMovingSpeed() {
+	private static final int getMaxMovingSpeed() {
 		return MAX_MOVING_SPEED;
 	}
 	/**
@@ -246,7 +246,7 @@ public class Mazub extends GameObject {
 	 * @return MAX_SPEED_DUCK
 	 */
 	@Basic @Immutable @Raw 
-	private int getMaxSpeedDuck() {
+	private static final int getMaxSpeedDuck() {
 		return MAX_SPEED_DUCK;
 	}
 	/**
@@ -254,7 +254,7 @@ public class Mazub extends GameObject {
 	 * @return START_SPEED
 	 */
 	@Basic @Immutable @Raw 
-	private int getStartSpeed() {
+	private static final int getStartSpeed() {
 		return START_SPEED;
 	}
 	/**
@@ -262,7 +262,7 @@ public class Mazub extends GameObject {
 	 * @return MOVE_ACC
 	 */
 	@Basic @Immutable @Raw
-	private double getMoveAcc() {
+	private static final double getMoveAcc() {
 		return MOVE_ACC;
 	}
 	/**
@@ -270,7 +270,7 @@ public class Mazub extends GameObject {
 	 * @return NOT_MOVING_TIME
 	 */
 	@Basic @Immutable @Raw 
-	private double getNotMovingTime() {
+	private static final double getNotMovingTime() {
 		return NOT_MOVING_TIME;
 	}
 	/**
@@ -278,7 +278,7 @@ public class Mazub extends GameObject {
 	 * @return TIME_DIFFERENT_SPRITE
 	 */
 	@Basic @Immutable @Raw 
-	private static double getTimeDifferentSprite() {
+	private static final double getTimeDifferentSprite() {
 		return TIME_DIFFERENT_SPRITE;
 	}
 	/**
@@ -299,7 +299,7 @@ public class Mazub extends GameObject {
 		return (this.duck);
 	}
 	
-	private static int getLossHitpointsInWater() {
+	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
 	}
 	
@@ -414,13 +414,13 @@ public class Mazub extends GameObject {
 		this.setXSpeed(this.getInitStartSpeed());
 		if (this.isDucked() == false) {
 			this.setXSpeed(this.getInitStartSpeed());
-			this.setXAcc(this.getMoveAcc());
+			this.setXAcc(Mazub.getMoveAcc());
 			this.setMaxSpeed(this.getMaxSpeed());
 		}
 		else {
-			this.setXSpeed(this.getMaxSpeedDuck());
+			this.setXSpeed(Mazub.getMaxSpeedDuck());
 			this.setXAcc(0);
-			this.setMaxSpeed(this.getMaxSpeedDuck());
+			this.setMaxSpeed(Mazub.getMaxSpeedDuck());
 		}
 		this.setTimeSinceStartMove(0);
 	}	
@@ -483,7 +483,7 @@ public class Mazub extends GameObject {
 	 */
 	public void startJump() {
 		if ( !this.isFalling()) {
-			this.setYSpeed(this.getStartJumpSpeed());	
+			this.setYSpeed(Mazub.getStartJumpSpeed());	
 		}
 	}
 	/**
@@ -744,7 +744,7 @@ public class Mazub extends GameObject {
 	public void startDuck() {
 		this.setDuck(true);
 		this.setDuckShouldEnd(false);
-		this.setMaxSpeed(this.getMaxSpeedDuck());
+		this.setMaxSpeed(Mazub.getMaxSpeedDuck());
 	}
 	
 	/**
@@ -760,7 +760,7 @@ public class Mazub extends GameObject {
 //		if ( ! this.isDucked())
 //			throw eenofandereexception -> dit werkte bij mij wel niet 		
 		this.setDuck(false);
-		this.setMaxSpeed(this.getMaxMovingSpeed());
+		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
 		if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
 			this.startDuck();
 			this.setDuckShouldEnd(true);
@@ -776,11 +776,11 @@ public class Mazub extends GameObject {
 		if ( ! this.isDying()) { 
 			this.setNbRunningSprites(((this.getSprite()).length-8)/2);
 			if ((this.getXSpeed()==0) && (! this.isDucked()) &&
-					(this.getTimeSinceEndMove() > this.getNotMovingTime())){
+					(this.getTimeSinceEndMove() > Mazub.getNotMovingTime())){
 				return sprites[0];
 			}
 			else if ((this.getXSpeed()==0) &&
-					(this.getTimeSinceEndMove() > this.getNotMovingTime())){
+					(this.getTimeSinceEndMove() > Mazub.getNotMovingTime())){
 				return sprites[1];
 			}
 			else if ((this.getXSpeed()==0) &&

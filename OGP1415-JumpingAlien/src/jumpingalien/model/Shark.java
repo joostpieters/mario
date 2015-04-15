@@ -37,7 +37,7 @@ public class Shark extends GameObject {
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */
-	private static int INIT_HIT_POINTS = 100;
+	private static final int INIT_HIT_POINTS = 100;
 	@Immutable
 	private static int getInitHitpoints() {
 		return INIT_HIT_POINTS;
@@ -45,35 +45,35 @@ public class Shark extends GameObject {
 	/**
 	 * the maximum horizontal speed a shark can reach
 	 */
-	private static double MAX_X_SPEED = 4;
+	private static final double MAX_X_SPEED = 4;
 	@Immutable
-	private static double getMaxXSpeed() {
+	private static final double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}
 	/**
 	 * the vertical speed at which the shark moves when 
 	 * startJump() is initiated
 	 */
-	private static int JUMP_SPEED = 2;
+	private static final int JUMP_SPEED = 2;
 	@Immutable
-	private static double getJumpSpeed() {
+	private static final double getJumpSpeed() {
 		return JUMP_SPEED;
 	}
-	private static double MOVE_ACC = 1.5;
+	private static final double MOVE_ACC = 1.5;
 	@Immutable
-	private static double getMoveAcc() {
+	private static final double getMoveAcc() {
 		return MOVE_ACC;
 	}
 	/**
 	 * the amount of hitpoints a shark loses when touching 
 	 * a mazub or a slime
 	 */
-	private static int CONTACT_DAMAGE = 50;
+	private static final int CONTACT_DAMAGE = 50;
 	@Immutable
-	public static int getContactDamage() {
+	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}	
-	private int MAX_HITPOINTS = 100;
+	private final int MAX_HITPOINTS = 100;
 	@Override
 	/**
 	 * the maximum amount of hitpoints
@@ -83,12 +83,12 @@ public class Shark extends GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
-	private static int LOSS_HITPOINTS_IN_AIR = 6;
-	private static int getLossHitpointsInAir() {
+	private static final int LOSS_HITPOINTS_IN_AIR = 6;
+	private static final int getLossHitpointsInAir() {
 		return LOSS_HITPOINTS_IN_AIR;
 	}	
-	private static double TIME_UNTIL_CHOKE = 0.2;
-	private static double getTimeUntilChoke() {
+	private static final double TIME_UNTIL_CHOKE = 0.2;
+	private static final double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
 	}
 	private boolean inWater = true;
@@ -141,8 +141,10 @@ public class Shark extends GameObject {
 	}
 	private void setMoving(boolean move) {
 		this.moving = move;
-	}	
+	}
+	
 //	Validations
+	
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;

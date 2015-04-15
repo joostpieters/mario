@@ -310,13 +310,13 @@ public abstract class GameObject {
 	/**
 	 * the vertical acceleration at which a GameObject falls
 	 */
-	private static double FALL_ACC = -10;
+	private static final double FALL_ACC = -10;
 	/**
 	 * Returns the acceleration when the GameObject falls
 	 * @return FALL_ACC
 	 */
 	@Basic @Immutable @Raw 
-	protected double getFallAcc() {
+	protected static final double getFallAcc() {
 		return FALL_ACC;
 	}
 	/**
@@ -341,7 +341,7 @@ public abstract class GameObject {
 		this.falling = false;
 	}	
 	protected void fall() {
-		this.setYAcc(this.getFallAcc());
+		this.setYAcc(GameObject.getFallAcc());
 		this.setFalling();
 	}	
 	/**
@@ -373,12 +373,12 @@ public abstract class GameObject {
 	protected void setTimeSinceImmune(double dt) {
 		this.timeSinceImmune = dt;
 	}
-	protected double IMMUNE_TIME = 0.6;
-	protected double getImmuneTime() {
-		return this.IMMUNE_TIME;
+	protected static final double IMMUNE_TIME = 0.6;
+	protected static final double getImmuneTime() {
+		return IMMUNE_TIME;
 	}
-	private static int TOUCH_ENEMY = 50;
-	private static int getTouchEnemy() {
+	private static final int TOUCH_ENEMY = 50;
+	private static final int getTouchEnemy() {
 		return TOUCH_ENEMY;
 	}
 	protected double timeInMagma = 0;
@@ -395,20 +395,20 @@ public abstract class GameObject {
 	protected void setTimeInWater(double dt) {
 		this.timeInWater = dt;
 	}
-	protected static double DROWN_TIME = 0.2;
-	protected static double getDrownTime() {
+	protected static final double DROWN_TIME = 0.2;
+	protected static final double getDrownTime() {
 		return DROWN_TIME;
 	}
-	protected static double LOSS_HITPOINTS_IN_MAGMA = 50;
-	protected static double getLossHitpointsInMagma() {
+	protected static final double LOSS_HITPOINTS_IN_MAGMA = 50;
+	protected static final double getLossHitpointsInMagma() {
 		return LOSS_HITPOINTS_IN_MAGMA;
 	}
-	protected static double BURN_TIME = 0.2;
-	protected static double getBurnTime() {
+	protected static final double BURN_TIME = 0.2;
+	protected static final double getBurnTime() {
 		return BURN_TIME;
 	}
-	protected static double TIME_UNTIL_REMOVE = 0.6;
-	protected static double getTimeUntilRemove() {
+	protected static final double TIME_UNTIL_REMOVE = 0.6;
+	protected static final double getTimeUntilRemove() {
 		return TIME_UNTIL_REMOVE;
 	}
 	protected double counterUntilRemove = 0;
@@ -573,7 +573,7 @@ public abstract class GameObject {
 		int pixelLeft = (int)(xPos);
 		int pixelBottom = (int)(yPos);
 		int pixelRight = pixelLeft + this.getSize()[0];
-		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 1, pixelRight -1, pixelBottom + 1);
+		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom);
 	}
 	
 	protected int[][] getTiles(double xPos, double yPos) {
@@ -768,7 +768,7 @@ public abstract class GameObject {
 	
 	protected void updateImmunity(double dt) {
 		if (this.isImmune()) {
-			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
+			if (this.getTimeSinceImmune() > GameObject.getImmuneTime()) {
 				this.setNotImmune();
 				this.setTimeSinceImmune(0);				
 			}

@@ -35,28 +35,27 @@ public class Plant extends GameObject {
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
-	private static int INIT_HITPOINTS = 1;
-	private static int getInitHitpoints() {
+	private static final int INIT_HITPOINTS = 1;
+	private static final int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
 	/**
 	 * every 0.5 seconds the orientation of the plant changes
 	 */
-	private double TIME_CHANGE_ORIENTATION = 0.5;	
+	private static final double TIME_CHANGE_ORIENTATION = 0.5;	
 	/**
 	 * the time a plant is moving in 1 direction
 	 */
 	private double timeSameOrientation = 0;
 
-	private int MAX_HITPOINTS = 1;  
+	private static final int MAX_HITPOINTS = 1;  	
 	
-	@Override
 	/**
 	 * the maximum amount of hitpoints
-	 * @returnMAXHITPOINTS
+	 * @return MAXHITPOINTS
 	 */
-	protected int getMaxHitpoints() {
-		return this.MAX_HITPOINTS;
+	protected final int getMaxHitpoints() {
+		return Plant.MAX_HITPOINTS;
 	}
 
 // GETTERS	
@@ -67,7 +66,7 @@ public class Plant extends GameObject {
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
-	private double getTimeChangeOrientation() {
+	private static final double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
 	}
 	
@@ -110,10 +109,10 @@ public class Plant extends GameObject {
 		
 		this.setXPos(newXPos);
 		
-		if (this.getTimeSameOrientation() > this.getTimeChangeOrientation()) {
+		if (this.getTimeSameOrientation() > Plant.getTimeChangeOrientation()) {
 			this.changeOrientation();
 			this.setTimeSameOrientation(this.getTimeSameOrientation()
-					- this.getTimeChangeOrientation());
+					- Plant.getTimeChangeOrientation());
 		}		
 		
 		if (this.isDying()) {
