@@ -202,9 +202,7 @@ public class Slime extends GameObject {
 	
 	public double[] collidingSharksMazub(double newXPos, double newYPos) {		
 		List<GameObject> allSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
-		if ( ! this.getWorld().getAlien().isDying()) {
-			allSharksMazub.add(this.getWorld().getAlien());
-		}		
+		allSharksMazub.add(this.getWorld().getAlien());	
 		for(GameObject other: allSharksMazub) {
 			double x1 = newXPos;
 			double xDim1 = this.getXDim();
