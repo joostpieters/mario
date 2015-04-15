@@ -596,9 +596,7 @@ public class World {
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
-		if ( ! this.getAlien().isDying()) {
-			this.getAlien().advanceTime(dt);
-		}
+		this.getAlien().advanceTime(dt);
 
 		positioningVisibleWindow();
 	}

@@ -530,15 +530,13 @@ public class World {
 	 * @return true if the game is over and the player has won; false otherwise.
 	 */
 	public boolean didPlayerWin() {
-		if ( ! this.getAlien().isDying()) {
-			for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
-					(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),
-					(int) this.getAlien().getYPos() + this.getAlien().getYDim())) {
-				if (tile[0] == this.getTargetTileX() && tile[1] == this.getTargetTileY()) {
-					return true;
-				}
+		for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
+				(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),
+				(int) this.getAlien().getYPos() + this.getAlien().getYDim())) {
+			if (tile[0] == this.getTargetTileX() && tile[1] == this.getTargetTileY()) {
+				return true;
 			}
-		}		
+		}
 		return false;
 	}
 	
@@ -596,9 +594,7 @@ public class World {
 		for (Slime slime: this.getSlimes()) {
 			slime.advanceTime(dt);
 		}
-		if ( ! this.getAlien().isDying()) {
-			this.getAlien().advanceTime(dt);
-		}
+		this.getAlien().advanceTime(dt);
 
 		positioningVisibleWindow();
 	}
