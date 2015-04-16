@@ -1,0 +1,359 @@
+package jumpingalien.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.util.Sprite;
+
+public class Slime extends GameObject {
+	
+	/**
+	 * Creates a new slime, located at the provided pixel location (x, y).
+	 * The returned slime should not belong to a world.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the slime's initial position
+	 * @param y
+	 *            The y-coordinate of the slime's initial position
+	 * @param sprites
+	 *            An array of sprites for the new slime
+	 * @param school
+	 *            The initial school to which the new slime belongs
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the slime
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
+	 */
+	public Slime(int xPos,int yPos, Sprite[] sprites,School school) 
+			throws IllegalPositionException, IllegalSpriteException {
+		super(xPos, yPos, sprites);
+		this.setSchool(school);
+		this.getSchool().newSlime(this);
+		this.setHitpoints(Slime.getInitHitpoints());
+		this.setMaxSpeed(Slime.getMaxXSpeed());
+	}
+	
+	
+	private static final int LOSS_HITPOINTS_IN_WATER = 6;
+	private static final int getLossHitpointsInWater() {
+		return LOSS_HITPOINTS_IN_WATER;
+	}	 
+	private double movementDuration = 0;
+	private double getMovementDuration() {
+		return movementDuration;
+	}	
+	private void setMovementDuration(double time) {
+		this.movementDuration = time;
+	}	
+	private double timeSinceMove = 0;
+	/**
+	 * @return the timeSinceMove
+	 */
+	private double getTimeSinceMove() {
+		return timeSinceMove;
+	}
+	/**
+	 * sets the time since the start of a move
+	 * @param timeSinceMove the timeSinceMove to set
+	 */
+	private void setTimeSinceMove(double time) {
+		this.timeSinceMove = time;
+	}
+	private static final int INIT_HITPOINTS = 100;
+	private static final int getInitHitpoints() {
+		return INIT_HITPOINTS;
+	}
+	/**
+	 * the horizontal acceleration of a slime
+	 */
+	private static final double xAcc = 0.7;
+	@Override
+	public final double getXAcc() {
+		return xAcc;
+	}
+	/**
+	 * the maximum horizontal speed a slime can reach
+	 */
+	private static final double MAX_X_SPEED = 2.5;
+	/**
+	 * the amount of hitpoints a slime loses when touching 
+	 * a shark or mazub.
+	 */
+	private static final int CONTACT_DAMAGE = 50;
+	/**
+	 * the damage every slime in the school looses when a single
+	 * slime looses some hitpoints
+	 */
+	private static final int SCHOOL_DAMAGE = 1;
+	/**
+	 * the maximum amount of slime schools in a game world
+	 */
+	private static final int MAX_AMOUNT_OF_SCHOOLS = 10;		
+	private School school;
+	/**
+	 * Returns the current school to which the given slime belongs.
+	 * 
+	 * @param slime
+	 *            The slime for which to retrieve the school.
+	 * 
+	 * @return The current school of the given slime.
+	 */
+	public School getSchool() {
+		return this.school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
+	private static final int MAX_HITPOINTS = 500;
+	@Override
+	/**
+	 * the maximum amount of hitpoints
+	 * @returnMAXHITPOINTS
+	 */
+	protected final int getMaxHitpoints() {
+		return MAX_HITPOINTS;
+	}
+	
+//	GETTERS	
+
+	private static final double getMaxXSpeed() {
+		return  MAX_X_SPEED;
+	}	
+	public static final int getContactDamage() {
+		return CONTACT_DAMAGE;
+	}	
+	private static final int getSchoolDamage() {
+		return SCHOOL_DAMAGE;
+	}
+	private static final int getMaxAmountOfSchools() {
+		return MAX_AMOUNT_OF_SCHOOLS;
+	}
+	
+//	VALIDATIONS
+	
+	@Override
+	protected boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}
+	
+	private double[] checkSurroundings(double newXPos, double newYPos) {
+
+		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+			this.stopMoving();
+		}
+		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
+			this.stopMoving();
+		}
+		if (isAgainstRoof(newXPos,newYPos)) {
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+			this.setYSpeed(0);
+		}		
+		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+			this.endFall();
+		}		
+		if (( ! this.isFalling()) && ( ! onFloor(newXPos,newYPos))){
+			fall();
+		}
+		
+		return new double[] {newXPos, newYPos};
+	}	
+
+	// TODO adjust schools maken ofzo
+	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
+		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
+		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
+		allSharksSlimesMazub.add(this.getWorld().getAlien());	
+		boolean onGameObject = false;
+		for(GameObject other: allSharksSlimesMazub) {
+			if(other != this) {
+				double xDim1 = this.getXDim();
+				double yDim1 = this.getYDim();
+				double x2 = other.getXPos();
+				double xDim2 = other.getXDim();
+				double y2 = other.getYPos();
+				double yDim2 = other.getYDim();
+				boolean touched = false;
+				
+				double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
+						yDim2);
+				newXPos = newPos[0];
+				newYPos = newPos[1];
+				if (newPos[2] == 1) {
+					touched = true;
+				}
+				if (newPos[3] == 1) {
+					onGameObject = true;
+				}
+				if (touched && ( ! other.isDying())) {
+					if (other instanceof Slime) {
+						if(this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
+							this.getSchool().addSlime((Slime) other);
+						}
+						else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) {
+							((Slime) other).getSchool().addSlime(this);
+						}
+					}
+					else   {
+						this.contactDamage(dt);
+						other.contactDamage(dt);
+					}
+				}	
+			}
+		}
+		if (this.isFalling() && onGameObject) {
+			this.endFall();
+		}
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
+			fall();
+		}
+		return new double[] {newXPos, newYPos};
+	}
+	
+	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
+		if (this.isInContactWithFeature(newXPos,newYPos,3)) {
+			this.setTimeInMagma(this.getTimeInMagma() + dt);
+			if(this.getTimeInMagma() >= Slime.getBurnTime()) {
+				this.loseHitpoints( (int) GameObject.getLossHitpointsInMagma());
+				this.setTimeInMagma(this.getTimeInMagma() - dt);
+			}
+		}
+		if (this.isInContactWithFeature(newXPos,newYPos,2)) {
+			this.setTimeInWater(this.getTimeInWater() + dt);
+			if(this.getTimeInWater() >= Slime.getDrownTime()) {
+				this.loseHitpoints(Slime.getLossHitpointsInWater());
+				this.setTimeInWater(this.getTimeInWater() - dt);
+			}			
+		}
+		else {
+			this.setTimeInWater(0);
+		}
+	}
+	
+	private void advanceTimeWhileLiving(double dt) {
+		this.randomMovement(dt);			
+		double[] newCalculatedPos = this.calculateNewPos(dt);
+		double newXPos = newCalculatedPos[0];
+		double newYPos = newCalculatedPos[1];
+		if((this.getXPos() - newXPos >= 1) || (this.getYPos() - newYPos) >= 1) {
+			System.out.println("de possen zijn mis!!!");
+		}
+		this.checkIfWithinBoundaries(newXPos, newYPos);
+				
+		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt);
+		this.setNewSpeed(dt);
+		
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
+		
+		this.loseHitpointsBecauseOfFeature(dt, newXPos, newYPos);			
+		this.updateImmunity(dt);
+		
+		if (this.getHitpoints() <= 0) {
+			this.die();
+		}
+	}
+	
+	private void advanceTimeWhileDeath(double dt) {
+		setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
+			this.remove();
+		}
+	}
+	
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);
+		
+		if ( ! this.isDying()) {
+			this.advanceTimeWhileLiving(dt);
+		}
+		else {
+			this.advanceTimeWhileDeath(dt);
+		}		
+	}
+	
+	/**
+	 * Return the current sprite image for the given slime.
+	 * 
+	 * @return The current sprite image for the given slime, determined by its
+	 *         orientation as defined in the assignment.
+	 */
+	public Sprite getCurrentSprite(){
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == Orientation.RIGHT) {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
+	}
+	
+	public void remove() {
+		this.getSchool().removeSlime(this);
+		this.setSchool(null);
+		this.getWorld().removeSlime(this);
+		this.setWorld(null);		
+	}
+	
+	private void randomMovement(double dt) {
+		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
+			this.stopMove();
+			this.setMovementDuration(Math.random() * 4 + 2);
+			this.setTimeSinceMove(dt);
+			if(Math.random()>=0.5) {
+				this.startMoveRight();
+			}
+			else {
+				this.startMoveLeft();
+			}
+		}
+		else {
+			this.setTimeSinceMove(this.getTimeSinceMove() + dt);
+		}
+	}	
+
+	/**
+	 * Mazub starts moving to the right
+	 * @effect 	| 
+	 */
+	public void startMoveRight(){
+		if(this.getOrientation() == Orientation.LEFT) {
+			this.setXSpeed(0);
+			this.setOrientationRight();
+		}
+	}
+	
+	/**
+	 * Mazub starts moving to the left
+	 * @effect 	|
+	 */
+	public void startMoveLeft(){
+		this.setOrientationLeft();
+	}	
+	
+	public void stopMove() {
+		this.setXSpeed(0);
+	}
+	
+	@Override
+	public void loseHitpoints(int nb) {
+		this.setHitpoints(this.getHitpoints() - nb);
+		for (Slime other: this.getSchool().getMembers()) {
+			if (other != this) {
+				other.setHitpoints(other.getHitpoints() - 1);
+			}
+		}
+	}
+	
+	
+}
+	

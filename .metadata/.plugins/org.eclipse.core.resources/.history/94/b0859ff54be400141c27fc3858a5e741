@@ -1,0 +1,148 @@
+package jumpingalien.model;
+
+
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.util.Sprite;
+
+public class Plant extends GameObject {
+	
+	/**
+	 * Creates a new plant, located at the provided pixel location (x, y).
+	 * The returned plant should not belong to a world.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the plant's initial position
+	 * @param y
+	 *            The y-coordinate of the plant's initial position
+	 * @param sprites
+	 *            An array of sprites for the new plant
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the plant
+	 * 			| !isValidPosition(x_pos,y_pos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
+	 */
+	public Plant(int xPos,int yPos, Sprite[] sprites ) 
+			throws IllegalPositionException, IllegalSpriteException {
+		super(xPos,yPos,sprites);
+		this.setXSpeed(0.5);
+		this.setHitpoints(Plant.getInitHitpoints());
+	}
+
+	/**
+	 * the initial amount of hitpoints a plant possesses
+	 */	
+	private static final int INIT_HITPOINTS = 1;
+	private static final int getInitHitpoints() {
+		return INIT_HITPOINTS;
+	}
+	/**
+	 * every 0.5 seconds the orientation of the plant changes
+	 */
+	private static final double TIME_CHANGE_ORIENTATION = 0.5;	
+	/**
+	 * the time a plant is moving in 1 direction
+	 */
+	private double timeSameOrientation = 0;
+
+	private static final int MAX_HITPOINTS = 1;  	
+	
+	/**
+	 * the maximum amount of hitpoints
+	 * @return MAXHITPOINTS
+	 */
+	protected final int getMaxHitpoints() {
+		return Plant.MAX_HITPOINTS;
+	}
+
+// GETTERS	
+	
+	/**
+	 * 
+	 */
+	private double getTimeSameOrientation() {
+		return timeSameOrientation;
+	}
+	private static final double getTimeChangeOrientation() {
+		return TIME_CHANGE_ORIENTATION;
+	}
+	
+//	SETTERS	
+	
+	/**
+	 * 
+	 */
+	private void setTimeSameOrientation(double t) {
+		this.timeSameOrientation = t;
+	}	
+	
+// VALIDATIONS
+	
+	@Override
+	protected boolean isValidSprite(Sprite[] sprites) {
+		return sprites.length == 2;
+	}	
+	
+	// TODO in level 2 de plantjes fixeeeuuuuu
+	public void advanceTime(double dt) {
+		
+		double newXPos = this.getXPos();
+		
+		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
+		
+		if ((this.getOrientation() == Orientation.RIGHT) &&
+				( ! this.againstRightWall(this.getXPos(), this.getYPos()))) {
+				newXPos = (this.getXPos() + this.getXSpeed() * 100 * dt);
+		}
+		else if ((this.getOrientation() == Orientation.LEFT) &&
+				( ! this.againstRightWall(this.getXPos(), this.getYPos()))) {
+				newXPos = (this.getXPos() - this.getXSpeed() * 100 * dt);
+		}
+		
+		if ( ! this.isWithinBoundaries(newXPos, this.getYPos())) {
+			this.remove();
+		}
+		
+		this.setXPos(newXPos);
+		
+		if (this.getTimeSameOrientation() > Plant.getTimeChangeOrientation()) {
+			this.changeOrientation();
+			this.setTimeSameOrientation(this.getTimeSameOrientation()
+					- Plant.getTimeChangeOrientation());
+		}		
+		
+		if (this.isDying()) {
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
+				this.remove();
+			}
+		}
+		else if (this.getHitpoints() <= 0) {
+			this.die();
+		}
+	}
+	
+	private void remove() {
+		this.getWorld().removePlant(this);
+		this.setWorld(null);
+	}
+	
+	/**
+	 * Return the current sprite image for the given plant.
+	 * 
+	 * @return The current sprite image for the given plant, determined by its
+	 *         orientation as defined in the assignment.
+	 */
+	public Sprite getCurrentSprite(){
+		assert isValidSprite(this.getSprite());
+		if (this.getOrientation() == Orientation.RIGHT) {
+			return sprites[1];
+		}
+		else {
+			return sprites[0];
+		}
+	}
+}

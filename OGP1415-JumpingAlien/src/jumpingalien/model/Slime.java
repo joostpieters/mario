@@ -127,7 +127,7 @@ public class Slime extends GameObject {
 	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}	
-	private static final int getSchoolDamage() {
+	public static final int getSchoolDamage() {
 		return SCHOOL_DAMAGE;
 	}
 	private static final int getMaxAmountOfSchools() {
@@ -164,10 +164,25 @@ public class Slime extends GameObject {
 		}
 		
 		return new double[] {newXPos, newYPos};
-	}	
-
-	// TODO adjust schools maken ofzo
-	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
+	}
+	
+	private void adjustSchools(GameObject other, boolean touched, double dt) {
+		if (touched && ( ! other.isDying())) {
+			if (other instanceof Slime) {
+				if(this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
+					this.getSchool().addSlime((Slime) other);
+				}
+				else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) {
+					((Slime) other).getSchool().addSlime(this);
+				}
+			}
+			else   {
+				this.contactDamage(dt);
+				other.contactDamage(dt);
+			}
+		}	
+	}
+	private boolean updateHitpointsSharksSlimesMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
 		allSharksSlimesMazub.add(this.getWorld().getAlien());	
@@ -192,22 +207,14 @@ public class Slime extends GameObject {
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}
-				if (touched && ( ! other.isDying())) {
-					if (other instanceof Slime) {
-						if(this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
-							this.getSchool().addSlime((Slime) other);
-						}
-						else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) {
-							((Slime) other).getSchool().addSlime(this);
-						}
-					}
-					else   {
-						this.contactDamage(dt);
-						other.contactDamage(dt);
-					}
-				}	
+				this.adjustSchools(other, touched, dt);
 			}
 		}
+		return onGameObject;
+	}
+	
+	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
+		boolean onGameObject = this.updateHitpointsSharksSlimesMazub(newXPos, newYPos, dt);
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
@@ -234,6 +241,12 @@ public class Slime extends GameObject {
 		}
 		else {
 			this.setTimeInWater(0);
+		}
+	}
+	
+	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.remove();
 		}
 	}
 	

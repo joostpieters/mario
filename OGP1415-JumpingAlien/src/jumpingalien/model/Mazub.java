@@ -578,8 +578,11 @@ public class Mazub extends GameObject {
 		}			
 	}
 	
-	// TODO misschien dit opsplitsen want das redelijk lang...
-	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
+	/**
+	 * updates the hitpoints for collisions with slimes and sharks
+	 * @return a boolean: onGameObject
+	 */
+	private boolean updateHitpointsSlimesAndSharks(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharks.addAll(this.getWorld().getSharks());
 		boolean onGameObject = false;
@@ -605,8 +608,13 @@ public class Mazub extends GameObject {
 			if ( touched && ( ! other.isDying()))  {
 				this.contactDamage(dt);
 				other.contactDamage(dt);
-			}		
+			}
 		}
+		return onGameObject;
+	}
+	
+	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
+		boolean onGameObject = this.updateHitpointsSlimesAndSharks(newXPos, newYPos, dt);
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
@@ -681,6 +689,12 @@ public class Mazub extends GameObject {
 			this.loseHitpoints( (int) toLose);
 		}
 	}
+	
+	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.remove();
+		}
+	}
 
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
@@ -729,15 +743,22 @@ public class Mazub extends GameObject {
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
 	 * and the maxSpeed back to MAX_SPEED_DUCK
+	 * @throws IllegalDuckException 
 	 * @effect
 	 * 			| duck == true
 	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
-	// TODO defensief maken -> als mazub al geducked is misschien? Als modelexception eruit laten komen
 	public void startDuck() {
-		this.setDuck(true);
-		this.setDuckShouldEnd(false);
-		this.setMaxSpeed(Mazub.getMaxSpeedDuck());
+		try {
+			if (this.isDucked())
+				throw new IllegalDuckException(this.isDucked());
+			this.setDuck(true);
+			this.setDuckShouldEnd(false);
+			this.setMaxSpeed(Mazub.getMaxSpeedDuck());
+		} catch (IllegalDuckException exc) {
+			assert(false);
+		}
+		
 	}
 	
 	/**
@@ -747,17 +768,20 @@ public class Mazub extends GameObject {
 	 * 			| duck == false
 	 * 			| maxSpeed == MAX_SPEED
 	 */
-	// TODO defensief maken
 	public void endDuck() {
-		// zoiets fzo? kweet eig ni echt zo goed hoe...
-//		if ( ! this.isDucked())
-//			throw eenofandereexception -> dit werkte bij mij wel niet + try/catch
-		this.setDuck(false);
-		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
-		if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
-			this.startDuck();
-			this.setDuckShouldEnd(true);
-		}		
+		try {
+			if ( ! this.isDucked())
+				throw new IllegalDuckException(this.isDucked());
+			this.setDuck(false);
+			this.setMaxSpeed(Mazub.getMaxMovingSpeed());
+			if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
+				this.startDuck();
+				this.setDuckShouldEnd(true);
+			}	
+		} catch (IllegalDuckException exc) {
+			assert (false);
+		}
+		
 	}
 	
 	/**

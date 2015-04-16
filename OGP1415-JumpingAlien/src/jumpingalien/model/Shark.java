@@ -208,15 +208,20 @@ public class Shark extends GameObject {
 		}
 	}
 	
+	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.remove();
+		}
+	}
+	
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);
 		
 		double[] newCalculatedPos = this.calculateNewPos(dt);
 		double newXPos = newCalculatedPos[0];
 		double newYPos = newCalculatedPos[1];
-		if ( ! isWithinBoundaries(newXPos,newYPos)) {
-			this.remove();
-		}
+		
+		this.checkIfWithinBoundaries(newXPos, newYPos);
 		
 		double[] newPos = checkSurroundings(newXPos,newYPos);
 		newPos = colliding(newPos[0],newPos[1], dt);

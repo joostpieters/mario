@@ -35,7 +35,11 @@ public class World {
 	 *            Tile x-coordinate of the target tile of the created world
 	 * @param targetTileY
 	 *            Tile y-coordinate of the target tile of the created world
-	 * @throws IllegalNbTilesException 
+	 * @throws IllegalAmountOfCharactersException
+	 * @throws IllegalTileSizeException
+	 * @throws IllegalTargetTileException
+	 * @throws IllegalVisibleWindowException
+	 * @throws IllegalArgumentException
 	 * @effect the new game world is created
 	 * 			| setTileSize)
 	 * 			| this.setNbTilesX(nbTilesX)
@@ -45,8 +49,7 @@ public class World {
 	 * 			| this.setTargetTileX(targetTileX)
 	 * 			| this.setTargetTileY(targetTileY)
 	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
-	 *  		| the geological features of the entire world are by default air (0)
-	 *  //TODO throws in commentaar toevoegen	
+	 *  		| the geological features of the entire world are by default air (0)	
 	 */
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
@@ -179,22 +182,21 @@ public class World {
 		return new int[] {tileX * this.getTileLength(),
 				tileY * this.getTileLength()};
 	}	
-	/**
-	 * Returns the bottom right pixel coordinate of the tile at the given tile
-	 * position.
-	 * 
-	 * @param tileX
-	 *            The x-position x_T of the tile
-	 * @param tileY
-	 *            The y-position y_T of the tile
-	 * @return An array which contains the x-coordinate and y-coordinate of the
-	 *         bottom right pixel of the given tile, in that order.
-	 */
-	// TODO ik denk dat we die niet nodig hebben
-	public int[] getBottomRightPixelOfTile(int tileX, int tileY) {
-		return new int[] {tileX * this.getTileLength() + this.getTileLength(),
-				tileY * this.getTileLength()};
-	}		
+//	/**
+//	 * Returns the bottom right pixel coordinate of the tile at the given tile
+//	 * position.
+//	 * 
+//	 * @param tileX
+//	 *            The x-position x_T of the tile
+//	 * @param tileY
+//	 *            The y-position y_T of the tile
+//	 * @return An array which contains the x-coordinate and y-coordinate of the
+//	 *         bottom right pixel of the given tile, in that order.
+//	 */
+//	public int[] getBottomRightPixelOfTile(int tileX, int tileY) {
+//		return new int[] {tileX * this.getTileLength() + this.getTileLength(),
+//				tileY * this.getTileLength()};
+//	}		
 	/**
 	 * Returns the tile coordinate of the tile at the given pixels.
 	 * 
@@ -301,10 +303,7 @@ public class World {
 	 */
 	public int getY() {
 		return this.getNbTilesY() * this.getTileLength();
-	}	
-//	public Collection<Mazub> getMazubs() {
-//		return this.mazubs;
-//	}
+	}
 	public Collection<Plant> getPlants() {
 		return this.plants;
 	}
@@ -313,10 +312,7 @@ public class World {
 	}
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
-	}	
-//	private int getNbMazubs() {
-//		return mazubs.size();
-//	}
+	}
 	private int getNbPlants() {
 		return plants.size();
 	}

@@ -792,13 +792,6 @@ public abstract class GameObject {
 		this.stopMovingY();
 	}
 	
-	// TODO dit fixen pieter = een piemel muilen laura hahaha spel
-	protected void checkIfWithinBoundaries(double newXPos, double newYPos) {
-		if ( ! isWithinBoundaries(newXPos,newYPos)) {
-			this.die();
-		}
-	}
-	
 	public double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
 			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1

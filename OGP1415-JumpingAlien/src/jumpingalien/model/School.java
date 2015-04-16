@@ -26,7 +26,7 @@ public class School {
 		assert ( ! this.getMembers().contains(slime));
 		slime.setHitpoints(slime.getHitpoints() + slime.getSchool().getLength() - this.getLength());
 		for (Slime oldMember: slime.getSchool().getMembers()) {
-			oldMember.setHitpoints(oldMember.getHitpoints() - 1);
+			oldMember.setHitpoints(oldMember.getHitpoints() - Slime.getSchoolDamage());
 		}
 		for (Slime newMember: this.getMembers()) {
 			newMember.setHitpoints(newMember.getHitpoints() + 1);

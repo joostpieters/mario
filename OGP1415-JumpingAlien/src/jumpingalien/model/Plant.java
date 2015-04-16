@@ -86,28 +86,28 @@ public class Plant extends GameObject {
 		return sprites.length == 2;
 	}	
 	
-	// TODO in level 2 de plantjes fixeeeuuuuu
+	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
+			this.remove();
+		}
+	}
+	
 	public void advanceTime(double dt) {
 		
 		double newXPos = this.getXPos();
 		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
-		// TODO in 1nen if zetten, boeit het of boeit het niet? :o
-		// is ward een hoer of is hij het? ik denk van ni, want meestal betaal ik toch u mama
-		if (this.getOrientation() == Orientation.RIGHT) {
-			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
-				newXPos = (this.getXPos() + this.getXSpeed()*100*dt);
-			}
+		
+		if ((this.getOrientation() == Orientation.RIGHT) &&
+				( ! this.againstRightWall(this.getXPos(), this.getYPos()))) {
+				newXPos = (this.getXPos() + this.getXSpeed() * 100 * dt);
 		}
-		else if (this.getOrientation() == Orientation.LEFT) {
-			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
-				newXPos = (this.getXPos() - this.getXSpeed()*100*dt);
-			}
+		else if ((this.getOrientation() == Orientation.LEFT) &&
+				( ! this.againstLeftWall(this.getXPos(), this.getYPos()))) {
+				newXPos = (this.getXPos() - this.getXSpeed() * 100 * dt);
 		}
 		
-		if ( ! this.isWithinBoundaries(newXPos, this.getYPos())) {
-			this.remove();
-		}
+		this.checkIfWithinBoundaries(newXPos, this.getYPos());
 		
 		this.setXPos(newXPos);
 		
