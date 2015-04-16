@@ -8,7 +8,6 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 // TODO alles final maken wat final moet zijn
-// TODO alle @Basic enzo
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren
@@ -89,6 +88,8 @@ public class World {
 	private int[][] geologicalFeature;// = new int[this.nbTilesY][this.nbTilesX];
 	private Mazub alien;
 	
+	// private List<Mazub> mazubs = new CopyOnWriteArrayList<Mazub>(); 
+	//	TODO			-> blz 3 onderaan: at least one player character mazub
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
 	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();	
@@ -482,7 +483,8 @@ public class World {
 	}	
 	private boolean isValidNbTiles(int nbTiles){
 		return nbTiles > 0;
-	}
+	}	
+	// TODO, is deze niet klaar?
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight

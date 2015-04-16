@@ -58,7 +58,6 @@ public class Slime extends GameObject {
 		return timeSinceMove;
 	}
 	/**
-	 * sets the time since the start of a move
 	 * @param timeSinceMove the timeSinceMove to set
 	 */
 	private void setTimeSinceMove(double time) {

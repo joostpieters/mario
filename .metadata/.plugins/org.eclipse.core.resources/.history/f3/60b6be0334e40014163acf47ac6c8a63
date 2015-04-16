@@ -452,7 +452,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	private void endMove() {
-		assert (this.isValidXSpeed(this.getXSpeed()));
+		assert (this.isValidXSpeed());
 		assert (this.isValidPosition(this.getXPos(),this.getYPos()));
 		this.setXSpeed(0);
 		this.setXAcc(0);

@@ -61,9 +61,7 @@ public abstract class GameObject {
 	 * 			The new value for the horizontal position
 	 */
 	@Raw 
-	protected void setXPos(double x) {
-		assert x >= 0;
-		assert x <= this.getWorld().getX();
+	public void setXPos(double x) {
 		this.xPos = x;
 	}	
 	/**

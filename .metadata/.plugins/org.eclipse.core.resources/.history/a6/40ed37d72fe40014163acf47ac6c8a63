@@ -58,7 +58,6 @@ public class Slime extends GameObject {
 		return timeSinceMove;
 	}
 	/**
-	 * sets the time since the start of a move
 	 * @param timeSinceMove the timeSinceMove to set
 	 */
 	private void setTimeSinceMove(double time) {
@@ -248,6 +247,7 @@ public class Slime extends GameObject {
 		this.checkIfWithinBoundaries(newXPos, newYPos);
 				
 		double[] newPos = checkSurroundings(newXPos,newYPos);
+//		newPos = collidingSlimes(newPos[0],newPos[1]);
 		newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt);
 		this.setNewSpeed(dt);
 		

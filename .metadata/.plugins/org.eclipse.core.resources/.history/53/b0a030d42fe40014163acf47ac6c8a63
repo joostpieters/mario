@@ -58,7 +58,6 @@ public class Slime extends GameObject {
 		return timeSinceMove;
 	}
 	/**
-	 * sets the time since the start of a move
 	 * @param timeSinceMove the timeSinceMove to set
 	 */
 	private void setTimeSinceMove(double time) {
@@ -165,7 +164,35 @@ public class Slime extends GameObject {
 		
 		return new double[] {newXPos, newYPos};
 	}	
-
+	
+//	public double[] collidingSlimes(double newXPos, double newYPos) {		
+//		for(Slime other: this.getWorld().getSlimes()) {
+//			if(other != this) {
+//				double x1 = newXPos;
+//				double xDim1 = this.getXDim();
+//				double y1 = newYPos;
+//				double yDim1 = this.getYDim();
+//				double x2 = other.getXPos();
+//				double xDim2 = other.getXDim();
+//				double y2 = other.getYPos();
+//				double yDim2 = other.getYDim();
+//				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
+//						yDim2, newXPos, newYPos);
+//				newXPos = newPos[0];
+//				newYPos = newPos[1];
+//				if (newPos[2] == 1) {
+//					if(this.getSchool().getLength() > other.getSchool().getLength()) {
+//						this.getSchool().addSlime(other);
+//					}
+//					else if (this.getSchool().getLength() < other.getSchool().getLength()) {
+//						other.getSchool().addSlime(this);
+//					}
+//				}
+//			}
+//		}
+//		return new double[] {newXPos, newYPos};
+//	}
+	
 	// TODO adjust schools maken ofzo
 	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
@@ -248,6 +275,7 @@ public class Slime extends GameObject {
 		this.checkIfWithinBoundaries(newXPos, newYPos);
 				
 		double[] newPos = checkSurroundings(newXPos,newYPos);
+//		newPos = collidingSlimes(newPos[0],newPos[1]);
 		newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt);
 		this.setNewSpeed(dt);
 		

@@ -93,7 +93,7 @@ public class Plant extends GameObject {
 		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		// TODO in 1nen if zetten, boeit het of boeit het niet? :o
-		// is ward een hoer of is hij het? ik denk van ni, want meestal betaal ik toch u mama
+		// is ward een hoer of is hij het?
 		if (this.getOrientation() == Orientation.RIGHT) {
 			if ( ! this.againstRightWall(this.getXPos(), this.getYPos())) {
 				newXPos = (this.getXPos() + this.getXSpeed()*100*dt);

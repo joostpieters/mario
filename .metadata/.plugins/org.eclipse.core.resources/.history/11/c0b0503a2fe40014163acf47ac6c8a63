@@ -182,7 +182,9 @@ public class Shark extends GameObject {
 				this.setYSpeed(0);
 			}
 		}			
-
+		if (( ! onFloor(newXPos,newYPos)) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isFalling())){
+			fall();
+		}
 		return new double[] {newXPos, newYPos};
 	}
 	
@@ -402,7 +404,7 @@ public class Shark extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.onFloor(newXPos,newYPos))) {
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}
 		return new double[] {newXPos, newYPos};

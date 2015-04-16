@@ -52,7 +52,7 @@ public abstract class GameObject {
 	 * @return xPos
 	 */
 	@Basic @Raw 
-	protected double getXPos() {
+	public double getXPos() {
 		return xPos;
 	}	
 	/**
@@ -61,9 +61,7 @@ public abstract class GameObject {
 	 * 			The new value for the horizontal position
 	 */
 	@Raw 
-	protected void setXPos(double x) {
-		assert x >= 0;
-		assert x <= this.getWorld().getX();
+	public void setXPos(double x) {
 		this.xPos = x;
 	}	
 	/**
@@ -140,7 +138,6 @@ public abstract class GameObject {
 		return this.xSpeed;
 	}
 	protected void setXSpeed(double speed) {
-		assert this.isValidXSpeed(speed);
 		this.xSpeed = speed;
 	}	
 	private double ySpeed;
@@ -148,7 +145,6 @@ public abstract class GameObject {
 		return this.ySpeed;
 	}
 	public void setYSpeed(double speed) {
-		assert this.isValidYSpeed(speed);
 		this.ySpeed = speed;
 	}	
 	/**
@@ -472,15 +468,6 @@ public abstract class GameObject {
 	protected boolean isValidAmountOfHitpoints(int hitpoints) {
 		return (hitpoints <= this.getMaxHitpoints() && hitpoints >= 0);
 	}	
-	/**
-	 * Checks whether the current horizontal speed is valid
-	 * @return True if the current horizontal speed is valid
-	 * 			| ((this.getXSpeed() >= 0) && (this.getXSpeed() <= this.getMaxSpeed()))
-	 */
-	protected boolean isValidXSpeed(double speed) {
-		return ((speed >= 0) && (speed <= this.getMaxSpeed()) && ( ! Double.isNaN(speed)));
-	}
-	
 	protected boolean isWithinBoundariesX(double x) {
 		return ((x >= 0) && (x <= this.getWorld().getX()));
 	}
