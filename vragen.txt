@@ -14,6 +14,8 @@
 12. Hoe moeten die overlappingen?
 13. start- en endDuck in mazub: hoe defensief maken
 
+14. Wanneer een getter niet @Basic maken?
+
 
 
 Als we magisch 3 uur over hebben: mazub die rare dingen doet als er een slime opvalt (alle soms toch)

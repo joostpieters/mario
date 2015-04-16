@@ -31,6 +31,7 @@ public abstract class GameObject {
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
+	@Raw
 	protected GameObject(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 				if(!isValidPosition(xPos,yPos))
@@ -121,6 +122,7 @@ public abstract class GameObject {
 	/**
 	 * @return the sprites
 	 */
+	@Basic
 	public Sprite[] getSprite() {
 		return sprites;
 	}
@@ -132,6 +134,7 @@ public abstract class GameObject {
 		this.sprites = sprites;
 	}	
 	private World world;
+	@Basic
 	public World getWorld() {
 		return this.world;
 	}
@@ -139,6 +142,7 @@ public abstract class GameObject {
 		this.world = world;
 	}	
 	protected double xSpeed;
+	@Basic
 	public double getXSpeed() {
 		return this.xSpeed;
 	}
@@ -147,6 +151,7 @@ public abstract class GameObject {
 		this.xSpeed = speed;
 	}	
 	private double ySpeed;
+	@Basic
 	public double getYSpeed() {
 		return this.ySpeed;
 	}
@@ -158,6 +163,7 @@ public abstract class GameObject {
 	 * the horizontal acceleration 
 	 */
 	private double xAcc;
+	@Basic
 	public double getXAcc() {
 		return xAcc;
 	}
@@ -168,8 +174,8 @@ public abstract class GameObject {
 	 */
 	@Raw 
 	public void setXAcc(double xAcc) {
-		assert  ! Double.isNaN(xAcc);
-		assert xAcc >= 0;	
+		assert ( ! Double.isNaN(xAcc));
+		assert (xAcc >= 0);	
 		this.xAcc = xAcc;
 	}
 	/**
@@ -195,7 +201,8 @@ public abstract class GameObject {
 		assert  ! Double.isNaN(yAcc);
 		this.yAcc = yAcc;
 	}	
-	private boolean dying = false;	
+	private boolean dying = false;
+	@Basic
 	public boolean isDying() {
 		return this.dying;
 	}
@@ -208,6 +215,7 @@ public abstract class GameObject {
 	 * @return An array, consisting of 2 integers {x, y}, that represents the
 	 *         coordinates of the given shark's bottom left pixel in the world.
 	 */
+	@Basic
 	public int[] getLocation(){
 		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
 	}	
@@ -215,6 +223,7 @@ public abstract class GameObject {
 	 * a variable containing the amount of hitpoints a Shark possesses
 	 */
 	protected int hitpoints;
+	@Basic
 	public int getHitpoints() {
 		return this.hitpoints;
 	}
@@ -230,29 +239,20 @@ public abstract class GameObject {
 	private int MAX_HITPOINTS = 100;
 	/**
 	 * the maximum amount of hitpoints
-	 * @returnMAXHITPOINTS
+	 * @return MAXHITPOINTS
 	 */
+	@Basic @Immutable 
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
 	private double timeSinceDeath = 0;
+	@Basic
 	public double getTimeSinceDeath() {
 		return this.timeSinceDeath;
 	}
 	public void setTimeSinceDeath(double t) {
 		assert t >= 0;
 		this.timeSinceDeath = t;
-	}	
-	/**
-	 * changes the orientation of the plant
-	 */
-	public void changeOrientation() {
-		if (this.getOrientation() == Orientation.LEFT) {
-			this.setOrientationRight();
-		}
-		else {
-			this.setOrientationLeft();
-		}
 	}	
 	/**
 	 * Returns the horizontal and vertical velocity
@@ -316,9 +316,9 @@ public abstract class GameObject {
 	 * 			the new maximum horizontal speed of mazub
 	 */
 	@Raw
-	protected void setMaxSpeed(double d) {
-		assert this.isValidXSpeed(d);
-		this.maxSpeed = d;
+	protected void setMaxSpeed(double speed) {
+		assert this.isValidXSpeed(speed);
+		this.maxSpeed = speed;
 	}
 	/**
 	 * the vertical acceleration at which a GameObject falls
@@ -335,7 +335,8 @@ public abstract class GameObject {
 	/**
 	 * The boolean to reflect or a gameObject is falling or not
 	 */
-	private boolean falling = false;		
+	private boolean falling = false;
+	@Basic 
 	protected boolean isFalling() {
 		return falling;
 	}
@@ -370,6 +371,7 @@ public abstract class GameObject {
 		this.endFalling();		
 	}	
 	protected boolean immune = false;
+	@Basic 
 	protected boolean isImmune() {
 		return this.immune;
 	}
@@ -380,6 +382,7 @@ public abstract class GameObject {
 		this.immune = false;
 	}
 	protected double timeSinceImmune = 0;
+	@Basic 
 	protected double getTimeSinceImmune() {
 		return this.timeSinceImmune;
 	}
@@ -388,14 +391,17 @@ public abstract class GameObject {
 		this.timeSinceImmune = dt;
 	}
 	protected static final double IMMUNE_TIME = 0.6;
+	@Basic @Immutable 
 	protected static final double getImmuneTime() {
 		return IMMUNE_TIME;
 	}
 	private static final int TOUCH_ENEMY = 50;
+	@Basic @Immutable 
 	private static final int getTouchEnemy() {
 		return TOUCH_ENEMY;
 	}
 	protected double timeInMagma = 0;
+	@Basic 
 	protected double getTimeInMagma() {
 		return this.timeInMagma;
 	}
@@ -404,6 +410,7 @@ public abstract class GameObject {
 		this.timeInMagma = dt;
 	}	
 	protected double timeInWater = 0;
+	@Basic 
 	protected double getTimeInWater() {
 		return this.timeInWater;
 	}
@@ -412,22 +419,27 @@ public abstract class GameObject {
 		this.timeInWater = dt;
 	}
 	protected static final double DROWN_TIME = 0.2;
+	@Basic @Immutable 
 	protected static final double getDrownTime() {
 		return DROWN_TIME;
 	}
 	protected static final double LOSS_HITPOINTS_IN_MAGMA = 50;
+	@Basic @Immutable 
 	protected static final double getLossHitpointsInMagma() {
 		return LOSS_HITPOINTS_IN_MAGMA;
 	}
 	protected static final double BURN_TIME = 0.2;
+	@Basic @Immutable 
 	protected static final double getBurnTime() {
 		return BURN_TIME;
 	}
 	protected static final double TIME_UNTIL_REMOVE = 0.6;
+	@Basic @Immutable 
 	protected static final double getTimeUntilRemove() {
 		return TIME_UNTIL_REMOVE;
 	}
 	protected double counterUntilRemove = 0;
+	@Basic 
 	protected double getCounterUntilRemove() {
 		return counterUntilRemove;
 	}
@@ -441,6 +453,7 @@ public abstract class GameObject {
 	 * of the hitpoints which are to lose and the int value
 	 */
 	protected double hitpointsDifference;
+	@Basic 
 	protected double getHitpointsDifference() {
 		return hitpointsDifference;
 	}
@@ -510,6 +523,18 @@ public abstract class GameObject {
 		this.setYSpeed(0);
 		this.setYAcc(0);
 		this.setDying();
+	}
+	
+	/**
+	 * changes the orientation of the plant
+	 */
+	public void changeOrientation() {
+		if (this.getOrientation() == Orientation.LEFT) {
+			this.setOrientationRight();
+		}
+		else {
+			this.setOrientationLeft();
+		}
 	}	
 	
 	protected double[] calculateNewPos(double dt) {		

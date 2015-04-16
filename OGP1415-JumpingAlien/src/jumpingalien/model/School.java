@@ -3,6 +3,7 @@ package jumpingalien.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 
 public class School {
@@ -11,6 +12,7 @@ public class School {
 	}
 	private List<Slime> members = new CopyOnWriteArrayList<Slime>();
 	
+	@Basic 
 	public List<Slime> getMembers() {
 		return this.members;
 	}
@@ -18,6 +20,7 @@ public class School {
 		this.members.add(slime);
 	}
 	
+	@Basic 
 	public int getLength() {
 		return this.getMembers().size();
 	}

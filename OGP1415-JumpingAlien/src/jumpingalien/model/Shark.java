@@ -38,7 +38,7 @@ public class Shark extends GameObject {
 	 * the initial amount of hitpoints a shark possesses
 	 */
 	private static final int INIT_HIT_POINTS = 100;
-	@Immutable
+	@Basic @Immutable
 	private static int getInitHitpoints() {
 		return INIT_HIT_POINTS;
 	}		
@@ -46,7 +46,7 @@ public class Shark extends GameObject {
 	 * the maximum horizontal speed a shark can reach
 	 */
 	private static final double MAX_X_SPEED = 4;
-	@Immutable
+	@Basic @Immutable
 	private static final double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}
@@ -55,12 +55,12 @@ public class Shark extends GameObject {
 	 * startJump() is initiated
 	 */
 	private static final int JUMP_SPEED = 2;
-	@Immutable
+	@Basic @Immutable
 	private static final double getJumpSpeed() {
 		return JUMP_SPEED;
 	}
 	private static final double MOVE_ACC = 1.5;
-	@Immutable
+	@Basic @Immutable
 	private static final double getMoveAcc() {
 		return MOVE_ACC;
 	}
@@ -69,7 +69,7 @@ public class Shark extends GameObject {
 	 * a mazub or a slime
 	 */
 	private static final int CONTACT_DAMAGE = 50;
-	@Immutable
+	@Basic @Immutable
 	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
 	}	
@@ -79,19 +79,22 @@ public class Shark extends GameObject {
 	 * the maximum amount of hitpoints
 	 * @return MAX_HITPOINTS
 	 */
-	@Immutable
+	@Basic @Immutable
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
 	private static final int LOSS_HITPOINTS_IN_AIR = 6;
+	@Basic @Immutable 
 	private static final int getLossHitpointsInAir() {
 		return LOSS_HITPOINTS_IN_AIR;
 	}	
 	private static final double TIME_UNTIL_CHOKE = 0.2;
+	@Basic @Immutable 
 	private static final double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
 	}
 	private boolean inWater = true;
+	@Basic
 	private boolean isInWater() {
 		return inWater;
 	}
@@ -102,6 +105,7 @@ public class Shark extends GameObject {
 		this.inWater = false;
 	}
 	private double timeInAir = 0;
+	@Basic
 	private double getTimeInAir() {
 		return timeInAir;
 	}
@@ -109,6 +113,7 @@ public class Shark extends GameObject {
 		this.timeInAir = time;
 	}
 	private double movementDuration = 0;
+	@Basic
 	private double getMovementDuration() {
 		return movementDuration;
 	}
@@ -119,6 +124,7 @@ public class Shark extends GameObject {
 	/**
 	 * @return the timeSinceMove
 	 */
+	@Basic
 	private double getTimeSinceMove() {
 		return timeSinceMove;
 	}
@@ -129,6 +135,7 @@ public class Shark extends GameObject {
 		this.timeSinceMove = time;
 	}	
 	private int jumpCounter = 0;
+	@Basic
 	private int getJumpCounter() {
 		return this.jumpCounter;
 	}
@@ -136,6 +143,7 @@ public class Shark extends GameObject {
 		this.jumpCounter = count;		
 	}
 	private boolean moving = true;
+	@Basic
 	private boolean isMoving() {
 		return this.moving;
 	}

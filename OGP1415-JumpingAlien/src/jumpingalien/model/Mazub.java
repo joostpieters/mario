@@ -196,6 +196,8 @@ public class Mazub extends GameObject {
 	 * @return the nbRunningSprites
 	 * 			| nbRunningSprites
 	 */
+	// TODO is dit immutable?
+	@Basic @Immutable 
 	private int getNbRunningSprites() {
 		return nbRunningSprites;
 	}
@@ -204,6 +206,7 @@ public class Mazub extends GameObject {
 	 * @return the counterSprites
 	 * 			| counterSprites
 	 */
+	@Basic
 	private int getCounterSprites() {
 		return counterSprites;
 	}
@@ -212,7 +215,7 @@ public class Mazub extends GameObject {
 	 * @return the time_since_endMove
 	 * 			| time_since_endMove
 	 */
-	@Raw 
+	@Basic @Raw 
 	private double getTimeSinceEndMove() {
 		return timeSinceEndMove;
 	}
@@ -221,7 +224,7 @@ public class Mazub extends GameObject {
 	 * @return the time_since_startMove
 	 * 			| time_since_startMove
 	 */
-	@Raw 
+	@Basic @Raw 
 	private double getTimeSinceStartMove() {
 		return timeSinceStartMove;
 	}
@@ -295,10 +298,12 @@ public class Mazub extends GameObject {
      ~~` `-.~-..~` ~~`  ~`
      '~~ ~~`-  ^-~~`~ ^
 	 */
+	@Basic
 	private boolean isDucked(){
 		return (this.duck);
 	}
 	
+	@Basic @Immutable
 	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
 	}
@@ -741,6 +746,7 @@ public class Mazub extends GameObject {
 	}	
 	
 	// TODO sorry maar die exceptions hier werkten absoluut niet
+	// -> die moeten toch ook niet werken?
 	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 

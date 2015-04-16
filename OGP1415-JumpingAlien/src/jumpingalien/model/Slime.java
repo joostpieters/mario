@@ -40,10 +40,12 @@ public class Slime extends GameObject {
 	
 	
 	private static final int LOSS_HITPOINTS_IN_WATER = 6;
+	@Basic @Immutable 
 	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
 	}	 
 	private double movementDuration = 0;
+	@Basic
 	private double getMovementDuration() {
 		return movementDuration;
 	}	
@@ -54,6 +56,7 @@ public class Slime extends GameObject {
 	/**
 	 * @return the timeSinceMove
 	 */
+	@Basic
 	private double getTimeSinceMove() {
 		return timeSinceMove;
 	}
@@ -65,6 +68,7 @@ public class Slime extends GameObject {
 		this.timeSinceMove = time;
 	}
 	private static final int INIT_HITPOINTS = 100;
+	@Basic @Immutable 
 	private static final int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
@@ -72,7 +76,7 @@ public class Slime extends GameObject {
 	 * the horizontal acceleration of a slime
 	 */
 	private static final double xAcc = 0.7;
-	@Override
+	@Override @Basic @Immutable 
 	public final double getXAcc() {
 		return xAcc;
 	}
@@ -103,6 +107,7 @@ public class Slime extends GameObject {
 	 * 
 	 * @return The current school of the given slime.
 	 */
+	@Basic
 	public School getSchool() {
 		return this.school;
 	}
@@ -115,21 +120,25 @@ public class Slime extends GameObject {
 	 * the maximum amount of hitpoints
 	 * @returnMAXHITPOINTS
 	 */
+	@Basic @Immutable 
 	protected final int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
 	
 //	GETTERS	
-
+	@Basic @Immutable 
 	private static final double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}	
+	@Basic @Immutable 
 	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
-	}	
+	}
+	@Basic @Immutable 
 	public static final int getSchoolDamage() {
 		return SCHOOL_DAMAGE;
 	}
+	@Basic @Immutable 
 	private static final int getMaxAmountOfSchools() {
 		return MAX_AMOUNT_OF_SCHOOLS;
 	}

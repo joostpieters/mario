@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 // TODO alles final maken wat final moet zijn
-// TODO alle @Basic enzo
+// TODO alles @Basic enzo
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren
@@ -80,7 +82,7 @@ public class World {
 		this.geologicalFeature = new int[nbTilesY][nbTilesX];		
 	}	
 	
-
+	
 	private int tileSize;
 	private int nbTilesX;
 	private int nbTilesY;
@@ -105,6 +107,7 @@ public class World {
 	 * @return The size of the game world, in pixels, as an array of two
 	 *         elements: width (X) and height (Y), in that order.
 	 */
+	@Basic @Immutable 
 	public int[] getWorldSizeInPixels() {
 		return new int[] {getX(),getY()};
 	}	
@@ -114,42 +117,49 @@ public class World {
 	 * @return The length of a square tile side, expressed as a number of
 	 *         pixels.
 	 */
+	@Basic @Immutable 
 	public int getTileLength() {
 		return this.tileSize;
 	}		
 	/**
 	 * @return the nbTilesX
 	 */
+	@Basic @Immutable 
 	public int getNbTilesX() {
 		return nbTilesX;
 	}
 	/**
 	 * @return the nbTilesY
 	 */
+	@Basic @Immutable 
 	private int getNbTilesY() {
 		return nbTilesY;
 	}
 	/**
 	 * @return the visibleWindowWidth
 	 */
+	@Basic @Immutable 
 	private int getVisibleWindowWidth() {
 		return visibleWindowWidth;
 	}
 	/**
 	 * @return the visibleWindowHeight
 	 */
+	@Basic @Immutable 
 	private int getVisibleWindowHeight() {
 		return visibleWindowHeight;
 	}
 	/**
 	 * @return the targetTileX
 	 */
+	@Basic @Immutable 
 	private int getTargetTileX() {
 		return targetTileX;
 	}
 	/**
 	 * @return the targetTileY
 	 */
+	@Basic @Immutable 
 	private int getTargetTileY() {
 		return targetTileY;
 	}
@@ -160,11 +170,13 @@ public class World {
 	 * @return The pixel coordinates of the visible window, in the order
 	 *         <b>left, bottom, right, top</b>.
 	 */
+	@Basic
 	public int[] getVisibleWindow() {
 		return new int[] {this.getXVisibleWindow(), this.getYVisibleWindow(),
 				this.getXVisibleWindow() + this.getVisibleWindowWidth(),
 				this.getYVisibleWindow() + this.getVisibleWindowHeight()};
-	}	
+	}
+	@Basic
 	public Mazub getAlien() {
 		return this.alien;
 	}	
@@ -179,6 +191,7 @@ public class World {
 	 * @return An array which contains the x-coordinate and y-coordinate of the
 	 *         bottom left pixel of the given tile, in that order.
 	 */
+	@Basic
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
 		return new int[] {tileX * this.getTileLength(),
 				tileY * this.getTileLength()};
@@ -208,6 +221,7 @@ public class World {
 	 * @return An array which contains the x-coordinate and y-coordinate of the
 	 *          given tile, in that order.
 	 */
+	@Basic
 	private int[] getTileOfPixels(int pixelX, int pixelY) {
 		return new int[] {(pixelX - pixelX % this.getTileLength()) / this.getTileLength(),
 				(pixelY - pixelY % this.getTileLength()) / this.getTileLength()};
@@ -233,6 +247,7 @@ public class World {
 	 *         small to large x_T) precede the positions of the row above that.
 	 * 
 	 */
+	@Basic
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
 	//	System.out.println(pixelLeft); System.out.println(pixelBottom); System.out.println(pixelRight);
@@ -285,6 +300,7 @@ public class World {
 	 * @throw IllegalPixelException if the given position does not correspond to the
 	 *        bottom left pixel of a tile.
 	 */
+	@Basic
 	public int getGeologicalFeature(int pixelX, int pixelY)
 			throws IllegalPixelException {
 				if ( ! isValidBottomLeftPixel(pixelX, pixelY))
@@ -295,46 +311,57 @@ public class World {
 	 * 
 	 * @return nbTilesX * tileLength
 	 */
+	@Basic @Immutable 
 	public int getX() {
 		return this.getNbTilesX() * this.getTileLength();
 	}	
 	/**
 	 * 
-	 * @return
+	 * @return nbTilesY * tileLength
 	 */
+	@Basic @Immutable 
 	public int getY() {
 		return this.getNbTilesY() * this.getTileLength();
 	}
+	@Basic
 	public Collection<Plant> getPlants() {
 		return this.plants;
 	}
+	@Basic
 	public Collection<Shark> getSharks() {
 		return this.sharks;
 	}
+	@Basic
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
 	}
+	@Basic
 	private int getNbPlants() {
 		return plants.size();
 	}
+	@Basic
 	private int getNbSharks() {
 		return sharks.size();
 	}
+	@Basic
 	private int getNbSlimes() {
 		return slimes.size();
 	}
+	@Basic
 	private int getNbAliens() {
 		return 1;
 	}	
 	/**
 	 * @return the xVisibleWindow
 	 */
+	@Basic
 	private int getXVisibleWindow() {
 		return XVisibleWindow;
 	}
 	/**
 	 * @return the yVisibleWindow
 	 */
+	@Basic
 	private int getYVisibleWindow() {
 		return YVisibleWindow;
 	}

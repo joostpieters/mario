@@ -36,6 +36,7 @@ public class Plant extends GameObject {
 	 * the initial amount of hitpoints a plant possesses
 	 */	
 	private static final int INIT_HITPOINTS = 1;
+	@Basic @Immutable 
 	private static final int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
@@ -54,6 +55,7 @@ public class Plant extends GameObject {
 	 * the maximum amount of hitpoints
 	 * @return MAXHITPOINTS
 	 */
+	@Basic @Immutable 
 	protected final int getMaxHitpoints() {
 		return Plant.MAX_HITPOINTS;
 	}
@@ -63,9 +65,11 @@ public class Plant extends GameObject {
 	/**
 	 * 
 	 */
+	@Basic
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
+	@Basic @Immutable 
 	private static final double getTimeChangeOrientation() {
 		return TIME_CHANGE_ORIENTATION;
 	}
