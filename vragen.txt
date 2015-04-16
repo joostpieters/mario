@@ -9,7 +9,7 @@
 							-> staat niet duidelijk id opgave/Ifacade ==> vanaf een overlapping (zoals nu)
 8. Wat is het maximum aantal hitpoints van een slime? -> 500
 9. als mazub op een shark springt, moet de shark (en mazub) dan naar beneden gaan ofzo?
-10. testfiles: voor elke uitzondering test maken? en alle tests in 1 bestand of verschillende bestanden?
+10. testfiles: voor elke uitzondering test maken? en alle tests in 1 bestand of verschillende bestanden? -> per klasse file maken
 11. hoelang mogen functies ongeveer zijn? -> ongeveer 25 lijnen 
 12. Hoe moeten die overlappingen?
 13. start- en endDuck in mazub: hoe defensief maken
