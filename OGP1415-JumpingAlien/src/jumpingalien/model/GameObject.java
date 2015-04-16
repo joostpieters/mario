@@ -723,18 +723,17 @@ public abstract class GameObject {
 	
 	protected boolean collidesAbove(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
-		boolean xStatement = ( (x2 + 1 >= x1 + 1) && (x2 + 1<= x1 + xDim1 - 1) ) 
-				|| ( (x2 + xDim2 - 1>= x1 + 1) && (x2 + xDim2 - 1<= x1 + xDim1 - 1) );
-		boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1);
-				
+		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
+				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
+		boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1 - 1);			
 		return ((xStatement) && (yStatement));
 	}
 	
 	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
 								double x2, double xDim2, double y2, double yDim2) {
 		
-		boolean xStatement = ( (x2 + 1 >= x1 + 1) && (x2 + 1<= x1 + xDim1 - 1) ) 
-				|| ( (x2 + xDim2 - 1>= x1 + 1) && (x2 + xDim2 - 1<= x1 + xDim1 - 1) );
+		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
+				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
 		boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1);
 		
 		return ((xStatement) && (yStatement));
@@ -747,18 +746,6 @@ public abstract class GameObject {
 	
 	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos -> fight anders?:p
 	protected void contactDamage(double dt) {
-		// dit klopte niet denk ik, timeSinceImmune moet bij elke advance time 
-		// aangepast worden -- jep inderdaad
-//		if (this.isImmune()) {
-//			if (this.getTimeSinceImmune() > this.getImmuneTime()) {
-//				this.setNotImmune();
-//				this.setTimeSinceImmune(0);
-//				
-//			}
-//			else {
-//				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-//			}
-//		}
 		if( ! this.isImmune()) {
 			this.setImmune();
 			this.loseHitpoints(GameObject.getTouchEnemy());
@@ -805,34 +792,38 @@ public abstract class GameObject {
 	}
 	
 	// TODO betere naam zoeken
-	protected double [] collidesSomewhere(double x1, double xDim1, double y1, double yDim1, 
-			double x2, double xDim2, double y2, double yDim2, double newXPos, double newYPos) {
+	protected double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
+			double x2, double xDim2, double y2, double yDim2, double dt) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1
-		if (this.collidesRight(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+		int onGameObject = 0;
+		if (this.collidesRight(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newXPos = x2 - xDim1;
 			this.stopMoving();
 			touched = 1;
 		}
-		if (this.collidesLeft(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
+		if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newXPos = x2 + xDim2;
 			this.stopMoving();
-			touched = 1;
 		}
-		if (this.collidesAbove(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-			newYPos = y2 - yDim1;
+		if (this.collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
+			newYPos = y2 - yDim1 + 1;
+			System.out.println("collidesabove");
+			System.out.println(newXPos);
+			System.out.println(newYPos);
 			this.setYSpeed(0);
 			touched = 1;
 		}
-		// deze 2 laatste if statements moeten eigenlijk niet bij mazub
-		if (this.isFalling() &&  this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
-			newYPos = y2 + yDim2;
-			this.endFall();
+		
+		if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
+			System.out.println("collidesunder");
+			System.out.println(newXPos);
+			System.out.println(newYPos);
+			newYPos = y2 + yDim2 - 1 ;
+			onGameObject = 1;
 			touched = 1;
 		}
-		if (( ! this.isFalling()) && ( ! this.collidesUnder(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2) && ( ! onFloor(newXPos,newYPos)))){
-			this.fall();
-		}
-		return new double[] {newXPos, newYPos, touched};
+		
+		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
 	
 	
