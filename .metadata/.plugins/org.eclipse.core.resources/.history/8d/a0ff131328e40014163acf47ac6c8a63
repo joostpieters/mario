@@ -115,7 +115,6 @@ public class Slime extends GameObject {
 	// -> sharks beginnen met 100 hitpoints en kunnen er geen bijkrijgen
 	// Ja maar das is wel ne slime e en die erft dat van Mazub
 	// ge hebt gelijk! maar waarom moet die da erven van mazub?
-	// 500 is een goede keuze volgens thomas
 	private static final int MAX_HITPOINTS = 500;
 	@Override
 	/**

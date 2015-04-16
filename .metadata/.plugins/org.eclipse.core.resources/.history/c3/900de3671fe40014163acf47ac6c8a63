@@ -378,9 +378,9 @@ public class Shark extends GameObject {
 		boolean onGameObject = false;
 		for(GameObject other: allSlimesSharksMazub) {
 			if(this != other) {
-				// double x1 = newXPos;
+				double x1 = newXPos;
 				double xDim1 = this.getXDim();
-				// double y1 = newYPos;
+				double y1 = newYPos;
 				double yDim1 = this.getYDim();
 				double x2 = other.getXPos();
 				double xDim2 = other.getXDim();
@@ -407,6 +407,7 @@ public class Shark extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
+		// TODO kunnen we hetgeen hieronder niet weglaten? Nee dat is nogal belangrijk
 		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}

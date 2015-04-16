@@ -614,6 +614,7 @@ public class Mazub extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
+		// TODO kunnen we hetgeen hieronder niet weglaten? Nee dat is nogal belangrijk
 		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}

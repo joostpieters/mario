@@ -614,9 +614,10 @@ public class Mazub extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
-			fall();
-		}
+		// TODO kunnen we hetgeen hieronder niet weglaten? Nee dat is nogal belangrijk
+//		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
+//			fall();
+//		}
 		return new double[] {newXPos, newYPos};
 	}
 	

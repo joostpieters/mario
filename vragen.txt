@@ -13,6 +13,7 @@
 
 
 
+Als we magisch 3 uur over hebben: mazub die rare dingen doet als er een slime opvalt (alle soms toch)
 
 algemene opmerking: blz 4 vd opgave: the outer layer of a game object's pixels is allowed to overlap with impassable terrain and game objects
 TODO: overal @override in facade

@@ -15,7 +15,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO invariant van binnen grenzen
 
 
-public class World {
+public class World {	
 
 	/**
 	 * Create a new world with the given parameters.
