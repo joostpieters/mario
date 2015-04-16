@@ -793,7 +793,7 @@ public abstract class GameObject {
 	
 	// TODO betere naam zoeken
 	protected double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
-			double x2, double xDim2, double y2, double yDim2, double dt) {
+			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1
 		int onGameObject = 0;
 		if (this.collidesRight(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {

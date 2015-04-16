@@ -386,7 +386,7 @@ public class Shark extends GameObject {
 				boolean touched = false;
 				
 				double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
-						yDim2, dt);
+						yDim2);
 				newXPos = newPos[0];
 				newYPos = newPos[1];
 				if (newPos[2] == 1) {
