@@ -737,7 +737,7 @@ public class Mazub extends GameObject {
 	 * 			| duck == true
 	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
-	// TODO defensief maken -> als mazub al geducked is misschien? Als modelexception eruit laten komen
+	// TODO defensief maken
 	public void startDuck() {
 		this.setDuck(true);
 		this.setDuckShouldEnd(false);
@@ -755,7 +755,7 @@ public class Mazub extends GameObject {
 	public void endDuck() {
 		// zoiets fzo? kweet eig ni echt zo goed hoe...
 //		if ( ! this.isDucked())
-//			throw eenofandereexception -> dit werkte bij mij wel niet + try/catch
+//			throw eenofandereexception -> dit werkte bij mij wel niet + catchen
 		this.setDuck(false);
 		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
 		if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {

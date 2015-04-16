@@ -201,7 +201,6 @@ public class Slime extends GameObject {
 //		return new double[] {newXPos, newYPos};
 //	}
 	
-	// TODO adjust schools maken ofzo
 	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
