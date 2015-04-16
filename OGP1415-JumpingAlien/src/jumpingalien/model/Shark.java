@@ -216,6 +216,9 @@ public class Shark extends GameObject {
 		double[] newCalculatedPos = this.calculateNewPos(dt);
 		double newXPos = newCalculatedPos[0];
 		double newYPos = newCalculatedPos[1];
+		if((this.getXPos() - newXPos >= 1) || (this.getYPos() - newYPos) >= 1) {
+			System.out.println("de possen zijn mis!!!");
+		}
 		if( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}

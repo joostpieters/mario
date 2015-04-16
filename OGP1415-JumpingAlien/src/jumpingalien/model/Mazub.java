@@ -694,15 +694,19 @@ public class Mazub extends GameObject {
 			double[] newCalculatedPos = this.calculateNewPos(dt);
 			double newXPos = newCalculatedPos[0];
 			double newYPos = newCalculatedPos[1];
-			
+			if((this.getXPos() - newXPos >= 1) || (this.getYPos() - newYPos) >= 1) {
+				System.out.println("de possen zijn mis!!!");
+			}
+		
 			this.checkIfWithinBoundaries(newXPos, newYPos);
 			
-			double[] newPos = checkSurroundings(newXPos,newYPos);
-			newPos = colliding(newPos[0],newPos[1], dt);
+//			double[] newPos = checkSurroundings(newXPos,newYPos);
+//			newPos = colliding(newPos[0],newPos[1], dt);
 			
+			double[] newPos = colliding(newXPos, newYPos, dt);
+			newPos = checkSurroundings(newPos[0],newPos[1]);
 			this.setNewSpeed(dt);
 			this.changeMovingTimes(dt);
-			
 			this.setXPos(newPos[0]);
 			this.setYPos(newPos[1]);	
 			if(this.getDuckShouldEnd()) {

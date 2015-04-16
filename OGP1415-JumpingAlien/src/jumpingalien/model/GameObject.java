@@ -734,7 +734,7 @@ public abstract class GameObject {
 		
 		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
 				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
-		boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1);
+		boolean yStatement = (y2 + yDim2 >= y1 + 1) && (y2 + yDim2 <= y1 + yDim1);
 		
 		return ((xStatement) && (yStatement));
 	}	
@@ -792,7 +792,7 @@ public abstract class GameObject {
 	}
 	
 	// TODO betere naam zoeken
-	protected double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
+	public double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
 			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1
 		int onGameObject = 0;
@@ -800,27 +800,27 @@ public abstract class GameObject {
 			newXPos = x2 - xDim1;
 			this.stopMoving();
 			touched = 1;
-			System.out.println("collidesright");
-			System.out.println(newYPos);
+//			System.out.println("collidesright");
+//			System.out.println(newYPos);
 		}
 		if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newXPos = x2 + xDim2;
 			this.stopMoving();
-			System.out.println("collidesleft");
-			System.out.println(newYPos);
+//			System.out.println("collidesleft");
+//			System.out.println(newYPos);
 		}
 		if (this.collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newYPos = y2 - yDim1 + 1;
-			System.out.println("collidesabove");
-			System.out.println(newXPos);
-			System.out.println(newYPos);
+//			System.out.println("collidesabove");
+//			System.out.println(newXPos);
+//			System.out.println(newYPos);
 			this.setYSpeed(0);
 			touched = 1;
 		}
 		if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-			System.out.println("collidesunder");
-			System.out.println(newXPos);
-			System.out.println(newYPos);
+//			System.out.println("collidesunder");
+//			System.out.println(newXPos);
+//			System.out.println(newYPos);
 			newYPos = y2 + yDim2 - 1 ;
 			onGameObject = 1;
 			touched = 1;
