@@ -588,9 +588,7 @@ public class Mazub extends GameObject {
 		allSlimesSharks.addAll(this.getWorld().getSharks());
 		boolean onGameObject = false;
 		for(GameObject other: allSlimesSharks) {
-			double x1 = newXPos;
 			double xDim1 = this.getXDim();
-			double y1 = newYPos;
 			double yDim1 = this.getYDim();
 			double x2 = other.getXPos();
 			double xDim2 = other.getXDim();
@@ -598,18 +596,15 @@ public class Mazub extends GameObject {
 			double yDim2 = other.getYDim();
 			boolean touched = false;
 			
-			double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
-					yDim2, newXPos, newYPos);
+			double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
+					yDim2, dt);
 			newXPos = newPos[0];
 			newYPos = newPos[1];
 			if (newPos[2] == 1) {
 				touched = true;
 			}
-			
-			if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-				newYPos = y2 + yDim2;
+			if (newPos[3] == 1) {
 				onGameObject = true;
-				touched = true;
 			}
 			if ( touched && ( ! other.isDying()))  {
 				this.contactDamage(dt);
@@ -619,7 +614,7 @@ public class Mazub extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		// TODO kunnen we hetgeen hieronder niet weglaten?
+		// TODO kunnen we hetgeen hieronder niet weglaten? Nee dat is nogal belangrijk
 		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
 			fall();
 		}
@@ -632,7 +627,6 @@ public class Mazub extends GameObject {
 		return new double[] {newPos[0], newPos[1]};
 	}
 	
-	//TODO OPASSEN VOLGORDE VAN TOEWIJZIGINGEN AAN NEWPOS 
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		
 		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
