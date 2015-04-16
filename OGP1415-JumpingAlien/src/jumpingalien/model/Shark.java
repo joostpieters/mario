@@ -395,7 +395,7 @@ public class Shark extends GameObject {
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}
-				if ( touched && ( ! other.isDying()))  {
+				if ( touched && ( ! other.isDying()) && !(other instanceof Shark))  {
 					this.contactDamage(dt);
 					other.contactDamage(dt);
 				}		

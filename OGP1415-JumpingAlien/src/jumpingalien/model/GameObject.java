@@ -800,10 +800,14 @@ public abstract class GameObject {
 			newXPos = x2 - xDim1;
 			this.stopMoving();
 			touched = 1;
+			System.out.println("collidesright");
+			System.out.println(newYPos);
 		}
 		if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newXPos = x2 + xDim2;
 			this.stopMoving();
+			System.out.println("collidesleft");
+			System.out.println(newYPos);
 		}
 		if (this.collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newYPos = y2 - yDim1 + 1;
@@ -813,7 +817,6 @@ public abstract class GameObject {
 			this.setYSpeed(0);
 			touched = 1;
 		}
-		
 		if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			System.out.println("collidesunder");
 			System.out.println(newXPos);
