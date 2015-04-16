@@ -85,6 +85,8 @@ public abstract class GameObject {
 	 */	
 	@Raw 
 	public void setYPos(double y) {
+		assert y >= 0;
+		assert y <= this.getWorld().getY();
 		this.yPos = y;
 	}	
 	/**
@@ -126,6 +128,7 @@ public abstract class GameObject {
 	 * @param sprites the sprites to set
 	 */
 	private void setSprite(Sprite[] sprites) {
+		assert this.isValidSprite(sprites);
 		this.sprites = sprites;
 	}	
 	private World world;
@@ -165,6 +168,8 @@ public abstract class GameObject {
 	 */
 	@Raw 
 	public void setXAcc(double xAcc) {
+		assert  ! Double.isNaN(xAcc);
+		assert xAcc >= 0;	
 		this.xAcc = xAcc;
 	}
 	/**
@@ -187,6 +192,7 @@ public abstract class GameObject {
 	 */
 	@Raw 
 	public void setYAcc(double yAcc) {
+		assert  ! Double.isNaN(yAcc);
 		this.yAcc = yAcc;
 	}	
 	private boolean dying = false;	
@@ -213,7 +219,8 @@ public abstract class GameObject {
 		return this.hitpoints;
 	}
 	public void setHitpoints(int number) {
-		if ( ! (number > this.getMaxHitpoints())) {
+		assert number >= 0;
+		if ( number < this.getMaxHitpoints()) {
 			this.hitpoints = number;
 		}		
 		else {
@@ -233,7 +240,8 @@ public abstract class GameObject {
 		return this.timeSinceDeath;
 	}
 	public void setTimeSinceDeath(double t) {
-		this.timeSinceDeath += t;
+		assert t >= 0;
+		this.timeSinceDeath = t;
 	}	
 	/**
 	 * changes the orientation of the plant
@@ -309,6 +317,7 @@ public abstract class GameObject {
 	 */
 	@Raw
 	protected void setMaxSpeed(double d) {
+		assert this.isValidXSpeed(d);
 		this.maxSpeed = d;
 	}
 	/**
@@ -375,6 +384,7 @@ public abstract class GameObject {
 		return this.timeSinceImmune;
 	}
 	protected void setTimeSinceImmune(double dt) {
+		assert dt >= 0;
 		this.timeSinceImmune = dt;
 	}
 	protected static final double IMMUNE_TIME = 0.6;
@@ -390,6 +400,7 @@ public abstract class GameObject {
 		return this.timeInMagma;
 	}
 	protected void setTimeInMagma(double dt) {
+		assert dt >= 0;
 		this.timeInMagma = dt;
 	}	
 	protected double timeInWater = 0;
@@ -397,6 +408,7 @@ public abstract class GameObject {
 		return this.timeInWater;
 	}
 	protected void setTimeInWater(double dt) {
+		assert dt >= 0;
 		this.timeInWater = dt;
 	}
 	protected static final double DROWN_TIME = 0.2;
@@ -420,6 +432,7 @@ public abstract class GameObject {
 		return counterUntilRemove;
 	}
 	protected void setCounterUntilRemove(double time) {
+		assert time >= 0;
 		this.counterUntilRemove = time;
 	}
 	/**

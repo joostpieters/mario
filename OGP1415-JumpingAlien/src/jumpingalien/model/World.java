@@ -14,6 +14,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO Commentaren
 // TODO aparte testfiles
 // TODO invariant van binnen grenzen
+// TODO Laura nog eens muilen
 
 
 public class World {
