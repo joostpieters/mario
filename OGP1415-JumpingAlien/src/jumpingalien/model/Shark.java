@@ -372,6 +372,7 @@ public class Shark extends GameObject {
 		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
 		allSlimesSharksMazub.add(this.getWorld().getAlien());
+		boolean onGameObject = false;
 		for(GameObject other: allSlimesSharksMazub) {
 			if(this != other) {
 				double x1 = newXPos;
@@ -382,21 +383,32 @@ public class Shark extends GameObject {
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				boolean touched =  false;
-				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
-						yDim2, newXPos, newYPos);
+				boolean touched = false;
+				
+				double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
+						yDim2, dt);
 				newXPos = newPos[0];
 				newYPos = newPos[1];
 				if (newPos[2] == 1) {
 					touched = true;
 				}
-	
-				if ( ! other.isDying() && touched && (other instanceof Slime)) {
+				if (newPos[3] == 1) {
+					onGameObject = true;
+				}
+				if ( touched && ( ! other.isDying()))  {
 					this.contactDamage(dt);
 					other.contactDamage(dt);
-				}
+				}		
 			}
+		}
+		if (this.isFalling() && onGameObject) {
+			this.endFall();
+		}
+		// TODO kunnen we hetgeen hieronder niet weglaten? Nee dat is nogal belangrijk
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
+			fall();
 		}
 		return new double[] {newXPos, newYPos};
 	}
+		
 }

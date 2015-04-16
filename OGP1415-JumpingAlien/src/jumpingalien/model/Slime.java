@@ -172,51 +172,81 @@ public class Slime extends GameObject {
 		return new double[] {newXPos, newYPos};
 	}	
 	
-	public double[] collidingSlimes(double newXPos, double newYPos) {		
-		for(Slime other: this.getWorld().getSlimes()) {
+//	public double[] collidingSlimes(double newXPos, double newYPos) {		
+//		for(Slime other: this.getWorld().getSlimes()) {
+//			if(other != this) {
+//				double x1 = newXPos;
+//				double xDim1 = this.getXDim();
+//				double y1 = newYPos;
+//				double yDim1 = this.getYDim();
+//				double x2 = other.getXPos();
+//				double xDim2 = other.getXDim();
+//				double y2 = other.getYPos();
+//				double yDim2 = other.getYDim();
+//				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
+//						yDim2, newXPos, newYPos);
+//				newXPos = newPos[0];
+//				newYPos = newPos[1];
+//				if (newPos[2] == 1) {
+//					if(this.getSchool().getLength() > other.getSchool().getLength()) {
+//						this.getSchool().addSlime(other);
+//					}
+//					else if (this.getSchool().getLength() < other.getSchool().getLength()) {
+//						other.getSchool().addSlime(this);
+//					}
+//				}
+//			}
+//		}
+//		return new double[] {newXPos, newYPos};
+//	}
+	
+	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
+		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
+		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
+		allSharksSlimesMazub.add(this.getWorld().getAlien());	
+		boolean onGameObject = false;
+		for(GameObject other: allSharksSlimesMazub) {
 			if(other != this) {
-				double x1 = newXPos;
 				double xDim1 = this.getXDim();
-				double y1 = newYPos;
 				double yDim1 = this.getYDim();
 				double x2 = other.getXPos();
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
-						yDim2, newXPos, newYPos);
+				boolean touched = false;
+				
+				double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
+						yDim2, dt);
 				newXPos = newPos[0];
 				newYPos = newPos[1];
 				if (newPos[2] == 1) {
-					if(this.getSchool().getLength() > other.getSchool().getLength()) {
-						this.getSchool().addSlime(other);
-					}
-					else if (this.getSchool().getLength() < other.getSchool().getLength()) {
-						other.getSchool().addSlime(this);
-					}
+					touched = true;
 				}
+				if (newPos[3] == 1) {
+					onGameObject = true;
+				}
+				if (touched && ( ! other.isDying())) {
+					if (other instanceof Slime) {
+						if(this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
+							this.getSchool().addSlime((Slime) other);
+						}
+						else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) {
+							((Slime) other).getSchool().addSlime(this);
+						}
+					}
+					else   {
+						this.contactDamage(dt);
+						other.contactDamage(dt);
+					}
+				}	
 			}
 		}
-		return new double[] {newXPos, newYPos};
-	}
-	
-	public double[] collidingSharksMazub(double newXPos, double newYPos) {		
-		List<GameObject> allSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
-		allSharksMazub.add(this.getWorld().getAlien());	
-		for(GameObject other: allSharksMazub) {
-			double x1 = newXPos;
-			double xDim1 = this.getXDim();
-			double y1 = newYPos;
-			double yDim1 = this.getYDim();
-			double x2 = other.getXPos();
-			double xDim2 = other.getXDim();
-			double y2 = other.getYPos();
-			double yDim2 = other.getYDim();
-			
-			double[] newPos = collidesSomewhere(x1, xDim1, y1, yDim1, x2, xDim2, y2,
-					yDim2, newXPos, newYPos);
-			newXPos = newPos[0];
-			newYPos = newPos[1];
+		if (this.isFalling() && onGameObject) {
+			this.endFall();
+		}
+		// TODO kunnen we hetgeen hieronder niet weglaten? Nee dat is nogal belangrijk
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
+			fall();
 		}
 		return new double[] {newXPos, newYPos};
 	}
@@ -250,8 +280,8 @@ public class Slime extends GameObject {
 		this.checkIfWithinBoundaries(newXPos, newYPos);
 				
 		double[] newPos = checkSurroundings(newXPos,newYPos);
-		newPos = collidingSlimes(newPos[0],newPos[1]);
-		newPos = collidingSharksMazub(newPos[0],newPos[1]);
+//		newPos = collidingSlimes(newPos[0],newPos[1]);
+		newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt);
 		this.setNewSpeed(dt);
 		
 		this.setXPos(newPos[0]);
