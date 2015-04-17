@@ -772,14 +772,14 @@ public class Mazub extends GameObject {
 	public void endDuck() {
 		try {
 			if ( ! this.isDucked())
-				throw new IllegalStateException();
+				throw new IllegalDuckException();
 			this.setDuck(false);
 			this.setMaxSpeed(Mazub.getMaxMovingSpeed());
 			if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
 				this.startDuck();
 				this.setDuckShouldEnd(true);
 			}	
-		} catch (IllegalStateException exc) {
+		} catch (IllegalDuckException exc) {
 			assert (false);
 		}
 		
