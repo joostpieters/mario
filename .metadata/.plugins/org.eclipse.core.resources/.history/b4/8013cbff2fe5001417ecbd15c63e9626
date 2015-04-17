@@ -89,10 +89,7 @@ public class Plant extends GameObject {
 //	SETTERS	
 	
 	/**
-	 * sets the double timeSameOrientation to the given value
-	 * @param t
-	 * 			the new value
-	 * @post timeSameOrientation = t
+	 * 
 	 */
 	private void setTimeSameOrientation(double t) {
 		this.timeSameOrientation = t;
@@ -100,65 +97,17 @@ public class Plant extends GameObject {
 	
 // VALIDATIONS
 	
-	/**
-	 * returns true if the sprites are valid
-	 * @param sprites
-	 * 			the sprites
-	 * @return sprits.length == 2
-	 */
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}	
 	
-	/**
-	 * checks if a new position of the plant is within the boundaries of the
-	 * game world and removes the plant if this is not the case
-	 * @param newXPos
-	 * @param newYPos
-	 * @effect removes plant if the new position is not within the boundaries
-	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos) 
-	 * 			| 	then remove()
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
 	}
 	
-	/**
-	 * Advanced the time with dt seconds, the new horizontal and vertical 
-	 * positions are calculated and updated
-	 * 
-	 * @param dt: the amount of seconds the time has to be advanced
-	 * 
-	 * @effect timeSameOrientation is updated
-	 * 			| setTimeSameOrientation(getTimeSameOrientation() + dt)
-	 * @effect the new horizontal position newXPos is calculated
-	 * 			| if ((getOrientation() == Orientation.RIGHT) &&
-	 * 			| 		( ! againstRightWall(getXPos(), getYPos())))
-	 * 			| 	then newXPos = (getXPos() + getXSpeed() * 100 * dt)
-	 * 			| else if ((this.getOrientation() == Orientation.LEFT) &&
-	 * 			| 		( ! againstLeftWall(getXPos(), getYPos())))
-	 * 			| 	then newXPos = newXPos = (getXPos() - getXSpeed() * 100 * dt)
-	 * @effect checks if the new position of the plant is within the game world and removes
-	 * 			the plant is this is not the case
-	 * 			| checkIfWithinBoundaries(newXPos, getYPos())
-	 * @effect updates the position of the plant
-	 * 			| setXPos(newXPos)
-	 * @effect changes the orientation if the time is right and updates
-	 * 			timeSameOrientation
-	 * 			| if (getTimeSameOrientation() > getTimeChangeOrientation())
-	 * 			| 	then changeOrientation()
-	 * 			|		 setTimeSameOrientation(getTimeSameOrientation() - Plant.getTimeChangeOrientation())
-	 * @effect removes the plant if the plant is already dying long enough or sets the plant dying
-	 * 			| if (isDying())
-	 * 			| 	then setTimeSinceDeath(getTimeSinceDeath() + dt)
-	 * 			| 		 if (getTimeSincedeath() >= GameObject.getTimeUntilRemove())
-	 * 			| 			then this.remove();
-	 * 			| else if (getHitpoints() <= 0)
-	 * 			| 	then die()
-	 */
 	public void advanceTime(double dt) {
 		
 		double newXPos = this.getXPos();
@@ -185,7 +134,7 @@ public class Plant extends GameObject {
 		}		
 		
 		if (this.isDying()) {
-			this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 				this.remove();
 			}
@@ -195,12 +144,6 @@ public class Plant extends GameObject {
 		}
 	}
 	
-	/**
-	 * removes the plant from the game world
-	 * @effect the plant gets removed
-	 * 			| world.removePlant(this)
-	 * 			| setWorld(null)
-	 */
 	private void remove() {
 		this.getWorld().removePlant(this);
 		this.setWorld(null);

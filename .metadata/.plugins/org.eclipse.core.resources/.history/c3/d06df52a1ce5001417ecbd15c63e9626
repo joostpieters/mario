@@ -118,24 +118,10 @@ public class Mazub extends GameObject {
 	 * a boolean saying if the mazub is ducked
 	 */
 	private boolean duck = false;
-	/**
-	 * a boolean indicating if a mazub should end the ducking
-	 * period when it is possible 
-	 */
 	private boolean duckShouldEnd = false;
-	/**
-	 * Returns the boolean duckShouldEnd
-	 * @return duckShouldEnd
-	 */
 	private boolean getDuckShouldEnd() {
 		return this.duckShouldEnd;
 	}
-	/**
-	 * sets the boolean duckShouldEnd to a given boolean bool 
-	 * @param bool
-	 * 			the new state of duckShouldEnd
-	 * @post the new duckShouldEnd is equal to the given boolean
-	 */
 	private void setDuckShouldEnd(boolean bool) {
 		this.duckShouldEnd = bool;
 	}
@@ -315,12 +301,8 @@ public class Mazub extends GameObject {
 	@Basic
 	private boolean isDucked(){
 		return (this.duck);
-	}	
-	/**
-	 * Returns the amount of hitpoints mazub loses for every
-	 * 0.2 seconds in water
-	 * @return LOSS_HITPOINTS_IN_WATER
-	 */
+	}
+	
 	@Basic @Immutable
 	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
@@ -332,7 +314,6 @@ public class Mazub extends GameObject {
 	 * Sets the initial starting speed to a new value
 	 * @param initstartspeed
 	 * 			The new speed by initialization
-	 * @post initStartSpeed is equal to the given speed
 	 */
 	@Raw 
 	private void setInitStartSpeed(int initstartspeed) {
@@ -342,7 +323,6 @@ public class Mazub extends GameObject {
 	 * Sets the boolean duck to a new value duck
 	 * @param duck
 	 * 			The new boolean for duck
-	 * @post the boolean duck is equal to the given boolean
 	 */
 	@Raw 
 	private void setDuck(boolean duck) {
@@ -352,7 +332,6 @@ public class Mazub extends GameObject {
 	 * Sets the number of available running sprites to a new value
 	 * @param nbRunningSprites
 	 * 			the nuw value for nbRunningSprites
-	 * @post nbRunningSprites is equal to the given int
 	 */
 	private void setNbRunningSprites(int nbRunningSprites) {
 		this.nbRunningSprites = nbRunningSprites;
@@ -361,7 +340,6 @@ public class Mazub extends GameObject {
 	 * Sets the counter of the running sprites to a new value
 	 * @param counterSprites
 	 * 			the new value for counterSprites
-	 * @post counterSprites is equal to the given int
 	 */
 	private void setCounterSprites(int counterSprites) {
 		this.counterSprites = counterSprites;
@@ -370,17 +348,15 @@ public class Mazub extends GameObject {
 	 * Sets the time since endMove to a new value
 	 * @param time_since_endMove 
 	 * 			the new time_since_endMove
-	 * @post timeSinceEndMove is equal to the given double
 	 */
 	@Raw 
-	private void setTimeSinceEndMove(double timeSinceEndMove) {
-		this.timeSinceEndMove = timeSinceEndMove;
+	private void setTimeSinceEndMove(double time_since_endMove) {
+		this.timeSinceEndMove = time_since_endMove;
 	}
 	/**
 	 * Sets the time since startMove to a new value
 	 * @param time_since_startMove 
 	 * 			the new time_since_startMove
-	 * @post timeSinceStartMove is equal to the given double
 	 */
 	@Raw 
 	private void setTimeSinceStartMove(double time_since_startMove) {
@@ -393,10 +369,11 @@ public class Mazub extends GameObject {
 	 * Checks whether the given initstartspeed and maxspeed are valid
 	 * for any Mazub
 	 * @return True if the given initstartspeed and maxspeed are valid
-	 * 			| ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed))
+	 * 			| ((this.getInitStartSpeed() >= 1) && (this.getMaxSpeed() 
+	 * 			|	>= this.getInitStartSpeed()))
 	 */
-	private boolean isValidSpeed(int initStartSpeed, double maxSpeed) {
-		return ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed));
+	private boolean isValidSpeed(int initStartSpeed,double d) {
+		return ((initStartSpeed >= 1) && (d >= initStartSpeed));
 	}
 
 	/**
@@ -419,13 +396,11 @@ public class Mazub extends GameObject {
 	 * 			| isValidSpeed()
 	 * @effect Mazub starts moving with a certain speed and acceleration
 	 * 			| if ( ! isDucked())
-	 * 			| 	then xSpeed = getInitStartSpeed()
-	 * 			|		 xAcc == getMoveAcc()
+	 * 			| 	then acc == 0.9
 	 * 			|		 maxSpeed == getMaxSpeed()
 	 * 			| else
-	 * 			|	xSpeed = getMaxSpeedDuck()
-	 * 			| 	xAcc == 0
-	 * 			|	maxSpeed == getMaxSpeedDuck()
+	 * 			| 	acc == 0
+	 * 			|	maxSpeed == MAX_SPEED_DUCK
 	 * @effect time_since_startMove is set to zero
 	 * 			| time_since_startMove == 0
 	 */
@@ -447,10 +422,9 @@ public class Mazub extends GameObject {
 		this.setTimeSinceStartMove(0);
 	}	
 	/**
-	 * Mazub starts moving to the right if mazub is not moving to the left
-	 * @effect 	| if ( ! (getOrientation == Orientation.LEFT && xSpeed > 0))
-	 * 			|	then orientation == Orientation.RIGHT
-	 * 			|		 startMove()
+	 * Mazub starts moving to the right
+	 * @effect 	| startMove()
+	 * 			| orientation == right
 	 */
 	public void startMoveRight() {
 		if ( ! (this.getOrientation() == Orientation.LEFT && this.getXSpeed() > 0)) {
@@ -459,10 +433,9 @@ public class Mazub extends GameObject {
 		}
 	}
 	/**
-	 * Mazub starts moving to the left if mazub is not moving to the right
-	 * @effect 	| if ( ! (getOrientation == Orientation.RIGHT && xSpeed > 0))
-	 * 			|	then orientation == Orientation.LEFT
-	 * 			|		 startMove()
+	 * Mazub starts moving to the left
+	 * @effect 	| startMove()
+	 * 			| orientation == left
 	 */
 	public void startMoveLeft() {
 		if ( ! (this.getOrientation() == Orientation.RIGHT && this.getXSpeed() > 0)) {
@@ -473,12 +446,12 @@ public class Mazub extends GameObject {
 	/**
 	 * Method to end the move of a Mazub
 	 * @pre The horizontal speed of Mazub must be valid
-	 * 			| isValidXSpeed(getXSpeed())
+	 * 			| isValidXSpeed()
 	 * @pre The position of Mazub must be valid
-	 * 			| isValidPosition(getXPos(), getYPos())
+	 * 			| isValidPosition()
 	 * @effect Mazub does not move
-	 * 			| xSpeed == 0;
-	 * 			| xAcc == 0;
+	 * 			| speed == 0;
+	 * 			| acc == 0;
 	 * @effect time_until_endMove is set to zero
 	 * 			| time_until_endMove == 0
 	 */
@@ -492,14 +465,12 @@ public class Mazub extends GameObject {
 	}	
 	/**
 	 * Ends the mazub's movement to the left
-	 * @effect endMove()
 	 */
 	public void endMoveLeft() {
 		this.endMove();
 	}	
 	/**
 	 * ends the mazub's movement to the right
-	 * @effect endMove()
 	 */
 	public void endMoveRight() {
 		this.endMove();
@@ -507,23 +478,23 @@ public class Mazub extends GameObject {
 	/**
 	 * Makes Mazub start his jump, when he is standing
 	 * on the ground, by setting his vertical speed
-	 * @effect the vertical velocity is equal to the jump speed
-	 * 			| if ( ! isFalling())
-	 * 			| 	then setySpeed(this.getJumpSpeed())
+	 * @effect ySpeed == JUMP_SPEED
+	 * 			| if (this.getYPos() == 0)
+	 * 			| 	then this.setySpeed(this.getJUMPSPEED())
 	 */
 	public void startJump() {
-		if ( ! this.isFalling()) {
+		if ( !this.isFalling()) {
 			this.setYSpeed(Mazub.getStartJumpSpeed());	
 		}
 	}
 	/**
 	 * Ends Mazub's jump if he is still jumping
-	 * @effect Sets the ySpeed to zero if it is positive
-	 * 			| if (getYSpeed > 0)
+	 * @effect Sets the Yspeed to zero if it is positive
+	 * 			| if ySpeed > 0
 	 * 			|	then setYSpeed(0)
 	 */
 	public void endJump() {
-		if (this.getYSpeed() > 0) {
+		if (this.getYSpeed()> 0) {
 			this.setYSpeed(0);
 		}
 	}
@@ -590,11 +561,6 @@ public class Mazub extends GameObject {
 //	private void advanceX(double dt) {				
 //	}
 	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 */
 	private void collidingPlants(double newXPos, double newYPos) {
 		for(Plant other: this.getWorld().getPlants()) {
 			if( ! other.isDying()) {
@@ -713,23 +679,6 @@ public class Mazub extends GameObject {
 		}
 	}
 	
-	/**
-	 * updates the hitpoints of mazub when mazub is in contact with
-	 * a hostile feature (water or magma)
-	 * @param dt: a small time interval
-	 * @param newXPos: the new horizontal position of Mazub
-	 * @param newYPos: the new vertical position of Mazub
-	 * @effect loses hitpoints if in contact with magma or water
-	 * 			| if (isInContactWithFeature(newXPos, newYPos, 2) 
-	 * 			| 	then setTimeInWater(getTimeInWater() + dt)
-	 * 			|		 if (getTimeInWater() >= getDrownTime())
-	 * 			|			then setTimeInWater(0)
-	 * 			| if (isInContactWithFeature(newXPos, newYPos, 3)
-	 * 			| 	then double toLose = (getLossHitpointsInMagma() * (dt / getBurnTime()))
-	 * 			|							+ getHitPointsDifference()
-	 * 			| 		 setHitpointsDifference(toLose - (int) toLose)
-	 * 			|		 loseHitpoints( (int) toLose)
-	 */
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
 		if (this.isInContactWithFeature(newXPos, newYPos, 2)) {
 			this.setTimeInWater(this.getTimeInWater() + dt);
@@ -746,27 +695,12 @@ public class Mazub extends GameObject {
 		}
 	}
 	
-	/**
-	 * checks if a new position of mazub is within the boundaries of the
-	 * game world and removes mazub if this is not the case
-	 * @param newXPos
-	 * @param newYPos
-	 * @effect removes Mazub if the new position is not within the boundaries
-	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos) 
-	 * 			| 	then remove()
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
 	}
-	
-	/**
-	 * advances the time for a period of dt seconds
-	 * @param dt
-	 * @throws IllegalDtException
-	 */
-	// TODO misschien nog iets opsplitsen
+
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
@@ -779,6 +713,9 @@ public class Mazub extends GameObject {
 			}
 		
 			this.checkIfWithinBoundaries(newXPos, newYPos);
+			
+//			double[] newPos = checkSurroundings(newXPos,newYPos);
+//			newPos = colliding(newPos[0],newPos[1], dt);
 			
 			double[] newPos = colliding(newXPos, newYPos, dt);
 			newPos = checkSurroundings(newPos[0],newPos[1]);
@@ -796,6 +733,7 @@ public class Mazub extends GameObject {
 			
 			if (this.getHitpoints() <= 0) {
 				this.die();
+				System.out.println("sterf");
 			}
 		}
 		else {
@@ -815,9 +753,8 @@ public class Mazub extends GameObject {
 	 * and the maxSpeed back to MAX_SPEED_DUCK
 	 * @throws IllegalDuckException 
 	 * @effect
-	 * 			| setDuck(true)
-	 * 			| setDuckShouldEnd(false)
-	 * 			| setMaxSpeed(getMaxSpeedDuck())
+	 * 			| duck == true
+	 * 			| maxSpeed == MAX_SPEED_DUCK
 	 */
 	public void startDuck() {
 		this.setDuck(true);
@@ -844,7 +781,8 @@ public class Mazub extends GameObject {
 			}	
 		} catch (IllegalDuckException exc) {
 			assert (false);
-		}		
+		}
+		
 	}
 	
 	/**
@@ -855,19 +793,19 @@ public class Mazub extends GameObject {
 		assert isValidSprite(this.getSprite());
 		if ( ! this.isDying()) { 
 			this.setNbRunningSprites(((this.getSprite()).length-8)/2);
-			if ((this.getXSpeed() == 0) && (! this.isDucked()) &&
+			if ((this.getXSpeed()==0) && (! this.isDucked()) &&
 					(this.getTimeSinceEndMove() > Mazub.getNotMovingTime())){
 				return sprites[0];
 			}
-			else if ((this.getXSpeed() == 0) &&
+			else if ((this.getXSpeed()==0) &&
 					(this.getTimeSinceEndMove() > Mazub.getNotMovingTime())){
 				return sprites[1];
 			}
-			else if ((this.getXSpeed() == 0) &&
+			else if ((this.getXSpeed()==0) &&
 					(!this.isDucked()) && (this.getOrientation() == Orientation.RIGHT )){
 				return sprites[2];
 			}		
-			else if ((this.getXSpeed() == 0) && (!this.isDucked())){
+			else if ((this.getXSpeed()==0) && (!this.isDucked())){
 				return sprites[3];
 			}
 			else if ((this.getXSpeed() > 0) && (this.getOrientation() == Orientation.RIGHT ) 
@@ -914,7 +852,8 @@ public class Mazub extends GameObject {
 	private static int TOUCH_PLANT_HITPOINTS = 50;
 	private static int getTouchPlantHitpoints() {
 		return TOUCH_PLANT_HITPOINTS;
-	}	
+	}
+	
 	/**
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
@@ -938,15 +877,10 @@ public class Mazub extends GameObject {
 		return immune;
 	}
 	
-	/**
-	 * removes Mazub from the game world
-	 * @effect mazub gets removed
-	 * 			| world.removeAlien(this)
-	 * 			| setWorld(null)
-	 */
 	private void remove() {
 		this.getWorld().removeAlien(this);
 		this.setWorld(null);
+		System.out.println("hij is dood");
 	}	
 	
 	//eventueel nieuwe checksurroundings, nee hij is toch niet zo goed. Problemen als hij 2 keer touched denk ik. Mss niet. Not sure. Maar ik heb denk ik een andere oplossing gevonden.

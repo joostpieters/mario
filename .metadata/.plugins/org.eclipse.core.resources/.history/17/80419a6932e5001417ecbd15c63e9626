@@ -146,18 +146,8 @@ public class Plant extends GameObject {
 	 * 			| checkIfWithinBoundaries(newXPos, getYPos())
 	 * @effect updates the position of the plant
 	 * 			| setXPos(newXPos)
-	 * @effect changes the orientation if the time is right and updates
-	 * 			timeSameOrientation
+	 * @effect changes the orientation if the time is right
 	 * 			| if (getTimeSameOrientation() > getTimeChangeOrientation())
-	 * 			| 	then changeOrientation()
-	 * 			|		 setTimeSameOrientation(getTimeSameOrientation() - Plant.getTimeChangeOrientation())
-	 * @effect removes the plant if the plant is already dying long enough or sets the plant dying
-	 * 			| if (isDying())
-	 * 			| 	then setTimeSinceDeath(getTimeSinceDeath() + dt)
-	 * 			| 		 if (getTimeSincedeath() >= GameObject.getTimeUntilRemove())
-	 * 			| 			then this.remove();
-	 * 			| else if (getHitpoints() <= 0)
-	 * 			| 	then die()
 	 */
 	public void advanceTime(double dt) {
 		
@@ -185,7 +175,7 @@ public class Plant extends GameObject {
 		}		
 		
 		if (this.isDying()) {
-			this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+			setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 				this.remove();
 			}

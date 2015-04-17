@@ -10,7 +10,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 // TODO alles final maken wat final moet zijn
-// TODO @Raw toevoegen overal waar het nodig is
+// TODO alles @Basic enzo
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren

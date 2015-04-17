@@ -751,7 +751,7 @@ public class Mazub extends GameObject {
 	 * game world and removes mazub if this is not the case
 	 * @param newXPos
 	 * @param newYPos
-	 * @effect removes Mazub if the new position is not within the boundaries
+	 * @effect removes Mazub if the new position is not withn the boundaries
 	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos) 
 	 * 			| 	then remove()
 	 */

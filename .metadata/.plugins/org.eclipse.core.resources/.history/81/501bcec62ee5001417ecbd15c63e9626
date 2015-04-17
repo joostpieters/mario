@@ -751,7 +751,7 @@ public class Mazub extends GameObject {
 	 * game world and removes mazub if this is not the case
 	 * @param newXPos
 	 * @param newYPos
-	 * @effect removes Mazub if the new position is not within the boundaries
+	 * @effect removes Mazub if the new position is not withn the boundaries
 	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos) 
 	 * 			| 	then remove()
 	 */
@@ -938,15 +938,10 @@ public class Mazub extends GameObject {
 		return immune;
 	}
 	
-	/**
-	 * removes Mazub from the game world
-	 * @effect mazub gets removed
-	 * 			| world.removeAlien(this)
-	 * 			| setWorld(null)
-	 */
 	private void remove() {
 		this.getWorld().removeAlien(this);
 		this.setWorld(null);
+		System.out.println("hij is dood");
 	}	
 	
 	//eventueel nieuwe checksurroundings, nee hij is toch niet zo goed. Problemen als hij 2 keer touched denk ik. Mss niet. Not sure. Maar ik heb denk ik een andere oplossing gevonden.
