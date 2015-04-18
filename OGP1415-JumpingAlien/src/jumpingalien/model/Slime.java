@@ -49,7 +49,16 @@ public class Slime extends GameObject {
 	private double getMovementDuration() {
 		return movementDuration;
 	}	
+	/**
+	 * Sets movementDuration to a new value
+	 * @param time
+	 * 			the new value for movementDuration
+	 * @pre  time should always be bigger than or equal to zero
+	 * 		| time >= 0
+	 * @post this.movementDuration = time
+	 */
 	private void setMovementDuration(double time) {
+		assert time >= 0;
 		this.movementDuration = time;
 	}	
 	private double timeSinceMove = 0;
@@ -61,12 +70,16 @@ public class Slime extends GameObject {
 		return timeSinceMove;
 	}
 	/**
-	 * sets the time since the start of a move
+	 * Sets timeSinceEndMove to a new value
 	 * @param timeSinceMove the timeSinceMove to set
+	 * @pre  time should always be bigger than or equal to zero
+	 * 		| time >= 0
+	 * @post this.movementDuration = time
 	 */
 	private void setTimeSinceMove(double time) {
+		assert time >= 0;
 		this.timeSinceMove = time;
-	}
+	}	
 	private static final int INIT_HITPOINTS = 100;
 	@Basic @Immutable 
 	private static final int getInitHitpoints() {
@@ -84,20 +97,36 @@ public class Slime extends GameObject {
 	 * the maximum horizontal speed a slime can reach
 	 */
 	private static final double MAX_X_SPEED = 2.5;
+	@Basic @Immutable 
+	private static final double getMaxXSpeed() {
+		return  MAX_X_SPEED;
+	}	
 	/**
 	 * the amount of hitpoints a slime loses when touching 
 	 * a shark or mazub.
 	 */
 	private static final int CONTACT_DAMAGE = 50;
+	@Basic @Immutable 
+	public static final int getContactDamage() {
+		return CONTACT_DAMAGE;
+	}
 	/**
 	 * the damage every slime in the school looses when a single
 	 * slime looses some hitpoints
 	 */
 	private static final int SCHOOL_DAMAGE = 1;
+	@Basic @Immutable 
+	public static final int getSchoolDamage() {
+		return SCHOOL_DAMAGE;
+	}
 	/**
 	 * the maximum amount of slime schools in a game world
 	 */
-	private static final int MAX_AMOUNT_OF_SCHOOLS = 10;		
+	private static final int MAX_AMOUNT_OF_SCHOOLS = 10;
+	@Basic @Immutable 
+	private static final int getMaxAmountOfSchools() {
+		return MAX_AMOUNT_OF_SCHOOLS;
+	}
 	private School school;
 	/**
 	 * Returns the current school to which the given slime belongs.
@@ -125,23 +154,6 @@ public class Slime extends GameObject {
 		return MAX_HITPOINTS;
 	}
 	
-//	GETTERS	
-	@Basic @Immutable 
-	private static final double getMaxXSpeed() {
-		return  MAX_X_SPEED;
-	}	
-	@Basic @Immutable 
-	public static final int getContactDamage() {
-		return CONTACT_DAMAGE;
-	}
-	@Basic @Immutable 
-	public static final int getSchoolDamage() {
-		return SCHOOL_DAMAGE;
-	}
-	@Basic @Immutable 
-	private static final int getMaxAmountOfSchools() {
-		return MAX_AMOUNT_OF_SCHOOLS;
-	}
 	
 //	VALIDATIONS
 	

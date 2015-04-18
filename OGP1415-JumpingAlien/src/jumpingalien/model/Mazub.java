@@ -942,36 +942,79 @@ public class Mazub extends GameObject {
 	}
 	
 	/**
+	 * changes the Time Dependent aspects of Mazub. It calculates the new position, checks the
+	 * boundaries, adjusts the speed, acceleration and position for surroundings and colliding.
+	 * It calculates the new speed, changes the moving times en sets the new positions
+	 * @param dt
+	 * 		The time interval that is used for all the calculations
+	 * @effect Calculating new positions
+	 * 		| double[] newCalculatedPos = this.calculateNewPos(dt);
+	 * 		| double newXPos = newCalculatedPos[0];
+	 * 		| double newYPos = newCalculatedPos[1];
+	 * @effect Checks boundaries, colliding and surroundings
+	 * 		| this.checkIfWithinBoundaries(newXPos, newYPos);
+	 * 		| double[] newPos = colliding(newXPos, newYPos, dt);
+	 * 		| newPos = checkSurroundings(newPos[0],newPos[1]);
+	 * @effect Sets the new speed, movingTimes and the new positions
+	 * 		| this.setNewSpeed(dt);
+	 * 		| this.setXPos(newPos[0]);
+	 * 		| this.setYPos(newPos[1]);
+	 */
+	private void changeTimeDependents(double dt) {
+		double[] newCalculatedPos = this.calculateNewPos(dt);
+		double newXPos = newCalculatedPos[0];
+		double newYPos = newCalculatedPos[1];
+	
+		this.checkIfWithinBoundaries(newXPos, newYPos);
+		double[] newPos = colliding(newXPos, newYPos, dt);
+		newPos = checkSurroundings(newPos[0],newPos[1]);
+		
+		
+		this.changeMovingTimes(dt);
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
+	}
+	
+	/**
 	 * advances the time for a period of dt seconds
 	 * @param dt
 	 * @throws IllegalDtException
+	 * @effect
+	 * 		| if ( ! this.isDying()) {		
+	 * 		| 	this.changeTimeDependents(dt);
+	 *			
+	 * 		| 	if(this.getDuckShouldEnd()) {
+	 * 		| 		this.setDuckShouldEnd(false);
+	 * 		| 		this.endDuck();
+	 * 		| 	}
+	 *			
+	 * 		| 	this.loseHitpointsBecauseOfFeature(dt, this.getXPos(), this.getYPos());
+	 * 		| 	this.updateImmunity(dt);		
+	 * 		| 
+	 * 		| 	if (this.getHitpoints() <= 0) {
+	 * 		| 		this.die();
+	 * 		| 	}
+	 * 		| }
+	 * 		| else {
+	 * 		| 		this.setCounterUntilRemove(this.getCounterUntilRemove() + dt);
+	 * 		| 		if (this.getCounterUntilRemove() > GameObject.getTimeUntilRemove()) {
+	 * 		| 			 this.remove();
+	 * 		| 		}
+	 * 		| }
 	 */
-	// TODO misschien nog iets opsplitsen
+	// TODO misschien nog iets opsplitsen. Done :)
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
-		if ( ! this.isDying()) {
-			double[] newCalculatedPos = this.calculateNewPos(dt);
-			double newXPos = newCalculatedPos[0];
-			double newYPos = newCalculatedPos[1];
-			if((this.getXPos() - newXPos >= 1) || (this.getYPos() - newYPos) >= 1) {
-				System.out.println("de possen zijn mis!!!");
-			}
-		
-			this.checkIfWithinBoundaries(newXPos, newYPos);
+		if ( ! this.isDying()) {		
+			this.changeTimeDependents(dt);
 			
-			double[] newPos = colliding(newXPos, newYPos, dt);
-			newPos = checkSurroundings(newPos[0],newPos[1]);
-			this.setNewSpeed(dt);
-			this.changeMovingTimes(dt);
-			this.setXPos(newPos[0]);
-			this.setYPos(newPos[1]);	
 			if(this.getDuckShouldEnd()) {
 				this.setDuckShouldEnd(false);
 				this.endDuck();
 			}
 			
-			this.loseHitpointsBecauseOfFeature(dt, newXPos, newYPos);
+			this.loseHitpointsBecauseOfFeature(dt, this.getXPos(), this.getYPos());
 			this.updateImmunity(dt);		
 			
 			if (this.getHitpoints() <= 0) {
@@ -982,27 +1025,39 @@ public class Mazub extends GameObject {
 				this.setCounterUntilRemove(this.getCounterUntilRemove() + dt);
 				if (this.getCounterUntilRemove() > GameObject.getTimeUntilRemove()) {
 					 this.remove();
-					 System.out.println("hij zou dood moeten gaan");
 			}
 		}
 	}	
 	
 	// TODO sorry maar die exceptions hier werkten absoluut niet
-	// -> die moeten toch ook niet werken?
+	// -> die moeten toch ook niet werken? Ja ge hebt gelijk
+	// Foutje. Git is ne zak.
 	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
 	 * and the maxSpeed back to MAX_SPEED_DUCK
 	 * @throws IllegalDuckException 
 	 * @effect
-	 * 			| setDuck(true)
-	 * 			| setDuckShouldEnd(false)
-	 * 			| setMaxSpeed(getMaxSpeedDuck())
+	 * 		| try {
+	 * 		| 		if (this.isDucked())
+	 * 		| 			throw new IllegalDuckException(this.isDucked());
+	 * 		| 		setDuck(true)
+	 * 		| 		setDuckShouldEnd(false)
+	 * 		| 		setMaxSpeed(getMaxSpeedDuck())
+	 * 		| } catch (IllegalDuckException exc) {
+	 * 		| 		assert(false);
+	 * 		| }
 	 */
 	public void startDuck() {
-		this.setDuck(true);
-		this.setDuckShouldEnd(false);
-		this.setMaxSpeed(Mazub.getMaxSpeedDuck());
+		try {
+			if (this.isDucked())
+				throw new IllegalDuckException(this.isDucked());
+			this.setDuck(true);
+			this.setDuckShouldEnd(false);
+			this.setMaxSpeed(Mazub.getMaxSpeedDuck());
+		} catch (IllegalDuckException exc) {
+			assert(false);
+		}
 	}
 	
 	/**
