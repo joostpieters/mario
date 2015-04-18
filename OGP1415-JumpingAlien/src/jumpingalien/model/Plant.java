@@ -18,12 +18,17 @@ public class Plant extends GameObject {
 	 *            The y-coordinate of the plant's initial position
 	 * @param sprites
 	 *            An array of sprites for the new plant
+	 * @effect the plant is created at the given position with the given sprites
+	 * 			| super(xPos, yPos, sprites)
+	 * @effect the horizontal speed is set and the hitpoints are set to the default value
+	 * 			| new.setXSpeed(0.5)
+	 * 			| new.setHitpoitns(Plant.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the plant
-	 * 			| !isValidPosition(x_pos,y_pos)
+	 * 			| ! isValidPosition(x_pos,y_pos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
-	 * 			| !isValidSprite(sprites) 
+	 * 			| ! isValidSprite(sprites) 
 	 */
 	public Plant(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {

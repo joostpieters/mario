@@ -32,58 +32,58 @@ public class Mazub extends GameObject {
 	 * Initialize this new Mazub with given x and y positions and given sprites.
 	 * 
 	 * @param xPos
-	 * The x position in the field for the new Mazub
+	 * 			The x position in the field for the new Mazub
 	 * @param yPos
-	 * The y position in the field for the new Mazub
+	 * 			The y position in the field for the new Mazub
 	 * @param sprites
-	 * The sprites for the new Mazub
-	 * @effect the mazub is created at (x_pos,y_pos)
-	 * 			| new.getXPos() == x_pos
-	 * 			| new.getYPos() == y_pos
-	 * 			| new.getSprite() == sprites
-	 * 			| new.getInitStartSpeed() == START_SPEED
-	 * 			| new.getMaxSpeed() == MAX_SPEED
-	 * 			| new.getNumberOfMazubs += 1
+	 * 			The sprites for the new Mazub
+	 * @effect the mazub is created at (x_pos,y_pos) with a given set of sprites
+	 * 			| super(xPos, yPos, sprites)
+	 * @effect the initial startspeed, maximum speed and hitpoints are
+	 * 			set to the default values
+	 * 			| new.setInitStartSpeed(START_SPEED)
+	 * 			| new.setMaxSpeed(MAX_MOVING_SPEED)
+	 * 			| new.setHitpoints(Mazub.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
-	 * 			| !isValidPosition(x_pos,y_pos)
+	 * 			| ! isValidPosition(x_pos,y_pos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
-	 * 			| !isValidSprite(sprites) 
+	 * 			| ! isValidSprite(sprites) 
 	 * 
 	 */
 	@Raw
 	public Mazub(int xPos, int yPos, Sprite[] sprites)
 		throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
-		this.setInitStartSpeed(START_SPEED);
-		this.setMaxSpeed(MAX_MOVING_SPEED);
+		this.setInitStartSpeed(Mazub.getStartSpeed());
+		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
 		this.setHitpoints(Mazub.getInitHitpoints());
 	}
 	
 
 	/**
 	 * Initialize this new Mazub with given x and y positions, sprites,
-	 * 
-	 * < horizontal start speed and maximum horizontal speed.
+	 * horizontal start speed and maximum horizontal speed.
 	 * 
 	 * @param xPos
-	 * The x position in the field for the new Mazub
+	 * 			The x position in the field for the new Mazub
 	 * @param yPos
-	 * The y position in the field for the new Mazub
+	 * 			The y position in the field for the new Mazub
 	 * @param sprites
-	 * The sprites for the new Mazub
+	 * 			The sprites for the new Mazub
 	 * @param initStartSpeed
-	 * The initial horizontal start speed
+	 *			The initial horizontal start speed
 	 * @param maxSpeed
-	 * The maximum horizontal speed 
-	 * @effect the mazub is created at (x_pos,y_pos)
-	 * 			| new.getXPos() == x_pos
-	 * 			| new.getYPos() == y_pos
-	 * 			| new.getSprite() == sprites
-	 * 			| new.getInitStartSpeed() == initStartSpeed
-	 * 			| new.getMaxSpeed() == maxSpeed
-	 * 			| new.getNumberOfMazubs += 1
+	 * 			The maximum horizontal speed 
+	 * @effect the mazub is created at (x_pos,y_pos) with a given set of sprites
+	 * 			| super(xPos, yPos, sprites)
+	 * @effect the initial startspeed and maximum speed are
+	 * 			set to the given values and the hitpoints are 
+	 * 			set to the default value
+	 * 			| new.setInitStartSpeed(initStartSpeed)
+	 * 			| new.setMaxSpeed(maxSpeed)
+	 * 			| new.setHitpoints(Mazub.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
 	 * 			| !isValidPosition(x_pos,y_pos)
@@ -106,7 +106,7 @@ public class Mazub extends GameObject {
 			super(xPos, yPos, sprites);
 			this.setInitStartSpeed(initStartSpeed);
 			this.setMaxSpeed(maxSpeed);
-			this.setHitpoints(100);
+			this.setHitpoints(Mazub.getInitHitpoints());
 	}
 	
 	
@@ -119,47 +119,31 @@ public class Mazub extends GameObject {
 	 */
 	private boolean duck = false;
 	/**
-	 * a boolean indicating if a mazub should end the ducking
+	 * a boolean indicating if a Mazub should end the ducking
 	 * period when it is possible 
 	 */
-	private boolean duckShouldEnd = false;
+	private boolean duckShouldEnd = false;	
 	/**
-	 * Returns the boolean duckShouldEnd
-	 * @return duckShouldEnd
-	 */
-	private boolean getDuckShouldEnd() {
-		return this.duckShouldEnd;
-	}
-	/**
-	 * sets the boolean duckShouldEnd to a given boolean bool 
-	 * @param bool
-	 * 			the new state of duckShouldEnd
-	 * @post the new duckShouldEnd is equal to the given boolean
-	 */
-	private void setDuckShouldEnd(boolean bool) {
-		this.duckShouldEnd = bool;
-	}
-	/**
-	 * the static int giving the starting speed of mazub
+	 * the static int giving the horizontal speed of Mazub
 	 * when startMove() is initiated
 	 */
 	private static final int START_SPEED = 1;
 	/**
-	 * the maximal horizontal speed mazub can reach
+	 * the maximal horizontal speed Mazub can reach
 	 */
 	private static final int MAX_MOVING_SPEED = 3;
 	/**
-	 * the maximal horizontal speed mazub can reach
+	 * the maximal horizontal speed Mazub can reach
 	 * when mazub is ducked
 	 */
 	private static final int MAX_SPEED_DUCK = 1;
 	/**
-	 * the vertical speed at which mazub moves when 
+	 * the vertical speed at which Mazub moves when 
 	 * startJump() is initiated
 	 */
 	private static final int JUMP_SPEED = 8;
 	/**
-	 * the acceleration when mazub starts moving horizontally
+	 * the acceleration when Mazub starts moving horizontally
 	 */
 	private static final double MOVE_ACC = 0.9;
 	/**
@@ -193,6 +177,18 @@ public class Mazub extends GameObject {
 	 * 2 hitpoints shall be deducted per 0.2 seconds in water
 	 */
 	private static final int LOSS_HITPOINTS_IN_WATER = 2;
+	/**
+	 * the default amount of hitpoints mazub possesses in the beginning of a game
+	 */
+	private static final int INIT_HITPOINTS = 100;
+	/**
+	 * the amount of hitpoints a mazub recieves when eating a plant
+	 */
+	private static final int TOUCH_PLANT_HITPOINTS = 50;
+	/**
+	 * the maximum amount of hitpoints a mazub can reach
+	 */
+	private static final int MAX_HITPOINTS = 500;
 		
 //GETTERS	
 	
@@ -217,7 +213,7 @@ public class Mazub extends GameObject {
 	}
 	/**
 	 * Returns the counter that goes over the available sprites for running
-	 * @return the counterSprites
+	 * @return the counter of the sprites
 	 * 			| counterSprites
 	 */
 	@Basic
@@ -275,7 +271,7 @@ public class Mazub extends GameObject {
 		return START_SPEED;
 	}
 	/**
-	 * returns the acceleration when mazub starts moving
+	 * returns the acceleration when Mazub starts moving
 	 * @return MOVE_ACC
 	 */
 	@Basic @Immutable @Raw
@@ -283,7 +279,7 @@ public class Mazub extends GameObject {
 		return MOVE_ACC;
 	}
 	/**
-	 * Returns the time between endMove and an change of sprites
+	 * Returns the time between endMove and a change of sprites
 	 * @return NOT_MOVING_TIME
 	 */
 	@Basic @Immutable @Raw 
@@ -299,7 +295,7 @@ public class Mazub extends GameObject {
 		return TIME_DIFFERENT_SPRITE;
 	}
 	/**
-	 * Returns the boolean duck, if mazub is ducked, true is returned,
+	 * Returns the boolean duck, if Mazub is ducked, true is returned,
 	 * otherwise false
 	 * @return (duck)
 	 *     __
@@ -314,16 +310,51 @@ public class Mazub extends GameObject {
 	 */
 	@Basic
 	private boolean isDucked(){
-		return (this.duck);
+		return this.duck;
 	}	
 	/**
-	 * Returns the amount of hitpoints mazub loses for every
+	 * Returns the amount of hitpoints Mazub loses for every
 	 * 0.2 seconds in water
 	 * @return LOSS_HITPOINTS_IN_WATER
 	 */
 	@Basic @Immutable
 	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
+	}
+	/**
+	 * Returns the boolean duckShouldEnd
+	 * @return duckShouldEnd
+	 */
+	private boolean getDuckShouldEnd() {
+		return this.duckShouldEnd;
+	}
+	/**
+	 * the initial amount of hitpoints
+	 * @return INITHITPOINTS
+	 */
+	private static int getInitHitpoints() {
+		return INIT_HITPOINTS;
+	}
+	
+	private static int getTouchPlantHitpoints() {
+		return TOUCH_PLANT_HITPOINTS;
+	}	
+	@Override
+	/**
+	 * the maximum amount of hitpoints
+	 * @return MAXHITPOINTS
+	 */
+	protected int getMaxHitpoints() {
+		return MAX_HITPOINTS;
+	}	
+	/**
+	 * Returns whether the given alien is currently immune against enemies
+	 * 
+	 * @return True if the given alien is immune against other enemies (i.e.,
+	 *         there are no interactions between the alien and enemy objects).
+	 */
+	public boolean isImmune() {
+		return immune;
 	}
 	
 //Setters	
@@ -404,13 +435,22 @@ public class Mazub extends GameObject {
 		assert timeSinceStartMove >= 0;
 		this.timeSinceStartMove = timeSinceStartMove;
 	}
+	/**
+	 * sets the boolean duckShouldEnd to a given boolean bool 
+	 * @param bool
+	 * 			the new state of duckShouldEnd
+	 * @post the new duckShouldEnd is equal to the given boolean
+	 */
+	private void setDuckShouldEnd(boolean bool) {
+		this.duckShouldEnd = bool;
+	}
 	
 //VALIDATIONS	
 	
 	/**
-	 * Checks whether the given initstartspeed and maxspeed are valid
+	 * Checks whether the given initial startspeed and maxspeed are valid
 	 * for any Mazub
-	 * @return True if the given initstartspeed and maxspeed are valid
+	 * @return True if the given initStartSpeed and maxSpeed are valid
 	 * 			| ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed))
 	 */
 	private boolean isValidSpeed(int initStartSpeed, double maxSpeed) {
@@ -437,22 +477,21 @@ public class Mazub extends GameObject {
 	 * 			| isValidSpeed()
 	 * @effect Mazub starts moving with a certain speed and acceleration
 	 * 			| if ( ! isDucked())
-	 * 			| 	then xSpeed = getInitStartSpeed()
-	 * 			|		 xAcc == getMoveAcc()
-	 * 			|		 maxSpeed == getMaxSpeed()
+	 * 			| 	then setXSpeed(getInitStartSpeed())
+	 * 			|		 setXAcc(getMoveAcc())
+	 * 			|		 setMaxSpeed(getMaxSpeed())
 	 * 			| else
-	 * 			|	xSpeed = getMaxSpeedDuck()
-	 * 			| 	xAcc == 0
-	 * 			|	maxSpeed == getMaxSpeedDuck()
+	 * 			|	setXSpeed(getMaxSpeedDuck())
+	 * 			| 	setXAcc(0)
+	 * 			|	setMaxSpeed(Mazub.getMaxSpeedDuck())
 	 * @effect time_since_startMove is set to zero
 	 * 			| time_since_startMove == 0
 	 */
 	@Raw
 	private void startMove() {
 		assert this.isValidPosition(getXPos(), getYPos());
-		assert this.isValidSpeed(this.getInitStartSpeed(), this.getMaxSpeed());
-		this.setXSpeed(this.getInitStartSpeed());
-		if (this.isDucked() == false) {
+		assert this.isValidSpeed(this.getInitStartSpeed(), this.getMaxSpeed());		
+		if ( ! this.isDucked()) {
 			this.setXSpeed(this.getInitStartSpeed());
 			this.setXAcc(Mazub.getMoveAcc());
 			this.setMaxSpeed(this.getMaxSpeed());
@@ -495,10 +534,10 @@ public class Mazub extends GameObject {
 	 * @pre The position of Mazub must be valid
 	 * 			| isValidPosition(getXPos(), getYPos())
 	 * @effect Mazub does not move
-	 * 			| xSpeed == 0;
-	 * 			| xAcc == 0;
+	 * 			| setXSpeed(0)
+	 * 			| setXAcc(0)
 	 * @effect time_until_endMove is set to zero
-	 * 			| time_until_endMove == 0
+	 * 			| setTimeUntilEndMove(0)
 	 */
 	@Raw
 	private void endMove() {
@@ -527,7 +566,7 @@ public class Mazub extends GameObject {
 	 * on the ground, by setting his vertical speed
 	 * @effect the vertical velocity is equal to the jump speed
 	 * 			| if ( ! isFalling())
-	 * 			| 	then setySpeed(this.getJumpSpeed())
+	 * 			| 	then setYSpeed(Mazub.getJumpSpeed())
 	 */
 	public void startJump() {
 		if ( ! this.isFalling()) {
@@ -563,10 +602,7 @@ public class Mazub extends GameObject {
 	 * 			| 	then new_x_pos == this.getXPos() - this.getXSpeed()*100*dt
 	 * 			|					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2) + this.getXDifference();
 	 */
-//	private double moveX(double dt) {
-		
-//	}
-	
+//	private double moveX(double dt) {	
 	
 	/**
 	 * Changes the horizontal coordinates of mazub when mazub is moving
@@ -609,9 +645,28 @@ public class Mazub extends GameObject {
 //	}
 	
 	/**
-	 * 
+	 * checks for all the Plants in the world if mazub touches them
+	 * if so, mazub recieves 50 hitpoints and the plant dies
 	 * @param newXPos
+	 * 			the newly calculated horizontal position
 	 * @param newYPos
+	 * 			the newly calculated vertical position
+	 * @effect every living plant is checked
+	 * 			| for each other(plant) in world.getPlants():
+	 * 			| 	if ( !  other.isDying())
+	 * 			|		x1 = newXPos
+	 * 			|		xDim1 = getXDim()
+	 * 			|		y1 = newYPos
+	 * 			| 		yDim1 = getYDim
+	 * 			|		x2 = other.getXPos()
+	 * 			|		xDim2 = other.getXDim()
+	 * 			| 		y2 = other.getYPos()
+	 * 			| 		yDim2 = other.getYDim()
+	 * 			|		then if (touches(x1 , xDim1, y1, yDim1, x2, xDim2, y2, yDim2))
+	 * 			|			then newHitpoints = getHitpoints + Mazub.getTouchPlantHitpoints()
+	 * 			|				 if (isValidAmountOfHitpoints(newHitpoints)
+	 * 			|					then other.die()
+	 * 			| 						 setHitpoints(newHitpoints)
 	 */
 	private void collidingPlants(double newXPos, double newYPos) {
 		for(Plant other: this.getWorld().getPlants()) {
@@ -637,7 +692,37 @@ public class Mazub extends GameObject {
 	
 	/**
 	 * updates the hitpoints for collisions with slimes and sharks
-	 * @return a boolean: onGameObject
+	 * @param newXPos
+	 * 			the new horizontal position
+	 * @param nexYPos
+	 * 			the new vertical position
+	 * @param dt
+	 * 			the time interval
+	 * @effect the list allSlimesSharks contains all the slimes and sharks in the world
+	 * 			| allSlimesSharks = world.getSlimes()
+	 * 			| allSlimesSharks.addAll(world.getSharks())
+	 * @effect calculates the new position of mazub taking all the slimes and sharks
+	 * 			in the world into account
+	 * 			| for each other: allSlimesSharks:
+	 * 			| 	xDim1 = getXDim()
+	 * 			|	yDim1 = getYDim()
+	 * 			| 	x2 = other.getXPos()
+	 * 			| 	xDim2 = other.getXDim()
+	 * 			| 	y2 = other.getYPos()
+	 * 			|	yDim2 = other.getYPos()
+	 * 			| 	touched = false
+	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
+	 * 			|	newXPos =  newPos[0]
+	 * 			| 	newYPos = newPos[1]
+	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
+	 * 			| if newPos[2] == 1
+	 * 			|	then touched = true
+	 * 			| if newPos[3] == 1
+	 * 			| 	then onGameObject = true
+	 * 			| if touched && ( ! other.isDying()) 
+	 * 			| 	then contactDamage(dt)
+	 * 			| 		 other.contactDamage(dt)
+	 * @return a boolean: onGameObject, indicating if mazub is on top of another game object
 	 */
 	private boolean updateHitpointsSlimesAndSharks(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
@@ -670,6 +755,23 @@ public class Mazub extends GameObject {
 		return onGameObject;
 	}
 	
+	/**
+	 * 
+	 * @param newXPos
+	 * 			the newly calculated horizontal position
+	 * @param newYPos
+	 * 			the newly calculated vertical position
+	 * @param dt
+	 * 			the time interval
+	 * @effect updates the hitpoints of the slimes and sharks
+	 * 			| boolean onGameObject = updateHitpointsSlimesSharks()
+	 * @effect if Mazub is on top of another game object, his fall is ended, else Mazub falls
+	 * 			| if (isFalling() && onGameObject())
+	 * 			| 	then endFall()
+	 * 			| else if ( ! isFalling() && ( ! onGameObject) && ( ! onFloor(newXpos, newYPos)
+	 * 			| 	then fall()
+	 * @return {newXPos, newYPos}
+	 */
 	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
 		boolean onGameObject = this.updateHitpointsSlimesAndSharks(newXPos, newYPos, dt);
 		if (this.isFalling() && onGameObject) {
@@ -681,37 +783,94 @@ public class Mazub extends GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
+	/**
+	 * 
+	 * @param newXPos
+	 * 			the newly calculated horizontal position
+	 * @param newYPos
+	 * 			the newly calculated vertical position
+	 * @param dt
+	 * 			the time interval
+	 * @effect the new position of Mazub is calculated and a possible collision with
+	 * 			a plant gets checked
+	 * 			| newPos = collidingSlimesSharks(newXPos, newYPos, dt)
+	 * 			| collidingPlants(newXPos, newYPos)
+	 * @return the adapted horizontal and vertical position of Mazub
+	 * 			| {newPos[0], newPos[1]}
+	 */
 	public double[] colliding(double newXPos, double newYPos,double dt) {	
 		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
 		this.collidingPlants(newXPos, newYPos);
 		return new double[] {newPos[0], newPos[1]};
 	}
 	
+	/**
+	 * 
+	 * @param newXPos
+	 * 			the newly calculated horizontal position
+	 * @param newYPos
+	 * 			the newly calculated vertical position
+	 * @effect Mazubs stops moving if he walks into a left or a right wall
+	 * 			| if (getOrientation = Orientation.LEFT && againstLeftWall(newXPos, nexYPos)
+	 * 			| 	then newXPos = (getTilesLeft(newXPos, newYPos)[0][0] + 1) * world.getTileLength()
+	 * 			| 		 stopMoving()
+	 * 			| if (getOrientation = Orientation.RIGHT && againstRightWall(newXPos, nexYPos)
+	 * 			| 	then newXPos = (getTilesRight(newXPos, newYPos)[0][0] + 1) * world.getTileLength()
+	 * 			| 		 stopMoving() 
+	 * @effect Mazub stops moving vertically if he's against a roof
+	 * 			| if isAgainstRoof(newXPos, newYPos)
+	 * 			| 	then newYPos = getTilesRight(newXPos, newYPos)[0][0] * world.getTileLength() - getTileSize()[0]
+	 * 			| 		 setYSpeed(0)
+	 * @effect if Mazub reaches the floor in a fall, the fall is ended
+	 * 			| if (isFalling && onFloor(newXPos, nexYPos))
+	 * 			| 	then newYPos = getTilesUnder(newXPos, newYPos)[0][1] + 1 * world.getTileLength() - 1)
+	 * 			|		 endFall()
+	 * @return the adapted horizontal and vertical position of Mazub
+	 * 			| {newPos[0], newPos[1]}
+	 */
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		
 		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
-			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
+			newXPos = (this.getTilesLeft(newXPos, newYPos)[0][0] + 1) * getWorld().getTileLength();
 			this.stopMoving();
 		}	
 
 		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
+			newXPos = (this.getTilesRight(newXPos, newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 			this.stopMoving();
 		}
 		
 		if (isAgainstRoof(newXPos,newYPos)) {
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
+			newYPos = (this.getTilesAbove(newXPos, newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			this.setYSpeed(0);
 		}
 		
-		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+		if (this.isFalling() && this.onFloor(newXPos, newYPos)) {
+			newYPos = ((this.getTilesUnder(newXPos, newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
 		}
 		
 		return new double[] {newXPos, newYPos};
 	}	
 	
+	/**
+	 * 
+	 * @param dt
+	 * 			a small time interval
+	 * @effect if Mazub isn't moving, the double timeSinceEndMove is updated
+	 * 			| if (getXSpeed() == 0) 
+	 * 			| 	then setTimeSinceEndMove(getTimeSinceEndMove() + dt)
+	 * @effect if mazub is moving, the double timeSinceStartMove is updated and 
+	 * 			counterSprites is updated
+	 * 			| else if (getXSpeed() > 0)
+	 * 			|	then setTimeSinceStartMove(getTimeSinceStartMove() + dt)
+	 * 			|		 if (getTimeSinceStartMove() > Mazub.getTimeDifferentSprite())
+	 * 			|			then setTimeSinceStartMove(getTimeSinceStartMove - Mazub.getTimeDifferentSprite())
+	 * 			| 				 if (getCounterSprites() < getNbRunningSprites() - 1) 
+	 * 			|					then setCounterSprites(getCounterSprites() + 1)
+	 * 			|				 else 
+	 * 			|					then setCounterSprites(0)	 * 
+	 */
 	private void changeMovingTimes(double dt) {
 		if (this.getXSpeed() == 0) {
 			this.setTimeSinceEndMove(this.getTimeSinceEndMove() + dt);
@@ -721,7 +880,7 @@ public class Mazub extends GameObject {
 			if (this.getTimeSinceStartMove() > Mazub.getTimeDifferentSprite()) {
 				this.setTimeSinceStartMove(this.getTimeSinceStartMove()
 						- Mazub.getTimeDifferentSprite());
-				if (this.getCounterSprites() < this.getNbRunningSprites()-1) {
+				if (this.getCounterSprites() < this.getNbRunningSprites() - 1) {
 					this.setCounterSprites(this.getCounterSprites() +1);
 				}
 				else {
@@ -734,9 +893,12 @@ public class Mazub extends GameObject {
 	/**
 	 * updates the hitpoints of mazub when mazub is in contact with
 	 * a hostile feature (water or magma)
-	 * @param dt: a small time interval
-	 * @param newXPos: the new horizontal position of Mazub
-	 * @param newYPos: the new vertical position of Mazub
+	 * @param dt
+	 * 			a small time interval
+	 * @param newXPos
+	 * 			the new horizontal position of Mazub
+	 * @param newYPos
+	 * 			the new vertical position of Mazub
 	 * @effect loses hitpoints if in contact with magma or water
 	 * 			| if (isInContactWithFeature(newXPos, newYPos, 2) 
 	 * 			| 	then setTimeInWater(getTimeInWater() + dt)
@@ -911,49 +1073,6 @@ public class Mazub extends GameObject {
 		else {
 			return sprites[0];
 		}
-	}
-	
-// PART 2	
-	
-	/**
-	 * the amount of hitpoints mazub possesses in the beginning of a game
-	 */
-	private static int INIT_HITPOINTS = 100;
-	/**
-	 * the initial amount of hitpoints
-	 * @return INITHITPOINTS
-	 */
-	private static int getInitHitpoints() {
-		return INIT_HITPOINTS;
-	}
-	/**
-	 * the amount of hitpoints a mazub recieves when eating a plant
-	 */
-	private static int TOUCH_PLANT_HITPOINTS = 50;
-	private static int getTouchPlantHitpoints() {
-		return TOUCH_PLANT_HITPOINTS;
-	}	
-	/**
-	 * the maximum amount of hitpoints a mazub can reach
-	 */
-	private int MAX_HITPOINTS = 500;
-	@Override
-	/**
-	 * the maximum amount of hitpoints
-	 * @return MAXHITPOINTS
-	 */
-	protected int getMaxHitpoints() {
-		return MAX_HITPOINTS;
-	}
-	
-	/**
-	 * Returns whether the given alien is currently immune against enemies
-	 * 
-	 * @return True if the given alien is immune against other enemies (i.e.,
-	 *         there are no interactions between the alien and enemy objects).
-	 */
-	public boolean isImmune() {
-		return immune;
 	}
 	
 	/**
