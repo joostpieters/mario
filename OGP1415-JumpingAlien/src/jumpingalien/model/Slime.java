@@ -175,8 +175,8 @@ public class Slime extends GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
-	private void adjustSchools(GameObject other, boolean touched, double dt) {
-		if (touched && ( ! other.isDying())) {
+	private void adjustHitpoints(GameObject other, double touched, double dt) {
+		if ((touched == 1) && ( ! other.isDying())) {
 			if (other instanceof Slime) {
 				if(this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
 					this.getSchool().addSlime((Slime) other);
@@ -191,11 +191,12 @@ public class Slime extends GameObject {
 			}
 		}	
 	}
-	private boolean updateHitpointsSharksSlimesMazub(double newXPos, double newYPos, double dt) {
+	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
 		allSharksSlimesMazub.add(this.getWorld().getAlien());	
 		boolean onGameObject = false;
+		double[] newPos = {newXPos, newYPos};
 		for(GameObject other: allSharksSlimesMazub) {
 			if(other != this) {
 				double xDim1 = this.getXDim();
@@ -204,33 +205,21 @@ public class Slime extends GameObject {
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				boolean touched = false;
-				
-				double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
+				newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
 						yDim2);
-				newXPos = newPos[0];
-				newYPos = newPos[1];
-				if (newPos[2] == 1) {
-					touched = true;
-				}
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}
-				this.adjustSchools(other, touched, dt);
+				this.adjustHitpoints(other, newPos[2], dt);
 			}
 		}
-		return onGameObject;
-	}
-	
-	public double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {		
-		boolean onGameObject = this.updateHitpointsSharksSlimesMazub(newXPos, newYPos, dt);
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newPos[0],newPos[1]))) {
 			fall();
 		}
-		return new double[] {newXPos, newYPos};
+		return new double[] {newPos[0], newPos[1]};
 	}
 	
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
@@ -264,9 +253,6 @@ public class Slime extends GameObject {
 		double[] newCalculatedPos = this.calculateNewPos(dt);
 		double newXPos = newCalculatedPos[0];
 		double newYPos = newCalculatedPos[1];
-		if((this.getXPos() - newXPos >= 1) || (this.getYPos() - newYPos) >= 1) {
-			System.out.println("de possen zijn mis!!!");
-		}
 		this.checkIfWithinBoundaries(newXPos, newYPos);
 				
 		double[] newPos = checkSurroundings(newXPos,newYPos);
@@ -276,7 +262,7 @@ public class Slime extends GameObject {
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 		
-		this.loseHitpointsBecauseOfFeature(dt, newXPos, newYPos);			
+		this.loseHitpointsBecauseOfFeature(dt, this.getXPos(), this.getYPos());			
 		this.updateImmunity(dt);
 		
 		if (this.getHitpoints() <= 0) {
