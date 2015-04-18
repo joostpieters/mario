@@ -74,12 +74,11 @@ public class Shark extends GameObject {
 		return CONTACT_DAMAGE;
 	}	
 	private final int MAX_HITPOINTS = 100;
-	@Override
 	/**
 	 * the maximum amount of hitpoints
 	 * @return MAX_HITPOINTS
 	 */
-	@Basic @Immutable
+	@Basic @Immutable @Override
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
@@ -109,7 +108,16 @@ public class Shark extends GameObject {
 	private double getTimeInAir() {
 		return timeInAir;
 	}
+	/**
+	 * Sets the timeInAir to a new value
+	 * @param time
+	 * 			the new value for timeInAir
+	 * @pre time should always be bigger than or equal to zero
+	 * 		| time >= 0
+	 * @post this.timeInAir = time
+	 */
 	private void setTimeInAir(double time) {
+		assert time >= 0;
 		this.timeInAir = time;
 	}
 	private double movementDuration = 0;
@@ -117,7 +125,16 @@ public class Shark extends GameObject {
 	private double getMovementDuration() {
 		return movementDuration;
 	}
+	/**
+	 * Sets movementDuration to a new value
+	 * @param time
+	 * 			the new value for movementDuration
+	 * @pre  time should always be bigger than or equal to zero
+	 * 		| time >= 0
+	 * @post this.movementDuration = time
+	 */
 	private void setMovementDuration(double time) {
+		assert time >= 0;
 		this.movementDuration = time;
 	}	
 	private double timeSinceMove = 0;
@@ -129,9 +146,14 @@ public class Shark extends GameObject {
 		return timeSinceMove;
 	}
 	/**
+	 * Sets timeSinceEndMove to a new value
 	 * @param timeSinceMove the timeSinceMove to set
+	 * @pre  time should always be bigger than or equal to zero
+	 * 		| time >= 0
+	 * @post this.movementDuration = time
 	 */
 	private void setTimeSinceMove(double time) {
+		assert time >= 0;
 		this.timeSinceMove = time;
 	}	
 	private int jumpCounter = 0;
@@ -139,7 +161,15 @@ public class Shark extends GameObject {
 	private int getJumpCounter() {
 		return this.jumpCounter;
 	}
+	/**
+	 * Sets jumpCounter to a new value
+	 * @param count
+	 * 			new value to set
+	 * @pre count should always be bigger than or equal to zero
+	 * 		| count >= 0
+	 */
 	private void setJumpCounter(int count) {
+		assert count >= 0;
 		this.jumpCounter = count;		
 	}
 	private boolean moving = true;

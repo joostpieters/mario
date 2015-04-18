@@ -332,10 +332,13 @@ public class Mazub extends GameObject {
 	 * Sets the initial starting speed to a new value
 	 * @param initstartspeed
 	 * 			The new speed by initialization
+	 * @pre the initstartspeed must be bigger than or equal to zero
+	 * 		|  initstartspeed >= 0
 	 * @post initStartSpeed is equal to the given speed
 	 */
 	@Raw 
 	private void setInitStartSpeed(int initstartspeed) {
+		assert initstartspeed >= 0;
 		this.initStartSpeed = initstartspeed;
 	}
 	/**
@@ -351,40 +354,55 @@ public class Mazub extends GameObject {
 	/**
 	 * Sets the number of available running sprites to a new value
 	 * @param nbRunningSprites
-	 * 			the nuw value for nbRunningSprites
+	 * 			the new value for nbRunningSprites 
+	 * @pre nbRunningSprites must be be bigger than or equal to zero
+	 * 			| nbRunningSprites >= 0
 	 * @post nbRunningSprites is equal to the given int
 	 */
 	private void setNbRunningSprites(int nbRunningSprites) {
+		assert nbRunningSprites >= 0;
 		this.nbRunningSprites = nbRunningSprites;
 	}
 	/**
 	 * Sets the counter of the running sprites to a new value
 	 * @param counterSprites
 	 * 			the new value for counterSprites
+	 * @pre counterSprites must be be bigger than or equal to zero and
+			never bigger than nbRunningSprites
+			| counterSprites >= 0;
+		 	| counterSprites <= this.getNbRunningSprites();
 	 * @post counterSprites is equal to the given int
 	 */
 	private void setCounterSprites(int counterSprites) {
+		assert counterSprites >= 0;
+		assert counterSprites <= this.getNbRunningSprites();
 		this.counterSprites = counterSprites;
 	}
 	/**
 	 * Sets the time since endMove to a new value
-	 * @param time_since_endMove 
+	 * @param timeSinceEndMove 
 	 * 			the new time_since_endMove
+	 * @pre	timeSinceEndMove should always be bigger than or equel to zero
+	 * 		| timeSinceEndMove >= 0;
 	 * @post timeSinceEndMove is equal to the given double
 	 */
 	@Raw 
 	private void setTimeSinceEndMove(double timeSinceEndMove) {
+		assert timeSinceEndMove >= 0;
 		this.timeSinceEndMove = timeSinceEndMove;
 	}
 	/**
 	 * Sets the time since startMove to a new value
-	 * @param time_since_startMove 
+	 * @param timeSinceStartMove 
 	 * 			the new time_since_startMove
+	 * @pre timeSinceStartmove should always be bigger than or equel to zero
+	 * 		| timeSinceStartMove >= 0
 	 * @post timeSinceStartMove is equal to the given double
 	 */
 	@Raw 
-	private void setTimeSinceStartMove(double time_since_startMove) {
-		this.timeSinceStartMove = time_since_startMove;
+	private void setTimeSinceStartMove(double timeSinceStartMove) {
+		assert timeSinceStartMove >= 0;
+		this.timeSinceStartMove = timeSinceStartMove;
 	}
 	
 //VALIDATIONS	

@@ -92,9 +92,12 @@ public class Plant extends GameObject {
 	 * sets the double timeSameOrientation to the given value
 	 * @param t
 	 * 			the new value
+	 * @pre t should always be bigger than or equal to zero
+	 * 		| t >= 0 
 	 * @post timeSameOrientation = t
 	 */
 	private void setTimeSameOrientation(double t) {
+		assert t >= 0;
 		this.timeSameOrientation = t;
 	}	
 	
