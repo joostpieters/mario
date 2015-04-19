@@ -217,8 +217,7 @@ public class Slime extends GameObject {
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
-						yDim2);
+				newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2);
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}

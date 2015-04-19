@@ -416,9 +416,7 @@ public class Shark extends GameObject {
 		boolean onGameObject = false;
 		for(GameObject other: allSlimesSharksMazub) {
 			if(this != other) {
-				// double x1 = newXPos;
 				double xDim1 = this.getXDim();
-				// double y1 = newYPos;
 				double yDim1 = this.getYDim();
 				double x2 = other.getXPos();
 				double xDim2 = other.getXDim();
@@ -430,13 +428,11 @@ public class Shark extends GameObject {
 						yDim2);
 				newXPos = newPos[0];
 				newYPos = newPos[1];
-				if (newPos[2] == 1) {
-					touched = true;
-				}
+	
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}
-				if ( touched && ( ! other.isDying()) && !(other instanceof Shark))  {
+				if ( newPos[2] == 1 && ( ! other.isDying()) && !(other instanceof Shark))  {
 					this.contactDamage(dt);
 					other.contactDamage(dt);
 				}		
