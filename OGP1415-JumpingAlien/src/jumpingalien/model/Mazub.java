@@ -736,21 +736,17 @@ public class Mazub extends GameObject {
 			double y2 = other.getYPos();
 			double yDim2 = other.getYDim();
 			boolean touched = false;
-			
 			double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
 					yDim2);
 			newXPos = newPos[0];
 			newYPos = newPos[1];
-			if (newPos[2] == 1) {
+			if (newPos[2] == 1) 
 				touched = true;
-			}
-			if (newPos[3] == 1) {
+			if (newPos[3] == 1) 
 				onGameObject = true;
-			}
-			if ( touched && ( ! other.isDying()))  {
+			if ( touched && ( ! other.isDying()))
 				this.contactDamage(dt);
 				other.contactDamage(dt);
-			}
 		}
 		return onGameObject;
 	}
@@ -773,14 +769,33 @@ public class Mazub extends GameObject {
 	 * @return {newXPos, newYPos}
 	 */
 	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
-		boolean onGameObject = this.updateHitpointsSlimesAndSharks(newXPos, newYPos, dt);
-		if (this.isFalling() && onGameObject) {
+		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharks.addAll(this.getWorld().getSharks());
+		boolean onGameObject = false;
+		double[] newPos = {newXPos, newYPos};
+		for(GameObject other: allSlimesSharks) {
+			double xDim1 = this.getXDim();
+			double yDim1 = this.getYDim();
+			double x2 = other.getXPos();
+			double xDim2 = other.getXDim();
+			double y2 = other.getYPos();
+			double yDim2 = other.getYDim();
+			newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2);
+			if (newPos[3] == 1) {
+				onGameObject = true;
+			}
+			if ( newPos[2] == 1 && ( ! other.isDying())) {
+				this.contactDamage(dt);
+				other.contactDamage(dt);
+			}
+		}
+		if (this.isFalling() && onGameObject)  {
 			this.endFall();
 		}
-		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newXPos,newYPos))) {
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newPos[0],newPos[1]))) {
 			fall();
 		}
-		return new double[] {newXPos, newYPos};
+		return new double[] {newPos[0], newPos[1]};
 	}
 	
 	/**
@@ -957,6 +972,7 @@ public class Mazub extends GameObject {
 	 * 		| newPos = checkSurroundings(newPos[0],newPos[1]);
 	 * @effect Sets the new speed, movingTimes and the new positions
 	 * 		| this.setNewSpeed(dt);
+	 * 		| this.changeMovingTimes(dt);
 	 * 		| this.setXPos(newPos[0]);
 	 * 		| this.setYPos(newPos[1]);
 	 */
@@ -969,7 +985,7 @@ public class Mazub extends GameObject {
 		double[] newPos = colliding(newXPos, newYPos, dt);
 		newPos = checkSurroundings(newPos[0],newPos[1]);
 		
-		
+		this.setNewSpeed(dt);
 		this.changeMovingTimes(dt);
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
