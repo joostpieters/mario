@@ -898,7 +898,8 @@ public class Mazub extends GameObject {
 	 * @param newXPos
 	 * 			the new horizontal position of Mazub
 	 * @param newYPos
-	 * 			the new vertical position of Mazub
+	 * 			
+	 * the new vertical position of Mazub
 	 * @effect loses hitpoints if in contact with magma or water
 	 * 			| if (isInContactWithFeature(newXPos, newYPos, 2) 
 	 * 			| 	then setTimeInWater(getTimeInWater() + dt)

@@ -547,7 +547,7 @@ public abstract class GameObject {
 			newXPos = this.getXPos() - this.getXSpeed()*100*dt
 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
 		}
-		double newYPos = this.getYPos() + this.getYSpeed()*100*dt + 0.5 * 100 *
+		double newYPos = this.getYPos() + this.getYSpeed() * 100 * dt + 0.5 * 100 *
 				this.getYAcc() * Math.pow(dt,2);
 		return new double[] {newXPos, newYPos};
 	}
