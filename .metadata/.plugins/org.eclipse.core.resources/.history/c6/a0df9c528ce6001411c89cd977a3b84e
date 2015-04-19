@@ -113,11 +113,11 @@ public class World {
 	/**
 	 * the horizontal position of the visible window (of the bottom left pixel)
 	 */
-	private int xVisibleWindow;
+	private int XVisibleWindow;
 	/**
 	 * the vertical position of the visible window (of the bottom left pixel)
 	 */
-	private int yVisibleWindow;
+	private int YVisibleWindow;
 	/**
 	 * the geological feature of the tile with its bottom left pixel
 	 * on the given position
@@ -253,7 +253,22 @@ public class World {
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
 		return new int[] {tileX * this.getTileLength(),
 				tileY * this.getTileLength()};
-	}
+	}	
+//	/**
+//	 * Returns the bottom right pixel coordinate of the tile at the given tile
+//	 * position.
+//	 * 
+//	 * @param tileX
+//	 *            The x-position x_T of the tile
+//	 * @param tileY
+//	 *            The y-position y_T of the tile
+//	 * @return An array which contains the x-coordinate and y-coordinate of the
+//	 *         bottom right pixel of the given tile, in that order.
+//	 */
+//	public int[] getBottomRightPixelOfTile(int tileX, int tileY) {
+//		return new int[] {tileX * this.getTileLength() + this.getTileLength(),
+//				tileY * this.getTileLength()};
+//	}		
 	/**
 	 * Returns the tile coordinate of the tile at the given pixels.
 	 * 
@@ -290,7 +305,6 @@ public class World {
 	 *         small to large x_T) precede the positions of the row above that.
 	 * 
 	 */
-	// TODO moet hier nog andere documentatie bij?
 	@Basic
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
@@ -353,8 +367,7 @@ public class World {
 	}	
 	/**
 	 * 
-	 * @return the amount of horizontal pixels in the world
-	 * 			| nbTilesX * tileLength
+	 * @return nbTilesX * tileLength
 	 */
 	@Basic @Immutable 
 	public int getX() {
@@ -362,168 +375,110 @@ public class World {
 	}	
 	/**
 	 * 
-	 * @return the amount of vertical pixels in the world
-	 * 			| nbTilesY * tileLength
+	 * @return nbTilesY * tileLength
 	 */
 	@Basic @Immutable 
 	public int getY() {
 		return this.getNbTilesY() * this.getTileLength();
 	}
-	/**
-	 * the collection of all the plants in the world
-	 * @return the list containing every plant in the world
-	 * 			| plants
-	 */
 	@Basic
 	public Collection<Plant> getPlants() {
 		return this.plants;
 	}
-	/**
-	 * the collection of all the sharks in the world
-	 * @return the list containing every shark in the world
-	 * 			| sharks
-	 */
 	@Basic
 	public Collection<Shark> getSharks() {
 		return this.sharks;
 	}
-	/**
-	 * the collection of all the slimes in the world
-	 * @return the list containing every slime in the world
-	 * 			| slime
-	 */
 	@Basic
 	public Collection<Slime> getSlimes() {
 		return this.slimes;
 	}
-	/**
-	 * the amount of plants in the world
-	 * @return number of plants
-	 * 			| plants.size()
-	 */
 	@Basic
 	private int getNbPlants() {
 		return plants.size();
 	}
-	/**
-	 * the amount of sharks in the world
-	 * @return number of sharks
-	 * 			| sharks.size()
-	 */
 	@Basic
 	private int getNbSharks() {
 		return sharks.size();
 	}
-	/**
-	 * the amount of slimes in the world
-	 * @return number of slimes
-	 * 			| slimes.size()
-	 */
 	@Basic
 	private int getNbSlimes() {
 		return slimes.size();
 	}
-	/**
-	 * the amount of aliens in the world
-	 * @return number of aliens
-	 * 			| 1
-	 */
 	@Basic
 	private int getNbAliens() {
 		return 1;
 	}	
 	/**
-	 * @return the horizontal amount of pixels of the VisibleWindow
-	 * 			| XVisibleWindow
+	 * @return the xVisibleWindow
 	 */
 	@Basic
 	private int getXVisibleWindow() {
-		return xVisibleWindow;
+		return XVisibleWindow;
 	}
 	/**
-	 * @return the vertical amount of pixels of the VisibleWindow
-	 * 			| YVisibleWindow
+	 * @return the yVisibleWindow
 	 */
 	@Basic
 	private int getYVisibleWindow() {
-		return yVisibleWindow;
+		return YVisibleWindow;
 	}
 	
 //	SETTERS	
 	
 	/**
 	 * @param tileSize the tileSize to set
-	 * @post the tileSize is set to the given value
-	 * 			| this.tileSize = tileSize
 	 */
 	private void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
 	}
 	/**
 	 * @param nbTilesX the nbTilesX to set
-	 * @post the number of tiles (horizontally) is set to the given amount
-	 * 			| this.nbTilesX = nbTilesX
 	 */
 	private void setNbTilesX(int nbTilesX) {
 		this.nbTilesX = nbTilesX;
 	}
 	/**
 	 * @param nbTilesY the nbTilesY to set
-	 * @post the number of tiles (vertically) is set to the given amount
-	 * 			| this.nbTilesY = nbTilesY
 	 */
 	private void setNbTilesY(int nbTilesY) {
 		this.nbTilesY = nbTilesY;
 	}
 	/**
 	 * @param visibleWindowWidth the visibleWindowWidth to set
-	 * @post the width of the visible window is equal to the given int
-	 * 			| this.visibleWindowWidth = visibleWindowWidth
 	 */
 	private void setVisibleWindowWidth(int visibleWindowWidth) {
 		this.visibleWindowWidth = visibleWindowWidth;
 	}
 	/**
 	 * @param visibleWindowHeight the visibleWindowHeight to set
-	 * @post the height of the visible window is equal to the given int
-	 * 			| this.visibleWindowHeight = visibleWindowHeight
 	 */
 	private void setVisibleWindowHeight(int visibleWindowHeight) {
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
 	/**
 	 * @param targetTileX the targetTileX to set
-	 * @post the horizontal coordinate of the targetTile is equal to the given int
-	 * 			| this.targetTileX =  targetTileX
 	 */
 	private void setTargetTileX(int targetTileX) {
 		this.targetTileX = targetTileX;
 	}
 	/**
 	 * @param targetTileY the targetTileY to set
-	 * @post the vertical coordinate of the targetTile is equal to the given int
-	 * 			| this.targetTileY = targetTileY
 	 */
 	private void setTargetTileY(int targetTileY) {
 		this.targetTileY = targetTileY;
 	}	
 	/**
 	 * @param xVisibleWindow the xVisibleWindow to set
-	 * @post the horizontal position of the bottom left pixel of the visible window
-	 * 		 is equal to the given value
-	 * 			| this.xVisibleWindow = xVisibleWindow
 	 */
 	private void setXVisibleWindow(int xVisibleWindow) {
-		this.xVisibleWindow = xVisibleWindow;
+		XVisibleWindow = xVisibleWindow;
 	}
 	/**
 	 * @param yVisibleWindow the yVisibleWindow to set
-	 * @post the vertical position of the bottom left pixel of the visible window
-	 * 		 is equal to the given value
-	 * 			| this.yVisibleWindow = yVisibleWindow
 	 */
 	private void setYVisibleWindow(int yVisibleWindow) {
-		this.yVisibleWindow = yVisibleWindow;
+		YVisibleWindow = yVisibleWindow;
 	}
 	/**
 	 * Modify the geological type of a specific tile in the given world to a
@@ -543,51 +498,22 @@ public class World {
 	 *            <li>the value 2 is provided for a <b>water</b> tile;</li>
 	 *            <li>the value 3 is provided for a <b>magma</b> tile.</li>
 	 *            </ul>
-	 * @post the geological feature of the tile at the given position is equal to 
-	 * 		 the given tileType
-	 * 			| this.geologicalFeature[tileY][tileX] = tileType
 	 */
 	public void setGeologicalFeature(int tileX, int tileY, int tileType)
 		throws IllegalTileException {
 		if ( ! isValidTile(tileX, tileY, tileType)) {
 			throw new IllegalTileException(tileX, tileY, tileType);
-		}
-		// TODO waarom is dit eerst Y en dan X ?
+		}		
 		this.geologicalFeature[tileY][tileX] = tileType;
-	}
-	/**
-	 * @param the player character
-	 * 			| alien
-	 * @post the player character alien is equal to the given Mazub
-	 * 			| this.alien = alien
-	 */
+	}	
 	public void setAlien(Mazub alien) {
 		this.alien = alien;
 	}
-	/**
-	 * removes the Mazub alien from the game world
-	 * @param the player character
-	 * 			| alien
-	 * @pre the alien has to exist
-	 * 			| alien != null
-	 * @post the alien is set to null
-	 * 			| this.alien = null
-	 */
 	public void removeAlien(@Raw Mazub alien) {
+		//assert this.hasAlien(alien);
 		assert alien != null;
 		this.alien = null;
 	}
-	/**
-	 * removes the Slime slime from the game world
-	 * @param the Slime to remove
-	 * 			| slime
-	 * @pre this has to contain a slime
-	 * 			| hasSlime(slime)
-	 * @pre the slime may not be equal to null
-	 * 			| slime != null
-	 * @post the Slime slime is removed from the game world
-	 * 			| this.slimes.remove(slime)
-	 */
 	public void removeSlime(@Raw Slime slime) {
 		assert this.hasSlime(slime);
 		assert slime != null;

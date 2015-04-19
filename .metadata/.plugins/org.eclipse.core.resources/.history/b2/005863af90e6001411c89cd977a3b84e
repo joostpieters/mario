@@ -554,40 +554,15 @@ public class World {
 		}
 		// TODO waarom is dit eerst Y en dan X ?
 		this.geologicalFeature[tileY][tileX] = tileType;
-	}
-	/**
-	 * @param the player character
-	 * 			| alien
-	 * @post the player character alien is equal to the given Mazub
-	 * 			| this.alien = alien
-	 */
+	}	
 	public void setAlien(Mazub alien) {
 		this.alien = alien;
 	}
-	/**
-	 * removes the Mazub alien from the game world
-	 * @param the player character
-	 * 			| alien
-	 * @pre the alien has to exist
-	 * 			| alien != null
-	 * @post the alien is set to null
-	 * 			| this.alien = null
-	 */
 	public void removeAlien(@Raw Mazub alien) {
+		//assert this.hasAlien(alien);
 		assert alien != null;
 		this.alien = null;
 	}
-	/**
-	 * removes the Slime slime from the game world
-	 * @param the Slime to remove
-	 * 			| slime
-	 * @pre this has to contain a slime
-	 * 			| hasSlime(slime)
-	 * @pre the slime may not be equal to null
-	 * 			| slime != null
-	 * @post the Slime slime is removed from the game world
-	 * 			| this.slimes.remove(slime)
-	 */
 	public void removeSlime(@Raw Slime slime) {
 		assert this.hasSlime(slime);
 		assert slime != null;
