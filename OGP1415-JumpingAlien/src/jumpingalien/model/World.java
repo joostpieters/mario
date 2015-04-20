@@ -10,6 +10,8 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 // TODO alles final maken wat final moet zijn
+// TODO protected/ public /private maken #randomspaties
+// TODO overal @override in facade (voor als iemands hoofd echt niet wil denken)
 // TODO @Raw toevoegen overal waar het nodig is
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
@@ -17,7 +19,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO aparte testfiles
 // TODO invariant van binnen grenzen
 // TODO Laura nog eens muilen
-
+// TODO alle classes doorzoeken op Mazub in de commentaar
 
 public class World {
 
@@ -133,7 +135,7 @@ public class World {
 	 */
 	private List<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 	/**
-	 * a list of all the plants in tht world
+	 * a list of all the plants in the world
 	 */
 	private List<Plant> plants = new CopyOnWriteArrayList<Plant>();
 	/**
@@ -290,19 +292,14 @@ public class World {
 	 *         small to large x_T) precede the positions of the row above that.
 	 * 
 	 */
-	// TODO moet hier nog andere documentatie bij?
+	// TODO moet hier nog andere documentatie bij? alles wat in die functie staat zeker
 	@Basic
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
-	//	System.out.println(pixelLeft); System.out.println(pixelBottom); System.out.println(pixelRight);
-	//	System.out.println(pixelTop);
 		int posLeft = this.getTileOfPixels(pixelLeft,pixelBottom)[0];
 		int posBottom = this.getTileOfPixels(pixelLeft,pixelBottom)[1];
 		int posRight = this.getTileOfPixels(pixelRight,pixelTop)[0];
 		int posTop = this.getTileOfPixels(pixelRight,pixelTop)[1];
-	//	System.out.println(posLeft); System.out.println(posBottom); System.out.println(posRight);
-	//	System.out.println(posTop);
-
 		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];
 		
 		int counter = 0;
@@ -338,6 +335,8 @@ public class World {
 	 *         <li>the value 2 is returned for a <b>water</b> tile;</li>
 	 *         <li>the value 3 is returned for a <b>magma</b> tile.</li>
 	 *         </ul>
+	 *         
+	 *         | this.geologicalFeature[pixelY/this.getTileLength()][pixelX/this.getTileLength()]
 	 * 
 	 * @note This method must return its result in constant time.
 	 * 
@@ -552,7 +551,7 @@ public class World {
 		if ( ! isValidTile(tileX, tileY, tileType)) {
 			throw new IllegalTileException(tileX, tileY, tileType);
 		}
-		// TODO waarom is dit eerst Y en dan X ?
+		// TODO waarom is dit eerst Y en dan X ? Omdat dat ne matrix is. Gewoon kwestie van hetzelfde te doen als bovenaan
 		this.geologicalFeature[tileY][tileX] = tileType;
 	}
 	/**
@@ -858,6 +857,7 @@ public class World {
 	 * @return the minimal value for dt
 	 */
 	// TODO dit moet toch niet gedocumenteerd worden omdat dit deel van advanceTime is he?
+	// Geen idee eigenlijk. Alles is deel van advanceTime :D Geen commentaar nodig. Jeeeeej!!!
 	private double computeMinimalDt(double dt) {
 		double dtGiven = dt;
 		for (Plant plant : this.getPlants()) {
@@ -1017,6 +1017,7 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
+	//TODO volgens mij gebruiken we alle methodes hieronder niet
 	/**
 	 * returns the amount of Plants the player character touched
 	 * @param xPos
@@ -1029,7 +1030,7 @@ public class World {
 	 * 			the vertical dimension of the player character
 	 * @return 
 	 */
-	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
+	private int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {
 			 if (this.touches(xPos, xDim, yPos, yDim, plant.getXPos(),
@@ -1074,7 +1075,7 @@ public class World {
 		return nbTouchedAliens;
 	}
 	
-	public boolean mazubCollidesAboveWithSharkOrSlime() {
+	private boolean mazubCollidesAboveWithSharkOrSlime() {
 		for (Shark shark: this.getSharks()) {
 			if (alien.collidesAbove(shark.getXPos(), shark.getXDim(), shark.getYPos(), shark.getYDim(),
 					alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim())) {

@@ -1,7 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Arrays;
-
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -24,12 +22,16 @@ public abstract class GameObject {
 	 *            The y-coordinate of the gameObject's initial position
 	 * @param sprites
 	 *            An array of sprites for the new gameObject
+	 * @effect the x and y position and the sprites are set
+	 * 			| this.setXPos(xPos)
+	 * 			| this.setYPos(yPos)
+	 *			| this.setSprite(sprites)
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the gameObject
 	 * 			| !isValidPosition(x_pos,y_pos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
-	 * 			| !isValidSprite(sprites) 
+	 * 			| !isValidSprite(sprites)  	
 	 */
 	@Raw
 	protected GameObject(int xPos,int yPos, Sprite[] sprites ) 
@@ -60,6 +62,12 @@ public abstract class GameObject {
 	 * Sets the horizontal position of mazub to the rounded down value of x
 	 * @param x
 	 * 			The new value for the horizontal position
+	 * @pre the position x should  be bigger than or equal to zero and 
+	 * 		smaller than the boundary of the world
+	 * 		| x >= 0
+	 * 		| x <= this.getWorld().getX()
+	 * @post the position is set
+	 * 		| this.xPos = x
 	 */
 	@Raw 
 	protected void setXPos(double x) {
@@ -83,6 +91,12 @@ public abstract class GameObject {
 	 * Sets the vertical position of mazub to the rounded down value of y
 	 * @param y
 	 * 			The new value for the vertical position
+	 * @pre the position y should  be bigger than or equal to zero and 
+	 * 		smaller than the boundary of the world
+	 * 		| y >= 0
+	 * 		| y <= this.getWorld().getY()
+	 * @post the position is set
+	 * 		| this.yPos = y
 	 */	
 	@Raw 
 	public void setYPos(double y) {
@@ -91,11 +105,11 @@ public abstract class GameObject {
 		this.yPos = y;
 	}	
 	/**
-	 * the orientation of Mazub
+	 * the orientation of the object
 	 */
 	private Orientation orientation  = Orientation.RIGHT;	
 	/**
-	 * Returns the orientation of Mazub
+	 * Returns the orientation of the object
 	 * @return orientation
 	 */
 	@Basic @Raw 
@@ -103,58 +117,113 @@ public abstract class GameObject {
 		return orientation;
 	}
 	/**
-	 * Sets the orientation of Mazub to right
-	 * @post orientation == "right"
+	 * Sets the orientation to right
+	 * @post the orientation is right
+	 * 		| this.orientation = Orientation.RIGHT
 	 */
 	@Raw 
-	public void setOrientationRight() {
+	protected void setOrientationRight() {
 		this.orientation = Orientation.RIGHT;
 	}
 	/**
-	 * Sets the orientation of Mazub to left
-	 * @post orientation == "left"
+	 * Sets the orientation to left
+	 *@post the orientation is left
+	 * 		| this.orientation = Orientation.LEFT
 	 */
 	@Raw 
-	public void setOrientationLeft() {
+	protected void setOrientationLeft() {
 		this.orientation = Orientation.LEFT;
-	}	
+	}
+	/**
+	 * the sprites of an object
+	 */
 	protected Sprite[] sprites;
 	/**
-	 * @return the sprites
+	 * Returns the sprites of the object
+	 * @return sprites
 	 */
 	@Basic
-	public Sprite[] getSprite() {
+	protected Sprite[] getSprite() {
 		return sprites;
 	}
 	/**
-	 * @param sprites the sprites to set
+	 * Sets the sprites to a new set of sprites
+	 * @param sprites 
+	 * 			the sprites to set
+	 * @pre the sprites should be valid
+	 * 		| this.isValidSprite(sprites)
+	 * @post the sprites are set
 	 */
 	private void setSprite(Sprite[] sprites) {
 		assert this.isValidSprite(sprites);
 		this.sprites = sprites;
 	}	
+	/**
+	 * the world where the object appears
+	 */
 	private World world;
+	/**
+	 * returns the world where the object appears
+	 * @return world
+	 */
 	@Basic
-	public World getWorld() {
+	protected World getWorld() {
 		return this.world;
 	}
+	/**
+	 * Sets the world to the givan value world
+	 * @param world
+	 * 		the world to set
+	 * @post world is set
+	 * 		| this.world = world
+	 */
 	public void setWorld(World world) {
 		this.world = world;
 	}	
+	/**
+	 * the horizontal speed of the object
+	 */
 	protected double xSpeed;
+	/**
+	 * returns the horizontal speed
+	 * @return xSpeed
+	 */
 	@Basic
-	public double getXSpeed() {
+	protected double getXSpeed() {
 		return this.xSpeed;
 	}
+	/**
+	 * Sets the horizontal speed to a new value speed
+	 * @param speed
+	 * 		the speed to set
+	 * @pre the speed should be valid
+	 * 		| this.isValidXSpeed(speed)
+	 * @post the xSpeed is set
+	 */
 	protected void setXSpeed(double speed) {
 		assert this.isValidXSpeed(speed);
 		this.xSpeed = speed;
 	}	
+	/**
+	 * the vertical speed of the object
+	 */
 	private double ySpeed;
 	@Basic
+	/**
+	 * returns the vertical speed
+	 * @return ySpeed
+	 */
 	public double getYSpeed() {
 		return this.ySpeed;
 	}
+	/**
+	 * Sets the vertical speed to a new value speed
+	 * @param speed
+	 * 		the speed to set
+	 * @pre the speed should be valid
+	 * 		| this.isValidYSpeed(speed)
+	 * @post the ySpeed is set
+	 */
 	public void setYSpeed(double speed) {
 		assert this.isValidYSpeed(speed);
 		this.ySpeed = speed;
@@ -163,6 +232,10 @@ public abstract class GameObject {
 	 * the horizontal acceleration 
 	 */
 	private double xAcc;
+	/**
+	 * returns the horizontal acceleration
+	 * @return xAcc
+	 */
 	@Basic
 	public double getXAcc() {
 		return xAcc;
@@ -171,6 +244,10 @@ public abstract class GameObject {
 	 * Sets the horizontal acceleration to a new value
 	 * @param xAcc
 	 * 			the new value of the horizontal acceleration
+	 * @pre xAcc should be a number and bigger than or equal to zero
+	 * 			| ( ! Double.isNaN(xAcc))
+	 * 			|  (xAcc >= 0)
+	 * @post xAcc is set
 	 */
 	@Raw 
 	public void setXAcc(double xAcc) {
@@ -185,48 +262,84 @@ public abstract class GameObject {
 	/**
 	 *  Returns the vertical acceleration 
 	 * @return the vertical acceleration
-	 * 			| YAcc
+	 * 			| yAcc
 	 */
 	@Basic @Raw 
-	public double getYAcc() {
+	protected double getYAcc() {
 		return yAcc;
 	}
 	/**
 	 * Sets the vertical acceleration to a new value
 	 * @param yAcc
 	 * 			the new value of the vertical acceleration
+	 * @pre yAcc should be a number
+	 * 			| ( ! Double.isNaN(yAcc))
+	 * @post yAcc is set
 	 */
 	@Raw 
-	public void setYAcc(double yAcc) {
+	protected void setYAcc(double yAcc) {
 		assert  ! Double.isNaN(yAcc);
 		this.yAcc = yAcc;
 	}	
+	/**
+	 * boolean to show or the object is dying or not
+	 */
 	private boolean dying = false;
+	/**
+	 * Returns or the object is dying
+	 * @return dying
+	 */
 	@Basic
-	public boolean isDying() {
+	protected boolean isDying() {
 		return this.dying;
 	}
-	public void setDying() {
+	/**
+	 * Sets the boolean dying to true and so the object dies
+	 * @post dying is true
+	 * 		| this.dying = true
+	 */
+	protected void setDying() {
 		this.dying = true;
 	}	
 	/**
-	 * Returns the current location of the given shark.
+	 * Returns the current location of the object. With the positions both casted into
+	 * integers (rounded down)
 	 * 
-	 * @return An array, consisting of 2 integers {x, y}, that represents the
-	 *         coordinates of the given shark's bottom left pixel in the world.
+	 * @return An array, consisting of 2 integers {x, y}, that represents the rounded
+	 *         down coordinates of the bottom left pixel in the world.
+	 *         | new int[]{(int) this.getXPos(), (int) this.getYPos()}
 	 */
 	@Basic
 	public int[] getLocation(){
 		return new int[]{(int) this.getXPos(), (int) this.getYPos()};
 	}	
 	/**
-	 * a variable containing the amount of hitpoints a Shark possesses
+	 * a variable containing the amount of hitpoints an object possesses
 	 */
-	protected int hitpoints;
+	private int hitpoints;
+	/**
+	 * Returns the amount of hitpoints the gameObject has
+	 * @return hitpoints
+	 */
 	@Basic
 	public int getHitpoints() {
 		return this.hitpoints;
 	}
+	/**
+	 * Sets the hitpoints of an object to a new value
+	 * @param number
+	 * 			the value for hitpoints to set
+	 * @pre number should be bigger than or equal to zero
+	 * @post hitpoints is set to number if number is smaller than the maximum amount of
+	 * 			hitpoints, otherwise hitpoints is set to the maximum amount of hitpoints
+	 * 			the object can posses
+	 * 			| if ( number < this.getMaxHitpoints()) {
+	 * 			|		this.hitpoints = number;
+	 * 			|	}		
+	 * 			|	else {
+	 * 			|		this.hitpoints = this.getMaxHitpoints();
+	 * 			|	}
+	 */
 	public void setHitpoints(int number) {
 		assert number >= 0;
 		if ( number < this.getMaxHitpoints()) {
@@ -236,6 +349,9 @@ public abstract class GameObject {
 			this.hitpoints = this.getMaxHitpoints();
 		}
 	}
+	/**
+	 * the maximum amount of hitpoints an object can posses
+	 */
 	private int MAX_HITPOINTS = 100;
 	/**
 	 * the maximum amount of hitpoints
@@ -245,18 +361,34 @@ public abstract class GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
+	/**
+	 * the time since the object has died
+	 */
 	private double timeSinceDeath = 0;
+	/**
+	 * the time since the object has died
+	 * @return timeSinceDeath
+	 */
 	@Basic
 	public double getTimeSinceDeath() {
 		return this.timeSinceDeath;
 	}
+	/**
+	 * sets the timeSinceDeath to a new value
+	 * @param t
+	 * 		the time to set
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		| t >= 0
+	 * @post the time is set to t
+	 */
 	public void setTimeSinceDeath(double t) {
 		assert t >= 0;
 		this.timeSinceDeath = t;
 	}	
 	/**
 	 * Returns the horizontal and vertical velocity
-	 * @return {xSpeed,ySpeed}
+	 * @return the velocities
+	 * 			| new double[] {this.getXSpeed(),this.getYSpeed()}
 	 */
 	@Basic @Raw 
 	public double[] getVelocity(){
@@ -264,18 +396,18 @@ public abstract class GameObject {
 	}	
 	/**
 	 * Returns an array consisting of the horizontal and 
-	 * vertical acceleration.
+	 * 		vertical acceleration.
 	 * @return an array consisting of the horizontal and 
-	 * vertical acceleration.
-	 * 			| {xAcc,YAcc}
+	 * 		vertical acceleration.
+	 * 			| new double[] {this.getXAcc(),this.getYAcc()}
 	 */
 	@Basic @Raw 
 	public double[] getAcceleration(){
 		return new double[] {this.getXAcc(),this.getYAcc()};
 	}	
 	/**
-	 * Returns the horizontal dimension of mazub (width)
-	 * @return the horizontal dimension of mazub (width)
+	 * Returns the horizontal dimension (width)
+	 * @return the horizontal dimension (width)
 	 * 			| this.getCurrentSprite().getWidth()
 	 */
 	@Basic @Raw 
@@ -283,8 +415,8 @@ public abstract class GameObject {
 		return this.getCurrentSprite().getWidth();
 	}
 	/**
-	 * Returns the vertical dimension of mazub (height)
-	 * @return the vertical dimension of mazub (height)
+	 * Returns the vertical dimension (height)
+	 * @return the vertical dimension (height)
 	 * 			| this.getCurrentSprite().getHeight()
 	 */
 	@Basic @Raw 
@@ -292,14 +424,17 @@ public abstract class GameObject {
 		return this.getCurrentSprite().getHeight();
 	}	
 	/**
-	 * Returns an array consisting of the width and height of mazub
-	 * @return an array consisting of the width and height of mazub
-	 * 			| {XDim,YDim}
+	 * Returns an array consisting of the width and height
+	 * @return an array consisting of the width and height
+	 * 			| new int[] {this.getXDim(),this.getYDim()}
 	 */
 	@Basic @Raw 
 	public int[] getSize() {
 		return new int[] {this.getXDim(),this.getYDim()};
-	}	
+	}
+	/**
+	 * the maximum horizontal speed an object can have
+	 */
 	private double maxSpeed; 
 	/**
 	 * Returns the maximum speed
@@ -312,8 +447,13 @@ public abstract class GameObject {
 	}
 	/**
 	 * Sets the maximum horizontal speed to a new value maxspeed
-	 * @param d
-	 * 			the new maximum horizontal speed of mazub
+	 * @param speed
+	 * 			the new maximum horizontal speed
+	 * @pre the speed should be valid
+	 * 			| this.isValidXSpeed(speed)
+	 * @post the maxSpeed is set to speed
+	 * 			| this.maxSpeed = speed
+	 * 		
 	 */
 	@Raw
 	protected void setMaxSpeed(double speed) {
@@ -337,6 +477,10 @@ public abstract class GameObject {
 	 */
 	private boolean falling = false;
 	@Basic 
+	/**
+	 * checks or the object is falling or not
+	 * @return falling
+	 */
 	protected boolean isFalling() {
 		return falling;
 	}
@@ -354,34 +498,62 @@ public abstract class GameObject {
 	protected void endFalling() {
 		this.falling = false;
 	}	
+	/**
+	 * Makes the object fall by setting the yAcc and falling
+	 * @effect making the object fall
+	 * 			| this.setYAcc(GameObject.getFallAcc())
+	 * 			| this.setFalling()
+	 */
 	protected void fall() {
 		this.setYAcc(GameObject.getFallAcc());
 		this.setFalling();
 	}	
 	/**
-	 * Mazub fall ends
-	 * @effect	the acceleration of Mazub is set to 0
-	 * 		|	yAcc == 0
-	 * 		|	ySpeed == 0
-	 * 		|	endFalling()
+	 * Ends the object's fall
+	 * @effect	the acceleration and speed is set to 0 and endFalling is called
+	 * 		|	this.setYAcc(0)
+	 * 		|	this.setYSpeed(0)
+	 * 		|	this.endFalling()
 	 */
 	protected void endFall() {
 		this.setYAcc(0);
 		this.setYSpeed(0);
 		this.endFalling();		
 	}	
+	/**
+	 * Boolean to reflect or the object is immune
+	 */
 	protected boolean immune = false;
+	/**
+	 * Returns whether the given object is currently immune against enemies
+	 * 
+	 * @return True if the given object is immune against other enemies (i.e.,
+	 *         there are no interactions between the object and enemy objects).
+	 */
 	@Basic 
 	protected boolean isImmune() {
 		return this.immune;
 	}
+	/**
+	 * Makes the object immune by setting immune to true
+	 * @post immune is set to true
+	 * 			| this.immune = true
+	 */
 	protected void setImmune() {
 		this.immune = true;
 	}
+	/**
+	 * Ends the object's immunity by setting immune to false
+	 * @post immune is set to false
+	 * 			| this.immune = false
+	 */
 	protected void setNotImmune() {
 		this.immune = false;
 	}
-	protected double timeSinceImmune = 0;
+	/**
+	 * the time since the abject started to be immune
+	 */
+	private double timeSinceImmune = 0;
 	@Basic 
 	protected double getTimeSinceImmune() {
 		return this.timeSinceImmune;
@@ -561,9 +733,6 @@ public abstract class GameObject {
 		}
 		else {
 			dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt);
-			
-//			dtX = 0.01 * (-10 * Math.abs(this.getXSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getXSpeed()),2) 
-//					+ 2 * Math.abs(this.getXAcc())))/ Math.abs(this.getXAcc());
 		}
 		
 		if (this.getYAcc() == 0) {
@@ -571,31 +740,8 @@ public abstract class GameObject {
 		}
 		else {
 			dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt);
-//			dtY = 0.01 * (-10 * Math.abs(this.getYSpeed()) + Math.sqrt(100 * Math.pow(Math.abs(this.getYSpeed()),2) 
-//					+ 2 * Math.abs(this.getYAcc())))/ Math.abs(this.getYAcc());
 		}		
-		
-		if (dtX <= 0 || dtY <= 0) {
-			System.out.println("de dt formule geeft iets negatief");
-		}
 		return Math.min(dtX,dtY);
-		
-//		if (this.getXAcc() == 0 && this.getYAcc() == 0) {
-//			dt = (Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getYSpeed())));
-//		}
-//		else {
-//			if (this.getXAcc() != 0) {
-//				dt = Math.min(Math.min(100 / Math.abs(this.getXSpeed()), 100 / Math.abs(this.getXSpeed())),
-//						(Math.sqrt(2 * Math.abs(this.getXAcc() / 100) + Math.pow(Math.abs(this.getXSpeed() / 100), 2))
-//								- Math.abs(this.getXSpeed()/ 100)) / (Math.abs(this.getXAcc() / 100)) );
-//			}
-//			else {
-//				dt = Math.min(Math.min(100 / Math.abs(this.getYSpeed()), 100 / Math.abs(this.getYSpeed())),
-//						(Math.sqrt(2 * Math.abs(this.getYAcc() / 100) + Math.pow(Math.abs(this.getYSpeed() / 100), 2))
-//								- Math.abs(this.getYSpeed()/ 100)) / (Math.abs(this.getYAcc() / 100)) );			
-//			}
-//		}		
-//		return dt;
 	}	
 	
 	protected int[][] getTilesLeft(double XPos, double YPos) {
@@ -795,7 +941,6 @@ public abstract class GameObject {
 		this.setHitpoints(this.getHitpoints() - nb);
 	}
 	
-	// dees heeft nen betere naam nodig maar ik ben weeral inspiratieloos -> fight anders?:p
 	protected void contactDamage(double dt) {
 		if( ! this.isImmune()) {
 			this.setImmune();
@@ -838,32 +983,21 @@ public abstract class GameObject {
 			newXPos = x2 - xDim1;
 			this.stopMoving();
 			touched = 1;
-//			System.out.println("collidesright");
-//			System.out.println(newYPos);
 		}
 		if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newXPos = x2 + xDim2;
 			this.stopMoving();
-//			System.out.println("collidesleft");
-//			System.out.println(newYPos);
 		}
 		if (this.collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newYPos = y2 - yDim1 + 1;
-//			System.out.println("collidesabove");
-//			System.out.println(newXPos);
-//			System.out.println(newYPos);
 			this.setYSpeed(0);
 			touched = 1;
 		}
 		if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-//			System.out.println("collidesunder");
-//			System.out.println(newXPos);
-//			System.out.println(newYPos);
 			newYPos = y2 + yDim2 - 1 ;
 			onGameObject = 1;
 			touched = 1;
-		}
-		
+		}	
 		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
 	

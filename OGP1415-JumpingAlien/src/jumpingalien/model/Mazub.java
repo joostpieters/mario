@@ -363,7 +363,7 @@ public class Mazub extends GameObject {
 	 * Sets the initial starting speed to a new value
 	 * @param initstartspeed
 	 * 			The new speed by initialization
-	 * @pre the initstartspeed must be bigger than or equal to zero
+	 * @pre the initstartspeed should be bigger than or equal to zero
 	 * 		|  initstartspeed >= 0
 	 * @post initStartSpeed is equal to the given speed
 	 */
@@ -1004,10 +1004,6 @@ public class Mazub extends GameObject {
 			}
 		}
 	}	
-	
-	// TODO sorry maar die exceptions hier werkten absoluut niet
-	// -> die moeten toch ook niet werken? Ja ge hebt gelijk
-	// Foutje. Git is ne zak -> true story
 	
 	/**
 	 * Starts the ducking of Mazub by setting the boolean duck on true 
