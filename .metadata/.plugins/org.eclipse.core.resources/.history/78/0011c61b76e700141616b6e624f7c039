@@ -592,208 +592,68 @@ public class World {
 		assert this.hasSlime(slime);
 		assert slime != null;
 		this.slimes.remove(slime);
-	}
-	/**
-	 * removes the Plant plant from the game world
-	 * @param the Plant to remove
-	 * 			| plant
-	 * @pre this has to contain a plant
-	 * 			| hasPlant(plant)
-	 * @pre the plant may not be equal to null
-	 * 			| plant != null
-	 * @post the Plant plant is removed from the game world
-	 * 			| this.plants.remove(plant)
-	 */
+	}	
 	public void removePlant(@Raw Plant plant) {
 		assert this.hasPlant(plant);
 		assert plant != null;
 		this.plants.remove(plant);
-	}
-	/**
-	 * removes the Shark shark from the game world
-	 * @param the Shark to remove
-	 * 			| shark
-	 * @pre this has to contain a shark
-	 * 			| hasShark(shark)
-	 * @pre the shark may not be equal to null
-	 * 			| shark != null
-	 * @post the Shark shark is removed from the game world
-	 * 			| this.sharks.remove(shark)
-	 */
+	}	
 	public void removeShark(@Raw Shark shark) {
 		assert this.hasShark(shark);
 		assert shark != null;
 		this.sharks.remove(shark);
-	}
-	/**
-	 * adds the Slime slime to the world
-	 * @param the slime to add
-	 * 			| slime
-	 * @pre the slime may not be equal to null
-	 * 			| slime != null
-	 * @pre the slime must be added to this world
-	 * 			| slime.getWorld() == this
-	 * @pre the game world may not already contain this slime
-	 * 			| ! hasSlime(slime)
-	 * @effect the slime is added to slimes
-	 * 			| slimes.add(slime)
-	 */
+	}	
 	public void addSlime(Slime slime) {
 		assert slime != null;
 	    assert slime.getWorld() == this;
-	    assert ! this.hasSlime(slime);
+	    assert !this.hasSlime(slime);
 		this.slimes.add(slime);
-	}
-	/**
-	 * adds the Shark shark to the world
-	 * @param the shark to add
-	 * 			| shark
-	 * @pre the shark may not be equal to null
-	 * 			| shark != null
-	 * @pre the shark must be added to this world
-	 * 			| shark.getWorld() == this
-	 * @pre the game world may not already contain this shark
-	 * 			| ! hasShark(shark)
-	 * @effect the shark is added to shark
-	 * 			| sharks.add(shark)
-	 */
+	}	
 	public void addShark(Shark shark) {
 		assert shark != null;
 	    assert shark.getWorld() == this;
-	    assert ! this.hasShark(shark);
+	    assert !this.hasShark(shark);
 		this.sharks.add(shark);
 	}
-	/**
-	 * adds the Plant slime to the world
-	 * @param the plant to add
-	 * 			| plant
-	 * @pre the plant may not be equal to null
-	 * 			| plant != null
-	 * @pre the plant must be added to this world
-	 * 			| plant.getWorld() == this
-	 * @pre the game world may not already contain this plant
-	 * 			| ! hasPlant(plant)
-	 * @effect the plant is added to plants
-	 * 			| plants.add(plant)
-	 */
 	public void addPlant(Plant plant) {
 		assert plant != null;
 	    assert plant.getWorld() == this;
-	    assert ! this.hasPlant(plant);
+	    assert !this.hasPlant(plant);
 		this.plants.add(plant);
-	}
-	/**
-	 * returns true if this world has a Plant plant
-	 * @param the plant to check
-	 * 			| plant
-	 * @return this.plants.contains(plant)
-	 */
+	}	
 	private boolean hasPlant(Plant plant) {
 		return this.plants.contains(plant);
-	}
-	/**
-	 * returns true if this world has a Shark shark
-	 * @param the shark to check
-	 * 			| shark
-	 * @return this.sharks.contains(shark)
-	 */
+	}	
 	private boolean hasShark(Shark shark) {
 		return this.sharks.contains(shark);
-	}
-	/**
-	 * returns true if this world has a Slime slime
-	 * @param the slime to check
-	 * 			| slime
-	 * @return this.slimes.contains(slime)
-	 */
+	}	
 	private boolean hasSlime(Slime slime) {
 		return this.slimes.contains(slime);
 	}	
 	
 //	VALIDATIONS
 	
-	/**
-	 * returns true if the given tileSize is valid (greater than 0)
-	 * @param the tileSize to check
-	 * 			| tileSize
-	 * @return (tileSize > 0)
-	 */
 	private boolean isValidTileSize(int tileSize){
 		return tileSize > 0;
-	}
-	/**
-	 * returns true if the given number of tiles nbTiles is valid (greater than 0)
-	 * @param the given nbTiles to check
-	 * 			| nbTiles
-	 * @return (nbTiles > 0)
-	 */
+	}	
 	private boolean isValidNbTiles(int nbTiles){
 		return nbTiles > 0;
 	}
-	/**
-	 * returns true if the given visible window is valid
-	 * @param visiblewindowWidth
-	 * 			the width of the visible window
-	 * @param visibleWindowHeight
-	 * 			the height of the visible window
-	 * @param tileSize
-	 * 			the size of the tiles in the world
-	 * @param nbTilesX
-	 * 			the number of horizontal tiles
-	 * @param nbTilesY
-	 * 			the number of vertical tiles
-	 * @return ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
-				<=  tileSize * nbTilesY))
-	 */
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
 				<=  tileSize * nbTilesY));
 	}
-	/**
-	 * returns true if the given coordinate of the bottom left pixel is valid
-	 * @param pixelX
-	 * 			the horizontal position
-	 * @param pixelY
-	 * 			the vertical position
-	 * @return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0))
-	 */
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
-		return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0));
-	}
-	/**
-	 * returns true if there is at least one player character Mazub and if there are no
-	 * more than 100 other game objects
-	 * @return ((getNbPlants() + getNbSharks() + getNbSlimes() <= 100) && (getNbAliens() >= 1) )
-	 */
+		return ((pixelX%this.getTileLength() == 0) && (pixelY%this.getTileLength() ==0));
+	}	
 	private boolean isValidAmountOfCharacters() {
 		return ((this.getNbPlants() + this.getNbSharks() + 
 				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );
 	}
-	/**
-	 * returns true if the given target tile is valid
-	 * @param x
-	 * 			the horizontal position of the tile
-	 * @param y
-	 * 			the vertical position of the tile
-	 * @return 
-	 */
-	// TODO dit nog maken
 	private boolean isValidTargetTile(int x, int y) {
-//		return true;
-		return (x > 0 && y > 0); // && x < this.getX() && y < this.getY());
+		return true;
 	}
-	/**
-	 * returns true if the given tile is valid
-	 * @param tileX
-	 * 			the horizontal position of the tile
-	 * @param tileY
-	 * 			the vertical position of the tile
-	 * @param tileType
-	 * 			the type of geological feature this tile possesses
-	 * @return ((tileX < getNbTilesX()) && (tileY < getNbTilesY())
-				&& (tileType >= 0) && (tileType <= 4))
-	 */
 	private boolean isValidTile(int tileX, int tileY, int tileType) {
 		return (tileX < this.getNbTilesX()) && (tileY < this.getNbTilesY())
 				&& (tileType >= 0) && (tileType <= 4);
@@ -809,7 +669,6 @@ public class World {
 	 * will be changed via
 	 * {@link IFacadePart2#setGeologicalFeature(World, int, int, int)}.
 	 */
-	// TODO moeten we hier nu nog iets mee doen?
 	public void startGame() {
 		
 	}
@@ -819,25 +678,16 @@ public class World {
 	 * The game is over when Mazub has died, or has reached the target tile.
 	 * 
 	 * @return true if the game is over, false otherwise.
-	 * 			| (getAlien == null || didPlayerWint())
 	 */
 	public boolean isGameOver() {
-		return (this.getAlien() == null || this.didPlayerWin());
+		return (this.getAlien() == null || didPlayerWin());
 	}
 	
 	/**
 	 * Returns whether the game played in the given world has finished and the
 	 * player has won. The player wins when Mazub has reached the target tile.
 	 * 
-	 * @return true if the game is over and the player has won, false otherwise.
-	 * 			| if (getAlien != null)
-	 * 			| 	then for each tile in getTilePositionsIn(alien.getXPos(), alien.getYPos(),
-	 * 			|							alien.getXPos() + alien.getXDim()
-	 * 			|							alien.getYPos() + alien.getYDim()
-	 * 			|			if (tile[0] == getTargetTileX() && tile[1] == getTargetTileY())
-	 * 			|				then return true
-	 * 			| else 
-	 * 			| 	then return false
+	 * @return true if the game is over and the player has won; false otherwise.
 	 */
 	public boolean didPlayerWin() {
 		if (this.getAlien() != null) {
@@ -857,7 +707,6 @@ public class World {
 	 * the maximal value for dt is 0.2
 	 * @return the minimal value for dt
 	 */
-	// TODO dit moet toch niet gedocumenteerd worden omdat dit deel van advanceTime is he?
 	private double computeMinimalDt(double dt) {
 		double dtGiven = dt;
 		for (Plant plant : this.getPlants()) {
@@ -896,12 +745,7 @@ public class World {
 		}
 		advanceEveryGameObject(dt - timePassed);
 	}
-	/**
-	 * NO DOCUMENTATION
-	 * @param dt
-	 * @throws IllegalDtException
-	 */
-	// TODO dit moet toch niet gedocumenteerd worden omdat dit deel van advanceTime is he?
+		
 	private void advanceEveryGameObject(double dt) throws IllegalDtException {
 		if(this.getAlien() != null) {
 			for (Plant plant : this.getPlants()) {
@@ -920,37 +764,9 @@ public class World {
 		}
 	}
 	
-	/**
-	 * positions the visible window of the game world as Mazub is moving
-	 * @effect 
-	 * 			| if (getAlien != null)
-	 * 			| 	then ... (see next @effect's)
-	 * @effect positions the visible window in the horizontal direction
-	 * 			| if (alien.getLocation[0] < 200) 
-	 * 			| 	then setXVisibleWindow(0)
-	 * 			| else if (alien.getLocation[0] + alien.getSize()[0] > getX() - 200)
-	 * 			| 	then setXVisibleWindow(getX() - getVisibleWindowWidth())
-	 * 			| else if (alien.getLocation()[0] - 200 < getXVisibleWindow())
-	 * 			| 	then setXVisibleWindow(alien.getLocation[0] - 200)
-	 * 			| else if (alien.getLocation()[0] + alien.getSize()[0] +200 
-	 * 			| 			> getXVisibleWindow() + getVisibleWindowWidth())
-	 * 			| 	then setXVisibleWindow(alien.getLocation()[0] + alien.getSize()[0]
-	 * 			|							- getVisibleWindowWidth() + 200)
-	 * @effect positions the visible window in the vertical direction
-	 * 			| if (alien.getLocation[1] < 200) 
-	 * 			| 	then setYVisibleWindow(0)
-	 * 			| else if (alien.getLocation[1] + alien.getSize()[1] > getY() - 200)
-	 * 			| 	then setYVisibleWindow(getY() - getVisibleWindowHeight())
-	 * 			| else if (alien.getLocation()[1] - 200 < getYVisibleWindow())
-	 * 			| 	then setYVisibleWindow(alien.getLocation[0] - 200)
-	 * 			| else if (alien.getLocation()[1] + alien.getSize()[1] +200 
-	 * 			| 			> getYVisibleWindow() + getVisibleWindowHeight())
-	 * 			| 	then setYVisibleWindow(alien.getLocation()[1] + alien.getSize()[1]
-	 * 			|							- getVisibleWindowHeight() + 200)
-	 */
 	private void positioningVisibleWindow() {
+		//x
 		if (this.getAlien() != null) {
-			//x
 			if (this.getAlien().getLocation()[0] < 200) {
 				this.setXVisibleWindow(0);
 			}
@@ -962,7 +778,7 @@ public class World {
 			}
 			else if (this.getAlien().getLocation()[0] + this.getAlien().getSize()[0] + 200 >
 					this.getXVisibleWindow() + this.getVisibleWindowWidth()){
-				this.setXVisibleWindow(this.getAlien().getLocation()[0] + this.getAlien().getSize()[0]
+				this.setXVisibleWindow(this.getAlien().getLocation()[0] +this.getAlien().getSize()[0]
 									- this.getVisibleWindowWidth() + 200);
 			}
 			//y
@@ -986,25 +802,10 @@ public class World {
 	/**
 	 * returns true if the objects touch each other
 	 * @param x1
-	 * 			the horizontal position of the first object
 	 * @param xDim1
-	 * 			the horizontal dimension of the first object
 	 * @param y1
-	 * 			the vertical position of the first object
 	 * @param yDim1
-	 * 			the horizontal dimension of the first object
-	 * @param x2
-	 * 			the horizontal position of the first object
-	 * @param xDim2
-	 * 			the horizontal dimension of the first object
-	 * @param y2
-	 * 			the vertical position of the first object
-	 * @param yDim2
-	 * 			the vertical dimension of the first object
-	 * @return ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
-	 * 		|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) )
-	 * 		&& 	( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
-			|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) )		
+	 * @return
 	 */
 	private boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
@@ -1017,18 +818,6 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
-	/**
-	 * returns the amount of Plants the player character touched
-	 * @param xPos
-	 * 			the horizontal position of the player character
-	 * @param yPos
-	 * 			the vertical position of the player character
-	 * @param xDim
-	 * 			the horizontal dimension of the player character
-	 * @param yDim
-	 * 			the vertical dimension of the player character
-	 * @return 
-	 */
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {

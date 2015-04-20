@@ -986,25 +986,14 @@ public class World {
 	/**
 	 * returns true if the objects touch each other
 	 * @param x1
-	 * 			the horizontal position of the first object
 	 * @param xDim1
-	 * 			the horizontal dimension of the first object
 	 * @param y1
-	 * 			the vertical position of the first object
 	 * @param yDim1
-	 * 			the horizontal dimension of the first object
 	 * @param x2
-	 * 			the horizontal position of the first object
 	 * @param xDim2
-	 * 			the horizontal dimension of the first object
 	 * @param y2
-	 * 			the vertical position of the first object
 	 * @param yDim2
-	 * 			the vertical dimension of the first object
-	 * @return ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
-	 * 		|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) )
-	 * 		&& 	( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
-			|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) )		
+	 * @return 
 	 */
 	private boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
@@ -1017,18 +1006,6 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
-	/**
-	 * returns the amount of Plants the player character touched
-	 * @param xPos
-	 * 			the horizontal position of the player character
-	 * @param yPos
-	 * 			the vertical position of the player character
-	 * @param xDim
-	 * 			the horizontal dimension of the player character
-	 * @param yDim
-	 * 			the vertical dimension of the player character
-	 * @return 
-	 */
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
 		for (Plant plant : this.getPlants()) {

@@ -1018,16 +1018,12 @@ public class World {
 	}
 	
 	/**
-	 * returns the amount of Plants the player character touched
+	 * 
 	 * @param xPos
-	 * 			the horizontal position of the player character
 	 * @param yPos
-	 * 			the vertical position of the player character
 	 * @param xDim
-	 * 			the horizontal dimension of the player character
 	 * @param yDim
-	 * 			the vertical dimension of the player character
-	 * @return 
+	 * @return
 	 */
 	public int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
 		int amountOfDeadPlants = 0;
