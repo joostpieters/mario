@@ -690,66 +690,6 @@ public class Mazub extends GameObject {
 		}			
 	}
 	
-	/**
-	 * updates the hitpoints for collisions with slimes and sharks
-	 * @param newXPos
-	 * 			the new horizontal position
-	 * @param nexYPos
-	 * 			the new vertical position
-	 * @param dt
-	 * 			the time interval
-	 * @effect the list allSlimesSharks contains all the slimes and sharks in the world
-	 * 			| allSlimesSharks = world.getSlimes()
-	 * 			| allSlimesSharks.addAll(world.getSharks())
-	 * @effect calculates the new position of mazub taking all the slimes and sharks
-	 * 			in the world into account
-	 * 			| for each other: allSlimesSharks:
-	 * 			| 	xDim1 = getXDim()
-	 * 			|	yDim1 = getYDim()
-	 * 			| 	x2 = other.getXPos()
-	 * 			| 	xDim2 = other.getXDim()
-	 * 			| 	y2 = other.getYPos()
-	 * 			|	yDim2 = other.getYPos()
-	 * 			| 	touched = false
-	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
-	 * 			|	newXPos =  newPos[0]
-	 * 			| 	newYPos = newPos[1]
-	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
-	 * 			| if newPos[2] == 1
-	 * 			|	then touched = true
-	 * 			| if newPos[3] == 1
-	 * 			| 	then onGameObject = true
-	 * 			| if touched && ( ! other.isDying()) 
-	 * 			| 	then contactDamage(dt)
-	 * 			| 		 other.contactDamage(dt)
-	 * @return a boolean: onGameObject, indicating if mazub is on top of another game object
-	 */
-	private boolean updateHitpointsSlimesAndSharks(double newXPos, double newYPos, double dt) {
-		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-		allSlimesSharks.addAll(this.getWorld().getSharks());
-		boolean onGameObject = false;
-		for(GameObject other: allSlimesSharks) {
-			double xDim1 = this.getXDim();
-			double yDim1 = this.getYDim();
-			double x2 = other.getXPos();
-			double xDim2 = other.getXDim();
-			double y2 = other.getYPos();
-			double yDim2 = other.getYDim();
-			boolean touched = false;
-			double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
-					yDim2);
-			newXPos = newPos[0];
-			newYPos = newPos[1];
-			if (newPos[2] == 1) 
-				touched = true;
-			if (newPos[3] == 1) 
-				onGameObject = true;
-			if ( touched && ( ! other.isDying()))
-				this.contactDamage(dt);
-				other.contactDamage(dt);
-		}
-		return onGameObject;
-	}
 	
 	/**
 	 * 
@@ -759,14 +699,34 @@ public class Mazub extends GameObject {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
-	 * @effect updates the hitpoints of the slimes and sharks
-	 * 			| boolean onGameObject = updateHitpointsSlimesSharks()
+	 * @effect the list allSlimesSharks contains all the slimes and sharks in the world
+	 * 			| allSlimesSharks = world.getSlimes()
+	 * 			| allSlimesSharks.addAll(world.getSharks())
+	 * @effect calculates the new position of mazub taking all the slimes and sharks
+	 * 			in the world into account
+	 * 			| boolean onGameObject = false;
+	 * 			| double[] newPos = {newXPos, newYPos}; 
+	 * 			| for each other: allSlimesSharks:
+	 * 			| 	xDim1 = getXDim()
+	 * 			|	yDim1 = getYDim()
+	 * 			| 	x2 = other.getXPos()
+	 * 			| 	xDim2 = other.getXDim()
+	 * 			| 	y2 = other.getYPos()
+	 * 			|	yDim2 = other.getYPos()
+	 * 			| 	touched = false
+	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
+	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
+	 * 			| 	if newPos[3] == 1
+	 * 			| 		then onGameObject = true
+	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 
+	 * 			| 		then contactDamage(dt)
+	 * 			| 		 	other.contactDamage(dt)
 	 * @effect if Mazub is on top of another game object, his fall is ended, else Mazub falls
 	 * 			| if (isFalling() && onGameObject())
 	 * 			| 	then endFall()
-	 * 			| else if ( ! isFalling() && ( ! onGameObject) && ( ! onFloor(newXpos, newYPos)
+	 * 			| else if ( ! isFalling() && ( ! onGameObject) && ( ! onFloor(newPos[0], newPos[1])
 	 * 			| 	then fall()
-	 * @return {newXPos, newYPos}
+	 * @return {newPos[0], newPos[1]}
 	 */
 	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
