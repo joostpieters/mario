@@ -428,22 +428,6 @@ public class Shark extends GameObject {
 	}
 	
 	/**
-	 * Return the current sprite image for the given shark.
-	 * 
-	 * @return The current sprite image for the given shark, determined by its
-	 *         orientation as defined in the assignment.
-	 */
-	public Sprite getCurrentSprite(){
-		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == Orientation.RIGHT) {
-			return sprites[1];
-		}
-		else {
-			return sprites[0];
-		}
-	}
-
-	/**
 	 * Mazub starts moving to the right
 	 * @effect 	| 
 	 */

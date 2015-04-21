@@ -554,29 +554,6 @@ public class Slime extends GameObject {
 	}
 	
 	/**
-	 * Return the current sprite image for the given slime.
-	 * @pre the given sprite must be valid
-	 * 			| assert isValidSprite(getSprite())
-	 * @return depending of the orientation (left or right) the current sprite image
-	 * 			 for the given slime defined in the assignment.
-	 * 			| if (this.getOrientation() == Orientation.RIGHT) 
-	 * 			| 	then return sprites[1]
-	 * 			| else 
-	 * 			| 	then return sprites[0];
-	 * @return The current sprite image for the given slime, determined by its
-	 *         orientation as defined in the assignment.
-	 */
-	public Sprite getCurrentSprite(){
-		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == Orientation.RIGHT) {
-			return sprites[1];
-		}
-		else {
-			return sprites[0];
-		}
-	}
-	
-	/**
 	 * removes this Slime from the gameWorld and it's school
 	 * @effect this is removed from it's school
 	 * 			| school.removeSlime(this)

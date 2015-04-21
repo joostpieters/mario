@@ -214,19 +214,4 @@ public class Plant extends GameObject {
 		this.setWorld(null);
 	}
 	
-	/**
-	 * Return the current sprite image for the given plant.
-	 * 
-	 * @return The current sprite image for the given plant, determined by its
-	 *         orientation as defined in the assignment.
-	 */
-	public Sprite getCurrentSprite(){
-		assert isValidSprite(this.getSprite());
-		if (this.getOrientation() == Orientation.RIGHT) {
-			return sprites[1];
-		}
-		else {
-			return sprites[0];
-		}
-	}
 }
