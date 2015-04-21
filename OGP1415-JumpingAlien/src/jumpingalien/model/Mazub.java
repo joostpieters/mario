@@ -206,7 +206,7 @@ public class Mazub extends GameObject {
 	 * @return the nbRunningSprites
 	 * 			| nbRunningSprites
 	 */
-	// TODO is dit immutable?
+	// TODO is dit immutable? Geeeeen idee
 	@Basic @Immutable 
 	private int getNbRunningSprites() {
 		return nbRunningSprites;
@@ -998,8 +998,8 @@ public class Mazub extends GameObject {
 			}
 		}
 		else {
-				this.setCounterUntilRemove(this.getCounterUntilRemove() + dt);
-				if (this.getCounterUntilRemove() > GameObject.getTimeUntilRemove()) {
+				this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+				if (this.getTimeSinceDeath() > GameObject.getTimeUntilRemove()) {
 					 this.remove();
 			}
 		}

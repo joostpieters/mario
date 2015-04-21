@@ -19,7 +19,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO aparte testfiles
 // TODO invariant van binnen grenzen
 // TODO Laura nog eens muilen
-// TODO alle classes doorzoeken op Mazub in de commentaar -> hoe bedoelde?
+// TODO alle classes doorzoeken op Mazub in de commentaar -> hoe bedoelde? Dat er soms nog mazub staat in gameobject en dat ik daar waarschijnlijk over lees
 
 public class World {
 
@@ -776,10 +776,9 @@ public class World {
 	 * 			the vertical position of the tile
 	 * @return 
 	 */
-	// TODO dit nog maken
+	// TODO dit nog maken. Ik denk dat het zo goed is eigenlijk
 	private boolean isValidTargetTile(int x, int y) {
-//		return true;
-		return (x > 0 && y > 0); // && x < this.getX() && y < this.getY());
+		return (x >= 0 && y >= 0); 
 	}
 	/**
 	 * returns true if the given tile is valid
@@ -808,6 +807,7 @@ public class World {
 	 * {@link IFacadePart2#setGeologicalFeature(World, int, int, int)}.
 	 */
 	// TODO moeten we hier nu nog iets mee doen?
+	// ja ik geloof van we :(
 	public void startGame() {
 		
 	}

@@ -554,70 +554,148 @@ public abstract class GameObject {
 	 * the time since the abject started to be immune
 	 */
 	private double timeSinceImmune = 0;
+	/**
+	 * Returns the time since the object got immune
+	 * @return timeSinceImmune
+	 */
 	@Basic 
 	protected double getTimeSinceImmune() {
 		return this.timeSinceImmune;
 	}
-	protected void setTimeSinceImmune(double dt) {
-		assert dt >= 0;
-		this.timeSinceImmune = dt;
+	/**
+	 * Sets a new value to the timeSinceImmune
+	 * @param t
+	 * 			the new time to set
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
+	 * @post timeSinceImmune is set to t
+	 * 		 | this.timeSinceImmune = t
+	 */
+	protected void setTimeSinceImmune(double t) {
+		assert t >= 0;
+		this.timeSinceImmune = t;
 	}
+	/**
+	 * The time that an object stays immune
+	 */
 	protected static final double IMMUNE_TIME = 0.6;
+	/**
+	 * returns the time that an object stays immune
+	 * @return IMMUNE_TIME
+	 */
 	@Basic @Immutable 
 	protected static final double getImmuneTime() {
 		return IMMUNE_TIME;
 	}
+	/**
+	 * The amount of hitpoints an object loses by touching an enemy
+	 */
 	private static final int TOUCH_ENEMY = 50;
+	/** 
+	 * returns the amount of hitpoints an object loses by touching an enemy
+	 * @return TOUCH_ENEMY
+	 */
 	@Basic @Immutable 
 	private static final int getTouchEnemy() {
 		return TOUCH_ENEMY;
 	}
+	/**
+	 * the time the object touches magma
+	 */
 	protected double timeInMagma = 0;
+	/**
+	 * returns the time the object is in magma
+	 * @return timeInMagma
+	 */
 	@Basic 
 	protected double getTimeInMagma() {
 		return this.timeInMagma;
 	}
-	protected void setTimeInMagma(double dt) {
-		assert dt >= 0;
-		this.timeInMagma = dt;
+	/**
+	 * Sets the timeInMagma to a new value t
+	 * @param t
+	 * 			the new time to set
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
+	 * @post timeInMagma is set to t
+	 * 		 | this.timeInMagma = t
+	 */
+	protected void setTimeInMagma(double t) {
+		assert t >= 0;
+		this.timeInMagma = t;
 	}	
+	/**
+	 * the time the object is in water
+	 */
 	protected double timeInWater = 0;
+	/**
+	 * returns the time the object is in water
+	 * @return timeInWater
+	 */
 	@Basic 
 	protected double getTimeInWater() {
 		return this.timeInWater;
 	}
-	protected void setTimeInWater(double dt) {
-		assert dt >= 0;
-		this.timeInWater = dt;
+	/**
+	 * Sets the timeInWater to a new value t
+	 * @param t
+	 * 			the new time to set
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
+	 * @post timeInWater is set to t
+	 * 		 | this.timeInWater = t
+	 */
+	protected void setTimeInWater(double t) {
+		assert t >= 0;
+		this.timeInWater = t;
 	}
+	/**
+	 * Time until the object starts drowning
+	 */
 	protected static final double DROWN_TIME = 0.2;
+	/**
+	 * returns the time until the object starts drowning
+	 * @return DROWN_TIME
+	 */
 	@Basic @Immutable 
 	protected static final double getDrownTime() {
 		return DROWN_TIME;
 	}
+	/**
+	 * The amount of hitpoints an object loses when touching magma
+	 */
 	protected static final double LOSS_HITPOINTS_IN_MAGMA = 50;
+	/**
+	 * Returns the amount of hitpoints an object loses when touching magma
+	 * @return LOSS_HITPOINTS_IN_MAGMA
+	 */
 	@Basic @Immutable 
 	protected static final double getLossHitpointsInMagma() {
 		return LOSS_HITPOINTS_IN_MAGMA;
 	}
+	/**
+	 * The time after an object loses hitpoints again when touching magma
+	 */
 	protected static final double BURN_TIME = 0.2;
+	/**
+	 * returns the time after an object loses hitpoints again when touching magma
+	 * @return BURN_TIME
+	 */
 	@Basic @Immutable 
 	protected static final double getBurnTime() {
 		return BURN_TIME;
 	}
+	/**
+	 * The time until an object is removed after dying
+	 */
 	protected static final double TIME_UNTIL_REMOVE = 0.6;
+	/**
+	 * Returns the time until an object is removed after dying
+	 * @return TIME_UNTIL_REMOVE
+	 */
 	@Basic @Immutable 
 	protected static final double getTimeUntilRemove() {
 		return TIME_UNTIL_REMOVE;
-	}
-	protected double counterUntilRemove = 0;
-	@Basic 
-	protected double getCounterUntilRemove() {
-		return counterUntilRemove;
-	}
-	protected void setCounterUntilRemove(double time) {
-		assert time >= 0;
-		this.counterUntilRemove = time;
 	}
 	/**
 	 * when mazub is in touch with magma, it imediatly loses hitpoints,
@@ -625,35 +703,63 @@ public abstract class GameObject {
 	 * of the hitpoints which are to lose and the int value
 	 */
 	protected double hitpointsDifference;
+	/**
+	 * Returns the difference between the amount of hitpoints lost when touching magma
+	 * @return hitpointsDifference
+	 */
 	@Basic 
 	protected double getHitpointsDifference() {
 		return hitpointsDifference;
 	}
+	/**
+	 * sets the hitpointsDifference to a new value
+	 * @param difference	
+	 * 			the difference to set
+	 * @pre	the difference should be a number between -1 and 1
+	 * 			| !Double.isNaN(difference)
+	 * 			| difference < 1 && difference > -1
+	 * @post the difference is set
+	 * 			| this.hitpointsDifference = difference
+	 * 		
+	 */
 	protected void setHitpointsDifference(double difference) {
+		assert !Double.isNaN(difference);
+		assert difference < 1 && difference > -1;
 		this.hitpointsDifference = difference;
 	}
 	
 //	Validations
-	
+	/**
+	 * Checks or the given sprites are valid
+	 * @param sprites
+	 * 			the sprites to check
+	 * @return true if the number of sprites is even and sprites is not null
+	 * 			otherwise false
+	 * 			| (sprites.length % 2 == 0 && sprites != null)
+	 * 			
+	 */
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return (sprites.length % 2 == 0 && sprites != null) ;
 	}	
 	/**
 	 * Checks whether the current vertical speed is valid
-	 * for any game object except for plant
+	 * @param ySpeed
+	 * 			the ySpeed to check
 	 * @return True if the current vertical speed isn't equal to NaN 
+	 * 			| ( ! Double.isNaN(ySpeed))
 	 */
-	public boolean isValidYSpeed(double ySpeed) {
+	protected boolean isValidYSpeed(double ySpeed) {
 		return ( ! Double.isNaN(ySpeed));
 	}
-		/**
-	 * 	Checks whether the given positions are valid positions for 
-	 *  any Mazub.
-	 * @return 	True if the horizontal position x_pos and 
-	 *			and the vertical position y_pos stay in the 
-	 *			game world.
-	 *			| ((x_pos >= MIN_X_VALUE && x_pos <= MAX_X_VALUE
-	 *				&& y_pos >= MIN_Y_VALUE && y_pos <= MAX_Y_VALUE))
+	/**
+	 * 	Checks whether the given positions are valid positions
+	 * @param x
+	 * 			the horizontal position to check
+	 * @param y
+	 * 			the vertical position to check
+	 * @return 	True if the horizontal position x and and the vertical 
+	 * 			position y are bigger than or equal to zero
+	 *			| ((x >= 0) && (y >= 0))
 	 */
 	public boolean isValidPosition(double x, double y) {
 		return ((x >= 0) && (y >= 0));
@@ -661,46 +767,86 @@ public abstract class GameObject {
 	/**
 	 * Checks if dt has a proper value between 0 and 0.2.
 	 * @param dt
+	 * 			the time interval to check
 	 * @return True if dt is a value between 0 and 0.2 otherwise false.
 	 * 		| (dt <= 0.2 && dt > 0)
 	 */
 	protected boolean isValidDt(double dt) {
 		return ( dt <= 0.2 && dt > 0);
 	}	
+	/**
+	 * Checks or the amount of hitpoints for an object is valid
+	 * @param hitpoints
+	 * 			the hitpoints to check
+	 * @return true is between zero and the maximum amount of hitpoints
+	 * 			| (hitpoints <= this.getMaxHitpoints() && hitpoints >= 0)
+	 * 		
+	 */
 	protected boolean isValidAmountOfHitpoints(int hitpoints) {
 		return (hitpoints <= this.getMaxHitpoints() && hitpoints >= 0);
 	}	
 	/**
 	 * Checks whether the current horizontal speed is valid
+	 * @param speed
+	 * 			the horizontal speed to check
 	 * @return True if the current horizontal speed is valid
-	 * 			| ((this.getXSpeed() >= 0) && (this.getXSpeed() <= this.getMaxSpeed()))
+	 * 			| ((speed() >= 0) && (speed() <= this.getMaxSpeed())
+	 * 			| && ( ! Double.isNaN(speed)))
 	 */
 	protected boolean isValidXSpeed(double speed) {
 		return ((speed >= 0) && (speed <= this.getMaxSpeed()) && ( ! Double.isNaN(speed)));
 	}
-	
+	/**
+	 * Checks or the object is within the horizontal boundaries of the world
+	 * @param x	
+	 * 			the horizontal position
+	 * @return true if x is between zero and the width of the world
+	 * 			| ((x >= 0) && (x <= this.getWorld().getX()))
+	 */
 	protected boolean isWithinBoundariesX(double x) {
 		return ((x >= 0) && (x <= this.getWorld().getX()));
 	}
+	/**
+	 * Checks or the object is within the vertical boundaries of the world
+	 * @param y
+	 * 			the vertical position
+	 * @return true if y is between zero and the height of the world
+	 * 			| (y >= 0) && (y <= this.getWorld().getY())
+	 */
 	protected boolean isWithinBoundariesY(double y) {
 		return (y >= 0) && (y <= this.getWorld().getY());
 	}
-	public boolean isWithinBoundaries(double x, double y) {
+	/**
+	 * Checks or an object is within the boundaries of the world
+	 * @param x
+	 * 			the horizontal position
+	 * @param y
+	 * 			the vertical position
+	 * @return true if x and y are within their boundaries
+	 * 			| isWithinBoundariesX(x) && isWithinBoundariesY(y)
+	 */
+	protected boolean isWithinBoundaries(double x, double y) {
 		return isWithinBoundariesX(x) && isWithinBoundariesY(y);
 	}	
-	
-	public void die() {
+	/**
+	 * Makes the object die
+	 * @pre the hitpoints of the object should be smaller than or equal to zero
+	 * @effect the horiontal speed and acceleration are set to zero
+	 * 			| this.setXSpeed(0)
+	 * 			| this.setXAcc(0)
+	 * @effect the object is set dying, waiting for his removal
+	 * 			| this.setDying()
+	 */
+	protected void die() {
+		assert this.getHitpoints() <= 0;
 		this.setXSpeed(0);
 		this.setXAcc(0);
-		this.setYSpeed(0);
-		this.setYAcc(0);
 		this.setDying();
-	}
-	
+	}	
 	/**
-	 * changes the orientation of the plant
+	 * changes the orientation of the object
 	 */
-	public void changeOrientation() {
+	protected void changeOrientation() {
 		if (this.getOrientation() == Orientation.LEFT) {
 			this.setOrientationRight();
 		}
