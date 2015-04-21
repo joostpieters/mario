@@ -860,32 +860,15 @@ public abstract class GameObject {
 			this.setOrientationLeft();
 		}
 	}	
-	/**
-	 * calculates and returns the new horizontal and vertical position
-	 * of the GameObject
-	 * @param dt
-	 * 			a small time interval
-	 * @effect the horizontal position is adapted
-	 * 			| double newXPos
-	 * 			| if (this.getOrientation() == Orientation.RIGHT)
-	 * 			| 	then newXPos = this.getXPos() + this.getXSpeed() * 100 * dt
-	 * 			|					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2)
-	 * 			| else 
-	 * 			| 	then newXPos = this.getXPos() - this.getXSpeed() * 100 * dt
-	 * 			| 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2)
-	 * @effect the vertical position is adapted
-	 * 			| double newYPos = getYPos() + getYSpeed() * 100 * dt + 0.5 * 100 *
-	 * 			| 					getYAcc() * Math.pow(dt,2)
-	 * @return {newXPos, newYPos}
-	 */
+	
 	protected double[] calculateNewPos(double dt) {		
 		double newXPos;
 		if (this.getOrientation() == Orientation.RIGHT) {
-			newXPos = this.getXPos() + this.getXSpeed() * 100 * dt
+			newXPos = this.getXPos() + this.getXSpeed()*100*dt
 					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);		
 		}
 		else {
-			newXPos = this.getXPos() - this.getXSpeed() * 100 * dt
+			newXPos = this.getXPos() - this.getXSpeed()*100*dt
 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2);
 		}
 		double newYPos = this.getYPos() + this.getYSpeed() * 100 * dt + 0.5 * 100 *

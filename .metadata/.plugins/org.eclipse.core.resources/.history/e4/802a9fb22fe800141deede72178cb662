@@ -415,15 +415,12 @@ public class Slime extends GameObject {
 	 * 			| 		 if (getTimeInMagma() >= Slime.getBurnTime())
 	 * 			| 			then loseHitpoints( (int) GameObject.getLossHitpointsInMagma())
 	 * 			| 				 setTimeInMagma(getTimeInMagma() - dt)
-	 * @effect if this Slime is in contact with water longer than the drownTime, it loses hitpoints,
-	 * 			else timeInWater is set to zero
+	 * @effect if this Slime is in contact with water longer than the drownTime, it loses hitpoints
 	 * 			| if (this.isInContactWithFeature(newXPos,newYPos,2)) 
 	 * 			| 	then setTimeInWater(this.getTimeInWater() + dt)
 	 * 			| 		 if (this.getTimeInWater() >= Slime.getDrownTime())
 	 * 			| 			then loseHitpoints(Slime.getLossHitpointsInWater())
 	 * 			| 				 setTimeInWater(this.getTimeInWater() - dt)
-	 * 			| else
-	 * 			| 	then setTimeInWater(0)
 	 */
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
 		if (this.isInContactWithFeature(newXPos,newYPos,3)) {
@@ -462,33 +459,6 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances time when this Slime is still alive, the positions are adapted, 
-	 * hitpoints and immunity are updated and the Slime dies if hitpoints reach zero
-	 * @param dt
-	 * 			a small time interval
-	 * @effect this Slime moves randomly
-	 * 			| randomMovement(dt)
-	 * @effect the new position of the Slime is calculated, this position also gets
-	 * 			checked if within the boundaries of the game world
-	 * 			| double[] newCalculatedPos = calculateNewPos(dt)
-	 * 			| double newXPos = newCalculatedPos[0]
-	 * 			| double newYPos = newCalculatedPos[1]
-	 * 			| checkInWithinBoundaries(newXPos, newYPos)
-	 * @effect the surroundings of the newly calculated position and the presence of
-	 * 			other gameObjects is checked and the position/speed is adjusted accordingly
-	 * 			| double[] newPos = checkSurroundings(newXPos,newYPos)
-	 * 			| newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt)
-	 * 			| setNewSpeed(dt);
-	 * @effect the horizontal and vertical position of this Slime are set to the new positions
-	 * 			| setXPos(newPos[0])
-	 * 			| setYPos(newPos[1])
-	 * @effect this Slime loses hitpoints when drowning of burning in magma, the immunity also
-	 * 			gets updated
-	 * 			| loseHitpointsBecauseOfFeature(dt, getXPos(), getYPos())
-	 * 			| updateImmunity(dt);
-	 * @effect the Slime dies if no longer possesses hitpoints
-	 */
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);			
 		double[] newCalculatedPos = this.calculateNewPos(dt);
@@ -511,18 +481,8 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time while the Slime is dying
-	 * @param dt
-	 * 			a small time interval
-	 * @effect the timeSinceDeath is updated
-	 * 			| setTimeSinceDeazth(getTimeSinceDeath() + dt)
-	 * @effect if the Slime slime is dying long enough, it gets removed from the world
-	 * 			| if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) 
-	 * 			| 	then remove()
-	 */
 	private void advanceTimeWhileDeath(double dt) {
-		this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+		setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
 			this.remove();
 		}
@@ -555,14 +515,7 @@ public class Slime extends GameObject {
 	
 	/**
 	 * Return the current sprite image for the given slime.
-	 * @pre the given sprite must be valid
-	 * 			| assert isValidSprite(getSprite())
-	 * @return depending of the orientation (left or right) the current sprite image
-	 * 			 for the given slime defined in the assignment.
-	 * 			| if (this.getOrientation() == Orientation.RIGHT) 
-	 * 			| 	then return sprites[1]
-	 * 			| else 
-	 * 			| 	then return sprites[0];
+	 * 
 	 * @return The current sprite image for the given slime, determined by its
 	 *         orientation as defined in the assignment.
 	 */
@@ -576,15 +529,6 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * removes this Slime from the gameWorld and it's school
-	 * @effect this is removed from it's school
-	 * 			| school.removeSlime(this)
-	 * 			| setSchool(null)
-	 * @effect this is removed from the world
-	 * 			| world.removeSlime(this)
-	 * 			| setWorld(null) 			
-	 */
 	public void remove() {
 		this.getSchool().removeSlime(this);
 		this.setSchool(null);
@@ -592,31 +536,12 @@ public class Slime extends GameObject {
 		this.setWorld(null);		
 	}
 	
-	/**
-	 * moves this Slime in a random way
-	 * @param dt
-	 * 			a small time interval
-	 * @effect if the time since last moving is greater than the duration of the movement
-	 * 			the Slime stops moving, the movementDuration is set randomly, the time since
-	 * 			moving is set to dt and the random movement starts
-	 * 			otherwise, the timeSinceMove is updated
-	 * 			| if (this.getTimeSinceMove() >= this.getMovementDuration()) 
-	 * 			| 	then stopMove()
-	 * 			| 		 setMovementDuration(Math.random() * 4 + 2)
-	 * 			| 		 setTimeSinceMove(dt)
-	 * 			| 		 if (Math.random() >= 0.5) 
-	 * 			| 			then startMoveRight()
-	 * 			| 		 else 
-	 * 			| 			then startMoveLeft()
-	 *			| else 
-	 *			| 	then setTimeSinceMove(this.getTimeSinceMove() + dt)
-	 */
 	private void randomMovement(double dt) {
-		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
+		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();
 			this.setMovementDuration(Math.random() * 4 + 2);
 			this.setTimeSinceMove(dt);
-			if (Math.random() >= 0.5) {
+			if(Math.random()>=0.5) {
 				this.startMoveRight();
 			}
 			else {
@@ -630,14 +555,10 @@ public class Slime extends GameObject {
 
 	/**
 	 * Mazub starts moving to the right
-	 * @effect if not moving to the left, the horizontal speed is set to zero
-	 * 			and the orientation is set to RIGHT
-	 * 			| if (this.getOrientation() == Orientation.LEFT) 
-	 * 			| 	then setXSpeed(0)
-	 * 			| 		 setOrientationRight()
+	 * @effect 	| 
 	 */
-	public void startMoveRight() {
-		if (this.getOrientation() == Orientation.LEFT) {
+	public void startMoveRight(){
+		if(this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setOrientationRight();
 		}
@@ -645,39 +566,16 @@ public class Slime extends GameObject {
 	
 	/**
 	 * Mazub starts moving to the left
-	 * @effect if not moving to the right, the horizontal speed is set to zero
-	 * 			and the orientation is set to LEFT
-	 * 			| if (this.getOrientation() == Orientation.RIGHT) 
-	 * 			| 	then setXSpeed(0)
-	 * 			| 		 setOrientationLEFT()
+	 * @effect 	|
 	 */
-	public void startMoveLeft() {
-		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setXSpeed(0);
-			this.setOrientationLeft();
-		}
+	public void startMoveLeft(){
 		this.setOrientationLeft();
 	}	
 	
-	/**
-	 * the horizontal speed of the Slime is stopped
-	 * @effect the horizontal speed is set to zero
-	 * 			| setXSpeed(0)
-	 */
 	public void stopMove() {
 		this.setXSpeed(0);
 	}
 	
-	/**
-	 * this Slime loses the given amount of hitpoints, all the other
-	 * members of the same school are also affected by deducting 1 hitpoint
-	 * @effect the given number of hitpoints is deducted from this Slime
-	 * 			| setHitpoints(getHitpoints() - nb)
-	 * @effect every other Slime in the school is affected
-	 * 			| for each Slime other in school.getMembers():
-	 * 			| 	if (other != this)
-	 * 			| 		then other.setHitpoints(other.getHitpoints() - 1)
-	 */
 	@Override
 	public void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);

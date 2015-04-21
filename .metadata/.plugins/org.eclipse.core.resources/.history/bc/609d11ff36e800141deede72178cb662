@@ -12,36 +12,15 @@ import be.kuleuven.cs.som.annotate.Raw;
  *
  */
 public class School {
-	
-	/**
-	 * the School containing a number of Slimes
-	 */
 	public School() {
 		
 	}
-	
-	
-	/**
-	 * a list containing all the Slimes in this school
-	 */
 	private List<Slime> members = new CopyOnWriteArrayList<Slime>();
 	
-	/**
-	 * returns the members of this School
-	 * @return members
-	 */
 	@Basic 
 	public List<Slime> getMembers() {
 		return this.members;
 	}
-	
-	/**
-	 * adds the given Slime to the members of this school
-	 * @param slime
-	 * 			the Slime to add
-	 * @effect slime is added to the members
-	 * 			| this.members.add(slime)
-	 */
 	public void newSlime(Slime slime) {
 		this.members.add(slime);
 	}
@@ -89,17 +68,9 @@ public class School {
 		slime.setSchool(this);
 		this.members.add(slime);
 	}
-	
 	/**
-	 * removes the given Slime slime from this school
+	 * 
 	 * @param slime
-	 * 			the Slime to remove
-	 * @pre this School must have a Slime slime
-	 * 			| assert hasSlime(slime)
-	 * @pre the given Slime may not be equal to null
-	 * 			| slime != null
-	 * @effect the given Slime slime gets removed from this School
-	 * 			| this.members.remove(slime)
 	 */
 	public void removeSlime(@Raw Slime slime) {
 		assert this.hasSlime(slime);
@@ -107,16 +78,7 @@ public class School {
 		this.members.remove(slime);
 		
 	}
-	
-	/**
-	 * checks if ths Slime slime is part of this School
-	 * @param slime
-	 * 			the Slime to check
-	 * @return this.members.contains(slime)
-	 */
 	private boolean hasSlime(Slime slime) {
 		return this.members.contains(slime);
 	}
-	
-	
 }

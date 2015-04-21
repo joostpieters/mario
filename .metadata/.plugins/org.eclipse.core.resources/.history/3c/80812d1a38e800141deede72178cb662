@@ -12,24 +12,11 @@ import be.kuleuven.cs.som.annotate.Raw;
  *
  */
 public class School {
-	
-	/**
-	 * the School containing a number of Slimes
-	 */
 	public School() {
 		
 	}
-	
-	
-	/**
-	 * a list containing all the Slimes in this school
-	 */
 	private List<Slime> members = new CopyOnWriteArrayList<Slime>();
 	
-	/**
-	 * returns the members of this School
-	 * @return members
-	 */
 	@Basic 
 	public List<Slime> getMembers() {
 		return this.members;

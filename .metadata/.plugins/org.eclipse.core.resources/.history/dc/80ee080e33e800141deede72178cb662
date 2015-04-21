@@ -630,14 +630,10 @@ public class Slime extends GameObject {
 
 	/**
 	 * Mazub starts moving to the right
-	 * @effect if not moving to the left, the horizontal speed is set to zero
-	 * 			and the orientation is set to RIGHT
-	 * 			| if (this.getOrientation() == Orientation.LEFT) 
-	 * 			| 	then setXSpeed(0)
-	 * 			| 		 setOrientationRight()
+	 * @effect 	| 
 	 */
-	public void startMoveRight() {
-		if (this.getOrientation() == Orientation.LEFT) {
+	public void startMoveRight(){
+		if(this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setOrientationRight();
 		}
@@ -645,39 +641,16 @@ public class Slime extends GameObject {
 	
 	/**
 	 * Mazub starts moving to the left
-	 * @effect if not moving to the right, the horizontal speed is set to zero
-	 * 			and the orientation is set to LEFT
-	 * 			| if (this.getOrientation() == Orientation.RIGHT) 
-	 * 			| 	then setXSpeed(0)
-	 * 			| 		 setOrientationLEFT()
+	 * @effect 	|
 	 */
-	public void startMoveLeft() {
-		if (this.getOrientation() == Orientation.RIGHT) {
-			this.setXSpeed(0);
-			this.setOrientationLeft();
-		}
+	public void startMoveLeft(){
 		this.setOrientationLeft();
 	}	
 	
-	/**
-	 * the horizontal speed of the Slime is stopped
-	 * @effect the horizontal speed is set to zero
-	 * 			| setXSpeed(0)
-	 */
 	public void stopMove() {
 		this.setXSpeed(0);
 	}
 	
-	/**
-	 * this Slime loses the given amount of hitpoints, all the other
-	 * members of the same school are also affected by deducting 1 hitpoint
-	 * @effect the given number of hitpoints is deducted from this Slime
-	 * 			| setHitpoints(getHitpoints() - nb)
-	 * @effect every other Slime in the school is affected
-	 * 			| for each Slime other in school.getMembers():
-	 * 			| 	if (other != this)
-	 * 			| 		then other.setHitpoints(other.getHitpoints() - 1)
-	 */
 	@Override
 	public void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);

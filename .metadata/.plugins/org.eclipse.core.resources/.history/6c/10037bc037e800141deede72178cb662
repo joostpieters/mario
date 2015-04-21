@@ -12,36 +12,15 @@ import be.kuleuven.cs.som.annotate.Raw;
  *
  */
 public class School {
-	
-	/**
-	 * the School containing a number of Slimes
-	 */
 	public School() {
 		
 	}
-	
-	
-	/**
-	 * a list containing all the Slimes in this school
-	 */
 	private List<Slime> members = new CopyOnWriteArrayList<Slime>();
 	
-	/**
-	 * returns the members of this School
-	 * @return members
-	 */
 	@Basic 
 	public List<Slime> getMembers() {
 		return this.members;
 	}
-	
-	/**
-	 * adds the given Slime to the members of this school
-	 * @param slime
-	 * 			the Slime to add
-	 * @effect slime is added to the members
-	 * 			| this.members.add(slime)
-	 */
 	public void newSlime(Slime slime) {
 		this.members.add(slime);
 	}
