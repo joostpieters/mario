@@ -332,14 +332,6 @@ public class Slime extends GameObject {
 			}
 		}	
 	}
-	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 * @param dt
-	 * @return
-	 */
 	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
@@ -390,19 +382,8 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * checks if this Slime is within the boundaries of the game world, if not
-	 * the Slime is removed
-	 * @param newXPos
-	 * 			the new horizontal position of the Slime
-	 * @param newYPos
-	 * 			the new vertical position of the Slime
-	 * @effect the Slime gets removed if not within the boundaries
-	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos))
-	 * 			| 	then remove()
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
-		if ( ! isWithinBoundaries(newXPos, newYPos)) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
 	}
@@ -436,19 +417,6 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time with dt seconds
-	 * @param dt
-	 * 			a small time interval
-	 * @throws IllegalDtException
-	 * 			the given dt is not valid 
-	 * 			| ! isValidDt(dt)	 
-	 * @effect advances the time if the Slime is still alive or dying
-	 * 			| if ( ! isDying())
-	 * 			| 	then advanceTimeWhileLiving(dt)
-	 * 			| else
-	 * 			| 	then advanceTimeWhileDeath(dt)
-	 */
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);

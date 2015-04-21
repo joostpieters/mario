@@ -436,19 +436,6 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time with dt seconds
-	 * @param dt
-	 * 			a small time interval
-	 * @throws IllegalDtException
-	 * 			the given dt is not valid 
-	 * 			| ! isValidDt(dt)	 
-	 * @effect advances the time if the Slime is still alive or dying
-	 * 			| if ( ! isDying())
-	 * 			| 	then advanceTimeWhileLiving(dt)
-	 * 			| else
-	 * 			| 	then advanceTimeWhileDeath(dt)
-	 */
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);

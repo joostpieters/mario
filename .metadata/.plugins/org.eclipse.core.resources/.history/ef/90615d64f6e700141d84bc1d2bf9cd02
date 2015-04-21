@@ -93,15 +93,14 @@ public class Slime extends GameObject {
 	 */
 	private double timeSinceMove = 0;
 	/**
-	 * returns the time passed since the last movement
-	 * @return timeSinceMove
+	 * @return the timeSinceMove
 	 */
 	@Basic
 	private double getTimeSinceMove() {
 		return timeSinceMove;
 	}
 	/**
-	 * Sets timeSinceEndMove to the given value
+	 * Sets timeSinceEndMove to a new value
 	 * @param timeSinceMove the timeSinceMove to set
 	 * @pre  time should always be bigger than or equal to zero
 	 * 		| time >= 0
@@ -110,16 +109,8 @@ public class Slime extends GameObject {
 	private void setTimeSinceMove(double time) {
 		assert time >= 0;
 		this.timeSinceMove = time;
-	}
-	/**
-	 * the amount of hitpoints a Slime possesses when initialized
-	 */
+	}	
 	private static final int INIT_HITPOINTS = 100;
-	/**
-	 * returns the amount of hitpoints a Slime possesses when initialized
-	 * @return the amount of initial hitpoints
-	 * 			| INIT_HITPOINTS
-	 */
 	@Basic @Immutable 
 	private static final int getInitHitpoints() {
 		return INIT_HITPOINTS;
@@ -128,9 +119,6 @@ public class Slime extends GameObject {
 	 * the horizontal acceleration of a slime
 	 */
 	private static final double xAcc = 0.7;
-	/**
-	 * returns the horizontal acceleration of a Slime
-	 */
 	@Override @Basic @Immutable 
 	public final double getXAcc() {
 		return xAcc;
@@ -139,25 +127,15 @@ public class Slime extends GameObject {
 	 * the maximum horizontal speed a slime can reach
 	 */
 	private static final double MAX_X_SPEED = 2.5;
-	/**
-	 * returns the maximum horizontal speed a Slime may reach
-	 * @return the max speed
-	 * 			| MAX_X_SPEED	
-	 */
 	@Basic @Immutable 
 	private static final double getMaxXSpeed() {
 		return  MAX_X_SPEED;
 	}	
 	/**
 	 * the amount of hitpoints a slime loses when touching 
-	 * a Shark or mazub.
+	 * a shark or mazub.
 	 */
 	private static final int CONTACT_DAMAGE = 50;
-	/**
-	 * returns the lost hitpoints when colliding with a Mazub of Shark
-	 * @return the hitpoints upon making contact
-	 * 			| CONTACT_HITPOINTS
-	 */
 	@Basic @Immutable 
 	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
@@ -167,11 +145,6 @@ public class Slime extends GameObject {
 	 * slime looses some hitpoints
 	 */
 	private static final int SCHOOL_DAMAGE = 1;
-	/**
-	 * returns the hitpoints to lose wxhen a Slime in a school loses hitpoints
-	 * @return the hitpoints to lose
-	 * 			| SCHOOL_DAMAGE
-	 */
 	@Basic @Immutable 
 	public static final int getSchoolDamage() {
 		return SCHOOL_DAMAGE;
@@ -180,18 +153,10 @@ public class Slime extends GameObject {
 	 * the maximum amount of slime schools in a game world
 	 */
 	private static final int MAX_AMOUNT_OF_SCHOOLS = 10;
-	/**
-	 * returns the maximal amount of schools that may exist
-	 * @return the maximal amount of schools
-	 * 			| MAX_AMOUNT_OF_SCHOOLS
-	 */
 	@Basic @Immutable 
 	private static final int getMaxAmountOfSchools() {
 		return MAX_AMOUNT_OF_SCHOOLS;
 	}
-	/**
-	 * the School school of this Slime
-	 */
 	private School school;
 	/**
 	 * Returns the current school to which the given slime belongs.
@@ -200,31 +165,19 @@ public class Slime extends GameObject {
 	 *            The slime for which to retrieve the school.
 	 * 
 	 * @return The current school of the given slime.
-	 * 			| this.school
 	 */
 	@Basic
 	public School getSchool() {
 		return this.school;
 	}
-	/**
-	 * sets the School of this Slime to school
-	 * @param school
-	 * 			the new value for the School school
-	 * @post the School is equal to the given School school
-	 * 			| this.school = school
-	 */
 	public void setSchool(School school) {
 		this.school = school;
 	}
-	/**
-	 * the maximal amount of hitpoints a Slime may posses
-	 */
 	private static final int MAX_HITPOINTS = 500;
 	@Override
 	/**
 	 * the maximum amount of hitpoints
-	 * @return the max amount of hitpoints
-	 * 			| MAXHITPOINTS
+	 * @returnMAXHITPOINTS
 	 */
 	@Basic @Immutable 
 	protected final int getMaxHitpoints() {
@@ -234,92 +187,40 @@ public class Slime extends GameObject {
 	
 //	VALIDATIONS
 	
-	/**
-	 * returns true if the Sprite sprites is valid
-	 * @return the length of sprites is 2
-	 * 			| sprites.length == 2
-	 */
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}
 	
-	/**
-	 * checks the surroundings of the Slime and adapts the movement if needed
-	 * @param newXPos
-	 * 			the new horizontal position
-	 * @param newYPos
-	 * 			the new vertical position
-	 * @effect if the Slime collides with a wall, it stops moving if not falling and the horizontal position is adapted
-	 * 			| if (getOrientation() == Orientation.LEFT && againstLeftWall(newXPos, newYPos))
-	 * 			| 	then newXPos = getTilesLeft(newXPos, newYPos)[0][0] * world.geTileLength() - getSize()[0]
-	 * 			| 		 stopMoving()
-	 *			| if (getOrientation() == Orientation.RIGHT && againstRightWall(newXPos, newYPos))
-	 * 			| 	then newXPos = getTilesRight(newXPos, newYPos)[0][0] * world.geTileLength() - getSize()[0]
-	 * 			| 		 stopMoving()
-	 * @effect if the Slime collides with a roof, the vertical speed drops to zero and the vertical position is adapted
-	 * 			| if (isAgainstRoof(newXPos, newYPos))
-	 * 			| 	then newYPos = getTilesAbove(newXPos, newYPos[0][1] * world.getTileLength() - getSize()[1] - 1
-	 * 			| 		 stopMoving()
-	 * @effect if the Slime collides with a floor when falling, the fall is ended and the vertical position is adapted
-	 * 			| if (isFalling() && onFloor(newXPos, newYPos))
-	 * 			| 	then newYPos = ((getTilesUnder(newXPos, newYPos)[0][1] + 1) * getWorld().getTileLength() - 1)
-	 * 			| 		 endFall()
-	 * @effect the Slime falls when not touching a floor and not falling
-	 * 			| if (( ! isFalling()) && ( ! onFloor(newXPos, newYPos)))
-	 * 			| 	then fall()
-	 * @return {newXPos, newYPos}
-	 */
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 
-		if (this.getOrientation() == Orientation.LEFT && this.againstLeftWall(newXPos, newYPos)) {
-			newXPos = (this.getTilesLeft(newXPos, newYPos)[0][0] + 1) * this.getWorld().getTileLength();
+		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
 			this.stopMoving();
 		}
 		if (this.getOrientation() == Orientation.RIGHT && againstRightWall(newXPos,newYPos)) {
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * this.getWorld().getTileLength() - this.getSize()[0];
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 			this.stopMoving();
 		}
-		if (this.isAgainstRoof(newXPos, newYPos)) {
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * this.getWorld().getTileLength() - this.getSize()[1] - 1;
+		if (isAgainstRoof(newXPos,newYPos)) {
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			this.setYSpeed(0);
 		}		
-		if (this.isFalling() && this.onFloor(newXPos, newYPos)) {
-			newYPos = ((this.getTilesUnder(newXPos, newYPos)[0][1] +1) * this.getWorld().getTileLength() -1);
+		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
 		}		
-		if (( ! this.isFalling()) && ( ! this.onFloor(newXPos, newYPos))) {
+		if (( ! this.isFalling()) && ( ! onFloor(newXPos,newYPos))){
 			fall();
 		}
 		
 		return new double[] {newXPos, newYPos};
 	}
 	
-	/**
-	 * adapts the hitpoints of the Slime and a touched other GameObject other or changes the School
-	 * when other is a Slime
-	 * @param other
-	 * 			the touched GameObject
-	 * @param touched
-	 * 			a boolean indicating if the slime touched other
-	 * @param dt	
-	 * 			a small time interval
-	 * @effect if this Slime touched other and other isn't dying, both object's hitpoints are adjusted
-	 * 			or the schools are adapted if other is a Slime
-	 * 			| if ((touched == 1) && ( ! other.isDying()))
-	 * 			| 	then if (other instanceof Slime) 
-	 * 			| 			then if (this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) 
-	 * 			|					then school.addSlime((Slime) other);
-	 * 			| 				 else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) 
-	 * 			| 					then ((Slime) other).getSchool().addSlime(this)
-	 * 			| 		 else 	
-	 * 			| 			then this.contactDamage(dt)
-	 * 			| 				 other.contactDamage(dt);
-	 */
 	private void adjustHitpoints(GameObject other, double touched, double dt) {
 		if ((touched == 1) && ( ! other.isDying())) {
 			if (other instanceof Slime) {
-				if (this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
+				if(this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
 					this.getSchool().addSlime((Slime) other);
 				}
 				else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) {
@@ -332,14 +233,6 @@ public class Slime extends GameObject {
 			}
 		}	
 	}
-	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 * @param dt
-	 * @return
-	 */
 	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
@@ -390,19 +283,8 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * checks if this Slime is within the boundaries of the game world, if not
-	 * the Slime is removed
-	 * @param newXPos
-	 * 			the new horizontal position of the Slime
-	 * @param newYPos
-	 * 			the new vertical position of the Slime
-	 * @effect the Slime gets removed if not within the boundaries
-	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos))
-	 * 			| 	then remove()
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
-		if ( ! isWithinBoundaries(newXPos, newYPos)) {
+		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
 	}
@@ -436,19 +318,6 @@ public class Slime extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time with dt seconds
-	 * @param dt
-	 * 			a small time interval
-	 * @throws IllegalDtException
-	 * 			the given dt is not valid 
-	 * 			| ! isValidDt(dt)	 
-	 * @effect advances the time if the Slime is still alive or dying
-	 * 			| if ( ! isDying())
-	 * 			| 	then advanceTimeWhileLiving(dt)
-	 * 			| else
-	 * 			| 	then advanceTimeWhileDeath(dt)
-	 */
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);

@@ -19,7 +19,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO aparte testfiles
 // TODO invariant van binnen grenzen
 // TODO Laura nog eens muilen
-// TODO alle classes doorzoeken op Mazub in de commentaar -> hoe bedoelde?
+// TODO alle classes doorzoeken op Mazub in de commentaar
 
 public class World {
 
@@ -551,6 +551,7 @@ public class World {
 		if ( ! isValidTile(tileX, tileY, tileType)) {
 			throw new IllegalTileException(tileX, tileY, tileType);
 		}
+		// TODO waarom is dit eerst Y en dan X ? Omdat dat ne matrix is. Gewoon kwestie van hetzelfde te doen als bovenaan
 		this.geologicalFeature[tileY][tileX] = tileType;
 	}
 	/**

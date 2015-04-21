@@ -19,7 +19,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO aparte testfiles
 // TODO invariant van binnen grenzen
 // TODO Laura nog eens muilen
-// TODO alle classes doorzoeken op Mazub in de commentaar -> hoe bedoelde?
+// TODO alle classes doorzoeken op Mazub in de commentaar
 
 public class World {
 
