@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;INIT_HIT_POINTS&apos; in &apos;jumpingalien.model.Shark&apos; to &apos;INIT_HITPOINTS&apos;&#x0D;&#x0A;- Original project: &apos;OGP1415-JumpingAlien&apos;&#x0D;&#x0A;- Original element: &apos;jumpingalien.model.Shark.INIT_HIT_POINTS&apos;&#x0D;&#x0A;- Renamed element: &apos;jumpingalien.model.Shark.INIT_HITPOINTS&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;INIT_HIT_POINTS&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;jumpingalien.model{Shark.java[Shark^INIT_HIT_POINTS" name="INIT_HITPOINTS" references="true" setter="false" stamp="1429640787747" textual="false" version="1.0"/>
+</session>

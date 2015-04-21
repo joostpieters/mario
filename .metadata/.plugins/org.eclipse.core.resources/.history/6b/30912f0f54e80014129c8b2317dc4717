@@ -38,7 +38,6 @@ public class Shark extends GameObject {
 	 * the initial amount of hitpoints a shark possesses
 	 */
 	private static final int INIT_HITPOINTS = 100;
-	
 	@Basic @Immutable
 	private static int getInitHitpoints() {
 		return INIT_HITPOINTS;
