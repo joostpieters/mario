@@ -893,7 +893,25 @@ public abstract class GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
-	public double computeDt(double dt) {
+	/**
+	 * Computes the dt for the object, small enough, so that the object does not move 
+	 * more than one pixel at a time
+	 * @param dt
+	 * @return the minimum of the dt for the horizontal and vertical direction, 
+	 * 			calculated for acceleration equal to zero or not
+	 * 			| double dtX;
+	 * 			| double dtY;	
+	 * 			| if (this.getXAcc() == 0) 
+	 * 			| 	dtX = 0.01 / Math.abs(this.getXSpeed())
+	 * 			| else 
+	 * 			| 	dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt)
+	 * 			| if (this.getYAcc() == 0) 
+	 * 			| 	dtY = 0.01 / Math.abs(this.getYSpeed())
+	 * 			| else 
+	 * 			| 	dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt)
+	 * 			| return Math.min(dtX,dtY);
+	 */
+	protected double computeDt(double dt) {
 		double dtX;
 		double dtY;
 		
@@ -912,7 +930,19 @@ public abstract class GameObject {
 		}		
 		return Math.min(dtX,dtY);
 	}	
-	
+	/**
+	 * Returns the tiles where the object overlaps left with
+	 * @param XPos
+	 * 		the horizontal position of the object
+	 * @param YPos
+	 * 		the vertical position of the object
+	 * @effect the pixelpositions of the left corners are stored in local variables
+	 * 		| int pixelLeft = (int) XPos
+	 * 		| int pixelTop = (int) YPos + this.getSize()[1]
+	 * 		| int pixelBottom = (int) YPos
+	 * @return the positions of the tiles where the object overlaps left with are returned
+	 * 		| getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1)
+	 */
 	protected int[][] getTilesLeft(double XPos, double YPos) {
 		int pixelLeft = (int) XPos;
 		int pixelTop = (int) YPos + this.getSize()[1];
@@ -920,28 +950,72 @@ public abstract class GameObject {
 
 		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1);
 	}
-	
+	/**
+	 * Returns the tiles where the object overlaps right with
+	 * @param XPos
+	 * 		the horizontal position of the object
+	 * @param YPos
+	 * 		the vertical position of the object
+	 * @effect the pixelpositions of the right corners are stored in local variables
+	 * 		| int pixelRight = (int) XPos + this.getSize()[0]
+	 * 		| int pixelTop = (int) YPos + this.getSize()[1]
+	 * 		| int pixelBottom = (int) YPos
+	 * @return the positions of the tiles where the object overlaps right with are returned
+	 * 		| getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1)
+	 */
 	protected int[][] getTilesRight(double XPos, double YPos) {
 		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
 		int pixelBottom = (int) YPos;
 		return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1);		
 	}
-	
+	/**
+	 * Returns the tiles where the object overlaps above with
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @effect the pixelpositions of the upper corners are stored in local variables
+	 * 		| int pixelLeft = (int)(xPos)
+	 * 		| int pixelTop = (int) yPos + this.getSize()[1]
+	 * 		| int pixelRight = pixelLeft + this.getSize()[0]
+	 * @return the positions of the tiles where the object overlaps above with are returned
+	 * 		| getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop)
+	 */
 	protected int[][] getTilesAbove(double xPos,double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelTop = (int)(yPos) + this.getSize()[1];
 		int pixelRight = pixelLeft + this.getSize()[0];
 		return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop);
 	}
-	
+	/**
+	 * Returns the tiles where the object overlaps under with
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @effect the pixelpositions of the under corners are stored in local variables
+	 * 		| int pixelLeft = (int)(xPos)
+	 * 		| int pixelBottom = (int) yPos 
+	 * 		| int pixelRight = pixelLeft + this.getSize()[0]
+	 * @return the positions of the tiles where the object overlaps under with are returned
+	 * 		| getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom)
+	 */
 	protected int[][] getTilesUnder(double xPos, double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelBottom = (int)(yPos);
 		int pixelRight = pixelLeft + this.getSize()[0];
 		return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom);
 	}
-	
+	/**
+	 * returns the tiles from the region of the object with a certain position
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @return the position of the tiles in the region of the object
+	 * 		| this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim())
+	 */
 	protected int[][] getTiles(double xPos, double yPos) {
 		return this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim());
 	}
@@ -955,12 +1029,32 @@ public abstract class GameObject {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
+				assert false;
 			}
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks or the object is against the roof
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @return true if one of the tiles overlapping above the object is impassable terrain
+	 * 		otherwise false
+	 * 		| int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
+	 * 		| for (int[] tile: tilesAbove) {
+	 * 		| 	try {
+	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+	 * 		| 			return true;
+	 * 		| 		}
+	 * 		| 	} catch (IllegalPixelException e) {
+	 * 		| 		assert false;
+	 * 		| 	}
+	 * 		| }
+	 * 		| return false;
+	 */
 	protected boolean isAgainstRoof(double xPos, double yPos) {
 		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
 		for (int[] tile: tilesAbove) {
@@ -970,12 +1064,32 @@ public abstract class GameObject {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
+				assert false;
 			}
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks or the object is against the left wall
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @return true if one of the tiles overlapping left of the object is impassable terrain
+	 * 		otherwise false
+	 * 		| int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
+	 * 		| for (int[] tile: tilesLeft) {
+	 * 		| 	try {
+	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+	 * 		| 			return true;
+	 * 		| 		}
+	 * 		| 	} catch (IllegalPixelException e) {
+	 * 		| 		assert false;
+	 * 		| 	}
+	 * 		| }
+	 * 		| return false;
+	 */
 	protected boolean againstLeftWall(double xPos, double yPos) {
 		int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
 		for (int[] tile: tilesLeft) {
@@ -985,12 +1099,32 @@ public abstract class GameObject {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
+				assert false;
 			}
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks or the object is against the right wall
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @return true if one of the tiles overlapping right of the object is impassable terrain
+	 * 		otherwise false
+	 * 		| int[][] tilesLeft = this.getTilesRight(xPos, yPos);
+	 * 		| for (int[] tile: tilesRight) {
+	 * 		| 	try {
+	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+	 * 		| 			return true;
+	 * 		| 		}
+	 * 		| 	} catch (IllegalPixelException e) {
+	 * 		| 		assert false;
+	 * 		| 	}
+	 * 		| }
+	 * 		| return false;
+	 */
 	protected boolean againstRightWall(double xPos, double yPos) {
 		int[][] tilesRight = this.getTilesRight(xPos, yPos);
 		for (int[] tile: tilesRight) {
@@ -1000,12 +1134,38 @@ public abstract class GameObject {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
+				assert false;
 			}
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks or the object is fully overlapping with tiles with the given feature
+	 * @param xPos
+	 * 		the horizontal position of the object
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @param feature
+	 * 		the number of the feature of the tiles where the object should fully overlap with
+	 * @pre feature should be smaller than or equal to 3, because there are no feature with numbers
+	 * 		higher than three
+	 * 		| feature <= 3
+	 * @return true if the object only overlaps with tiles with the given feature, otherwise false
+	 * 		| int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
+	 * 		| for (int[][] tiles: tileFamilies) {	
+	 * 		| 	for (int[] tile: tiles) {
+	 * 		| 		try {
+	 * 		| 			if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != feature) {
+	 * 		| 				return false;
+	 * 		| 			}
+	 * 		| 		} catch (IllegalPixelException e) {
+	 * 		| 			assert false;
+	 * 		| 		}
+	 * 		| 	}
+	 * 		| }
+	 * 		| return true;
+	 */
 	protected boolean isFullyInFeature(double xPos, double yPos,int feature) {
 		assert(feature <= 3);
 		int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
@@ -1017,13 +1177,35 @@ public abstract class GameObject {
 						return false;
 					}
 				} catch (IllegalPixelException e) {
-					System.out.println("oei twerkt niet");
+					assert false;
 				}
 			}
 		}
 		return true;
 	}
-	
+	/**
+	 * Checks or the object is in contact with a given feature
+	 * @param xPos
+	 * 		the vertical position of the object
+	 * @param feature
+	 * 		the number of the feature of the tiles where the object should fully overlap with
+	 * @pre feature should be smaller than or equal to 3, because there are no feature with numbers
+	 * 		higher than three
+	 * 		| feature <= 3
+	 * @return true if the tiles of the region of mazub have the give feature, otherwise false
+	 * 		| int[][] tiles = this.getTiles(xPos,yPos);
+	 * 		| for (int[] tile: tiles) {
+	 * 		| 	try {
+	 * 		| 		if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+	 * 		| 				getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == feature) {
+	 * 		| 			return true;
+	 * 		| 		}
+	 * 		| 	} catch (IllegalPixelException e) {
+	 * 		| 		assert false;
+	 * 		| 	}
+	 * 		| }	
+	 * 		| return false;
+	 */
 	protected boolean isInContactWithFeature(double xPos, double yPos,int feature) {
 		assert(feature <= 3);
 		int[][] tiles = this.getTiles(xPos,yPos);
@@ -1034,7 +1216,7 @@ public abstract class GameObject {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
-				System.out.println("oei twerkt niet");
+				assert false;
 			}
 		}	
 		return false;
