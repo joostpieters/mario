@@ -333,12 +333,10 @@ public abstract class GameObject {
 	 * @post hitpoints is set to number if number is smaller than the maximum amount of
 	 * 			hitpoints, otherwise hitpoints is set to the maximum amount of hitpoints
 	 * 			the object can posses
-	 * 			| if ( number < this.getMaxHitpoints()) {
-	 * 			|		this.hitpoints = number;
-	 * 			|	}		
-	 * 			|	else {
-	 * 			|		this.hitpoints = this.getMaxHitpoints();
-	 * 			|	}
+	 * 			| if ( number < this.getMaxHitpoints()) 
+	 * 			|	then this.hitpoints = number	
+	 * 			|else 
+	 * 			|	then this.hitpoints = this.getMaxHitpoints()
 	 */
 	public void setHitpoints(int number) {
 		assert number >= 0;
@@ -902,13 +900,13 @@ public abstract class GameObject {
 	 * 			| double dtX;
 	 * 			| double dtY;	
 	 * 			| if (this.getXAcc() == 0) 
-	 * 			| 	dtX = 0.01 / Math.abs(this.getXSpeed())
+	 * 			| 	then dtX = 0.01 / Math.abs(this.getXSpeed())
 	 * 			| else 
-	 * 			| 	dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt)
+	 * 			| 	then dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt)
 	 * 			| if (this.getYAcc() == 0) 
-	 * 			| 	dtY = 0.01 / Math.abs(this.getYSpeed())
+	 * 			| 	then dtY = 0.01 / Math.abs(this.getYSpeed())
 	 * 			| else 
-	 * 			| 	dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt)
+	 * 			| 	then dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt)
 	 * 			| return Math.min(dtX,dtY);
 	 */
 	protected double computeDt(double dt) {
@@ -1043,12 +1041,11 @@ public abstract class GameObject {
 	 * @return true if one of the tiles overlapping above the object is impassable terrain
 	 * 		otherwise false
 	 * 		| int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
-	 * 		| for (int[] tile: tilesAbove) {
+	 * 		| for each tile in tilesAbove {
 	 * 		| 	try {
 	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
-	 * 		| 			return true;
-	 * 		| 		}
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) 
+	 * 		| 			then return true
 	 * 		| 	} catch (IllegalPixelException e) {
 	 * 		| 		assert false;
 	 * 		| 	}
@@ -1078,12 +1075,11 @@ public abstract class GameObject {
 	 * @return true if one of the tiles overlapping left of the object is impassable terrain
 	 * 		otherwise false
 	 * 		| int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
-	 * 		| for (int[] tile: tilesLeft) {
+	 * 		| for each tile in tilesLeft
 	 * 		| 	try {
 	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
-	 * 		| 			return true;
-	 * 		| 		}
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1)
+	 * 		| 			then return true
 	 * 		| 	} catch (IllegalPixelException e) {
 	 * 		| 		assert false;
 	 * 		| 	}
@@ -1113,12 +1109,11 @@ public abstract class GameObject {
 	 * @return true if one of the tiles overlapping right of the object is impassable terrain
 	 * 		otherwise false
 	 * 		| int[][] tilesLeft = this.getTilesRight(xPos, yPos);
-	 * 		| for (int[] tile: tilesRight) {
+	 * 		| for each tile in tilesRight) 
 	 * 		| 	try {
 	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
-	 * 		| 			return true;
-	 * 		| 		}
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) 
+	 * 		| 			then return true
 	 * 		| 	} catch (IllegalPixelException e) {
 	 * 		| 		assert false;
 	 * 		| 	}
@@ -1153,12 +1148,11 @@ public abstract class GameObject {
 	 * @return true if the object only overlaps with tiles with the given feature, otherwise false
 	 * 		| int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
 	 * 		| for (int[][] tiles: tileFamilies) {	
-	 * 		| 	for (int[] tile: tiles) {
+	 * 		| 	for each tile in tiles)
 	 * 		| 		try {
 	 * 		| 			if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != feature) {
-	 * 		| 				return false;
-	 * 		| 			}
+	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != feature)
+	 * 		| 				the return false
 	 * 		| 		} catch (IllegalPixelException e) {
 	 * 		| 			assert false;
 	 * 		| 		}
@@ -1194,12 +1188,11 @@ public abstract class GameObject {
 	 * 		| feature <= 3
 	 * @return true if the tiles of the region of mazub have the give feature, otherwise false
 	 * 		| int[][] tiles = this.getTiles(xPos,yPos);
-	 * 		| for (int[] tile: tiles) {
+	 * 		| for each tile in tiles) {
 	 * 		| 	try {
 	 * 		| 		if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-	 * 		| 				getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == feature) {
-	 * 		| 			return true;
-	 * 		| 		}
+	 * 		| 				getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == feature) 
+	 * 		| 			then return true
 	 * 		| 	} catch (IllegalPixelException e) {
 	 * 		| 		assert false;
 	 * 		| 	}
@@ -1221,7 +1214,21 @@ public abstract class GameObject {
 		}	
 		return false;
 	}	
-	
+	/**
+	 * Return the current sprite image for the given object.
+	 * @pre the given sprite must be valid
+	 * 			| assert isValidSprite(getSprite())
+	 * @return depending of the orientation (left or right) the current sprite image
+	 * 			 for the given object defined in the assignment.
+	 * 			| if (this.getOrientation() == Orientation.RIGHT) 
+	 * 			| 	then return sprites[1]
+	 * 			| else 
+	 * 			| 	then return sprites[0];
+	 * @return The current sprite image for the given object, determined by its
+	 *         orientation as defined in the assignment.
+	 *         
+	 */
+	//TODO is die return hier nu dubbel? of zien ik scheel
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -1231,7 +1238,19 @@ public abstract class GameObject {
 			return sprites[0];
 		}
 	}
-	
+	/**
+	 * Changes the speed of the given object with a given time interval dt
+	 * @param dt
+	 * 		time interval to calculate new speed
+	 * @effect Calculating and setting the horizontal and vertical speed
+	 * 		| this.setXSpeed(this.getXSpeed() + dt * this.getXAcc())
+	 * 		| this.setYSpeed(this.getYSpeed() + dt * this.getYAcc())
+	 * @effect setting the acceleration to zero and speed to the maximum speed if the
+	 * 		new speed is higher than the maximum speed
+	 * 		| if (this.getXSpeed() >= this.getMaxSpeed())
+	 * 		| 	then this.setXSpeed(this.getMaxSpeed());
+	 * 		| 	then this.setXAcc(0)
+	 */
 	protected void setNewSpeed(double dt) {
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
@@ -1244,12 +1263,10 @@ public abstract class GameObject {
 	
 	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
-		
 		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
 				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
 		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
 				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
-		
 		return ((xStatement) && (yStatement));
 	}
 	
