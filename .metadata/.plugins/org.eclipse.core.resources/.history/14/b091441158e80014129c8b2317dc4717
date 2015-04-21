@@ -38,11 +38,7 @@ public class Shark extends GameObject {
 	 * the initial amount of hitpoints a shark possesses
 	 */
 	private static final int INIT_HITPOINTS = 100;
-	/**
-	 * returns the amount of hitpoints a Shark possesses when created
-	 * @return the initial amount of hitpoints
-	 * 			| INIT_HITPOINTS
-	 */
+	
 	@Basic @Immutable
 	private static int getInitHitpoints() {
 		return INIT_HITPOINTS;
@@ -51,11 +47,6 @@ public class Shark extends GameObject {
 	 * the maximum horizontal speed a shark can reach
 	 */
 	private static final double MAX_X_SPEED = 4;
-	/**
-	 * returns the maximal horizontal speed a Shark can reach
-	 * @return the max x-speed
-	 * 			| MAX_X_SPEED	
-	 */
 	@Basic @Immutable
 	private static final double getMaxXSpeed() {
 		return  MAX_X_SPEED;
@@ -65,24 +56,11 @@ public class Shark extends GameObject {
 	 * startJump() is initiated
 	 */
 	private static final int JUMP_SPEED = 2;
-	/**
-	 * returns the vertical speed when a startJump gets initialized
-	 * @return the vertical initial velocity when jumping
-	 * 			| JUMP_SPEED
-	 */
 	@Basic @Immutable
 	private static final double getJumpSpeed() {
 		return JUMP_SPEED;
 	}
-	/**
-	 * the horizontal acceleration
-	 */
 	private static final double MOVE_ACC = 1.5;
-	/**
-	 * returns the horizontal acceleration
-	 * @return the acceleration when moving horizontally
-	 * 			| MOVE_ACC
-	 */
 	@Basic @Immutable
 	private static final double getMoveAcc() {
 		return MOVE_ACC;
@@ -92,19 +70,10 @@ public class Shark extends GameObject {
 	 * a mazub or a slime
 	 */
 	private static final int CONTACT_DAMAGE = 50;
-	/**
-	 * returns the amount of lost hitpoints when making contact
-	 * with mazub or a slime
-	 * @return the hitpoints to be deducted in case of contact
-	 * 			| CONTACT_DAMAGE
-	 */
 	@Basic @Immutable
 	public static final int getContactDamage() {
 		return CONTACT_DAMAGE;
-	}
-	/**
-	 * the maximal amount of hitpoints a shark may posses
-	 */
+	}	
 	private final int MAX_HITPOINTS = 100;
 	/**
 	 * the maximum amount of hitpoints
@@ -114,70 +83,28 @@ public class Shark extends GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}
-	/**
-	 * the amount of hitpoints a shark loses when in air
-	 */
 	private static final int LOSS_HITPOINTS_IN_AIR = 6;
-	/**
-	 * returns the amount of hitpoints to lose per 0.2 seconds in contact with air
-	 * @return the hitpoints to lose
-	 * 			| LOSS_HITPOINTS_IN_AIR
-	 */
 	@Basic @Immutable 
 	private static final int getLossHitpointsInAir() {
 		return LOSS_HITPOINTS_IN_AIR;
-	}
-	/**
-	 * the time a Shark may live spend in air without losing any hitpoints
-	 */
+	}	
 	private static final double TIME_UNTIL_CHOKE = 0.2;
-	/**
-	 * returns the time in seconds until a Shark chokes in air
-	 * @return the time until deduction of hitpoints
-	 * 			| TIME_UNTIL_CHOKE
-	 */
 	@Basic @Immutable 
 	private static final double getTimeUntilChoke() {
 		return TIME_UNTIL_CHOKE;
 	}
-	/**
-	 * a boolean indicating if a Shark is in water
-	 */
 	private boolean inWater = true;
-	/**
-	 * returns true if the Shark is in water
-	 * @return if the shark is in water
-	 * 			| inWater
-	 */
 	@Basic
 	private boolean isInWater() {
 		return inWater;
 	}
-	/**
-	 * sets the value of inWater to true
-	 * @post the value of inWater is true
-	 * 			| inWater = true
-	 */
 	private void setInWater() {
 		this.inWater = true;
 	}
-	/**
-	 * sets the value of inWater to false
-	 * @post the value of inWater is false
-	 * 			| inWater = false
-	 */
 	private void setNotInWater() {
 		this.inWater = false;
 	}
-	/**
-	 * double that counts the time spend in air
-	 */
 	private double timeInAir = 0;
-	/**
-	 * returns the double timeInAir
-	 * @return the time a Shark spend in air
-	 * 			| timeInAir
-	 */
 	@Basic
 	private double getTimeInAir() {
 		return timeInAir;
@@ -187,23 +114,14 @@ public class Shark extends GameObject {
 	 * @param time
 	 * 			the new value for timeInAir
 	 * @pre time should always be bigger than or equal to zero
-	 * 			| time >= 0
-	 * @post the value of timeInAir is equal to the given double
-	 * 			|  this.timeInAir = time
+	 * 		| time >= 0
+	 * @post this.timeInAir = time
 	 */
 	private void setTimeInAir(double time) {
 		assert time >= 0;
 		this.timeInAir = time;
 	}
-	/**
-	 * a double indicating the duration of a certain movement
-	 */
 	private double movementDuration = 0;
-	/**
-	 * returns the duration of the movement in seconds
-	 * @return the duration
-	 * 			| movementDuration
-	 */
 	@Basic
 	private double getMovementDuration() {
 		return movementDuration;
@@ -222,9 +140,7 @@ public class Shark extends GameObject {
 	}	
 	private double timeSinceMove = 0;
 	/**
-	 * returns the time in seconds since the last movement
-	 * @return the time since the last movement
-	 * 			| timeSinceMove
+	 * @return the timeSinceMove
 	 */
 	@Basic
 	private double getTimeSinceMove() {
@@ -240,16 +156,8 @@ public class Shark extends GameObject {
 	private void setTimeSinceMove(double time) {
 		assert time >= 0;
 		this.timeSinceMove = time;
-	}
-	/**
-	 * an int indicating the amount of times this Shark has jumped
-	 */
+	}	
 	private int jumpCounter = 0;
-	/**
-	 * returns the int giving the amount of jumps of this Shark
-	 * @return the amount of jumps
-	 * 			| jumpCounter
-	 */
 	@Basic
 	private int getJumpCounter() {
 		return this.jumpCounter;
@@ -265,52 +173,22 @@ public class Shark extends GameObject {
 		assert count >= 0;
 		this.jumpCounter = count;		
 	}
-	/**
-	 * a boolean indicating if the Shark is moving at the moment
-	 */
 	private boolean moving = true;
-	/**
-	 * returns true when the Shark is moving
-	 * @return if the shark is moving
-	 * 			| moving
-	 */
 	@Basic
 	private boolean isMoving() {
 		return this.moving;
 	}
-	/**
-	 * sets the boolean moving to a given boolean move
-	 * @param move
-	 * 			the new value of moving
-	 * @post moving is equal to the given boolean
-	 * 			| moving = move
-	 */
 	private void setMoving(boolean move) {
 		this.moving = move;
 	}
 	
 //	Validations
 	
-	/**
-	 * returns true if the given sprites are valid
-	 * @return true if the length is equal to 2
-	 * 			| sprites.length == 2
-	 */
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}	
 	
-	/**
-	 * checks the surroundings of the shark and adapts the position, speed and acceleration
-	 * @param newXPos
-	 * 			the newly calculated horizontal position
-	 * @param newYPos
-	 * 			the newly calculated vertical position
-	 *
-	 * @return {newXPos, newYPos}
-	 */
-	// TODO deze commentaar afmaken
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();

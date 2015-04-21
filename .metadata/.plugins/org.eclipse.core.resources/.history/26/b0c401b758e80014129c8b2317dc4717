@@ -307,10 +307,9 @@ public class Shark extends GameObject {
 	 * 			the newly calculated horizontal position
 	 * @param newYPos
 	 * 			the newly calculated vertical position
-	 *
+	 * 
 	 * @return {newXPos, newYPos}
 	 */
-	// TODO deze commentaar afmaken
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
