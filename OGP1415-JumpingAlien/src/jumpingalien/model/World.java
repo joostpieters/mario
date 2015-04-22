@@ -375,7 +375,7 @@ public class World {
 	 */
 	@Basic
 	public Collection<Plant> getPlants() {
-		return this.plants;
+		return new CopyOnWriteArrayList<Plant>(this.plants);
 	}
 	/**
 	 * the collection of all the sharks in the world
@@ -384,7 +384,7 @@ public class World {
 	 */
 	@Basic
 	public Collection<Shark> getSharks() {
-		return this.sharks;
+		return new CopyOnWriteArrayList<Shark>(this.sharks);
 	}
 	/**
 	 * the collection of all the slimes in the world
@@ -393,7 +393,7 @@ public class World {
 	 */
 	@Basic
 	public Collection<Slime> getSlimes() {
-		return this.slimes;
+		return new CopyOnWriteArrayList<Slime>(this.slimes);
 	}
 	/**
 	 * the amount of plants in the world
