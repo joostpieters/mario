@@ -421,15 +421,9 @@ public class Shark extends GameObject {
 	}
 	
 	/**
-	 * checks if this Shark is within the boundaries of the game world, if not
-	 * the Shark is removed
+	 * 
 	 * @param newXPos
-	 * 			the new horizontal position of the Shark
 	 * @param newYPos
-	 * 			the new vertical position of the Shark
-	 * @effect the Shark gets removed if not within the boundaries
-	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos))
-	 * 			| 	then remove()
 	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
@@ -437,40 +431,6 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time with dt seconds whilt the Shark is still alive
-	 * @param dt
-	 * 			a small time interval
-	 * @effect the Shark starts a random movement
-	 * 			| randomMovement(dt)
-	 * @effect the local variables newCalculatedPos, newXPos and nexYPos are initialized
-	 * 			| double[] newCalculatedPos = this.calculateNewPos(dt)
-	 * 			| double newXPos = newCalculatedPos[0]
-	 * 			| double newYPos = newCalculatedPos[1]
-	 * @effect checks if the newly calculated positions are within the boundaries of the game 
-	 * 			world, if this is not the case, the Shark is removed from the world
-	 * 			| checkIfWithinBoundaries(newXPos, newYPos)
-	 * @effect the position of the Shark is adapted to the surrounding world
-	 * 			| newPos = checkSurroundings(newXPos,newYPos)
-	 * @effect the position is adapted in case of a collision
-	 * 			| newPos = colliding(newPos[0],newPos[1], dt)
-	 * @effect the speed and the position of the Shark are set to the calculated values
-	 * 			| setNewSpeed(dt)
-	 * 			| setXPos(newPos[0])
-	 * 			| setYPos(newPos[1])
-	 * @effect the hitpoints of colliding objects are adapted if necessary
-	 * 			| contactDamage(dt)
-	 * @effect hitpoints are lost if the Shark is in touch with air or magma
-	 * 			and the immunity is updated
-	 * 			| loseHitpointsBecauseOfFeature()
-	 * 			| updateImmunity()
-	 * @effect the boolean inWater is updated to the correct value and the shark dies
-	 * 			if it hasn't got any hitpoints left
-	 * 			| if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater()))
-	 * 			| 	then setInWater()
-	 * 			| if (this.getHitpoints() <= 0)
-	 * 			| 	then die()
-	 */
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);
 		
@@ -486,10 +446,8 @@ public class Shark extends GameObject {
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 		
-		this.contactDamage(dt);
-		
-//		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
-//		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
+		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
 		
 		this.loseHitpointsBecauseOfFeature(dt);
 		this.updateImmunity(dt);
@@ -502,16 +460,6 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time with dt seconds if the Shark is dying
-	 * @param dt
-	 * 			 a small time interval
-	 * @effect the double timeSinceDeath is updated and if this double is greater than
-	 * 			the time until the Shark gets removed from the world, the shark gets removed
-	 * 			| setTimeSinceDeath(this.getTimeSinceDeath() + dt)
-	 * 			| if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove())
-	 * 			| 	then remove()
-	 */
 	private void advanceTimeWhileDeath(double dt) {
 		setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
@@ -519,23 +467,10 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * advances the time with dt seconds
-	 * @param dt
-	 * 			 a small time interval
-	 * @throws IllegalDtException
-	 * 			the given dt is not valid
-	 * 			| ! isValidDt()
-	 * @effect the time is advanced with dt seconds when the shark is living or while he's dying
-	 * 			| if ( ! this.isDying()) 
-	 * 			| 	then advanceTimeWhileLiving(dt)
-	 * 			| else 
-	 * 			| 	then advanceTimeWhileDeath(dt)
-	 */
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
-		if ( ! this.isDying()) { 
+		if (! this.isDying()) { 
 			this.advanceTimeWhileLiving(dt);
 		}		
 		else {
@@ -543,27 +478,14 @@ public class Shark extends GameObject {
 		}
 	}	
 	
-	/**
-	 * removes this Shark from the game world
-	 * @effect the Shark is removed from the world he lives in
-	 * 			and the world of this Shark is set to null
-	 * 			| this.getWorld().removeShark(this)
-	 * 			| this.setWorld(null)
-	 */
 	private void remove() {
 		this.getWorld().removeShark(this);
 		this.setWorld(null);
 	}
 	
 	/**
-	 * Shark starts moving to the right
-	 * @effect the horizontal acceleration and orientation are set
-	 * 			| setXAcc(Shark.getMoveAcc())
-	 * 			| setOrientationRight()
-	 * @effect if this Shark is in the water, he's vertical acceleration
-	 * 			is set to a random value
-	 * 			| if (isInWater())
-	 * 			| 	then setYAcc(Math.random() * 4 - 2)
+	 * Mazub starts moving to the right
+	 * @effect 	| 
 	 */
 	public void moveRight(){
 		this.setXAcc(Shark.getMoveAcc());
@@ -574,14 +496,8 @@ public class Shark extends GameObject {
 	}
 	
 	/**
-	 * Shark starts moving to the left
-	 * @effect the horizontal acceleration and orientation are set
-	 * 			| setXAcc(Shark.getMoveAcc())
-	 * 			| setOrientationLeft()
-	 * @effect if this Shark is in the water, he's vertical acceleration
-	 * 			is set to a random value
-	 * 			| if (isInWater())
-	 * 			| 	then setYAcc(Math.random() * 4 - 2)
+	 * Mazub starts moving to the left
+	 * @effect 	|
 	 */
 	public void moveLeft(){
 		this.setXAcc(Shark.getMoveAcc());
@@ -592,11 +508,8 @@ public class Shark extends GameObject {
 	}
 	
 	/**
-	 * Shark starts moving and jumping to the right
-	 * @effect the horizontal acceleration, vertical speed and orientation are set
-	 * 			| setXAcc(Shark.getMoveAcc())
-	 * 			| setYSpeed(Shark.getJumpSpeed())
-	 * 			| setOrientationRight()
+	 * Mazub starts moving to the right
+	 * @effect 	| 
 	 */
 	public void jumpRight(){
 		this.setXAcc(Shark.getMoveAcc());
@@ -605,11 +518,8 @@ public class Shark extends GameObject {
 	}
 	
 	/**
-	 * Shark starts moving and jumping to the left
-	 * @effect the horizontal acceleration, vertical speed and orientation are set
-	 * 			| setXAcc(Shark.getMoveAcc())
-	 * 			| setYSpeed(Shark.getJumpSpeed())
-	 * 			| setOrientationLeft()
+	 * Mazub starts moving to the left
+	 * @effect 	|
 	 */
 	public void jumpLeft(){
 		this.setXAcc(Shark.getMoveAcc());
@@ -617,49 +527,36 @@ public class Shark extends GameObject {
 		this.setOrientationLeft();
 	}
 	
-	/**
-	 * the Shark stops moving
-	 * @effect the horizontal speed is set to zero and the vertical acceleration is 
-	 * 			set to zero if the Shark isn't falling
-	 * 			| setXSpeed(0)
-	 * 			| if ( ! isFalling())
-	 * 			| 	then setYAcc(0)
-	 */
 	public void stopMove() {
 		this.setXSpeed(0);
-		if ( ! isFalling()) {
+		if (!isFalling()) {
 			this.setYAcc(0);
 		}
 	}
 	
-	/**
-	 * starts a random movement for the Shark
-	 * @param dt
-	 * 			a small time interval
-	 */
 	private void randomMovement(double dt) {
-		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
+		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();
 			this.setMovementDuration(Math.random() * 3 + 1);
 			this.setTimeSinceMove(dt);
 			double randomNb;
-			if ((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(),this.getYPos()) || this.isInWater())) {
+			if((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(),this.getYPos()) || this.isInWater())) {
 				randomNb = Math.random() * 4;
 			}
 			else {
 				randomNb = Math.random() * 2;
 			}
-			if (randomNb < 1) {
+			if(randomNb < 1) {
 				this.moveRight();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
-			else if (randomNb < 2){
+			else if(randomNb < 2){
 				this.moveLeft();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
-			else if (randomNb < 3){
+			else if(randomNb < 3){
 				this.jumpRight();
 				this.setJumpCounter(0);
 				this.setMoving(false);

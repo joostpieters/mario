@@ -632,34 +632,29 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * starts a random movement for the Shark
-	 * @param dt
-	 * 			a small time interval
-	 */
 	private void randomMovement(double dt) {
-		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
+		if(this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();
 			this.setMovementDuration(Math.random() * 3 + 1);
 			this.setTimeSinceMove(dt);
 			double randomNb;
-			if ((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(),this.getYPos()) || this.isInWater())) {
+			if((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(),this.getYPos()) || this.isInWater())) {
 				randomNb = Math.random() * 4;
 			}
 			else {
 				randomNb = Math.random() * 2;
 			}
-			if (randomNb < 1) {
+			if(randomNb < 1) {
 				this.moveRight();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
-			else if (randomNb < 2){
+			else if(randomNb < 2){
 				this.moveLeft();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
-			else if (randomNb < 3){
+			else if(randomNb < 3){
 				this.jumpRight();
 				this.setJumpCounter(0);
 				this.setMoving(false);

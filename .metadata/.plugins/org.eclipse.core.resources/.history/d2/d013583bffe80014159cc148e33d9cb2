@@ -958,8 +958,6 @@ public class Mazub extends GameObject {
 	 * advances the time for a period of dt seconds
 	 * @param dt
 	 * @throws IllegalDtException
-	 * 			the given dt is not valid
-	 * 			| ! isValidDt()
 	 * @effect
 	 * 		| if ( ! this.isDying()) {		
 	 * 		| 	this.changeTimeDependents(dt);
