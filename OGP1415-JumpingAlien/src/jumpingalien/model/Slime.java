@@ -316,7 +316,8 @@ public class Slime extends GameObject {
 	 * 			| 			then this.contactDamage(dt)
 	 * 			| 				 other.contactDamage(dt);
 	 */
-	private void adjustHitpoints(GameObject other, double touched, double dt) {
+	//TODO commentaar opnieuw fixen
+	private void adjustHitpoints(GameObject other, double touched, double dt, double newXPos, double newYPos) {
 		if ((touched == 1) && ( ! other.isDying())) {
 			if (other instanceof Slime) {
 				if (this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
@@ -328,7 +329,10 @@ public class Slime extends GameObject {
 			}
 			else   {
 				this.contactDamage(dt);
-				other.contactDamage(dt);
+				if (! (this.collidesAbove(newXPos, this.getXDim(), newYPos, this.getYDim(), other.getXPos(),
+						other.getXDim(), other.getYPos(), other.getYDim()) && other instanceof Mazub)) { 
+					other.contactDamage(dt);
+				}
 			}
 		}	
 	}
@@ -389,7 +393,7 @@ public class Slime extends GameObject {
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}
-				this.adjustHitpoints(other, newPos[2], dt);
+				this.adjustHitpoints(other, newPos[2], dt, newPos[0], newPos[1]);
 			}
 		}
 		if (this.isFalling() && onGameObject) {

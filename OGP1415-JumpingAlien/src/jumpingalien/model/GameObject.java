@@ -1278,7 +1278,8 @@ public abstract class GameObject {
 	 * 		the vertical position of the second object
 	 * @param yDim2
 	 * 		the vertical dimension of the second object
-	 * @return
+	 * @return True of one of the perimeters of the first object overlaps with a perimeter of the second object
+	 * 
 	 *
 	 */
 	//TODO niet af
@@ -1390,5 +1391,5 @@ public abstract class GameObject {
 		}	
 		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
-		
+	
 }

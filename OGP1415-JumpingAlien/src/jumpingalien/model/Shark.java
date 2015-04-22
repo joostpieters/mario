@@ -541,7 +541,10 @@ public class Shark extends GameObject {
 				}
 				if ( newPos[2] == 1 && ( ! other.isDying()) && !(other instanceof Shark))  {
 					this.contactDamage(dt);
+					if (! (this.collidesAbove(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)
+							&& other instanceof Mazub)) { 
 					other.contactDamage(dt);
+					}
 				}		
 			}
 		}
