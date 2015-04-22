@@ -634,7 +634,6 @@ public class Shark extends GameObject {
 	 * @param dt
 	 * 			a small time interval
 	 */
-	// TODO vanaf hier commentaar nog schrijven, daarna is de commentaar af denk ik
 	private void randomMovement(double dt) {
 		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();

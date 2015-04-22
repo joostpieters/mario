@@ -488,6 +488,9 @@ public class Shark extends GameObject {
 		
 		this.contactDamage(dt);
 		
+//		int touchedSlimes = this.getWorld().touchedSlimes(this.getXPos(), this.getYPos(), this.getXDim(), this.getYDim());
+//		this.setHitpoints(this.getHitpoints() - touchedSlimes * Shark.getContactDamage() );
+		
 		this.loseHitpointsBecauseOfFeature(dt);
 		this.updateImmunity(dt);
 		
@@ -634,7 +637,6 @@ public class Shark extends GameObject {
 	 * @param dt
 	 * 			a small time interval
 	 */
-	// TODO vanaf hier commentaar nog schrijven, daarna is de commentaar af denk ik
 	private void randomMovement(double dt) {
 		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();

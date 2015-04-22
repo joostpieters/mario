@@ -292,7 +292,7 @@ public class World {
 	 *         small to large x_T) precede the positions of the row above that.
 	 * 
 	 */
-	// TODO moet hier nog andere documentatie bij? alles wat in die functie staat zeker -> wenen
+	// TODO moet hier nog andere documentatie bij? alles wat in die functie staat zeker
 	@Basic
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
@@ -776,7 +776,7 @@ public class World {
 	 * 			the vertical position of the tile
 	 * @return 
 	 */
-	// TODO dit nog maken. Ik denk dat het zo goed is eigenlijk -> is er ook geen bovengrens voor x en y?
+	// TODO dit nog maken. Ik denk dat het zo goed is eigenlijk
 	private boolean isValidTargetTile(int x, int y) {
 		return (x >= 0 && y >= 0); 
 	}
