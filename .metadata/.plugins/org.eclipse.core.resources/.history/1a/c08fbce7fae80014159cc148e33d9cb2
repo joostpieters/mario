@@ -420,11 +420,6 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();

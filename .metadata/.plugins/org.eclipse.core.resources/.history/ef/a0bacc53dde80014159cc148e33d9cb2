@@ -307,68 +307,38 @@ public class Shark extends GameObject {
 	 * 			the newly calculated horizontal position
 	 * @param newYPos
 	 * 			the newly calculated vertical position
-	 * @effect if the slime touches a wall, it's movement is stopped and his position is adapted
-	 * 			| if (againstLeftWall(newXPos,newYPos) && getOrientation() == Orientation.LEFT)
-	 * 			| 	then newXPos = (getTilesLeft(newXPos,newYPos)[0][0] + 1) * world.getTileLength()
-	 * 			| 		 stopMoving()
-	 * 			| if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) 
-	 * 			| 	then newXPos = (getTilesRight(newXPos,newYPos)[0][0]) * world.getTileLength() - getSize()[0]
-	 * 			| 		 stopMoving()
-	 * @effect if the slime touches a roof, its vertical speed is set to zero and its vertical position is adapted
-	 * 			| if (isAgainstRoof(newXPos,newYPos)) 
-	 * 			| 	then newYPos = (getTilesAbove(newXPos,newYPos)[0][1]) * world.getTileLength() - getSize()[1] - 1
-	 * 			| 		 setYSpeed(0)
-	 * @effect if the slime is moving and not fully submerged in water, the horizontal movement is stopped
-	 * 			and the vertical position is adapted
-	 * 			| if (isMoving() && isInWater() && ( ! isFullyInFeature(newXPos, newYPos, 2)))
-	 * 			| 	then this.setYSpeed(0)
-	 * 			| 		 setYAcc(0)
-	 * 			| 		 newYPos = (getTilesAbove(newXPos,newYPos)[0][1]) * world.getTileLength() - getSize()[1] - 1
-	 * @effect if a falling slime touches a floor, its fall is ended and the vertical position is adapted
-	 * 			| if (isFalling() && onFloor(newXPos,newYPos))
-	 * 			| 	then newYPos = ((getTilesUnder(newXPos,newYPos)[0][1] +1) * world.getTileLength() - 1)
-	 * 			| 		 endFall()
-	 * @effect if a falling slime is fully submerged in water, it's fall is ended
-	 * 			| if (this.isFalling() && this.isFullyInFeature(newXPos, newYPos, 2)) 
-	 * 			| 	then endFall()
-	 * @effect if a slime touches a floor, its vertical position is adapted and vertical acceleration and speed
-	 * 			are set to zero if the vertical acceleration is still negative
-	 * 			| if (onFloor(newXPos,newYPos))
-	 * 			| 	then newYPos = ((getTilesUnder(newXPos,newYPos)[0][1] + 1) * world.getTileLength() - 1)
-	 * 			| 		 if (this.getYAcc() < 0 )
-	 * 			| 			then setYAcc(0)
-	 * 			| 				 setYSpeed(0)
 	 *
 	 * @return {newXPos, newYPos}
 	 */
+	// TODO deze commentaar afmaken
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
-			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * this.getWorld().getTileLength();
+			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
 			this.stopMoving();
 		}
 		if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) {
-			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * this.getWorld().getTileLength() - this.getSize()[0];
+			newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
 			this.stopMoving();
 		}
 		if (isAgainstRoof(newXPos,newYPos)) {
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * this.getWorld().getTileLength() - this.getSize()[1] - 1;
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 			this.setYSpeed(0);
 		}
 		if (this.isMoving() && this.isInWater() && ( ! this.isFullyInFeature(newXPos, newYPos, 2))) {
 			this.setYSpeed(0);
 			this.setYAcc(0);
-			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * this.getWorld().getTileLength() - this.getSize()[1] - 1;
+			newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
 		}
 		if (this.isFalling() && this.onFloor(newXPos,newYPos)) {
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] + 1) * this.getWorld().getTileLength() - 1);
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
 			this.endFall();
 		}
 		if (this.isFalling() && this.isFullyInFeature(newXPos, newYPos, 2)) {
 			this.endFall();
 		}
 		if (this.onFloor(newXPos,newYPos)) {
-			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] + 1) * this.getWorld().getTileLength() - 1);
-			if (this.getYAcc() < 0 ) {
+			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
+			if(this.getYAcc() < 0 ) {
 				this.setYAcc(0);
 				this.setYSpeed(0);
 			}
@@ -377,27 +347,6 @@ public class Shark extends GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
-	/**
-	 * lets this Shark lose hitpoints when in air or magma
-	 * @param dt
-	 * 			a small time interval
-	 * @effect when making contact with air, hitpoints are deducted
-	 * 			| if (this.isInContactWithFeature(getXPos(), getYPos(), 0))
-	 * 			| 	then if (isInWater()) 
-	 * 			| 			then setNotInWater()
-	 * 			| 				 setTimeInAir(dt)
-	 * 			| else 
-	 * 			| 	then setTimeInAir(getTimeInAir() + dt)
-	 * 			| if (getTimeInAir() >= Shark.getTimeUntilChoke())
-	 * 			| 	then setHitpoints(getHitpoints() - Shark.getLossHitpointsInAir())
-	 * 			| 		 setTimeInAir(0)
-	 * @effect when making contact with magma, hitpoints are deducted
-	 * 			| if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3))
-	 * 			| 	then double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
-	 * 			| 							+ this.getHitpointsDifference()
-	 * 			| 		 setHitpointsDifference(toLose - (int) toLose)
-	 * 			| 		 loseHitpoints( (int) toLose)
-	 */
 	private void loseHitpointsBecauseOfFeature(double dt) {
 		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 0)) {
 			if (this.isInWater()) {
@@ -420,11 +369,6 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();

@@ -377,27 +377,6 @@ public class Shark extends GameObject {
 		return new double[] {newXPos, newYPos};
 	}
 	
-	/**
-	 * lets this Shark lose hitpoints when in air or magma
-	 * @param dt
-	 * 			a small time interval
-	 * @effect when making contact with air, hitpoints are deducted
-	 * 			| if (this.isInContactWithFeature(getXPos(), getYPos(), 0))
-	 * 			| 	then if (isInWater()) 
-	 * 			| 			then setNotInWater()
-	 * 			| 				 setTimeInAir(dt)
-	 * 			| else 
-	 * 			| 	then setTimeInAir(getTimeInAir() + dt)
-	 * 			| if (getTimeInAir() >= Shark.getTimeUntilChoke())
-	 * 			| 	then setHitpoints(getHitpoints() - Shark.getLossHitpointsInAir())
-	 * 			| 		 setTimeInAir(0)
-	 * @effect when making contact with magma, hitpoints are deducted
-	 * 			| if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3))
-	 * 			| 	then double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
-	 * 			| 							+ this.getHitpointsDifference()
-	 * 			| 		 setHitpointsDifference(toLose - (int) toLose)
-	 * 			| 		 loseHitpoints( (int) toLose)
-	 */
 	private void loseHitpointsBecauseOfFeature(double dt) {
 		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 0)) {
 			if (this.isInWater()) {
@@ -420,11 +399,6 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 */
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
