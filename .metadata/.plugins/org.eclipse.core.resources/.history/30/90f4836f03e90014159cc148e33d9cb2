@@ -1228,7 +1228,7 @@ public abstract class GameObject {
 	 *         orientation as defined in the assignment.
 	 *         
 	 */
-	//TODO is die return hier nu dubbel? of zien ik scheel -> ik snap niet wat ge bedoelt, das toch gwn if...else...?
+	//TODO is die return hier nu dubbel? of zien ik scheel
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -1327,50 +1327,19 @@ public abstract class GameObject {
 		return ((xStatement) && (yStatement));
 	}	
 	
-	/**
-	 * loses the given amount of hitpoints
-	 * @param nb
-	 * 			the number of hitpoints to lose
-	 * @effect hitpoints is set to the new value
-	 * 			| setHitpoints(getHitpoints() - nb)
-	 */
+	
 	protected void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);
 	}
 	
-	/**
-	 * when making contact with an enemy and not immune, immunity is set to true,
-	 * hitpoints are deducted and the timeSinceImmunity is updated
-	 * @param dt
-	 * 			 a small time interval
-	 * @effect if not immunt, immune is set to true, hitpoints are deducted and
-	 * 			timeSinceImmune is updated
-	 * 			| if ( ! this.isImmune())	
-	 * 			| 	then setImmune()
-	 * 			| 		 loseHitpoints(GameObject.getTouchEnemy())
-	 * 			| 		 setTimeSinceImmune(dt)
-	 */
 	protected void contactDamage(double dt) {
-		if ( ! this.isImmune()) {
+		if( ! this.isImmune()) {
 			this.setImmune();
 			this.loseHitpoints(GameObject.getTouchEnemy());
 			this.setTimeSinceImmune(dt);
 		}
 	}
 	
-	/**
-	 * updates the immunity of a game object
-	 * @param dt
-	 * 			 a small time interval
-	 * @effect if immune, the time since immunity is updated and if this time is great enough
-	 * 			the immunity is set to false
-	 * 			| if (isImmune())
-	 * 			|	then if (getTimeSinceImmune() > GameObject.getImmuneTime())
-	 * 			| 			then setNotImmune()
-	 * 			| 				 setTimeSinceImmune(0)
-	 * 			| else 
-	 * 			| 	then setTimeSinceImmune(getTimeSinceImmune() + dt)
-	 */
 	protected void updateImmunity(double dt) {
 		if (this.isImmune()) {
 			if (this.getTimeSinceImmune() > GameObject.getImmuneTime()) {
@@ -1415,47 +1384,6 @@ public abstract class GameObject {
 		this.stopMovingY();
 	}
 	
-	/**
-	 * returns the new horizontal and vertical position, if the gameobjects touched and if on top of the 
-	 * second game object
-	 * @param newXPos
-	 * 			the new horizontal position of the first game object
-	 * @param xDim1
-	 * 			the new horizontal dimension of the first game object
-	 * @param newYPos
-	 * 			the new vertical position of the first game object
-	 * @param yDim1
-	 * 			the new vertical dimension of the first game object
-	 * @param x2
-	 * 			the horizontal position of the second game object
-	 * @param xDim2
-	 * 			the horizontal dimension of the second game object
-	 * @param y2
-	 * 			the vertical position of the second game object
-	 * @param yDim2
-	 * 			the vertical dimension of the second game object
-	 * @effect when colliding right, left, under or above, the position is adapted,
-	 * 			the movement is adapted (stopped) and touched is set to 1 (indicating
-	 * 			that the game objects touched)
-	 * 			| if (collidesRight(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2))
-	 * 			| 	then newXPos = x2 - xDim1
-	 * 			| 		 stopMoving()
-	 * 			| 		 touched = 1
-	 * 			| if (collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2))
-	 * 			| 	then newXPos = x2 + xDim2
-	 * 			| 		 stopMoving()
-	 * 			| 		 touched = 1
-	 * 			| if (collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) 
-	 * 			|	then newYPos = y2 - yDim1 + 1
-	 * 			| 		 setYSpeed(0)
-	 * 			| 		 touched = 1
-	 * 			| if  (collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2))
-	 * 			| 	then newYPos = y2 + yDim2 - 1 
-	 * 			| 		 onGameObject = 1
-	 * 			| 		 touched = 1
-	 * @return {newXPos, newYPos, touched, onGameObject}
-	 */
-	// TODO de locale variabelen fixen in commentaar : zie @iets
 	public double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
 			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1
@@ -1468,7 +1396,6 @@ public abstract class GameObject {
 		if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newXPos = x2 + xDim2;
 			this.stopMoving();
-			touched = 1;
 		}
 		if (this.collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
 			newYPos = y2 - yDim1 + 1;
