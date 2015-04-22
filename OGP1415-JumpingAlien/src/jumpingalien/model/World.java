@@ -20,7 +20,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO invariant van binnen grenzen
 // TODO Laura nog eens muilen
 // TODO alle classes doorzoeken op Mazub in de commentaar -> hoe bedoelde? Dat er soms nog mazub staat in gameobject en dat ik daar waarschijnlijk over lees
-
+// TODO hitpoints tot 500
 public class World {
 
 	/**
