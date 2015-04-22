@@ -54,7 +54,7 @@ public class World {
 	 * 			| this.setTargetTileX(targetTileX)
 	 * 			| this.setTargetTileY(targetTileY)
 	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
-	 *  		| the geological features of the entire world are by default air (0)
+	 *  		| the geological features of the entire world are by default air (0)	
 	 */
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
@@ -854,8 +854,9 @@ public class World {
 	 * calculates the dt for every object in the game world
 	 * the maximal value for dt is 0.2
 	 * @return the minimal value for dt
-	 * no documentation is needed because this is directly part of advanceTime
 	 */
+	// TODO dit moet toch niet gedocumenteerd worden omdat dit deel van advanceTime is he?
+	// Geen idee eigenlijk. Alles is deel van advanceTime :D Geen commentaar nodig. Jeeeeej!!!
 	private double computeMinimalDt(double dt) {
 		double dtGiven = dt;
 		for (Plant plant : this.getPlants()) {
@@ -877,15 +878,31 @@ public class World {
 			dt = alien.computeDt(dtGiven);
 		}		
 		return dt;
-	}
+	}	
 	
 	/**
-	 * no documentation is needed because this is directly part of advanceTime
+	 * NO DOCUMENTATION MUST BE WORKED OUT
+	 * @throws IllegalDtException 
+	 */
+	public void advanceTime(double dt) throws IllegalDtException {
+				
+		double minDt = computeMinimalDt(dt);
+		double timePassed = 0;
+		if(minDt < dt) {
+			for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
+				advanceEveryGameObject(minDt);
+			}
+		}
+		advanceEveryGameObject(dt - timePassed);
+	}
+	/**
+	 * NO DOCUMENTATION
 	 * @param dt
 	 * @throws IllegalDtException
 	 */
+	// TODO dit moet toch niet gedocumenteerd worden omdat dit deel van advanceTime is he?
 	private void advanceEveryGameObject(double dt) throws IllegalDtException {
-		if (this.getAlien() != null) {
+		if(this.getAlien() != null) {
 			for (Plant plant : this.getPlants()) {
 				 plant.advanceTime(dt);
 			}
@@ -901,23 +918,6 @@ public class World {
 			positioningVisibleWindow();
 		}
 	}
-	
-	/**
-	 * NO DOCUMENTATION MUST BE WORKED OUT
-	 * @throws IllegalDtException 
-	 */
-	public void advanceTime(double dt) throws IllegalDtException {
-				
-		double minDt = computeMinimalDt(dt);
-		double timePassed = 0;
-		if (minDt < dt) {
-			for (timePassed = 0; timePassed < (dt - minDt); timePassed += minDt) {
-				advanceEveryGameObject(minDt);
-			}
-		}
-		advanceEveryGameObject(dt - timePassed);
-	}
-	
 	
 	/**
 	 * positions the visible window of the game world as Mazub is moving
@@ -1016,7 +1016,7 @@ public class World {
 		return ((xStatement) && (yStatement));
 	}
 	
-	//TODO volgens mij gebruiken we alle methodes hieronder niet -> kan wel eens, de eerste en de laatste toch niet
+	//TODO volgens mij gebruiken we alle methodes hieronder niet -> kan wel eens, de eerste en de laatste sowieso niet
 	/**
 	 * returns the amount of Plants the player character touched
 	 * @param xPos
