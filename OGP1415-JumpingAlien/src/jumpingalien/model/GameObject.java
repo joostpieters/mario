@@ -1278,11 +1278,15 @@ public abstract class GameObject {
 	 * @param yDim2
 	 * 		the vertical dimension of the second object
 	 * @return True of one of the perimeters of the first object overlaps with a perimeter of the second object
-	 * 
-	 *
-	 */
-	//TODO niet af
-	
+	 * 		otherwise false
+	 * 		| let 
+	 * 		| 	boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
+	 *		|			|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) )
+	 * 		| 	boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
+	 * 		| 			|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) )
+	 * 		| in 
+	 * 		| 	 return ((xStatement) && (yStatement))
+	 */	
 	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
@@ -1291,7 +1295,34 @@ public abstract class GameObject {
 				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
 		return ((xStatement) && (yStatement));
 	}
-	
+	/**
+	 * Checks if the first object collides with his right side with the a second object
+	 * 			with given positions and dimensions
+	 * @param x1
+	 * 		the horizontal position of the first object
+	 * @param xDim1
+	 * 		the horizontal dimenesion of the first object
+	 * @param y1
+	 * 		the vertical position of the first object
+	 * @param yDim1
+	 * 		the vertical dimension of the first object
+	 * @param x2
+	 * 		the horizontal position of the second object
+	 * @param xDim2
+	 * 		the horizontal dimenesion of the second object
+	 * @param y2
+	 * 		the vertical position of the second object
+	 * @param yDim2
+	 * 		the vertical dimension of the second object
+	 * @return True of the right perimeter of the first object overlaps with a perimeter of the second object
+	 * 		otherwise false
+	 * 		| let 
+	 * 		| 	boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1)
+	 * 		| 	boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
+	 *		|			|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+	 * 		| in 
+	 * 		| 	 return ((xStatement) && (yStatement))
+	 */
 	protected boolean collidesRight(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1);
@@ -1299,7 +1330,34 @@ public abstract class GameObject {
 				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
 		return ((xStatement) && (yStatement));
 	}
-	
+	/**
+	 * Checks if the first object collides with his left side with the a second object
+	 * 			with given positions and dimensions
+	 * @param x1
+	 * 		the horizontal position of the first object
+	 * @param xDim1
+	 * 		the horizontal dimenesion of the first object
+	 * @param y1
+	 * 		the vertical position of the first object
+	 * @param yDim1
+	 * 		the vertical dimension of the first object
+	 * @param x2
+	 * 		the horizontal position of the second object
+	 * @param xDim2
+	 * 		the horizontal dimenesion of the second object
+	 * @param y2
+	 * 		the vertical position of the second object
+	 * @param yDim2
+	 * 		the vertical dimension of the second object
+	 * @return True of the left perimeter of the first object overlaps with a perimeter of the second object
+	 * 		otherwise false
+	 * 		| let 
+	 * 		| 	boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1)
+	 * 		| 	boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
+	 *		|			|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+	 * 		| in 
+	 * 		| 	 return ((xStatement) && (yStatement))
+	 */
 	protected boolean collidesLeft(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1);
@@ -1307,7 +1365,34 @@ public abstract class GameObject {
 				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
 		return ((xStatement) && (yStatement));
 	}
-	
+	/**
+	 * Checks if the first object collides with his upper perimeter with the a second object
+	 * 			with given positions and dimensions
+	 * @param x1
+	 * 		the horizontal position of the first object
+	 * @param xDim1
+	 * 		the horizontal dimenesion of the first object
+	 * @param y1
+	 * 		the vertical position of the first object
+	 * @param yDim1
+	 * 		the vertical dimension of the first object
+	 * @param x2
+	 * 		the horizontal position of the second object
+	 * @param xDim2
+	 * 		the horizontal dimenesion of the second object
+	 * @param y2
+	 * 		the vertical position of the second object
+	 * @param yDim2
+	 * 		the vertical dimension of the second object
+	 * @return True of the upper perimeter of the first object overlaps with a perimeter of the second object
+	 * 		otherwise false
+	 * 		| let 
+	 * 		| 	boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
+	 * 		| 			|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
+	 * 		| 	boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1 - 1);	 
+	 * 		| in 
+	 * 		| 	 return ((xStatement) && (yStatement))
+	 */
 	protected boolean collidesAbove(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
@@ -1315,7 +1400,34 @@ public abstract class GameObject {
 		boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1 - 1);			
 		return ((xStatement) && (yStatement));
 	}
-	
+	/**
+	 * Checks if the first object collides with his under perimeter with the a second object
+	 * 			with given positions and dimensions
+	 * @param x1
+	 * 		the horizontal position of the first object
+	 * @param xDim1
+	 * 		the horizontal dimenesion of the first object
+	 * @param y1
+	 * 		the vertical position of the first object
+	 * @param yDim1
+	 * 		the vertical dimension of the first object
+	 * @param x2
+	 * 		the horizontal position of the second object
+	 * @param xDim2
+	 * 		the horizontal dimenesion of the second object
+	 * @param y2
+	 * 		the vertical position of the second object
+	 * @param yDim2
+	 * 		the vertical dimension of the second object
+	 * @return True of the under perimeter of the first object overlaps with a perimeter of the second object
+	 * 		otherwise false
+	 * 		| let 
+	 * 		| 	boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
+	 * 		| 			|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
+	 * 		|		boolean yStatement = (y2 + yDim2 >= y1 + 1) && (y2 + yDim2 <= y1 + yDim1)
+	 * 		| in 
+	 * 		| 	 return ((xStatement) && (yStatement))
+	 */
 	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
 								double x2, double xDim2, double y2, double yDim2) {
 		
