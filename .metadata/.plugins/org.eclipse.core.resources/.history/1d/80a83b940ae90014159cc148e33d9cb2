@@ -59,7 +59,7 @@ public abstract class GameObject {
 		return xPos;
 	}	
 	/**
-	 * Sets the horizontal position of the game object to the rounded down value of x
+	 * Sets the horizontal position of mazub to the rounded down value of x
 	 * @param x
 	 * 			The new value for the horizontal position
 	 * @pre the position x should  be bigger than or equal to zero and 
@@ -88,7 +88,7 @@ public abstract class GameObject {
 		return yPos;
 	}		
 	/**
-	 * Sets the vertical position of the game object to the rounded down value of y
+	 * Sets the vertical position of mazub to the rounded down value of y
 	 * @param y
 	 * 			The new value for the vertical position
 	 * @pre the position y should  be bigger than or equal to zero and 
@@ -696,7 +696,7 @@ public abstract class GameObject {
 		return TIME_UNTIL_REMOVE;
 	}
 	/**
-	 * when the game object is in touch with magma, it imediatly loses hitpoints,
+	 * when mazub is in touch with magma, it imediatly loses hitpoints,
 	 * this variable counts the difference between the double value 
 	 * of the hitpoints which are to lose and the int value
 	 */
@@ -1186,6 +1186,7 @@ public abstract class GameObject {
 	 * @pre feature should be smaller than or equal to 3, because there are no feature with numbers
 	 * 		higher than three
 	 * 		| feature <= 3
+	 * @return true if the tiles of the region of mazub have the give feature, otherwise false
 	 * 		| int[][] tiles = this.getTiles(xPos,yPos);
 	 * 		| for each tile in tiles) {
 	 * 		| 	try {

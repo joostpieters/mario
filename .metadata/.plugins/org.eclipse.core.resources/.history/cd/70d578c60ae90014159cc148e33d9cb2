@@ -9,8 +9,8 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
-// TODO alles final maken wat final moet zijn -> ook ongeveer klaar denk ik?
-// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - autisme speaking
+// TODO alles final maken wat final moet zijn
+// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - autisme van pieter
 // TODO in facade nog default constructor toevoegen
 // TODO @Raw toevoegen overal waar het nodig is
 // TODO checkers toevoegen in elke getter / setter
