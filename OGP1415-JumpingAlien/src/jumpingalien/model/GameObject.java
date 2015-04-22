@@ -1260,6 +1260,28 @@ public abstract class GameObject {
 			this.setXAcc(0);
 		}
 	}
+	/**
+	 * Checks or two objects with given positions and dimensions are thouching eachother
+	 * @param x1
+	 * 		the horizontal position of the first object
+	 * @param xDim1
+	 * 		the horizontal dimenesion of the first object
+	 * @param y1
+	 * 		the vertical position of the first object
+	 * @param yDim1
+	 * 		the vertical dimension of the first object
+	 * @param x2
+	 * 		the horizontal position of the second object
+	 * @param xDim2
+	 * 		the horizontal dimenesion of the second object
+	 * @param y2
+	 * 		the vertical position of the second object
+	 * @param yDim2
+	 * 		the vertical dimension of the second object
+	 * @return
+	 *
+	 */
+	//TODO niet af
 	
 	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
@@ -1368,10 +1390,5 @@ public abstract class GameObject {
 		}	
 		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
-	
-	
-	
-	
-	
-	
+		
 }
