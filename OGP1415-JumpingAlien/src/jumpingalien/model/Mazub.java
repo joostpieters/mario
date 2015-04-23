@@ -1,6 +1,5 @@
 package jumpingalien.model;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import be.kuleuven.cs.som.annotate.Basic;

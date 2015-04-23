@@ -295,12 +295,21 @@ public class World {
 	 *         | 	int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2]
 	 *         | 	int counter = 0
 	 *         | in
+<<<<<<< HEAD
 	 *         | 	for each int i=posBottom; i <= posTop;i++ :
 	 *         | 		for each int j=posLeft; j <= posRight;j++ :
 	 *         | 			array[counter][0] = j
 	 *         | 			array[counter][1] = i
 	 *         | 			counter++
 	 *         | 	return array
+=======
+	 *         | 	for each int i=posBottom;i <= posTop;i++ :
+	 *         | 		for each int j=posLeft;j <= posRight;j++ :
+	 *         | 			array[counter][0] = j;
+	 *         | 			array[counter][1] = i;
+	 *         | 			counter++;
+	 *         | 	return array;
+>>>>>>> 7d0de117274517c3fbae04c1658fb9f6ecc4ae67
 	 */
 	@Basic @Raw
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,

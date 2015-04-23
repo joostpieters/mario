@@ -1123,7 +1123,11 @@ public abstract class GameObject {
 		}
 		return false;
 	}
-	//TODO in de volgende functies try/catch weghalen. Of mss moeten we dat maar gewoon zo laten. Wat denk jij? -> ik wist niet waarom (stomme merge conflicten)
+<<<<<<< HEAD
+	//TODO in de volgende functies try/catch weghalen -> waarom?
+=======
+	//TODO in de volgende functies try/catch weghalen. Of mss moeten we dat maar gewoon zo laten. Wat denk jij?
+>>>>>>> 7d0de117274517c3fbae04c1658fb9f6ecc4ae67
 	/**
 	 * Checks or the object is against the left wall
 	 * @param xPos
