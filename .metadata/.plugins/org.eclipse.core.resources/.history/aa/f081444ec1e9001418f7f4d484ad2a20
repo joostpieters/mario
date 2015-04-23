@@ -9,7 +9,8 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
-// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - autisme is peaking
+// TODO alles final maken wat final moet zijn -> ook ongeveer klaar denk ik?
+// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - a ut isme s peak ing
 // TODO in facade nog default constructor toevoegen
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
