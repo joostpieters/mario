@@ -648,8 +648,9 @@ public class Mazub extends GameObject {
 			}
 		}			
 	}
-	
-	
+
+
+	// TODO oei die commentaar heeft geen hoofding, maar mijn hoofd is moe
 	/**
 	 * 
 	 * @param newXPos

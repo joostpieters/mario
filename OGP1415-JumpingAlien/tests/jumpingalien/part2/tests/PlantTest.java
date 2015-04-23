@@ -28,5 +28,6 @@ public class PlantTest {
 		plant.advanceTime(0.5);
 		assertArrayEquals(intArray(50, 0), facade.getLocation(plant));
 	}	
+	//TODO dat werkt precies niet e :D
 	
 }

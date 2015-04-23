@@ -1365,7 +1365,8 @@ public abstract class GameObject {
 	 * 		| let 
 	 * 		| 	boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1)
 	 * 		| 	boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
-	 *		|			|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+	 *		|			|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )
+	 *		|			|| ((y1 > y2) && (y1 + 1 < y2 + yDim2 - 1 ))
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
@@ -1374,9 +1375,7 @@ public abstract class GameObject {
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1);
 		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
-				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )
-				
-				
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )				
 				|| ((y1 > y2) && (y1 + 1 < y2 + yDim2 - 1 ));
 ;
 		return ((xStatement) && (yStatement));
@@ -1405,7 +1404,8 @@ public abstract class GameObject {
 	 * 		| let 
 	 * 		| 	boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1)
 	 * 		| 	boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
-	 *		|			|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+	 *		|			|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )
+	 *		|			|| ((y1 > y2) && (y1 + 1 < y2 + yDim2 - 1 ))
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
@@ -1441,8 +1441,9 @@ public abstract class GameObject {
 	 * 		otherwise false
 	 * 		| let 
 	 * 		| 	boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
-	 * 		| 			|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
-	 * 		| 	boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1 - 1);	 
+	 * 		| 			|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) )
+	 * 		|			|| ( (x1 >= x2) && (x1 < x2 + xDim2))
+	 * 		| 	boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1 - 1)
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
@@ -1479,6 +1480,7 @@ public abstract class GameObject {
 	 * 		| let 
 	 * 		| 	boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
 	 * 		| 			|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) )
+	 * 		| 			|| ( (x1 >= x2) && (x1 < x2 + xDim2))
 	 * 		|	boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1)
 	 * 		| in 
 	 * 		| 	return ((xStatement) && (yStatement))
@@ -1633,7 +1635,7 @@ public abstract class GameObject {
 	 * @return {newXPos, newYPos, touched, onGameObject}
 	 */
 	@Raw
-	public double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
+	protected double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
 			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1
 		int onGameObject = 0;
