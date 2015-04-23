@@ -956,7 +956,7 @@ public class Mazub extends GameObject {
 		if ( ! this.isDying()) {		
 			this.changeTimeDependents(dt);
 			
-			if (this.getDuckShouldEnd()) {
+			if(this.getDuckShouldEnd()) {
 				this.setDuckShouldEnd(false);
 				this.endDuck();
 			}

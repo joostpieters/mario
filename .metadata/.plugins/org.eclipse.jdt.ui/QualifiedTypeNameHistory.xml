@@ -12,4 +12,5 @@
 <fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Immutable"/>
 <fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Raw"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Plant"/>
 </qualifiedTypeNameHistroy>
