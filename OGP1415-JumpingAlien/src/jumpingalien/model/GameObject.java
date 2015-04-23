@@ -1481,9 +1481,9 @@ public abstract class GameObject {
 	 * 		| let 
 	 * 		| 	boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
 	 * 		| 			|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) )
-	 * 		|		boolean yStatement = (y2 + yDim2 >= y1 + 1) && (y2 + yDim2 <= y1 + yDim1)
+	 * 		|	boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1)
 	 * 		| in 
-	 * 		| 	 return ((xStatement) && (yStatement))
+	 * 		| 	return ((xStatement) && (yStatement))
 	 */
 	@Raw
 	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
