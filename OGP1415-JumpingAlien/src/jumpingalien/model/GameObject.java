@@ -1123,7 +1123,7 @@ public abstract class GameObject {
 		}
 		return false;
 	}
-	//TODO in de volgende functies try/catch weghalen
+	//TODO in de volgende functies try/catch weghalen. Of mss moeten we dat maar gewoon zo laten. Wat denk jij?
 	/**
 	 * Checks or the object is against the left wall
 	 * @param xPos
@@ -1280,8 +1280,6 @@ public abstract class GameObject {
 	 * 			| else 
 	 * 			| 	then return sprites[0]
 	 */
-	//TODO is die return hier nu dubbel? of zien ik scheel -> ik snap niet wat ge bedoelt, das toch gwn if...else...?
-	// in de commentaar :) -> aaaaah :D ja ik had dat gedaan maar ben die ene return vergeten te verwijderen maar tis gefixt nu 
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -1493,7 +1491,7 @@ public abstract class GameObject {
 		
 		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
 				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
-		boolean yStatement = (y2 + yDim2 >= y1 + 1) && (y2 + yDim2 <= y1 + yDim1);
+		boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1);
 		
 		return ((xStatement) && (yStatement));
 	}	

@@ -304,7 +304,6 @@ public class World {
 	 *         | 			counter++;
 	 *         | 	return array;
 	 */
-	// TODO for loops deftig in commentaar
 	@Basic @Raw
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
@@ -463,85 +462,112 @@ public class World {
 	
 	/**
 	 * @param tileSize the tileSize to set
+	 * @pre tileSize should be positive
+	 * 			| tileSize > 0
 	 * @post the tileSize is set to the given value
 	 * 			| this.tileSize = tileSize
 	 */
 	@Raw
 	private void setTileSize(int tileSize) {
+		assert tileSize > 0;
 		this.tileSize = tileSize;
 	}
 	/**
 	 * @param nbTilesX the nbTilesX to set
+	 * @pre nbTilesX should be positive
+	 * 			| nbTilesX > 0
 	 * @post the number of tiles (horizontally) is set to the given amount
 	 * 			| this.nbTilesX = nbTilesX
 	 */
 	@Raw
 	private void setNbTilesX(int nbTilesX) {
+		assert nbTilesX > 0;
 		this.nbTilesX = nbTilesX;
 	}
 	/**
 	 * @param nbTilesY the nbTilesY to set
+	 * @pre nbTilesY should be positive
+	 * 			| nbTilesY > 0
 	 * @post the number of tiles (vertically) is set to the given amount
 	 * 			| this.nbTilesY = nbTilesY
 	 */
 	@Raw
 	private void setNbTilesY(int nbTilesY) {
+		assert nbTilesY > 0;
 		this.nbTilesY = nbTilesY;
 	}
 	/**
 	 * @param visibleWindowWidth the visibleWindowWidth to set
+	 * @pre visibleWindowWidth should be positive
+	 * 			| visibleWindowWidth > 0
 	 * @post the width of the visible window is equal to the given int
 	 * 			| this.visibleWindowWidth = visibleWindowWidth
 	 */
 	@Raw
 	private void setVisibleWindowWidth(int visibleWindowWidth) {
+		assert visibleWindowWidth > 0;
 		this.visibleWindowWidth = visibleWindowWidth;
 	}
 	/**
 	 * @param visibleWindowHeight the visibleWindowHeight to set
+	 * @pre visibleWindowHeight should be positive
+	 * 			| visibleWindowHeight > 0
 	 * @post the height of the visible window is equal to the given int
 	 * 			| this.visibleWindowHeight = visibleWindowHeight
 	 */
 	@Raw
 	private void setVisibleWindowHeight(int visibleWindowHeight) {
+		assert visibleWindowHeight > 0;
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
 	/**
 	 * @param targetTileX the targetTileX to set
+	 * @pre targetTileX should be zero or positive
+	 * 			| targetTileX >= 0
 	 * @post the horizontal coordinate of the targetTile is equal to the given int
 	 * 			| this.targetTileX =  targetTileX
 	 */
 	@Raw
 	private void setTargetTileX(int targetTileX) {
+		assert targetTileX >= 0;
 		this.targetTileX = targetTileX;
 	}
 	/**
 	 * @param targetTileY the targetTileY to set
+	 * @pre targetTileY should be zero or positive
+	 * 			| targetTileY >= 0
 	 * @post the vertical coordinate of the targetTile is equal to the given int
 	 * 			| this.targetTileY = targetTileY
 	 */
 	@Raw
 	private void setTargetTileY(int targetTileY) {
+		assert targetTileY >= 0;
 		this.targetTileY = targetTileY;
 	}	
 	/**
 	 * @param xVisibleWindow the xVisibleWindow to set
+	 * @pre xVisibleWindow should be zero or positive
+	 * 			| xVisibleWindow >= 0
 	 * @post the horizontal position of the bottom left pixel of the visible window
 	 * 		 is equal to the given value
 	 * 			| this.xVisibleWindow = xVisibleWindow
 	 */
 	@Raw
 	private void setXVisibleWindow(int xVisibleWindow) {
+		assert xVisibleWindow >= 0;
 		this.xVisibleWindow = xVisibleWindow;
 	}
 	/**
 	 * @param yVisibleWindow the yVisibleWindow to set
+	 * @pre yVisibleWindow should be zero or positive
+	 * 			| yVisibleWindow >= 0
 	 * @post the vertical position of the bottom left pixel of the visible window
 	 * 		 is equal to the given value
 	 * 			| this.yVisibleWindow = yVisibleWindow
 	 */
 	@Raw
 	private void setYVisibleWindow(int yVisibleWindow) {
+		assert yVisibleWindow >= 0;
 		this.yVisibleWindow = yVisibleWindow;
 	}
 	/**
@@ -595,6 +621,7 @@ public class World {
 	 */
 	@Raw
 	public void removeAlien(@Raw Mazub alien) {
+		assert this.hasAlien(alien);
 		assert alien != null;
 		this.alien = null;
 	}
@@ -739,6 +766,17 @@ public class World {
 	private boolean hasSlime(Slime slime) {
 		return this.slimes.contains(slime);
 	}	
+	/**
+	 * Returns true if this world has the given alien as alien
+	 * @param alien
+	 * 			the alien to check
+	 * @return true if the alien of the world equals the given alien
+	 * 			|  this.getAlien() == alien
+	 */
+	@Raw
+	private boolean hasAlien(Mazub alien) {
+		return this.getAlien() == alien;
+	}
 	
 //	VALIDATIONS
 	
