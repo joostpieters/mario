@@ -1332,22 +1332,14 @@ public abstract class GameObject {
 	 * 		the vertical dimension of the second object
 	 * @return True of one of the perimeters of the first object overlaps with a perimeter of the second object
 	 * 		otherwise false
-	 * 		| let 
-	 * 		| 	boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
-	 *		|			|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) )
-	 * 		| 	boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
-	 * 		| 			|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) )
-	 * 		| in 
-	 * 		| 	 return ((xStatement) && (yStatement))
+	 * 		| 	!((x1 + xDim1 - 1 < x2) || (x2 + xDim2 - 1 < x1) || 
+	 *		|		(y1 + yDim1 -1 < y2) || (x2)  + yDim2 - 1 < y1)
 	 */	
 	@Raw
 	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
-		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
-				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
-		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
-				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
-		return ((xStatement) && (yStatement));
+		return 	 !((x1 + xDim1 - 1 < x2) || (x2 + xDim2 - 1 < x1) || 
+					(y1 + yDim1 -1 < y2) || (x2)  + yDim2 - 1 < y1);
 	}
 	/**
 	 * Checks if the first object collides with his right side with the a second object
@@ -1382,7 +1374,11 @@ public abstract class GameObject {
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1);
 		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
-				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )
+				
+				
+				|| ((y1 > y2) && (y1 + 1 < y2 + yDim2 - 1 ));
+;
 		return ((xStatement) && (yStatement));
 	}
 	/**
@@ -1418,7 +1414,8 @@ public abstract class GameObject {
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1);
 		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
-				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) );
+				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )
+				|| ((y1 > y2) && (y1 + 1 < y2 + yDim2 - 1 ));
 		return ((xStatement) && (yStatement));
 	}
 	/**
@@ -1453,7 +1450,8 @@ public abstract class GameObject {
 	protected boolean collidesAbove(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
-				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
+				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) )
+				|| ( (x1 >= x2) && (x1 < x2 + xDim2));
 		boolean yStatement =  (y2 >= y1) && (y2 <= y1 + yDim1 - 1);			
 		return ((xStatement) && (yStatement));
 	}
@@ -1488,9 +1486,10 @@ public abstract class GameObject {
 	@Raw
 	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
 								double x2, double xDim2, double y2, double yDim2) {
-		
+
 		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
-				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) );
+				|| ( (x2 + xDim2 > x1) && (x2 + xDim2 <= x1 + xDim1) )
+				|| ( (x1 >= x2) && (x1 < x2 + xDim2));
 		boolean yStatement = (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1);
 		
 		return ((xStatement) && (yStatement));
