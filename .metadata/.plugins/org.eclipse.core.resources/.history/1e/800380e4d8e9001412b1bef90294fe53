@@ -172,7 +172,8 @@ public class Plant extends GameObject {
 	@Raw
 	public void advanceTime(double dt) {
 		
-		double newXPos = this.getXPos();		
+		double newXPos = this.getXPos();
+		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		
 		if ((this.getOrientation() == Orientation.RIGHT) &&
@@ -184,7 +185,8 @@ public class Plant extends GameObject {
 				newXPos = (this.getXPos() - this.getXSpeed() * 100 * dt);
 		}
 		
-		this.checkIfWithinBoundaries(newXPos, this.getYPos());		
+		this.checkIfWithinBoundaries(newXPos, this.getYPos());
+		
 		this.setXPos(newXPos);
 		
 		if (this.getTimeSameOrientation() > Plant.getTimeChangeOrientation()) {
@@ -192,6 +194,7 @@ public class Plant extends GameObject {
 			this.setTimeSameOrientation(this.getTimeSameOrientation()
 					- Plant.getTimeChangeOrientation());
 		}		
+		
 		if (this.isDying()) {
 			this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 			if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {

@@ -13,7 +13,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO in facade nog default constructor toevoegen
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
-// TODO Commentaren -> ik haat dit -> klaar hoop/denk ik ==> (medewerkers)feestje :D
+// TODO Commentaren -> ik haat dit
 // TODO aparte testfiles
 // TODO invariant van binnen grenzen
 // TODO Laura nog eens muilen

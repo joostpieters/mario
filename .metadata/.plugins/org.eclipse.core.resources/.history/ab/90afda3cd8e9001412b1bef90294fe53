@@ -1123,7 +1123,7 @@ public abstract class GameObject {
 		}
 		return false;
 	}
-	//TODO in de volgende functies try/catch weghalen -> waarom?
+	//TODO in de volgende functies try/catch weghalen
 	/**
 	 * Checks or the object is against the left wall
 	 * @param xPos
@@ -1148,14 +1148,14 @@ public abstract class GameObject {
 	protected boolean againstLeftWall(double xPos, double yPos) {
 		int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
 		for (int[] tile: tilesLeft) {
-			try {
+//			try {
 				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
 							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
 					return true;
 				}
-			} catch (IllegalPixelException e) {
-				assert false;
-			}
+//			} catch (IllegalPixelException e) {
+//				assert false;
+//			}
 		}
 		return false;
 	}

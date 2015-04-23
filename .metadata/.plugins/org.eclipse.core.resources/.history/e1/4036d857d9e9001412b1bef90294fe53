@@ -606,27 +606,24 @@ public class Mazub extends GameObject {
 	 * 			| for each other(plant) in world.getPlants():
 	 * 			| 	if ( !  other.isDying())
 	 * 			| 		let 
-	 * 			|			double x1 = newXPos
-	 * 			|			double xDim1 = getXDim()
-	 * 			|			double y1 = newYPos
-	 * 			| 			double yDim1 = getYDim
-	 * 			|			double x2 = other.getXPos()
-	 * 			|			double xDim2 = other.getXDim()
-	 * 			| 			double y2 = other.getYPos()
-	 * 			| 			double yDim2 = other.getYDim()
-	 * 			|			int newHitpoints
+	 * 			|			x1 = newXPos
+	 * 			|			xDim1 = getXDim()
+	 * 			|			y1 = newYPos
+	 * 			| 			yDim1 = getYDim
+	 * 			|			x2 = other.getXPos()
+	 * 			|			xDim2 = other.getXDim()
+	 * 			| 			y2 = other.getYPos()
+	 * 			| 			yDim2 = other.getYDim()
 	 * 			| 		in 
 	 * 			|		then if (touches(x1 , xDim1, y1, yDim1, x2, xDim2, y2, yDim2))
 	 * 			|			then newHitpoints = getHitpoints + Mazub.getTouchPlantHitpoints()
-	 * 			| 				if (newHitpoints > 500 && newHitpoints < 550)
-	 * 			|					then newHitpoints = 500
 	 * 			|				 if (isValidAmountOfHitpoints(newHitpoints)
 	 * 			|					then other.die()
-	 * 			| 						setHitpoints(newHitpoints)
+	 * 			| 						 setHitpoints(newHitpoints)
 	 */
 	@Raw
 	private void collidingPlants(double newXPos, double newYPos) {
-		for (Plant other: this.getWorld().getPlants()) {
+		for(Plant other: this.getWorld().getPlants()) {
 			if( ! other.isDying()) {
 				double x1 = newXPos;
 				double xDim1 = this.getXDim();
@@ -638,9 +635,6 @@ public class Mazub extends GameObject {
 				double yDim2 = other.getYDim();
 				if (this.touches(x1, xDim1, y1, yDim1, x2, xDim2, y2, yDim2)) {
 					int newHitpoints = this.getHitpoints() + Mazub.getTouchPlantHitpoints();
-					if (newHitpoints > 500 && newHitpoints < 550) {
-						newHitpoints = 500;
-					}
 					if (this.isValidAmountOfHitpoints(newHitpoints)) {
 						other.die();
 						this.setHitpoints(newHitpoints);
