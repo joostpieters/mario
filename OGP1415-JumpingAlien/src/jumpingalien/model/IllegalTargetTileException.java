@@ -21,6 +21,15 @@ public class IllegalTargetTileException extends Exception {
 	 * the vertical coordinate of the target tile
 	 */
 	private final int targetTileY;
+	/**
+	 * the horizontal number of tiles in world
+	 */
+	private final int nbTilesX;
+	
+	/**
+	 * the vertical number of tiles in world
+	 */
+	private final int nbTilesY;
 	
 	/**
 	 * 
@@ -32,9 +41,11 @@ public class IllegalTargetTileException extends Exception {
 	 * 			| new.getTargetTileY = targetTileY
 	 * 
 	 */
-	public IllegalTargetTileException(int targetTileX, int targetTileY) {
+	public IllegalTargetTileException(int targetTileX, int targetTileY, int nbTilesX, int nbTilesY) {
 		this.targetTileX = targetTileX;
 		this.targetTileY = targetTileY;
+		this.nbTilesX = nbTilesX;
+		this.nbTilesY = nbTilesY;
 	}
 	
 	/**
@@ -51,5 +62,21 @@ public class IllegalTargetTileException extends Exception {
 	 */
 	public int getTargetTileY() {
 		return targetTileY;
+	}
+
+	/**
+	 * the horizontal number of tiles in world
+	 * @return the nbTilesX
+	 */
+	public int getNbTilesX() {
+		return nbTilesX;
+	}
+
+	/**
+	 * the vertical number of tiles in world
+	 * @return the nbTilesY
+	 */
+	public int getNbTilesY() {
+		return nbTilesY;
 	}
 }

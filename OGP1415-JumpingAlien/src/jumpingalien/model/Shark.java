@@ -443,30 +443,30 @@ public class Shark extends GameObject {
 	 * 			a small time interval
 	 * @effect the Shark starts a random movement
 	 * 			| randomMovement(dt)
-	 * @effect the local variables newCalculatedPos, newXPos and nexYPos are initialized
-	 * 			| double[] newCalculatedPos = this.calculateNewPos(dt)
-	 * 			| double newXPos = newCalculatedPos[0]
-	 * 			| double newYPos = newCalculatedPos[1]
-	 * @effect checks if the newly calculated positions are within the boundaries of the game 
-	 * 			world, if this is not the case, the Shark is removed from the world
-	 * 			| checkIfWithinBoundaries(newXPos, newYPos)
-	 * @effect the position of the Shark is adapted to the surrounding world
-	 * 			| newPos = checkSurroundings(newXPos,newYPos)
-	 * @effect the position is adapted in case of a collision
+	 * @effect the local variables newCalculatedPos, newXPos and nexYPos are initialized, then 
+	 * 			checked if the newly calculated positions are within the boundaries of the game 
+	 * 			world, if this is not the case, the Shark is removed from the world, then 
+	 * 			new positions, speed and acceleration of the Shark is adapted to the surrounding
+	 * 			world, then the position, speed, acceleration and hitpoints are adapted in case of
+	 * 			a collision with other gameObject and then the new positions are used to set the
+	 * 			position of the shark
+	 * 			| let 
+	 * 			| 	double[] newPos =  this.calculateNewPos(dt);
+	 * 			| in
+	 * 			| 	checkIfWithinBoundaries(newPos[0], newPos[1])
+	 * 			| newPos = checkSurroundings(newPos[0], newPos[1])
 	 * 			| newPos = colliding(newPos[0],newPos[1], dt)
-	 * @effect the speed and the position of the Shark are set to the calculated values
-	 * 			| setNewSpeed(dt)
 	 * 			| setXPos(newPos[0])
 	 * 			| setYPos(newPos[1])
-	 * @effect the hitpoints of colliding objects are adapted if necessary
-	 * 			| contactDamage(dt)
+	 * @effect the speed of the Shark are set to the calculated values
+	 * 			| setNewSpeed(dt)
 	 * @effect hitpoints are lost if the Shark is in touch with air or magma
 	 * 			and the immunity is updated
 	 * 			| loseHitpointsBecauseOfFeature()
 	 * 			| updateImmunity()
 	 * @effect the boolean inWater is updated to the correct value and the shark dies
 	 * 			if it hasn't got any hitpoints left
-	 * 			| if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater()))
+	 * 			| if ((this.isFullyInFeature(newPos[0], newPos[1], 2)) && ( ! this.isInWater()))
 	 * 			| 	then setInWater()
 	 * 			| if (this.getHitpoints() <= 0)
 	 * 			| 	then die()
@@ -474,29 +474,27 @@ public class Shark extends GameObject {
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);
 		
-		double[] newCalculatedPos = this.calculateNewPos(dt);
-		double newXPos = newCalculatedPos[0];
-		double newYPos = newCalculatedPos[1];
+		double[] newPos =  this.calculateNewPos(dt);
 		
-		this.checkIfWithinBoundaries(newXPos, newYPos);
+		this.checkIfWithinBoundaries(newPos[0], newPos[1]);
 		
-		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = checkSurroundings(newPos[0], newPos[1]);
 		newPos = colliding(newPos[0],newPos[1], dt);
-		this.setNewSpeed(dt);
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
 		
-		this.contactDamage(dt);
+		this.setNewSpeed(dt);
 		
 		this.loseHitpointsBecauseOfFeature(dt);
 		this.updateImmunity(dt);
 		
-		if ((this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.isInWater())) {
+		if ((this.isFullyInFeature(newPos[0], newPos[1], 2)) && ( ! this.isInWater())) {
 			this.setInWater();			
 		}
 		if (this.getHitpoints() <= 0) {
 			this.die();
 		}
+		
 	}
 	
 	/**
@@ -678,6 +676,7 @@ public class Shark extends GameObject {
 		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
 		allSlimesSharksMazub.add(this.getWorld().getAlien());
 		boolean onGameObject = false;
+		double[] newPos = {newXPos, newYPos};
 		for(GameObject other: allSlimesSharksMazub) {
 			if(this != other) {
 				double xDim1 = this.getXDim();
@@ -686,13 +685,8 @@ public class Shark extends GameObject {
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				boolean touched = false;
-				
-				double[] newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2,
+				newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,
 						yDim2);
-				newXPos = newPos[0];
-				newYPos = newPos[1];
-	
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}
@@ -708,10 +702,11 @@ public class Shark extends GameObject {
 		if (this.isFalling() && onGameObject) {
 			this.endFall();
 		}
-		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.isFullyInFeature(newXPos, newYPos, 2)) && ( ! this.onFloor(newXPos,newYPos))) {
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.isFullyInFeature(newPos[0], newPos[1], 2))
+				&& ( ! this.onFloor(newPos[0],newPos[1]))) {
 			fall();
 		}
-		return new double[] {newXPos, newYPos};
+		return new double[] {newPos[0],newPos[1]};
 	}
 		
 }

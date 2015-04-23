@@ -863,18 +863,20 @@ public abstract class GameObject {
 	 * of the GameObject
 	 * @param dt
 	 * 			a small time interval
-	 * @effect the horizontal position is adapted
-	 * 			| double newXPos
-	 * 			| if (this.getOrientation() == Orientation.RIGHT)
-	 * 			| 	then newXPos = this.getXPos() + this.getXSpeed() * 100 * dt
-	 * 			|					+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2)
-	 * 			| else 
-	 * 			| 	then newXPos = this.getXPos() - this.getXSpeed() * 100 * dt
-	 * 			| 					- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2)
-	 * @effect the vertical position is adapted
-	 * 			| double newYPos = getYPos() + getYSpeed() * 100 * dt + 0.5 * 100 *
-	 * 			| 					getYAcc() * Math.pow(dt,2)
-	 * @return {newXPos, newYPos}
+	 * @return the new horizontal en vertical position is calculated with given time interval
+	 * 			and then they are both returned
+	 * 			| let 
+	 * 			| 	double newXPos
+	 * 			| 	if (this.getOrientation() == Orientation.RIGHT)
+	 * 			| 		then newXPos = this.getXPos() + this.getXSpeed() * 100 * dt
+	 * 			|						+ 0.5 * this.getXAcc() * 100 * Math.pow(dt,2)
+	 * 			| 	else 
+	 * 			| 		then newXPos = this.getXPos() - this.getXSpeed() * 100 * dt
+	 * 			| 						- 0.5 * this.getXAcc() * 100 * Math.pow(dt,2)
+	 * 			| 	double newYPos = getYPos() + getYSpeed() * 100 * dt + 0.5 * 100 *
+	 * 			| 						getYAcc() * Math.pow(dt,2)
+	 * 			| in
+	 * 			| 	return new double[] {newXPos, newYPos}
 	 */
 	protected double[] calculateNewPos(double dt) {		
 		double newXPos;
@@ -897,17 +899,19 @@ public abstract class GameObject {
 	 * @param dt
 	 * @return the minimum of the dt for the horizontal and vertical direction, 
 	 * 			calculated for acceleration equal to zero or not
-	 * 			| double dtX;
-	 * 			| double dtY;	
-	 * 			| if (this.getXAcc() == 0) 
-	 * 			| 	then dtX = 0.01 / Math.abs(this.getXSpeed())
-	 * 			| else 
-	 * 			| 	then dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt)
-	 * 			| if (this.getYAcc() == 0) 
-	 * 			| 	then dtY = 0.01 / Math.abs(this.getYSpeed())
-	 * 			| else 
-	 * 			| 	then dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt)
-	 * 			| return Math.min(dtX,dtY);
+	 * 			| let 
+	 * 			| 	double dtX;
+	 * 			| 	double dtY;	
+	 * 			|	 if (this.getXAcc() == 0) 
+	 * 			| 		then dtX = 0.01 / Math.abs(this.getXSpeed())
+	 * 			|	 else 
+	 * 			|	 	then dtX = 0.01 / (Math.abs(this.getXSpeed()) + Math.abs(this.getXAcc()) * dt)
+	 * 				| if (this.getYAcc() == 0) 
+	 * 			|	 	then dtY = 0.01 / Math.abs(this.getYSpeed())
+	 * 			|	 else 
+	 * 			|	 	then dtY = 0.01 / (Math.abs(this.getYSpeed()) + Math.abs(this.getYAcc()) * dt)
+	 * 			| in
+	 * 			| 	return Math.min(dtX,dtY);
 	 */
 	protected double computeDt(double dt) {
 		double dtX;
@@ -934,12 +938,14 @@ public abstract class GameObject {
 	 * 		the horizontal position of the object
 	 * @param YPos
 	 * 		the vertical position of the object
-	 * @effect the pixelpositions of the left corners are stored in local variables
-	 * 		| int pixelLeft = (int) XPos
-	 * 		| int pixelTop = (int) YPos + this.getSize()[1]
-	 * 		| int pixelBottom = (int) YPos
-	 * @return the positions of the tiles where the object overlaps left with are returned
-	 * 		| getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1)
+	 * @return the pixelpositions of the left corners are used the find the tile positions so
+	 *			the positions of the tiles where the object overlaps left with are returned
+	 * 		| let
+	 * 		| 	int pixelLeft = (int) XPos
+	 * 		| 	int pixelTop = (int) YPos + this.getSize()[1]
+	 * 		| 	int pixelBottom = (int) YPos
+	 * 		| in the positions of the tiles where the object overlaps left with are returned
+	 * 		| 	return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1)
 	 */
 	protected int[][] getTilesLeft(double XPos, double YPos) {
 		int pixelLeft = (int) XPos;
@@ -954,12 +960,14 @@ public abstract class GameObject {
 	 * 		the horizontal position of the object
 	 * @param YPos
 	 * 		the vertical position of the object
-	 * @effect the pixelpositions of the right corners are stored in local variables
-	 * 		| int pixelRight = (int) XPos + this.getSize()[0]
-	 * 		| int pixelTop = (int) YPos + this.getSize()[1]
-	 * 		| int pixelBottom = (int) YPos
-	 * @return the positions of the tiles where the object overlaps right with are returned
-	 * 		| getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1)
+	 * @return the pixelpositions of the right corners are used the find the tile positions so
+	 *			the positions of the tiles where the object overlaps right with are returned
+	 * 		| let	 
+	 * 		| 	int pixelRight = (int) XPos + this.getSize()[0]
+	 * 		|	int pixelTop = (int) YPos + this.getSize()[1]
+	 * 		|	int pixelBottom = (int) YPos
+	 * 		| in
+	 * 		| 	return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1)
 	 */
 	protected int[][] getTilesRight(double XPos, double YPos) {
 		int pixelRight = (int) XPos + this.getSize()[0];
@@ -973,12 +981,14 @@ public abstract class GameObject {
 	 * 		the horizontal position of the object
 	 * @param xPos
 	 * 		the vertical position of the object
-	 * @effect the pixelpositions of the upper corners are stored in local variables
-	 * 		| int pixelLeft = (int)(xPos)
-	 * 		| int pixelTop = (int) yPos + this.getSize()[1]
-	 * 		| int pixelRight = pixelLeft + this.getSize()[0]
-	 * @return the positions of the tiles where the object overlaps above with are returned
-	 * 		| getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop)
+	 * @return the pixelpositions of the upper corners are used the find the tile positions so
+	 *			the positions of the tiles where the object overlaps above with are returned
+	 * 		| let	 
+	 * 		| 	int pixelLeft = (int)(xPos)
+	 * 		| 	int pixelTop = (int) yPos + this.getSize()[1]
+	 * 		| 	int pixelRight = pixelLeft + this.getSize()[0]
+	 * 		| in
+	 * 		| 	return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop)
 	 */
 	protected int[][] getTilesAbove(double xPos,double yPos) {
 		int pixelLeft = (int)(xPos);
@@ -992,12 +1002,14 @@ public abstract class GameObject {
 	 * 		the horizontal position of the object
 	 * @param xPos
 	 * 		the vertical position of the object
-	 * @effect the pixelpositions of the under corners are stored in local variables
-	 * 		| int pixelLeft = (int)(xPos)
-	 * 		| int pixelBottom = (int) yPos 
-	 * 		| int pixelRight = pixelLeft + this.getSize()[0]
-	 * @return the positions of the tiles where the object overlaps under with are returned
-	 * 		| getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom)
+	 * @return the pixelpositions of the under corners are used the find the tile positions so
+	 *			the positions of the tiles where the object overlaps under with are returned
+	 * 		| let	 
+	 * 		| 	int pixelLeft = (int)(xPos)
+	 * 		| 	int pixelBottom = (int) yPos 
+	 * 		| 	int pixelRight = pixelLeft + this.getSize()[0]
+	 * 		| in
+	 * 		| 	return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom)
 	 */
 	protected int[][] getTilesUnder(double xPos, double yPos) {
 		int pixelLeft = (int)(xPos);
@@ -1040,17 +1052,19 @@ public abstract class GameObject {
 	 * 		the vertical position of the object
 	 * @return true if one of the tiles overlapping above the object is impassable terrain
 	 * 		otherwise false
-	 * 		| int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
-	 * 		| for each tile in tilesAbove {
-	 * 		| 	try {
-	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
-	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) 
-	 * 		| 			then return true
-	 * 		| 	} catch (IllegalPixelException e) {
-	 * 		| 		assert false;
+	 * 		| let
+	 * 		| 	int[][] tilesAbove = this.getTilesAbove(xPos, yPos)
+	 * 		|in
+	 * 		| 	for each tile in tilesAbove {
+	 * 		| 		try {
+	 * 		| 			if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+	 * 		| 						getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) 
+	 * 		| 				then return true
+	 * 		| 		} catch (IllegalPixelException e) {
+	 * 		| 			assert false;
+	 * 		| 		}
 	 * 		| 	}
-	 * 		| }
-	 * 		| return false;
+	 * 		|	 return false;
 	 */
 	protected boolean isAgainstRoof(double xPos, double yPos) {
 		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
@@ -1066,6 +1080,7 @@ public abstract class GameObject {
 		}
 		return false;
 	}
+	//TODO in de volgende functies try/catch weghalen
 	/**
 	 * Checks or the object is against the left wall
 	 * @param xPos
@@ -1145,7 +1160,7 @@ public abstract class GameObject {
 	 * @pre feature should be smaller than or equal to 3, because there are no feature with numbers
 	 * 		higher than three
 	 * 		| feature <= 3
-	 * @return true if the object only overlaps with tiles with the given feature, otherwise false
+	 * @return true if the object fully overlaps with tiles with the given feature, otherwise false
 	 * 		| int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
 	 * 		| for (int[][] tiles: tileFamilies) {	
 	 * 		| 	for each tile in tiles)
@@ -1186,6 +1201,7 @@ public abstract class GameObject {
 	 * @pre feature should be smaller than or equal to 3, because there are no feature with numbers
 	 * 		higher than three
 	 * 		| feature <= 3
+	 * @return true if the object is in contact with tiles with the given feature, otherwise false
 	 * 		| int[][] tiles = this.getTiles(xPos,yPos);
 	 * 		| for each tile in tiles) {
 	 * 		| 	try {
@@ -1228,6 +1244,7 @@ public abstract class GameObject {
 	 *         
 	 */
 	//TODO is die return hier nu dubbel? of zien ik scheel -> ik snap niet wat ge bedoelt, das toch gwn if...else...?
+	// in de commentaar :)
 	public Sprite getCurrentSprite(){
 		assert isValidSprite(this.getSprite());
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -1566,7 +1583,7 @@ public abstract class GameObject {
 	 * 			| 		 touched = 1
 	 * @return {newXPos, newYPos, touched, onGameObject}
 	 */
-	// TODO de locale variabelen fixen in commentaar : zie @iets
+	// TODO de locale variabelen fixen in commentaar : zie @iets -> dit snap ik niet
 	public double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
 			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1

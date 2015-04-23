@@ -473,20 +473,21 @@ public class Slime extends GameObject {
 	 * 			a small time interval
 	 * @effect this Slime moves randomly
 	 * 			| randomMovement(dt)
-	 * @effect the new position of the Slime is calculated, this position also gets
-	 * 			checked if within the boundaries of the game world
-	 * 			| double[] newCalculatedPos = calculateNewPos(dt)
-	 * 			| double newXPos = newCalculatedPos[0]
-	 * 			| double newYPos = newCalculatedPos[1]
-	 * 			| checkInWithinBoundaries(newXPos, newYPos)
-	 * @effect the surroundings of the newly calculated position and the presence of
-	 * 			other gameObjects is checked and the position/speed is adjusted accordingly
-	 * 			| double[] newPos = checkSurroundings(newXPos,newYPos)
-	 * 			| newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt)
+	 * @effect the new position of the Slime is calculated, this new position also gets
+	 * 			checked if within the boundaries of the game world, then the surroundings 
+	 * 			of the newly calculated position and the presence of other gameObjects is 
+	 * 			checked and the new position/speed is adjusted accordingly and at last the 
+	 * 			horizontal and vertical position of this Slime are set to the new positions
+	 * 			| let 
+	 * 			| 	double[] newPos = this.calculateNewPos(dt);
+	 * 			| in
+	 * 			|	checkInWithinBoundaries(newPos[0],newPos[1])
+	 * 			| 	newPos = checkSurroundings(newPos[0],newPos[1])
+	 * 			| 	newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt)
+	 *			| 	setXPos(newPos[0])
+	 * 			| 	setYPos(newPos[1])
+	 * @effect calculate and set the new speed of the slime
 	 * 			| setNewSpeed(dt);
-	 * @effect the horizontal and vertical position of this Slime are set to the new positions
-	 * 			| setXPos(newPos[0])
-	 * 			| setYPos(newPos[1])
 	 * @effect this Slime loses hitpoints when drowning of burning in magma, the immunity also
 	 * 			gets updated
 	 * 			| loseHitpointsBecauseOfFeature(dt, getXPos(), getYPos())
@@ -495,17 +496,17 @@ public class Slime extends GameObject {
 	 */
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);			
-		double[] newCalculatedPos = this.calculateNewPos(dt);
-		double newXPos = newCalculatedPos[0];
-		double newYPos = newCalculatedPos[1];
-		this.checkIfWithinBoundaries(newXPos, newYPos);
+		double[] newPos = this.calculateNewPos(dt);
+
+		this.checkIfWithinBoundaries(newPos[0],newPos[1]);
 				
-		double[] newPos = checkSurroundings(newXPos,newYPos);
+		newPos = checkSurroundings(newPos[0],newPos[1]);
 		newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt);
-		this.setNewSpeed(dt);
 		
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);
+		
+		this.setNewSpeed(dt);
 		
 		this.loseHitpointsBecauseOfFeature(dt, this.getXPos(), this.getYPos());			
 		this.updateImmunity(dt);

@@ -10,7 +10,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 // TODO alles final maken wat final moet zijn -> ook ongeveer klaar denk ik?
-// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - autisme speaking
+// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - a ut isme s peak ing
 // TODO in facade nog default constructor toevoegen
 // TODO @Raw toevoegen overal waar het nodig is
 // TODO checkers toevoegen in elke getter / setter
@@ -70,8 +70,8 @@ public class World {
 				throw new IllegalArgumentException();
 			if ( ! isValidNbTiles(nbTilesY))
 				throw new IllegalArgumentException();
-			if ( ! isValidTargetTile(targetTileX, targetTileY))
-				throw new  IllegalTargetTileException(targetTileX, targetTileY);
+			if ( ! isValidTargetTile(targetTileX, targetTileY, nbTilesX, nbTilesY))
+				throw new  IllegalTargetTileException(targetTileX, targetTileY, nbTilesX, nbTilesY);
 			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, nbTilesX, nbTilesY))
 				throw new  IllegalVisibleWindowException(visibleWindowWidth, visibleWindowHeight);
 		this.setTileSize(tileSize);
@@ -290,9 +290,22 @@ public class World {
 	 *         The returned array is ordered from left to right,
 	 *         bottom to top: all positions of the bottom row (ordered from
 	 *         small to large x_T) precede the positions of the row above that.
-	 * 
+	 *         | let
+	 *         | 	int posLeft = this.getTileOfPixels(pixelLeft,pixelBottom)[0]
+	 *         | 	int posBottom = this.getTileOfPixels(pixelLeft,pixelBottom)[1]
+	 *         | 	int posRight = this.getTileOfPixels(pixelRight,pixelTop)[0]
+	 *         | 	int posTop = this.getTileOfPixels(pixelRight,pixelTop)[1]
+	 *         | 	int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2]
+	 *         | 	int counter = 0
+	 *         | in
+	 *         | 	for (int i=posBottom;i <= posTop;i++ ) {
+	 *         | 		for (int j=posLeft;j <= posRight;j++){
+	 *         | 			array[counter][0] = j;
+	 *         | 			array[counter][1] = i;
+	 *         | 			counter++;
+	 *         | 	return array;
 	 */
-	// TODO moet hier nog andere documentatie bij? alles wat in die functie staat zeker -> wenen
+	// TODO for loops deftig in commentaar
 	@Basic
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
@@ -774,11 +787,16 @@ public class World {
 	 * 			the horizontal position of the tile
 	 * @param y
 	 * 			the vertical position of the tile
-	 * @return 
+	 * @param nbTilesX
+	 * 			the horizontal number of tiles in world
+	 * @param nbTilesY
+	 * 			the vertical number of tiles in world
+	 * @return True if x and y are zero or positive and smaller than the availeble
+	 * 			number of tiles in world
+	 * 			| (x >= 0 && y >= 0 && x <= nbTilesX - 1 && y <= nbTilesY - 1)
 	 */
-	// TODO dit nog maken. Ik denk dat het zo goed is eigenlijk -> is er ook geen bovengrens voor x en y?
-	private boolean isValidTargetTile(int x, int y) {
-		return (x >= 0 && y >= 0); 
+	private boolean isValidTargetTile(int x, int y, int nbTilesX, int nbTilesY) {
+		return (x >= 0 && y >= 0 && x <= nbTilesX - 1 && y <= nbTilesY - 1); 
 	}
 	/**
 	 * returns true if the given tile is valid
@@ -980,114 +998,6 @@ public class World {
 									- this.getVisibleWindowHeight() + 200);
 			}
 		}	
-	}
-	
-	/**
-	 * returns true if the objects touch each other
-	 * @param x1
-	 * 			the horizontal position of the first object
-	 * @param xDim1
-	 * 			the horizontal dimension of the first object
-	 * @param y1
-	 * 			the vertical position of the first object
-	 * @param yDim1
-	 * 			the horizontal dimension of the first object
-	 * @param x2
-	 * 			the horizontal position of the first object
-	 * @param xDim2
-	 * 			the horizontal dimension of the first object
-	 * @param y2
-	 * 			the vertical position of the first object
-	 * @param yDim2
-	 * 			the vertical dimension of the first object
-	 * @return ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
-	 * 		|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) )
-	 * 		&& 	( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
-			|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) )		
-	 */
-	private boolean touches(double x1, double xDim1, double y1, double yDim1,
-			double x2, double xDim2, double y2, double yDim2) {
-		
-		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
-				|| ( (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1) );
-		boolean yStatement = ( (y2 >= y1) && (y2 <= y1 + yDim1) ) 
-				|| ( (y2 + yDim2 >= y1) && (y2 + yDim2 <= y1 + yDim1) );
-		
-		return ((xStatement) && (yStatement));
-	}
-	
-	//TODO volgens mij gebruiken we alle methodes hieronder niet -> kan wel eens, de eerste en de laatste toch niet
-	/**
-	 * returns the amount of Plants the player character touched
-	 * @param xPos
-	 * 			the horizontal position of the player character
-	 * @param yPos
-	 * 			the vertical position of the player character
-	 * @param xDim
-	 * 			the horizontal dimension of the player character
-	 * @param yDim
-	 * 			the vertical dimension of the player character
-	 * @return 
-	 */
-	private int touchedPlants(double xPos, double yPos, double xDim, double yDim) {
-		int amountOfDeadPlants = 0;
-		for (Plant plant : this.getPlants()) {
-			 if (this.touches(xPos, xDim, yPos, yDim, plant.getXPos(),
-					 plant.getXDim(), plant.getYPos(), plant.getYDim())) {
-				 plant.die();
-				 amountOfDeadPlants += 1;
-			 }
-		}
-		return amountOfDeadPlants;
-	}
-	
-	public int touchedSharks(double xPos, double yPos, double xDim, double yDim) {
-		int nbTouchedSharks = 0;
-		for (Shark shark : this.getSharks()) {
-			 if (this.touches(xPos, xDim, yPos, yDim, shark.getXPos(),
-					 shark.getXDim(), shark.getYPos(), shark.getYDim())) {
-				 shark.setHitpoints(shark.getHitpoints() - Shark.getContactDamage());
-				 nbTouchedSharks += 1;
-			 }
-		}
-		return nbTouchedSharks;
-	}	
-	
-	public int touchedSlimes(double xPos, double yPos, double xDim, double yDim) {
-		int nbTouchedSlimes = 0;
-		for (Slime slime : this.getSlimes()) {
-			 if (this.touches(xPos, xDim, yPos, yDim, slime.getXPos(),
-					 slime.getXDim(), slime.getYPos(), slime.getYDim())) {
-				 slime.setHitpoints(slime.getHitpoints() - Slime.getContactDamage());
-				 nbTouchedSlimes += 1;
-			 }
-		}
-		return nbTouchedSlimes;
-	}
-	
-	public int touchedAliens(double xPos, double yPos, double xDim, double yDim) {
-		int nbTouchedAliens = 0;
-		if (this.touches(xPos, xDim, yPos, yDim, alien.getXPos(),
-				alien.getXDim(), alien.getYPos(), alien.getYDim())) {
-			nbTouchedAliens += 1;
-		}
-		return nbTouchedAliens;
-	}
-	
-	private boolean mazubCollidesAboveWithSharkOrSlime() {
-		for (Shark shark: this.getSharks()) {
-			if (alien.collidesAbove(shark.getXPos(), shark.getXDim(), shark.getYPos(), shark.getYDim(),
-					alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim())) {
-				return true;
-			}
-		}
-		for (Slime slime: this.getSlimes()) {
-			if (alien.collidesAbove(alien.getXPos(), alien.getXDim(), alien.getYPos(), alien.getYDim(),
-					slime.getXPos(), slime.getXDim(), slime.getYPos(), slime.getYDim())) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 }

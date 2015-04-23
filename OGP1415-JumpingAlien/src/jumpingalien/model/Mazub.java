@@ -925,33 +925,35 @@ public class Mazub extends GameObject {
 	 * It calculates the new speed, changes the moving times en sets the new positions
 	 * @param dt
 	 * 		The time interval that is used for all the calculations
-	 * @effect Calculating new positions
-	 * 		| double[] newCalculatedPos = this.calculateNewPos(dt);
-	 * 		| double newXPos = newCalculatedPos[0];
-	 * 		| double newYPos = newCalculatedPos[1];
-	 * @effect Checks boundaries, colliding and surroundings
-	 * 		| this.checkIfWithinBoundaries(newXPos, newYPos);
-	 * 		| double[] newPos = colliding(newXPos, newYPos, dt);
-	 * 		| newPos = checkSurroundings(newPos[0],newPos[1]);
-	 * @effect Sets the new speed, movingTimes and the new positions
+	 * @effect Calculating new positions, checking of the boundaries with the new position. If Mauz
+	 * 			is out of the world, he is removed. Then checking of colliding with gameObject and 
+	 * 			surroundings, new position/speed/acceleration/hitpoints are changed accordingly. 
+	 * 			At last the new positions are set.
+	 * 		| let
+	 * 		| 	double[] newPos = this.calculateNewPos(dt);
+	 * 		| in
+	 * 		| 	this.checkIfWithinBoundaries(newXPos, newYPos);
+	 * 		|   newPos = colliding(newXPos, newYPos, dt);
+	 * 		| 	newPos = checkSurroundings(newPos[0],newPos[1]);
+	 * 	  	| 	this.setXPos(newPos[0]);
+	 * 		| 	this.setYPos(newPos[1]);
+
+	 * @effect Sets the new speed and movingTimes
 	 * 		| this.setNewSpeed(dt);
 	 * 		| this.changeMovingTimes(dt);
-	 * 		| this.setXPos(newPos[0]);
-	 * 		| this.setYPos(newPos[1]);
 	 */
 	private void changeTimeDependents(double dt) {
-		double[] newCalculatedPos = this.calculateNewPos(dt);
-		double newXPos = newCalculatedPos[0];
-		double newYPos = newCalculatedPos[1];
+		double[] newPos = this.calculateNewPos(dt);
 	
-		this.checkIfWithinBoundaries(newXPos, newYPos);
-		double[] newPos = colliding(newXPos, newYPos, dt);
+		this.checkIfWithinBoundaries(newPos[0],newPos[1]);
+		newPos = colliding(newPos[0],newPos[1], dt);
 		newPos = checkSurroundings(newPos[0],newPos[1]);
+		
+		this.setXPos(newPos[0]);
+		this.setYPos(newPos[1]);
 		
 		this.setNewSpeed(dt);
 		this.changeMovingTimes(dt);
-		this.setXPos(newPos[0]);
-		this.setYPos(newPos[1]);
 	}
 	
 	/**
@@ -1116,119 +1118,5 @@ public class Mazub extends GameObject {
 		this.getWorld().removeAlien(this);
 		this.setWorld(null);
 	}	
-	
-	//eventueel nieuwe checksurroundings, nee hij is toch niet zo goed. Problemen als hij 2 keer touched denk ik. Mss niet. Not sure. Maar ik heb denk ik een andere oplossing gevonden.
-//	private void checkSurroundings(double newXPos, double newYPos, double dt) {
-//		double xDim1 = this.getXDim();
-//		double yDim1 = this.getYDim();
-//		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-//		allSlimesSharks.addAll(this.getWorld().getSharks());
-//		boolean touched = false;
-//		
-//		if (newXPos > this.getXPos()) {
-//			
-//			if (againstRightWall(newXPos, newYPos)) {
-//				newXPos = (this.getTilesRight(newXPos,newYPos)[0][0]) * getWorld().getTileLength() - this.getSize()[0];
-//				this.setXSpeed(0);
-//				this.setXAcc(0);
-//				if (this.getYSpeed()>0) {
-//					this.setYSpeed(0);
-//				}
-//			}
-//			else {
-//				for(GameObject other: allSlimesSharks) {
-//					double x2 = other.getXPos();
-//					double xDim2 = other.getXDim();
-//					double y2 = other.getYPos();
-//					double yDim2 = other.getYDim();
-//					if (this.collidesRight(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-//						newXPos = x2 - xDim1;
-//						this.setXSpeed(0);
-//						this.setXAcc(0);
-//						if (this.getYSpeed() > 0) {
-//							this.setYSpeed(0);
-//						}
-//						this.contactDamage(dt);
-//						other.contactDamage(dt);
-//					}
-//				}
-//			}
-//		}
-//		else if (newXPos < this.getXPos()) {
-//			if (againstLeftWall(newXPos,newYPos)) {
-//				newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * getWorld().getTileLength();
-//				this.setXSpeed(0);
-//				this.setXAcc(0);
-//				if (this.getYSpeed()>0) {
-//					this.setYSpeed(0);
-//				}
-//			}
-//			else {
-//				for(GameObject other: allSlimesSharks) {
-//					double x2 = other.getXPos();
-//					double xDim2 = other.getXDim();
-//					double y2 = other.getYPos();
-//					double yDim2 = other.getYDim();
-//					if (this.collidesLeft(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-//						newXPos = x2 + xDim2;
-//						this.setXSpeed(0);
-//						this.setXAcc(0);
-//						if (this.getYSpeed() > 0) {
-//							this.setYSpeed(0);
-//						}
-//						this.contactDamage(dt);
-//						other.contactDamage(dt);
-//					}
-//				}
-//			}
-//		}
-//		if (newYPos > this.getYPos()) {
-//			if (isAgainstRoof(newXPos,newYPos)) {
-//				newYPos = (this.getTilesAbove(newXPos,newYPos)[0][1]) * getWorld().getTileLength() - this.getSize()[1] -1;
-//				this.setYSpeed(0);
-//			}
-//			else {
-//				for(GameObject other: allSlimesSharks) {
-//					double x2 = other.getXPos();
-//					double xDim2 = other.getXDim();
-//					double y2 = other.getYPos();
-//					double yDim2 = other.getYDim();
-//					if (this.collidesAbove(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-//						newYPos = y2 - yDim1;
-//						this.setYSpeed(0);
-//						this.contactDamage(dt);
-//						other.contactDamage(dt);
-//					}
-//				}
-//			}	
-//		}
-//		if(this.isFalling() && this.onFloor(newXPos, newYPos)) {
-//			newYPos = ((this.getTilesUnder(newXPos,newYPos)[0][1] +1) * getWorld().getTileLength() -1);
-//			this.endFall();
-//		}
-//		else {
-//			boolean onGameObject = false;
-//			for(GameObject other: allSlimesSharks) {
-//				double x2 = other.getXPos();
-//				double xDim2 = other.getXDim();
-//				double y2 = other.getYPos();
-//				double yDim2 = other.getYDim();
-//				if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-//					newYPos = y2 + yDim2;
-//					this.contactDamage(dt);
-//					other.contactDamage(dt);
-//					onGameObject = true;
-//					if (this.isFalling()) {
-//						this.endFall();
-//					}
-//				}
-//			}
-//			if (!onGameObject && !this.isFalling() && !this.onFloor(newXPos,newYPos)) {
-//				fall();
-//			}
-//		}
-//	}
-
-	
-	
+		
 }
