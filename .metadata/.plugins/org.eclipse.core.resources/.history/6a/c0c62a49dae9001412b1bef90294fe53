@@ -891,8 +891,7 @@ public class Mazub extends GameObject {
 	/**
 	 * changes the Time Dependent aspects of Mazub. It calculates the new position, checks the
 	 * boundaries, adjusts the speed, acceleration and position for surroundings and colliding.
-	 * It calculates the new speed, changes the moving times en sets the new positions 
-	 * It also updates the hitpoints of the Mazub
+	 * It calculates the new speed, changes the moving times en sets the new positions
 	 * @param dt
 	 * 		The time interval that is used for all the calculations
 	 * @effect Calculating new positions, checking of the boundaries with the new position. If Mauz
