@@ -27,7 +27,6 @@ public class Shark extends GameObject {
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 */
-	@Raw
 	public Shark(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
@@ -106,7 +105,7 @@ public class Shark extends GameObject {
 	/**
 	 * the maximal amount of hitpoints a shark may posses
 	 */
-	private static final int MAX_HITPOINTS = 100;
+	private final int MAX_HITPOINTS = 100;
 	/**
 	 * the maximum amount of hitpoints
 	 * @return MAX_HITPOINTS
@@ -150,7 +149,7 @@ public class Shark extends GameObject {
 	 * @return if the shark is in water
 	 * 			| inWater
 	 */
-	@Basic 
+	@Basic
 	private boolean isInWater() {
 		return inWater;
 	}
@@ -159,7 +158,6 @@ public class Shark extends GameObject {
 	 * @post the value of inWater is true
 	 * 			| inWater = true
 	 */
-	@Raw
 	private void setInWater() {
 		this.inWater = true;
 	}
@@ -168,7 +166,6 @@ public class Shark extends GameObject {
 	 * @post the value of inWater is false
 	 * 			| inWater = false
 	 */
-	@Raw
 	private void setNotInWater() {
 		this.inWater = false;
 	}
@@ -181,7 +178,7 @@ public class Shark extends GameObject {
 	 * @return the time a Shark spend in air
 	 * 			| timeInAir
 	 */
-	@Basic @Raw
+	@Basic
 	private double getTimeInAir() {
 		return timeInAir;
 	}
@@ -194,7 +191,6 @@ public class Shark extends GameObject {
 	 * @post the value of timeInAir is equal to the given double
 	 * 			|  this.timeInAir = time
 	 */
-	@Raw
 	private void setTimeInAir(double time) {
 		assert time >= 0;
 		this.timeInAir = time;
@@ -208,7 +204,7 @@ public class Shark extends GameObject {
 	 * @return the duration
 	 * 			| movementDuration
 	 */
-	@Basic @Raw
+	@Basic
 	private double getMovementDuration() {
 		return movementDuration;
 	}
@@ -220,7 +216,6 @@ public class Shark extends GameObject {
 	 * 		| time >= 0
 	 * @post this.movementDuration = time
 	 */
-	@Raw
 	private void setMovementDuration(double time) {
 		assert time >= 0;
 		this.movementDuration = time;
@@ -231,7 +226,7 @@ public class Shark extends GameObject {
 	 * @return the time since the last movement
 	 * 			| timeSinceMove
 	 */
-	@Basic @Raw
+	@Basic
 	private double getTimeSinceMove() {
 		return timeSinceMove;
 	}
@@ -242,7 +237,6 @@ public class Shark extends GameObject {
 	 * 		| time >= 0
 	 * @post this.movementDuration = time
 	 */
-	@Raw
 	private void setTimeSinceMove(double time) {
 		assert time >= 0;
 		this.timeSinceMove = time;
@@ -256,7 +250,7 @@ public class Shark extends GameObject {
 	 * @return the amount of jumps
 	 * 			| jumpCounter
 	 */
-	@Basic @Raw
+	@Basic
 	private int getJumpCounter() {
 		return this.jumpCounter;
 	}
@@ -267,7 +261,6 @@ public class Shark extends GameObject {
 	 * @pre count should always be bigger than or equal to zero
 	 * 		| count >= 0
 	 */
-	@Raw
 	private void setJumpCounter(int count) {
 		assert count >= 0;
 		this.jumpCounter = count;		
@@ -292,7 +285,6 @@ public class Shark extends GameObject {
 	 * @post moving is equal to the given boolean
 	 * 			| moving = move
 	 */
-	@Raw
 	private void setMoving(boolean move) {
 		this.moving = move;
 	}
@@ -304,7 +296,7 @@ public class Shark extends GameObject {
 	 * @return true if the length is equal to 2
 	 * 			| sprites.length == 2
 	 */
-	@Override @Raw
+	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}	
@@ -349,7 +341,6 @@ public class Shark extends GameObject {
 	 *
 	 * @return {newXPos, newYPos}
 	 */
-	@Raw
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 		if (againstLeftWall(newXPos,newYPos) && this.getOrientation() == Orientation.LEFT) {
 			newXPos = (this.getTilesLeft(newXPos,newYPos)[0][0] + 1) * this.getWorld().getTileLength();
@@ -407,7 +398,6 @@ public class Shark extends GameObject {
 	 * 			| 		 setHitpointsDifference(toLose - (int) toLose)
 	 * 			| 		 loseHitpoints( (int) toLose)
 	 */
-	@Raw
 	private void loseHitpointsBecauseOfFeature(double dt) {
 		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 0)) {
 			if (this.isInWater()) {
@@ -441,7 +431,6 @@ public class Shark extends GameObject {
 	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos))
 	 * 			| 	then remove()
 	 */
-	@Raw
 	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
@@ -482,7 +471,6 @@ public class Shark extends GameObject {
 	 * 			| if (this.getHitpoints() <= 0)
 	 * 			| 	then die()
 	 */
-	@Raw
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);
 		
@@ -519,7 +507,6 @@ public class Shark extends GameObject {
 	 * 			| if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove())
 	 * 			| 	then remove()
 	 */
-	@Raw
 	private void advanceTimeWhileDeath(double dt) {
 		setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
@@ -540,7 +527,6 @@ public class Shark extends GameObject {
 	 * 			| else 
 	 * 			| 	then advanceTimeWhileDeath(dt)
 	 */
-	@Raw
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
@@ -646,7 +632,6 @@ public class Shark extends GameObject {
 	 * @param dt
 	 * 			a small time interval
 	 */
-	@Raw
 	// TODO vanaf hier commentaar nog schrijven, daarna is de commentaar af denk ik
 	private void randomMovement(double dt) {
 		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
@@ -686,15 +671,7 @@ public class Shark extends GameObject {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param newXPos
-	 * @param newYPos
-	 * @param dt
-	 * @return
-	 */
-	@Raw
-	public double[] colliding(double newXPos, double newYPos, double dt) {	
+	public double[] colliding(double newXPos, double newYPos,double dt) {	
 		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
 		allSlimesSharksMazub.add(this.getWorld().getAlien());

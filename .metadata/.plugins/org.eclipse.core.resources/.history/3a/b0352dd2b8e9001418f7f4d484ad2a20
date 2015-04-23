@@ -236,7 +236,7 @@ public class World {
 	 * @return the player character alien
 	 * 			| alien
 	 */
-	@Basic @Raw
+	@Basic
 	public Mazub getAlien() {
 		return this.alien;
 	}	
@@ -252,7 +252,7 @@ public class World {
 	 *         bottom left pixel of the given tile, in that order.
 	 * 			| {tileX * getTileLength(), tileY * getTileLength()}
 	 */
-	@Basic @Raw
+	@Basic
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY) {
 		return new int[] {tileX * this.getTileLength(),
 				tileY * this.getTileLength()};
@@ -267,7 +267,7 @@ public class World {
 	 * @return An array which contains the x-coordinate and y-coordinate of the
 	 *          given tile, in that order.
 	 */
-	@Basic @Raw
+	@Basic
 	private int[] getTileOfPixels(int pixelX, int pixelY) {
 		return new int[] {(pixelX - pixelX % this.getTileLength()) / this.getTileLength(),
 				(pixelY - pixelY % this.getTileLength()) / this.getTileLength()};
@@ -307,14 +307,15 @@ public class World {
 	 *         | 	return array;
 	 */
 	// TODO for loops deftig in commentaar
-	@Basic @Raw
+	@Basic
 	public int[][] getTilePositionsIn(int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop) {
 		int posLeft = this.getTileOfPixels(pixelLeft,pixelBottom)[0];
 		int posBottom = this.getTileOfPixels(pixelLeft,pixelBottom)[1];
 		int posRight = this.getTileOfPixels(pixelRight,pixelTop)[0];
 		int posTop = this.getTileOfPixels(pixelRight,pixelTop)[1];
-		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];		
+		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];
+		
 		int counter = 0;
 		for (int i=posBottom;i <= posTop;i++ ) {
 			for (int j=posLeft;j <= posRight;j++){
@@ -356,7 +357,7 @@ public class World {
 	 * @throw IllegalPixelException if the given position does not correspond to the
 	 *        bottom left pixel of a tile.
 	 */
-	@Basic @Raw
+	@Basic
 	public int getGeologicalFeature(int pixelX, int pixelY)
 			throws IllegalPixelException {
 				if ( ! isValidBottomLeftPixel(pixelX, pixelY))
@@ -386,7 +387,7 @@ public class World {
 	 * @return the list containing every plant in the world
 	 * 			| plants
 	 */
-	@Basic 
+	@Basic
 	public Collection<Plant> getPlants() {
 		return new CopyOnWriteArrayList<Plant>(this.plants);
 	}
@@ -413,7 +414,7 @@ public class World {
 	 * @return number of plants
 	 * 			| plants.size()
 	 */
-	@Basic 
+	@Basic
 	private int getNbPlants() {
 		return plants.size();
 	}
@@ -468,7 +469,6 @@ public class World {
 	 * @post the tileSize is set to the given value
 	 * 			| this.tileSize = tileSize
 	 */
-	@Raw
 	private void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
 	}
@@ -477,7 +477,6 @@ public class World {
 	 * @post the number of tiles (horizontally) is set to the given amount
 	 * 			| this.nbTilesX = nbTilesX
 	 */
-	@Raw
 	private void setNbTilesX(int nbTilesX) {
 		this.nbTilesX = nbTilesX;
 	}
@@ -486,7 +485,6 @@ public class World {
 	 * @post the number of tiles (vertically) is set to the given amount
 	 * 			| this.nbTilesY = nbTilesY
 	 */
-	@Raw
 	private void setNbTilesY(int nbTilesY) {
 		this.nbTilesY = nbTilesY;
 	}
@@ -495,7 +493,6 @@ public class World {
 	 * @post the width of the visible window is equal to the given int
 	 * 			| this.visibleWindowWidth = visibleWindowWidth
 	 */
-	@Raw
 	private void setVisibleWindowWidth(int visibleWindowWidth) {
 		this.visibleWindowWidth = visibleWindowWidth;
 	}
@@ -504,7 +501,6 @@ public class World {
 	 * @post the height of the visible window is equal to the given int
 	 * 			| this.visibleWindowHeight = visibleWindowHeight
 	 */
-	@Raw
 	private void setVisibleWindowHeight(int visibleWindowHeight) {
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
@@ -513,7 +509,6 @@ public class World {
 	 * @post the horizontal coordinate of the targetTile is equal to the given int
 	 * 			| this.targetTileX =  targetTileX
 	 */
-	@Raw
 	private void setTargetTileX(int targetTileX) {
 		this.targetTileX = targetTileX;
 	}
@@ -522,7 +517,6 @@ public class World {
 	 * @post the vertical coordinate of the targetTile is equal to the given int
 	 * 			| this.targetTileY = targetTileY
 	 */
-	@Raw
 	private void setTargetTileY(int targetTileY) {
 		this.targetTileY = targetTileY;
 	}	
@@ -532,7 +526,6 @@ public class World {
 	 * 		 is equal to the given value
 	 * 			| this.xVisibleWindow = xVisibleWindow
 	 */
-	@Raw
 	private void setXVisibleWindow(int xVisibleWindow) {
 		this.xVisibleWindow = xVisibleWindow;
 	}
@@ -542,7 +535,6 @@ public class World {
 	 * 		 is equal to the given value
 	 * 			| this.yVisibleWindow = yVisibleWindow
 	 */
-	@Raw
 	private void setYVisibleWindow(int yVisibleWindow) {
 		this.yVisibleWindow = yVisibleWindow;
 	}
@@ -568,7 +560,6 @@ public class World {
 	 * 		 the given tileType
 	 * 			| this.geologicalFeature[tileY][tileX] = tileType
 	 */
-	@Raw
 	public void setGeologicalFeature(int tileX, int tileY, int tileType)
 		throws IllegalTileException {
 		if ( ! isValidTile(tileX, tileY, tileType)) {
@@ -582,7 +573,6 @@ public class World {
 	 * @post the player character alien is equal to the given Mazub
 	 * 			| this.alien = alien
 	 */
-	@Raw
 	public void setAlien(Mazub alien) {
 		this.alien = alien;
 	}
@@ -595,7 +585,6 @@ public class World {
 	 * @post the alien is set to null
 	 * 			| this.alien = null
 	 */
-	@Raw
 	public void removeAlien(@Raw Mazub alien) {
 		assert alien != null;
 		this.alien = null;
@@ -611,7 +600,6 @@ public class World {
 	 * @post the Slime slime is removed from the game world
 	 * 			| this.slimes.remove(slime)
 	 */
-	@Raw
 	public void removeSlime(@Raw Slime slime) {
 		assert this.hasSlime(slime);
 		assert slime != null;
@@ -628,7 +616,6 @@ public class World {
 	 * @post the Plant plant is removed from the game world
 	 * 			| this.plants.remove(plant)
 	 */
-	@Raw
 	public void removePlant(@Raw Plant plant) {
 		assert this.hasPlant(plant);
 		assert plant != null;
@@ -645,7 +632,6 @@ public class World {
 	 * @post the Shark shark is removed from the game world
 	 * 			| this.sharks.remove(shark)
 	 */
-	@Raw
 	public void removeShark(@Raw Shark shark) {
 		assert this.hasShark(shark);
 		assert shark != null;
@@ -664,7 +650,6 @@ public class World {
 	 * @effect the slime is added to slimes
 	 * 			| slimes.add(slime)
 	 */
-	@Raw
 	public void addSlime(Slime slime) {
 		assert slime != null;
 	    assert slime.getWorld() == this;
@@ -684,7 +669,6 @@ public class World {
 	 * @effect the shark is added to shark
 	 * 			| sharks.add(shark)
 	 */
-	@Raw
 	public void addShark(Shark shark) {
 		assert shark != null;
 	    assert shark.getWorld() == this;
@@ -704,7 +688,6 @@ public class World {
 	 * @effect the plant is added to plants
 	 * 			| plants.add(plant)
 	 */
-	@Raw
 	public void addPlant(Plant plant) {
 		assert plant != null;
 	    assert plant.getWorld() == this;
@@ -717,7 +700,6 @@ public class World {
 	 * 			| plant
 	 * @return this.plants.contains(plant)
 	 */
-	@Raw
 	private boolean hasPlant(Plant plant) {
 		return this.plants.contains(plant);
 	}
@@ -727,7 +709,6 @@ public class World {
 	 * 			| shark
 	 * @return this.sharks.contains(shark)
 	 */
-	@Raw
 	private boolean hasShark(Shark shark) {
 		return this.sharks.contains(shark);
 	}
@@ -737,7 +718,6 @@ public class World {
 	 * 			| slime
 	 * @return this.slimes.contains(slime)
 	 */
-	@Raw
 	private boolean hasSlime(Slime slime) {
 		return this.slimes.contains(slime);
 	}	
@@ -759,7 +739,6 @@ public class World {
 	 * 			| nbTiles
 	 * @return (nbTiles > 0)
 	 */
-	
 	private boolean isValidNbTiles(int nbTiles){
 		return nbTiles > 0;
 	}
@@ -778,7 +757,6 @@ public class World {
 	 * @return ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
 				<=  tileSize * nbTilesY))
 	 */
-	@Raw
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
@@ -792,7 +770,6 @@ public class World {
 	 * 			the vertical position
 	 * @return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0))
 	 */
-	@Raw
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
 		return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0));
 	}

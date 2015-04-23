@@ -38,7 +38,6 @@ public class Slime extends GameObject {
 	 * 			The given sprite is not valid
 	 * 			| ! isValidSprite(sprites) 
 	 */
-	@Raw
 	public Slime(int xPos,int yPos, Sprite[] sprites,School school) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
@@ -72,7 +71,7 @@ public class Slime extends GameObject {
 	 * @return the movement duration
 	 * 			| movementDuration
 	 */
-	@Basic @Raw
+	@Basic
 	private double getMovementDuration() {
 		return movementDuration;
 	}	
@@ -85,7 +84,6 @@ public class Slime extends GameObject {
 	 * @post the value of movementDuration is set to the given value
 	 * 			| this.movementDuration = time
 	 */
-	@Raw
 	private void setMovementDuration(double time) {
 		assert time >= 0;
 		this.movementDuration = time;
@@ -98,7 +96,7 @@ public class Slime extends GameObject {
 	 * returns the time passed since the last movement
 	 * @return timeSinceMove
 	 */
-	@Basic @Raw
+	@Basic
 	private double getTimeSinceMove() {
 		return timeSinceMove;
 	}
@@ -109,7 +107,6 @@ public class Slime extends GameObject {
 	 * 		| time >= 0
 	 * @post this.movementDuration = time
 	 */
-	@Raw
 	private void setTimeSinceMove(double time) {
 		assert time >= 0;
 		this.timeSinceMove = time;
@@ -123,7 +120,7 @@ public class Slime extends GameObject {
 	 * @return the amount of initial hitpoints
 	 * 			| INIT_HITPOINTS
 	 */
-	@Basic @Immutable
+	@Basic @Immutable 
 	private static final int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
@@ -134,7 +131,7 @@ public class Slime extends GameObject {
 	/**
 	 * returns the horizontal acceleration of a Slime
 	 */
-	@Override @Basic @Immutable @Raw
+	@Override @Basic @Immutable 
 	public final double getXAcc() {
 		return xAcc;
 	}
@@ -205,7 +202,7 @@ public class Slime extends GameObject {
 	 * @return The current school of the given slime.
 	 * 			| this.school
 	 */
-	@Basic @Raw
+	@Basic
 	public School getSchool() {
 		return this.school;
 	}
@@ -216,7 +213,6 @@ public class Slime extends GameObject {
 	 * @post the School is equal to the given School school
 	 * 			| this.school = school
 	 */
-	@Raw
 	public void setSchool(School school) {
 		this.school = school;
 	}
@@ -274,7 +270,6 @@ public class Slime extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newXPos, newYPos}
 	 */
-	@Raw
 	private double[] checkSurroundings(double newXPos, double newYPos) {
 
 		if (this.getOrientation() == Orientation.LEFT && this.againstLeftWall(newXPos, newYPos)) {
@@ -323,7 +318,6 @@ public class Slime extends GameObject {
 	 * 			| 						other.getXDim(), other.getYPos(), other.getYDim()) && other instanceof Mazub)
 	 * 			| 					then other.contactDamage(dt)
 	 */
-	@Raw
 	private void adjustHitpoints(GameObject other, double touched, double dt, double newXPos, double newYPos) {
 		if ((touched == 1) && ( ! other.isDying())) {
 			if (other instanceof Slime) {
@@ -382,7 +376,6 @@ public class Slime extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
-	@Raw
 	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
@@ -437,7 +430,6 @@ public class Slime extends GameObject {
 	 * 			| else
 	 * 			| 	then setTimeInWater(0)
 	 */
-	@Raw
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
 		if (this.isInContactWithFeature(newXPos,newYPos,3)) {
 			this.setTimeInMagma(this.getTimeInMagma() + dt);
@@ -503,7 +495,6 @@ public class Slime extends GameObject {
 	 * 			| updateImmunity(dt);
 	 * @effect the Slime dies if no longer possesses hitpoints
 	 */
-	@Raw
 	private void advanceTimeWhileLiving(double dt) {
 		this.randomMovement(dt);			
 		double[] newPos = this.calculateNewPos(dt);
@@ -536,7 +527,6 @@ public class Slime extends GameObject {
 	 * 			| if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) 
 	 * 			| 	then remove()
 	 */
-	@Raw
 	private void advanceTimeWhileDeath(double dt) {
 		this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
 		if (this.getTimeSinceDeath() >= GameObject.getTimeUntilRemove()) {
@@ -557,7 +547,6 @@ public class Slime extends GameObject {
 	 * 			| else
 	 * 			| 	then advanceTimeWhileDeath(dt)
 	 */
-	@Raw
 	public void advanceTime(double dt) throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);
@@ -605,7 +594,6 @@ public class Slime extends GameObject {
 	 *			| else 
 	 *			| 	then setTimeSinceMove(this.getTimeSinceMove() + dt)
 	 */
-	@Raw
 	private void randomMovement(double dt) {
 		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();
@@ -673,7 +661,7 @@ public class Slime extends GameObject {
 	 * 			| 	if (other != this)
 	 * 			| 		then other.setHitpoints(other.getHitpoints() - 1)
 	 */
-	@Override @Raw
+	@Override
 	public void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);
 		for (Slime other: this.getSchool().getMembers()) {

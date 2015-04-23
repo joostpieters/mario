@@ -342,7 +342,6 @@ public abstract class GameObject {
 	 * 			|else 
 	 * 			|	then this.hitpoints = this.getMaxHitpoints()
 	 */
-	@Raw
 	public void setHitpoints(int number) {
 		assert number >= 0;
 		if ( number < this.getMaxHitpoints()) {
@@ -372,7 +371,7 @@ public abstract class GameObject {
 	 * the time since the object has died
 	 * @return timeSinceDeath
 	 */
-	@Basic @Raw
+	@Basic
 	public double getTimeSinceDeath() {
 		return this.timeSinceDeath;
 	}
@@ -384,7 +383,6 @@ public abstract class GameObject {
 	 * 		| t >= 0
 	 * @post the time is set to t
 	 */
-	@Raw
 	public void setTimeSinceDeath(double t) {
 		assert t >= 0;
 		this.timeSinceDeath = t;
@@ -480,11 +478,11 @@ public abstract class GameObject {
 	 * The boolean to reflect or a gameObject is falling or not
 	 */
 	private boolean falling = false;
+	@Basic 
 	/**
 	 * checks or the object is falling or not
 	 * @return falling
 	 */
-	@Basic @Raw
 	protected boolean isFalling() {
 		return falling;
 	}
@@ -562,7 +560,7 @@ public abstract class GameObject {
 	 * Returns the time since the object got immune
 	 * @return timeSinceImmune
 	 */
-	@Basic @Raw
+	@Basic 
 	protected double getTimeSinceImmune() {
 		return this.timeSinceImmune;
 	}
@@ -575,7 +573,6 @@ public abstract class GameObject {
 	 * @post timeSinceImmune is set to t
 	 * 		 | this.timeSinceImmune = t
 	 */
-	@Raw
 	protected void setTimeSinceImmune(double t) {
 		assert t >= 0;
 		this.timeSinceImmune = t;
@@ -600,7 +597,7 @@ public abstract class GameObject {
 	 * returns the amount of hitpoints an object loses by touching an enemy
 	 * @return TOUCH_ENEMY
 	 */
-	@Basic @Immutable @Raw
+	@Basic @Immutable 
 	private static final int getTouchEnemy() {
 		return TOUCH_ENEMY;
 	}
@@ -612,7 +609,7 @@ public abstract class GameObject {
 	 * returns the time the object is in magma
 	 * @return timeInMagma
 	 */
-	@Basic @Raw
+	@Basic 
 	protected double getTimeInMagma() {
 		return this.timeInMagma;
 	}
@@ -625,7 +622,6 @@ public abstract class GameObject {
 	 * @post timeInMagma is set to t
 	 * 		 | this.timeInMagma = t
 	 */
-	@Raw
 	protected void setTimeInMagma(double t) {
 		assert t >= 0;
 		this.timeInMagma = t;
@@ -638,7 +634,7 @@ public abstract class GameObject {
 	 * returns the time the object is in water
 	 * @return timeInWater
 	 */
-	@Basic @Raw
+	@Basic 
 	protected double getTimeInWater() {
 		return this.timeInWater;
 	}
@@ -651,7 +647,6 @@ public abstract class GameObject {
 	 * @post timeInWater is set to t
 	 * 		 | this.timeInWater = t
 	 */
-	@Raw
 	protected void setTimeInWater(double t) {
 		assert t >= 0;
 		this.timeInWater = t;
@@ -664,7 +659,7 @@ public abstract class GameObject {
 	 * returns the time until the object starts drowning
 	 * @return DROWN_TIME
 	 */
-	@Basic @Immutable @Raw
+	@Basic @Immutable 
 	protected static final double getDrownTime() {
 		return DROWN_TIME;
 	}
@@ -700,7 +695,7 @@ public abstract class GameObject {
 	 * Returns the time until an object is removed after dying
 	 * @return TIME_UNTIL_REMOVE
 	 */
-	@Basic @Immutable @Raw
+	@Basic @Immutable 
 	protected static final double getTimeUntilRemove() {
 		return TIME_UNTIL_REMOVE;
 	}
@@ -714,7 +709,7 @@ public abstract class GameObject {
 	 * Returns the difference between the amount of hitpoints lost when touching magma
 	 * @return hitpointsDifference
 	 */
-	@Basic @Raw
+	@Basic 
 	protected double getHitpointsDifference() {
 		return hitpointsDifference;
 	}
@@ -729,7 +724,6 @@ public abstract class GameObject {
 	 * 			| this.hitpointsDifference = difference
 	 * 		
 	 */
-	@Raw
 	protected void setHitpointsDifference(double difference) {
 		assert !Double.isNaN(difference);
 		assert difference < 1 && difference > -1;
@@ -737,7 +731,6 @@ public abstract class GameObject {
 	}
 	
 //	Validations
-	
 	/**
 	 * Checks or the given sprites are valid
 	 * @param sprites
@@ -837,7 +830,6 @@ public abstract class GameObject {
 	protected boolean isWithinBoundaries(double x, double y) {
 		return isWithinBoundariesX(x) && isWithinBoundariesY(y);
 	}	
-	
 	/**
 	 * Makes the object die
 	 * @pre the hitpoints of the object should be smaller than or equal to zero
@@ -847,14 +839,12 @@ public abstract class GameObject {
 	 * @effect the object is set dying, waiting for his removal
 	 * 			| this.setDying()
 	 */
-	@Raw
 	protected void die() {
 		assert this.getHitpoints() <= 0;
 		this.setXSpeed(0);
 		this.setXAcc(0);
 		this.setDying();
 	}	
-	
 	/**
 	 * changes the orientation of the object
 	 * @effect if the orientation is LEFT, orientation is set to RIGHT
@@ -872,7 +862,6 @@ public abstract class GameObject {
 			this.setOrientationLeft();
 		}
 	}	
-	
 	/**
 	 * calculates and returns the new horizontal and vertical position
 	 * of the GameObject
@@ -893,7 +882,6 @@ public abstract class GameObject {
 	 * 			| in
 	 * 			| 	return new double[] {newXPos, newYPos}
 	 */
-	@Raw
 	protected double[] calculateNewPos(double dt) {		
 		double newXPos;
 		if (this.getOrientation() == Orientation.RIGHT) {
@@ -929,7 +917,6 @@ public abstract class GameObject {
 	 * 			| in
 	 * 			| 	return Math.min(dtX,dtY);
 	 */
-	@Raw
 	protected double computeDt(double dt) {
 		double dtX;
 		double dtY;
@@ -949,7 +936,6 @@ public abstract class GameObject {
 		}		
 		return Math.min(dtX,dtY);
 	}	
-	
 	/**
 	 * Returns the tiles where the object overlaps left with
 	 * @param XPos
@@ -965,7 +951,6 @@ public abstract class GameObject {
 	 * 		| in the positions of the tiles where the object overlaps left with are returned
 	 * 		| 	return getWorld().getTilePositionsIn(pixelLeft,pixelBottom + 2, pixelLeft, pixelTop - 1)
 	 */
-	@Raw
 	protected int[][] getTilesLeft(double XPos, double YPos) {
 		int pixelLeft = (int) XPos;
 		int pixelTop = (int) YPos + this.getSize()[1];
@@ -988,7 +973,6 @@ public abstract class GameObject {
 	 * 		| in
 	 * 		| 	return getWorld().getTilePositionsIn(pixelRight -1, pixelBottom + 2, pixelRight -1, pixelTop - 1)
 	 */
-	@Raw
 	protected int[][] getTilesRight(double XPos, double YPos) {
 		int pixelRight = (int) XPos + this.getSize()[0];
 		int pixelTop = (int) YPos + this.getSize()[1];
@@ -1010,7 +994,6 @@ public abstract class GameObject {
 	 * 		| in
 	 * 		| 	return getWorld().getTilePositionsIn(pixelLeft,pixelTop, pixelRight-1, pixelTop)
 	 */
-	@Raw
 	protected int[][] getTilesAbove(double xPos,double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelTop = (int)(yPos) + this.getSize()[1];
@@ -1032,7 +1015,6 @@ public abstract class GameObject {
 	 * 		| in
 	 * 		| 	return getWorld().getTilePositionsIn(pixelLeft,pixelBottom, pixelRight -1, pixelBottom)
 	 */
-	@Raw
 	protected int[][] getTilesUnder(double xPos, double yPos) {
 		int pixelLeft = (int)(xPos);
 		int pixelBottom = (int)(yPos);
@@ -1048,36 +1030,16 @@ public abstract class GameObject {
 	 * @return the position of the tiles in the region of the object
 	 * 		| this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim())
 	 */
-	@Raw
 	protected int[][] getTiles(double xPos, double yPos) {
 		return this.getWorld().getTilePositionsIn((int)xPos,(int) yPos,(int) xPos + this.getXDim(),(int) yPos + this.getYDim());
 	}
-	/**
-	 * returns true if the gameObject is on a floor
-	 * @param xPos
-	 * 			the horizontal position
-	 * @param yPos
-	 * 			the vertical position
-	 * @return true if on floor
-	 * 			| let
-	 * 			| 	int[][] tileUnder getTilesUnder(xPos, yPos)
-	 * 			| in
-	 * 			| for each int[] tile: tileUnder:
-	 * 			| 	try
-	 * 			|		if world.getGeologicalFeature(world.getBottomLeftPixelOfTile(tile[0], tile[1])[0],
-	 * 			|			world.getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1)
-	 * 			| 		then return true
-	 * 			|	catch (IllegalPixelException e)
-	 * 			|		then assert false
-	 * 			| return false
-	 */
-	@Raw
+	
 	protected boolean onFloor(double xPos, double yPos) {
 		int[][] tilesUnder = this.getTilesUnder(xPos, yPos);
 		for (int[] tile: tilesUnder) {
 			try {
-				if (this.getWorld().getGeologicalFeature(this.getWorld().getBottomLeftPixelOfTile(tile[0], tile[1])[0],
-							this.getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
+							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
 					return true;
 				}
 			} catch (IllegalPixelException e) {
@@ -1106,9 +1068,8 @@ public abstract class GameObject {
 	 * 		| 			assert false;
 	 * 		| 		}
 	 * 		| 	}
-	 * 		|	 return false
+	 * 		|	 return false;
 	 */
-	@Raw
 	protected boolean isAgainstRoof(double xPos, double yPos) {
 		int[][] tilesAbove = this.getTilesAbove(xPos, yPos);
 		for (int[] tile: tilesAbove) {
@@ -1144,7 +1105,6 @@ public abstract class GameObject {
 	 * 		| }
 	 * 		| return false;
 	 */
-	@Raw
 	protected boolean againstLeftWall(double xPos, double yPos) {
 		int[][] tilesLeft = this.getTilesLeft(xPos, yPos);
 		for (int[] tile: tilesLeft) {
@@ -1168,21 +1128,22 @@ public abstract class GameObject {
 	 * @return true if one of the tiles overlapping right of the object is impassable terrain
 	 * 		otherwise false
 	 * 		| int[][] tilesLeft = this.getTilesRight(xPos, yPos);
-	 * 		| for each tile in tilesRight:
-	 * 		| 	try
-	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0], tile[1])[0],
+	 * 		| for each tile in tilesRight) 
+	 * 		| 	try {
+	 * 		| 		if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
 	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) 
 	 * 		| 			then return true
-	 * 		| 	catch (IllegalPixelException e) 
-	 * 		| 		then assert false
-	 * 		| return false
+	 * 		| 	} catch (IllegalPixelException e) {
+	 * 		| 		assert false;
+	 * 		| 	}
+	 * 		| }
+	 * 		| return false;
 	 */
-	@Raw
 	protected boolean againstRightWall(double xPos, double yPos) {
 		int[][] tilesRight = this.getTilesRight(xPos, yPos);
 		for (int[] tile: tilesRight) {
 			try {
-				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0], tile[1])[0],
+				if (getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
 							getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == 1) {
 					return true;
 				}
@@ -1205,17 +1166,19 @@ public abstract class GameObject {
 	 * 		| feature <= 3
 	 * @return true if the object fully overlaps with tiles with the given feature, otherwise false
 	 * 		| int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
-	 * 		| for (int[][] tiles: tileFamilies) 
-	 * 		| 	for each tile in tiles:
-	 * 		| 		try 
+	 * 		| for (int[][] tiles: tileFamilies) {	
+	 * 		| 	for each tile in tiles)
+	 * 		| 		try {
 	 * 		| 			if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
 	 * 		| 					getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) != feature)
 	 * 		| 				the return false
-	 * 		| 		catch (IllegalPixelException e) 
-	 * 		| 			assert false
-	 * 		| return true
+	 * 		| 		} catch (IllegalPixelException e) {
+	 * 		| 			assert false;
+	 * 		| 		}
+	 * 		| 	}
+	 * 		| }
+	 * 		| return true;
 	 */
-	@Raw
 	protected boolean isFullyInFeature(double xPos, double yPos,int feature) {
 		assert(feature <= 3);
 		int[][][] tileFamilies = new int[][][] {this.getTilesRight(xPos,yPos),this.getTilesAbove(xPos, yPos),this.getTilesLeft(xPos, yPos)};
@@ -1245,15 +1208,16 @@ public abstract class GameObject {
 	 * @return true if the object is in contact with tiles with the given feature, otherwise false
 	 * 		| int[][] tiles = this.getTiles(xPos,yPos);
 	 * 		| for each tile in tiles) {
-	 * 		| 	try 
+	 * 		| 	try {
 	 * 		| 		if (this.getWorld().getGeologicalFeature(getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[0],
 	 * 		| 				getWorld().getBottomLeftPixelOfTile(tile[0],tile[1])[1]) == feature) 
 	 * 		| 			then return true
-	 * 		|  catch (IllegalPixelException e) 
-	 * 		| 		assert false
+	 * 		| 	} catch (IllegalPixelException e) {
+	 * 		| 		assert false;
+	 * 		| 	}
+	 * 		| }	
 	 * 		| return false;
 	 */
-	@Raw
 	protected boolean isInContactWithFeature(double xPos, double yPos,int feature) {
 		assert(feature <= 3);
 		int[][] tiles = this.getTiles(xPos,yPos);
@@ -1278,7 +1242,7 @@ public abstract class GameObject {
 	 * 			| if (this.getOrientation() == Orientation.RIGHT) 
 	 * 			| 	then return sprites[1]
 	 * 			| else 
-	 * 			| 	then return sprites[0]
+	 * 			| 	then return sprites[0];
 	 */
 	//TODO is die return hier nu dubbel? of zien ik scheel -> ik snap niet wat ge bedoelt, das toch gwn if...else...?
 	// in de commentaar :) -> aaaaah :D ja ik had dat gedaan maar ben die ene return vergeten te verwijderen maar tis gefixt nu 
@@ -1304,7 +1268,6 @@ public abstract class GameObject {
 	 * 		| 	then this.setXSpeed(this.getMaxSpeed());
 	 * 		| 	then this.setXAcc(0)
 	 */
-	@Raw
 	protected void setNewSpeed(double dt) {
 		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
 		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
@@ -1342,7 +1305,6 @@ public abstract class GameObject {
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */	
-	@Raw
 	protected boolean touches(double x1, double xDim1, double y1, double yDim1,
 			double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = ( (x2 >= x1) && (x2 <= x1 + xDim1) ) 
@@ -1379,7 +1341,6 @@ public abstract class GameObject {
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
-	@Raw
 	protected boolean collidesRight(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 >= x1) && (x2 <= x1 + xDim1);
@@ -1415,7 +1376,6 @@ public abstract class GameObject {
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
-	@Raw
 	protected boolean collidesLeft(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = (x2 + xDim2 >= x1) && (x2 + xDim2 <= x1 + xDim1);
@@ -1451,7 +1411,6 @@ public abstract class GameObject {
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
-	@Raw
 	protected boolean collidesAbove(double x1, double xDim1, double y1, double yDim1,
 									double x2, double xDim2, double y2, double yDim2) {
 		boolean xStatement = ( (x2  >= x1 ) && (x2 < x1 + xDim1) ) 
@@ -1487,7 +1446,6 @@ public abstract class GameObject {
 	 * 		| in 
 	 * 		| 	 return ((xStatement) && (yStatement))
 	 */
-	@Raw
 	protected boolean collidesUnder(double x1, double xDim1, double y1, double yDim1,
 								double x2, double xDim2, double y2, double yDim2) {
 		
@@ -1505,7 +1463,6 @@ public abstract class GameObject {
 	 * @effect hitpoints is set to the new value
 	 * 			| setHitpoints(getHitpoints() - nb)
 	 */
-	@Raw
 	protected void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);
 	}
@@ -1522,7 +1479,6 @@ public abstract class GameObject {
 	 * 			| 		 loseHitpoints(GameObject.getTouchEnemy())
 	 * 			| 		 setTimeSinceImmune(dt)
 	 */
-	@Raw
 	protected void contactDamage(double dt) {
 		if ( ! this.isImmune()) {
 			this.setImmune();
@@ -1544,7 +1500,6 @@ public abstract class GameObject {
 	 * 			| else 
 	 * 			| 	then setTimeSinceImmune(getTimeSinceImmune() + dt)
 	 */
-	@Raw
 	protected void updateImmunity(double dt) {
 		if (this.isImmune()) {
 			if (this.getTimeSinceImmune() > GameObject.getImmuneTime()) {
@@ -1567,7 +1522,6 @@ public abstract class GameObject {
 		this.setXSpeed(0);
 		this.setXAcc(0);
 	}
-	
 	/**
 	 * stops the vertical speed if the game object isn't moving downwards
 	 * @effect the vertical speed is set to zero if positive
@@ -1579,7 +1533,6 @@ public abstract class GameObject {
 			this.setYSpeed(0);
 		}
 	}
-	
 	/**
 	 * stops the movement in the x and y direction
 	 * @effect stops moving horizontally and vertically if moving up
@@ -1635,7 +1588,6 @@ public abstract class GameObject {
 	 * 			| 		 touched = 1
 	 * @return {newXPos, newYPos, touched, onGameObject}
 	 */
-	@Raw
 	public double [] collidesSomewhere(double newXPos, double xDim1, double newYPos, double yDim1, 
 			double x2, double xDim2, double y2, double yDim2) {
 		int touched = 0; // if 2 game objects touched each other, the value of touched will be 1

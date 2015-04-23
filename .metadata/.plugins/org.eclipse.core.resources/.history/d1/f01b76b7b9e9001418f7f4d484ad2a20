@@ -751,7 +751,7 @@ public class World {
 	 * @return (tileSize > 0)
 	 */
 	private boolean isValidTileSize(int tileSize){
-		return tileSize > 0;
+		return (tileSize > 0) && (tileSize != null);
 	}
 	/**
 	 * returns true if the given number of tiles nbTiles is valid (greater than 0)
@@ -759,7 +759,6 @@ public class World {
 	 * 			| nbTiles
 	 * @return (nbTiles > 0)
 	 */
-	
 	private boolean isValidNbTiles(int nbTiles){
 		return nbTiles > 0;
 	}
@@ -778,7 +777,6 @@ public class World {
 	 * @return ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
 				<=  tileSize * nbTilesY))
 	 */
-	@Raw
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
@@ -792,7 +790,6 @@ public class World {
 	 * 			the vertical position
 	 * @return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0))
 	 */
-	@Raw
 	private boolean isValidBottomLeftPixel(int pixelX, int pixelY) {
 		return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0));
 	}

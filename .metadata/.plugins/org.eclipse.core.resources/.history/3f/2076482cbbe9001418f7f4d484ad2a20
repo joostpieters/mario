@@ -30,7 +30,6 @@ public class Plant extends GameObject {
 	 * 			The given sprite is not valid
 	 * 			| ! isValidSprite(sprites) 
 	 */
-	@Raw
 	public Plant(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
@@ -78,7 +77,7 @@ public class Plant extends GameObject {
 	 * same orientation
 	 * @return timeSameOrientation
 	 */
-	@Basic @Raw
+	@Basic
 	private double getTimeSameOrientation() {
 		return timeSameOrientation;
 	}
@@ -102,7 +101,6 @@ public class Plant extends GameObject {
 	 * 		| t >= 0 
 	 * @post timeSameOrientation = t
 	 */
-	@Raw
 	private void setTimeSameOrientation(double t) {
 		assert t >= 0;
 		this.timeSameOrientation = t;
@@ -116,7 +114,7 @@ public class Plant extends GameObject {
 	 * 			the sprites
 	 * @return sprits.length == 2
 	 */
-	@Override @Raw
+	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}	
@@ -169,7 +167,6 @@ public class Plant extends GameObject {
 	 * 			| else if (getHitpoints() <= 0)
 	 * 			| 	then die()
 	 */
-	@Raw
 	public void advanceTime(double dt) {
 		
 		double newXPos = this.getXPos();
