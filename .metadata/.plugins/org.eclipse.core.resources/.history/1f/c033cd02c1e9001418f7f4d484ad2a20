@@ -728,30 +728,8 @@ public class Shark extends GameObject {
 	 * 			| 	List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes())
 	 * 			| 	boolean onGameObject = false
 	 * 			|	double[] newPos = {newXPos, newYPos}
-	 * 			| 	double xDim1 = this.getXDim()
-	 * 			|	double yDim1 = this.getYDim()
-	 * 			| 	double x2 = other.getXPos()
-	 * 			| 	double xDim2 = other.getXDim()
-	 * 			| 	double y2 = other.getYPos()
-	 * 			|	double yDim2 = other.getYDim()
 	 * 			| in
-	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
-	 * 			| allSlimesSharksMazub.add(world.getAlien())
-	 * 			| for each GameObject other: allSlimesSharksMazub :
-	 * 			| 	if (this != other)
-	 * 			| 		then newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,yDim2)
-	 * 			| 	if (newPos[3] == 1) 
-	 * 			| 		then onGameObject = true
-	 * 			| 	if ( newPos[2] == 1 && ( ! other.isDying()) && !(other instanceof Shark)) 
-	 * 			| 		this.contactDamage(dt)
-	 * 			|		if (! (this.collidesAbove(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)
-	 * 			|				&& other instanceof Mazub)) 
-	 * 			|			then other.contactDamage(dt)
-	 * 			| if (this.isFalling() && onGameObject)
-	 * 			| 	then this.endFall()
-	 * 			| else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.isFullyInFeature(newPos[0], newPos[1], 2))
-	 * 			|			&& ( ! this.onFloor(newPos[0],newPos[1])))
-	 * 			| 	then fall()
+	 * 
 	 * @return {newPos[0], newPos[1]}
 	 */
 	@Raw
@@ -761,15 +739,16 @@ public class Shark extends GameObject {
 		allSlimesSharksMazub.add(this.getWorld().getAlien());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
-		for (GameObject other: allSlimesSharksMazub) {
-			if (this != other) {
+		for(GameObject other: allSlimesSharksMazub) {
+			if(this != other) {
 				double xDim1 = this.getXDim();
 				double yDim1 = this.getYDim();
 				double x2 = other.getXPos();
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2);
+				newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,
+						yDim2);
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}

@@ -645,45 +645,16 @@ public class Shark extends GameObject {
 	 * starts a random movement for the Shark
 	 * @param dt
 	 * 			a small time interval
-	 * @effect the Shark moves randomly and changes the kind of movement every period
-	 * 			| let 
-	 * 			|	double randoNb
-	 * 			| in
-	 * 			| if (getTimeSinceMove() >= getMovementDuration())
-	 * 			| 	then stopMove()
-	 * 			| 		 setMovementDuration(Math.random() * 3 + 1)
-	 * 			| 		 setTimeSinceMove(dt)
-	 * 			| if ((getJumpCounter() >= 4) && (onFloor(getXPos(), getYPos()) || isInWater()))
-	 * 			| 	then randomNb = Math.random() * 4
-	 * 			| else
-	 * 			| 	then randomNb = Math.random() * 2
-	 * 			| if (randomNb < 1) 
-	 * 			| 	then moveRight()
-	 * 			| 	setJumpCounter(getJumpCounter() + 1)
-	 * 			| 	setMoving(true)
-	 * 			| else if (randomNb < 2)
-	 * 			| 	then moveLeft()
-	 * 			| 		 setJumpCounter(getJumpCounter() + 1)
-	 * 			| 		 setMoving(true)
-	 * 			| else if (randomNb < 3)
-	 * 			| 	then jumpRight()
-	 * 			| 		 setJumpCounter(0)
-	 * 			| 		 setMoving(false)
-	 * 			| else 
-	 * 			|	then jumpLeft()
-	 * 			| 		 setJumpCounter(0)
-	 * 			|		 setMoving(false)
-	 * 			| else
-	 * 			| 	then setTimeSinceMove(this.getTimeSinceMove() + dt)
 	 */
 	@Raw
+	// TODO vanaf hier commentaar nog schrijven, daarna is de commentaar af denk ik
 	private void randomMovement(double dt) {
 		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
 			this.stopMove();
 			this.setMovementDuration(Math.random() * 3 + 1);
 			this.setTimeSinceMove(dt);
 			double randomNb;
-			if ((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(), this.getYPos()) || this.isInWater())) {
+			if ((this.getJumpCounter() >= 4) && (this.onFloor(this.getXPos(),this.getYPos()) || this.isInWater())) {
 				randomNb = Math.random() * 4;
 			}
 			else {
@@ -694,12 +665,12 @@ public class Shark extends GameObject {
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
-			else if (randomNb < 2) {
+			else if (randomNb < 2){
 				this.moveLeft();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
-			else if (randomNb < 3) {
+			else if (randomNb < 3){
 				this.jumpRight();
 				this.setJumpCounter(0);
 				this.setMoving(false);
@@ -718,41 +689,9 @@ public class Shark extends GameObject {
 	/**
 	 * 
 	 * @param newXPos
-	 * 			the new calculated horizontal position
 	 * @param newYPos
-	 * 			the new calculated vertical position
 	 * @param dt
-	 * 			a small time interval over which the time must be advanced
-	 * @effect 
-	 * 			| let 
-	 * 			| 	List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes())
-	 * 			| 	boolean onGameObject = false
-	 * 			|	double[] newPos = {newXPos, newYPos}
-	 * 			| 	double xDim1 = this.getXDim()
-	 * 			|	double yDim1 = this.getYDim()
-	 * 			| 	double x2 = other.getXPos()
-	 * 			| 	double xDim2 = other.getXDim()
-	 * 			| 	double y2 = other.getYPos()
-	 * 			|	double yDim2 = other.getYDim()
-	 * 			| in
-	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
-	 * 			| allSlimesSharksMazub.add(world.getAlien())
-	 * 			| for each GameObject other: allSlimesSharksMazub :
-	 * 			| 	if (this != other)
-	 * 			| 		then newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,yDim2)
-	 * 			| 	if (newPos[3] == 1) 
-	 * 			| 		then onGameObject = true
-	 * 			| 	if ( newPos[2] == 1 && ( ! other.isDying()) && !(other instanceof Shark)) 
-	 * 			| 		this.contactDamage(dt)
-	 * 			|		if (! (this.collidesAbove(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)
-	 * 			|				&& other instanceof Mazub)) 
-	 * 			|			then other.contactDamage(dt)
-	 * 			| if (this.isFalling() && onGameObject)
-	 * 			| 	then this.endFall()
-	 * 			| else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.isFullyInFeature(newPos[0], newPos[1], 2))
-	 * 			|			&& ( ! this.onFloor(newPos[0],newPos[1])))
-	 * 			| 	then fall()
-	 * @return {newPos[0], newPos[1]}
+	 * @return
 	 */
 	@Raw
 	public double[] colliding(double newXPos, double newYPos, double dt) {	
@@ -761,15 +700,16 @@ public class Shark extends GameObject {
 		allSlimesSharksMazub.add(this.getWorld().getAlien());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
-		for (GameObject other: allSlimesSharksMazub) {
-			if (this != other) {
+		for(GameObject other: allSlimesSharksMazub) {
+			if(this != other) {
 				double xDim1 = this.getXDim();
 				double yDim1 = this.getYDim();
 				double x2 = other.getXPos();
 				double xDim2 = other.getXDim();
 				double y2 = other.getYPos();
 				double yDim2 = other.getYDim();
-				newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2);
+				newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,
+						yDim2);
 				if (newPos[3] == 1) {
 					onGameObject = true;
 				}

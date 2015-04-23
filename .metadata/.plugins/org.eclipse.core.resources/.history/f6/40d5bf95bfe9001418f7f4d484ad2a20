@@ -12,6 +12,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO alles final maken wat final moet zijn -> ook ongeveer klaar denk ik?
 // TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - a ut isme s peak ing
 // TODO in facade nog default constructor toevoegen
+// TODO @Raw toevoegen overal waar het nodig is
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren -> ik haat dit
