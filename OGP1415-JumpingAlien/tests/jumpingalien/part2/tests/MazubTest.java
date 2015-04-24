@@ -88,6 +88,7 @@ public class MazubTest {
 	}
 
 	@Test
+	// TODO geen idee wat er fout gaat, sprites zijn vaag
 	public void testWalkAnimationLastFrame() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -135,7 +136,7 @@ public class MazubTest {
 		Mazub alien = facade.createMazub(499, 499, sprites);
 		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
-		// walking till the end of the tile (and to a wall)
+		// walking till the right end of the tile (and to a wall)
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(world, 0.2);
 		}
@@ -154,7 +155,7 @@ public class MazubTest {
 		Mazub alien = facade.createMazub(499, 600, sprites);
 		facade.setMazub(world, alien);
 		facade.startMoveLeft(alien);
-		// walking to the left, so out of the field
+		// walking till the leftht end of the tile (and to a left wall)
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(world, 0.2);
 		}
@@ -174,122 +175,149 @@ public class MazubTest {
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(world, 0.2);
 		}
-		assertArrayEquals(intArray(50, 0), facade.getLocation(alien));
+		// alien has fallen and stands on the solid tile
+		assertArrayEquals(intArray(50, 499), facade.getLocation(alien));
 	}
 	
 	@Test
 	public void testBoundaryGround2() {
-		IFacade facade = new Facade();
-		
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(250, 0, sprites);
-		// jumping and falling to the ground
+		Mazub alien = facade.createMazub(50, 550, sprites);
+		facade.setMazub(world, alien);
+		// falling, jumping and falling to the ground
+		for (int i = 0; i < 20; i++) {
+			facade.advanceTime(world, 0.2);
+		}
 		facade.startJump(alien);
 		for (int i = 0; i < 100; i++) {
-			facade.advanceTime(alien, 0.2);
+			facade.advanceTime(world, 0.2);
 		}
-		assertArrayEquals(intArray(250, 0), facade.getLocation(alien));
+		assertArrayEquals(intArray(50, 499), facade.getLocation(alien));
 	}
 	
 	@Test
 	public void testVelocityDucking() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
-		facade.startMoveLeft(alien);
+		Mazub alien = facade.createMazub(2, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
 		// walking till maximum speed and then ducking
 		for (int i = 0; i < 100 ; i++) {
-			facade.advanceTime(alien, 0.2/9);
+			facade.advanceTime(world, 0.2/9);
 		}
 		facade.startDuck(alien);
-		facade.advanceTime(alien, 0.005);
+		facade.advanceTime(world, 0.005);
 		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
 	@Test
+	// TODO laten werken
 	public void testVelocityJumpHighestPoint() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startJump(alien);
 		// jumping till highest point
 		for (int i = 0; i < 11 ; i++) {
-			facade.advanceTime(alien, 0.08);
-		}
-		assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
+			facade.advanceTime(world, 0.08);
+			assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
+					Util.DEFAULT_EPSILON);
+		}		
 	}
 	
 	@Test
+	// TODO laten werken
 	public void testAccelerationJump() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startJump(alien);
 		// jumping till highest point
-		for (int i = 0; i < 11 ; i++) {
-			facade.advanceTime(alien, 0.08);
-		}
-		assertArrayEquals(doubleArray(0, -10), facade.getAcceleration(alien),
-				Util.DEFAULT_EPSILON);
+		for (int i = 0; i < 12 ; i++) {
+			facade.advanceTime(world, 0.08);
+			assertArrayEquals(doubleArray(0, -10), facade.getAcceleration(alien),
+					Util.DEFAULT_EPSILON);
+		}		
 	}
 	
 	@Test
 	public void testFallAcceleration() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startJump(alien);
 		// jumping till highest point
 		for (int i = 0; i < 5; i++) {
-			facade.advanceTime(alien, 0.07);
+			facade.advanceTime(world, 0.08);
 		}
-		assertArrayEquals(intArray(0, 240), facade.getLocation(alien));
+		// 739 = 499 + 240
+		assertArrayEquals(intArray(50, 739), facade.getLocation(alien));
 	}
 	
 	@Test
 	public void testEndFallLocation() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startJump(alien);
 		//jumping and falling
 		for (int i = 0; i < 22 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
-		assertArrayEquals(intArray(0, 0), facade.getLocation(alien));
+		assertArrayEquals(intArray(50, 499), facade.getLocation(alien));
 	}
 	
 	@Test
 	public void testSpeedWhenJumping() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		// start moving to the right and accelerating
 		facade.startMoveRight(alien);
 		// mazub reaches it's maximum horizontal speed after
 		// 2.23s (=28*0.08)
 		for (int i = 0; i < 29 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
 		// mazub starts jumping when he is moving horizontally
 		// at a speed of 3m/s (maxSpeed)
 		facade.startJump(alien);
 		for (int i = 0; i < 1 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.0001);
 		}
 		assertArrayEquals(doubleArray(3, 8), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
@@ -297,28 +325,31 @@ public class MazubTest {
 	
 	@Test
 	public void testSpeedWhenJumpingAndDucking() {
-		IFacade facade = new Facade();
-
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		// start moving to the right and accelerating
 		facade.startMoveRight(alien);
 		// mazub reaches it's maximum horizontal speed after
 		// 2.23s (=28*0.08)
 		for (int i = 0; i < 29 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
 		// mazub starts jumping when he is moving horizontally
 		// at a speed of 3m/s (maxSpeed)
 		facade.startJump(alien);
 		for (int i = 0; i < 7 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
 		// mazub starts ducking when jumping
 		facade.startDuck(alien);
 		for (int i = 0; i < 3 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
 		// the horizontal speed of mazub must be 1m/s
 		assertEquals(1, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
@@ -326,131 +357,169 @@ public class MazubTest {
 	
 	@Test(expected = ModelException.class)
 	public void illegalSprite() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
-		Sprite[] sprites = spriteArrayForSize(1, 3, 9 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites);
+		Sprite[] sprites = spriteArrayForSize(2, 3, 11 + 2 * m);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
 		for (int i = 0; i < 29 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
 	}
 	
 	@Test(expected = ModelException.class)
 	public void illegalPosition() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		// an illegal horizontal position of mazub
 		Mazub alien = facade.createMazub(-5, 5, sprites);
+		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
-		facade.advanceTime(alien, 0.08);
+		facade.advanceTime(world, 0.08);
 	}
 	
 	@Test(expected = ModelException.class)
 	public void illegalInitStartSpeed() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(50, 499, sprites, -5, 3);
+		facade.setMazub(world, alien);
 		// the adapted initStartSpeed is negative
-		Mazub alien = facade.createMazub(5, 6, sprites, -5, 3);
 		facade.startMoveRight(alien);
 	}
 	
 	@Test(expected = ModelException.class)
 	public void illegalMaxSpeed() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// the adapted maxSpeed is negative
-		Mazub alien = facade.createMazub(5, 6, sprites, 2, -666);
+		// a negative maxspeed
+		Mazub alien = facade.createMazub(50, 499, sprites, 2, -666);
+		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
 	}
 	
 	@Test(expected = ModelException.class)
 	public void illegalSpeed() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// The maxSpeed of mazub is smaller than the initStartSpeed
-		Mazub alien = facade.createMazub(5, 6, sprites, 2, 1);
+		// the maxspeed is smaller than the initstartSpeed
+		Mazub alien = facade.createMazub(50, 499, sprites, 2, 1);
+		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
 	}
 	
 	@Test(expected = ModelException.class)
 	public void illegalnegativeDt() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// the adapted maxSpeed is negative
-		Mazub alien = facade.createMazub(0, 0, sprites);
-		facade.advanceTime(alien, -1);
+		Mazub alien = facade.createMazub(50, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, -1);
 	}
 	
 	@Test(expected = ModelException.class)
 	public void illegalbigDt() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// the adapted maxSpeed is negative
-		Mazub alien = facade.createMazub(0,0, sprites);
-		facade.advanceTime(alien,2.01);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 2.01);
 	}
 	
 	@Test
 	public void otherInitStartSpeed() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(0, 0, sprites, 2, 2);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
-		assertEquals(2, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
+		assertEquals(1, facade.getVelocity(alien)[0], Util.DEFAULT_EPSILON);
 	}
 	
 
 	@Test
 	public void MaxSpeedAfterDucking() {
-		IFacade facade = new Facade();
-
-		Mazub alien = facade.createMazub(0, 0, spriteArrayForSize(2, 2));
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(2, 499, sprites);
+		facade.setMazub(world, alien);
 		facade.startDuck(alien);
 		facade.endDuck(alien);
 		facade.startMoveRight(alien);
 		// maximum speed reached after 20/9 seconds
 		for (int i = 0; i < 100; i++) {
-			facade.advanceTime(alien, 0.2 / 9);
+			facade.advanceTime(world, 0.2 / 9);
 		}
 		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
 
 	@Test(expected = ModelException.class)
+	// TODO dit is een fout in de code ergens
 	public void illegalPosition2() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		// The maxSpeed of mazub is smaller than the initStartSpeed
-		Mazub alien = facade.createMazub(500, 2000, sprites);
+		Mazub alien = facade.createMazub(4000, 666, sprites);
+		facade.setMazub(world, alien);
 		facade.startMoveRight(alien);
 	}
 	
 	@Test
 	public void JumpAndEndJump() {
-		IFacade facade = new Facade();
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		int m = 10;
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
-		Mazub alien = facade.createMazub(200, 0, sprites);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
 		// the alien starts jumping
 		facade.startJump(alien);
 		for (int i = 0; i < 4 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
 		// while the alien is jumping, endJump is invoced,
 		// ySpeed becomes 0 and the alien falls
 		facade.endJump(alien);
 		for (int i = 0; i < 11 ; i++) {
-			facade.advanceTime(alien, 0.08);
+			facade.advanceTime(world, 0.08);
 		}
-		assertArrayEquals(intArray(200, 0), facade.getLocation(alien));
+		assertArrayEquals(intArray(499, 499), facade.getLocation(alien));
 	}
 }
