@@ -2,6 +2,9 @@ package jumpingalien.part2.tests;
 
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertEquals;
+
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
 import jumpingalien.model.School;
@@ -102,13 +105,13 @@ public class SlimeTest {
 	public void testDie() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(50, 5, 5, 1, 1, 2, 2);
-		// x * x
-		// * x *
+		// s a s
+		// a s a
 		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
 		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
 		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);	
 		School school = facade.createSchool();
-		Mazub alien = facade.createMazub(49, 452, spriteArrayForSize(50, 3));
+		Mazub alien = facade.createMazub(49, 502, spriteArrayForSize(50, 3));
 		Slime slime = facade.createSlime(49, 499, spriteArrayForSize(50, 3, 2), school);
 		facade.setMazub(world, alien);
 		facade.addSlime(world, slime);
@@ -121,4 +124,141 @@ public class SlimeTest {
 		assertEquals(slime.getHitpoints(), 0);
 	}
 	// TODO laten werken
+
+		
+	@Test 
+	public void testShortInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(0, 999, spriteArrayForSize(50, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
+		facade.setMazub(world, alien);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}		
+		//0.1 second, so the slime does not lose hitpoints
+		assertEquals(slime.getHitpoints(), 100);
+	}
+	
+	@Test 
+	public void testLongInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(0, 999, spriteArrayForSize(50, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
+		facade.setMazub(world, alien);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 5; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.5 seconds in water, so the slimes loses 2 * 2 hitpoints
+		assertEquals(slime.getHitpoints(), 96);
+	}
+	@Test 
+	public void testDieInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(0, 999, spriteArrayForSize(50, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
+		facade.setMazub(world, alien);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 102; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 10.2 seconds in water, so the slimes loses 50 * 2 hitpoints, he is dead now
+		// but still in the world
+		for (Slime deadSlime: world.getSlimes()) {
+			assertEquals(deadSlime.getHitpoints(), 0);
+		}
+	}
+	
+	@Test 
+	public void testRemoveAfterDeath() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(0, 999, spriteArrayForSize(50, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
+		facade.setMazub(world, alien);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 108; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 10.8 seconds in water, the slime dies and is removed after 0.6 seconds, so no part anymore of world
+		assertEquals(world.getSlimes(),  new CopyOnWriteArrayList<Slime>());
+	}
+	@Test 
+	public void testShortInMagma() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s m s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);		
+		Mazub alien = facade.createMazub(0, 999, spriteArrayForSize(50, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
+		facade.setMazub(world, alien);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}		
+		//0.1 second in magma, so the slime loses 25 hitpoints
+		assertEquals(slime.getHitpoints(), 75);
+	}
+	
+	@Test 
+	public void testLongInMagma() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s m s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);		
+		Mazub alien = facade.createMazub(0, 999, spriteArrayForSize(50, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
+		facade.setMazub(world, alien);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 5; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.4 seconds in magma, so the slimes loses 2 * 50 hitpoints
+		assertEquals(slime.getHitpoints(), 0);
+	}
+	
+	
+	
 }
