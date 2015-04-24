@@ -951,7 +951,7 @@ public class World {
 		}
 		if (alien.computeDt(dtGiven) < dt) {
 			dt = alien.computeDt(dtGiven);
-		}		
+		}	
 		return dt;
 	}
 	
@@ -991,7 +991,8 @@ public class World {
 				advanceEveryGameObject(minDt);
 			}
 		}
-		advanceEveryGameObject(dt - timePassed);
+		if (dt - timePassed > 0)
+			advanceEveryGameObject(dt - timePassed);
 	}
 	
 	

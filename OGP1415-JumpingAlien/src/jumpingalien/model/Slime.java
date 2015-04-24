@@ -57,11 +57,11 @@ public class Slime extends GameObject {
 	/**
 	 * the amount of hitpoints a slime loses when drowning (per 0.2 seconds)
 	 */
-	private static final int LOSS_HITPOINTS_IN_WATER = 6;
+	private static final int LOSS_HITPOINTS_IN_WATER = 2;
 	/**
 	 * returns the int that gives the amount of hitpoints a slime loses when 
 	 * drowning in water
-	 * @return the amount of hitpoints to lose er 0.2 seconds
+	 * @return the amount of hitpoints to lose every 0.2 seconds
 	 * 			| LOSS_HITPOINTS_IN_WATER
 	 */
 	@Basic @Immutable 
@@ -448,18 +448,17 @@ public class Slime extends GameObject {
 	 */
 	@Raw
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
-		if (this.isInContactWithFeature(newXPos,newYPos,3)) {
-			this.setTimeInMagma(this.getTimeInMagma() + dt);
-			if (this.getTimeInMagma() >= Slime.getBurnTime()) {
-				this.loseHitpoints( (int) GameObject.getLossHitpointsInMagma());
-				this.setTimeInMagma(this.getTimeInMagma() - dt);
-			}
+		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
+			double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
+								+ this.getHitpointsDifference();
+			this.setHitpointsDifference(toLose - (int) toLose);
+			this.loseHitpoints( (int) toLose);
 		}
 		if (this.isInContactWithFeature(newXPos,newYPos,2)) {
 			this.setTimeInWater(this.getTimeInWater() + dt);
 			if (this.getTimeInWater() >= Slime.getDrownTime()) {
 				this.loseHitpoints(Slime.getLossHitpointsInWater());
-				this.setTimeInWater(this.getTimeInWater() - dt);
+				this.setTimeInWater(this.getTimeInWater() - GameObject.getDrownTime());
 			}			
 		}
 		else {
