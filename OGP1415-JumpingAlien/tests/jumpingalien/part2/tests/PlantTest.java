@@ -6,12 +6,15 @@ import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import jumpingalien.model.Mazub;
+import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
+import jumpingalien.model.School;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
+import jumpingalien.util.ModelException;
 import jumpingalien.util.Sprite;
 import jumpingalien.util.Util;
 
@@ -19,15 +22,79 @@ import org.junit.Test;
 
 public class PlantTest {
 	
+	public static final int FEATURE_AIR = 0;
+	public static final int FEATURE_SOLID = 1;
+	public static final int FEATURE_WATER = 2;
+	public static final int FEATURE_MAGMA = 3;
+	
 	@Test 
-	public void testAdvanceTime() {
+	public void testAdvanceTimeCorrect() {
 		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(5, 4, 3, 1, 1, 1, 1);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		Mazub alien = facade.createMazub(200, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
 		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 2));
-		plant.advanceTime(0.5);
-		assertArrayEquals(intArray(50, 0), facade.getLocation(plant));
+		facade.addPlant(world, plant);
+		for (int i = 0; i < 5; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.5 sec* 0.5 m/s = 0.25 m = 25 pixels
+		assertArrayEquals(intArray(25, 0), facade.getLocation(plant));
 	}	
-	//TODO dat werkt precies niet e :D
+	
+	@Test 
+	public void testChangeOrientation() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		Mazub alien = facade.createMazub(200, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 2));
+		facade.addPlant(world, plant);
+		for (int i = 0; i < 7; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// plant changed orientation after 0.5 seconds
+		assertEquals(Orientation.LEFT, plant.getOrientation());
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testNotWithinBoundaries() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		Mazub alien = facade.createMazub(200, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		// the plant is not initiated within the boundaries of the game world
+		Plant plant = facade.createPlant(-5, -20, spriteArrayForSize(1, 1, 2));
+		facade.addPlant(world, plant);
+		for (int i = 0; i < 7; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+	}
+	
+	@Test 
+	public void testDie() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(0, 502, spriteArrayForSize(3, 3));
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(999, 999, spriteArrayForSize(2, 2), school);
+//		Probleem in collidingSlimesSharks: ik denk dat hij die allSlimesSharks
+//		niet kan maken als er geen slimes/sharks zijn
+		Shark shark = facade.createShark(1200, 50, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlant(1, 502, spriteArrayForSize(1, 1, 2));
+		facade.setMazub(world, alien);
+		facade.addShark(world, shark);
+		facade.addSlime(world, slime);
+		facade.addPlant(world, plant);
+		alien.startMoveRight();
+		for (int i = 0; i < 2; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// Mazub has eaten the plant so his hitpoints augmented with 50
+		assertEquals(alien.getHitpoints(), 150);
+	}
+	// TODO dit laten werken, stomme test
+	
 	
 }

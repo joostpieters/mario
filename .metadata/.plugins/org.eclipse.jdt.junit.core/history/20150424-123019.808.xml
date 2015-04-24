@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PlantTest" project="OGP1415-JumpingAlien" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.PlantTest" time="0.033">
+    <testcase name="testAdvanceTimeCorrect" classname="jumpingalien.part2.tests.PlantTest" time="0.022"/>
+    <testcase name="testNotWithinBoundaries" classname="jumpingalien.part2.tests.PlantTest" time="0.002"/>
+    <testcase name="testChangeOrientation" classname="jumpingalien.part2.tests.PlantTest" time="0.009"/>
+  </testsuite>
+</testrun>

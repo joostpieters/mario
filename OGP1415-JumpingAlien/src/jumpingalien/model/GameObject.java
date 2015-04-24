@@ -36,9 +36,9 @@ public abstract class GameObject {
 	@Raw
 	protected GameObject(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
-				if(!isValidPosition(xPos,yPos))
+				if( ! isValidPosition(xPos,yPos))
 					throw new IllegalPositionException(xPos,yPos); 
-				if (!isValidSprite(sprites))
+				if ( ! isValidSprite(sprites))
 					throw new IllegalSpriteException(sprites);
 		this.setXPos(xPos);
 		this.setYPos(yPos);
