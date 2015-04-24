@@ -141,7 +141,9 @@ public class Plant extends GameObject {
 	 * positions are calculated and updated
 	 * 
 	 * @param dt: the amount of seconds the time has to be advanced
-	 * 
+	 * @throws IllegalDtException
+	 * 			the given dt is not valid 
+	 * 			| ! isValidDt(dt) 
 	 * @effect timeSameOrientation is updated
 	 * 			| setTimeSameOrientation(getTimeSameOrientation() + dt)
 	 * @effect the new horizontal position newXPos is calculated
@@ -170,7 +172,9 @@ public class Plant extends GameObject {
 	 * 			| 	then die()
 	 */
 	@Raw
-	public void advanceTime(double dt) {
+	public void advanceTime(double dt)throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);	
 		
 		double newXPos = this.getXPos();		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
