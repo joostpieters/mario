@@ -632,11 +632,10 @@ public class MazubTest {
 		facade.addShark(world, shark);
 		School school = facade.createSchool();
 		Slime slime = facade.createSlime(130, 500, spriteArrayForSize(2, 2), school);
-		facade.addSlime(world, slime);
 		for (int i = 0; i < 15; i++) {
 			facade.advanceTime(world, 0.1);
 		}
-		// the alien collided with the slime
+		// the alien collided with the plant, so his hitpoints augmented with 50
 		assertEquals(150, facade.getNbHitPoints(alien),
 				Util.DEFAULT_EPSILON);
 	}
@@ -655,7 +654,7 @@ public class MazubTest {
 		for (int i = 0; i < 15; i++) {
 			facade.advanceTime(world, 0.1);
 		}
-		// the alien collided with the shark
+		// the alien collided with the plant, so his hitpoints augmented with 50
 		assertEquals(150, facade.getNbHitPoints(alien),
 				Util.DEFAULT_EPSILON);
 	}

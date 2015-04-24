@@ -7,7 +7,6 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
-import jumpingalien.model.School;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
@@ -233,12 +232,11 @@ public class MazubTest {
 		facade.setMazub(world, alien);
 		facade.startJump(alien);
 		// jumping till highest point
-		for (int i = 0; i < 10 ; i++) {
+		for (int i = 0; i < 11 ; i++) {
 			facade.advanceTime(world, 0.08);
-		}
-		// at the heighest point of the jump, the vertical velocity is equal to zero
-		assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
+			assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
+					Util.DEFAULT_EPSILON);
+		}		
 	}
 	
 	@Test
@@ -524,141 +522,4 @@ public class MazubTest {
 		}
 		assertArrayEquals(intArray(499, 499), facade.getLocation(alien));
 	}
-	
-	@Test
-	public void testEndMoveRight() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.startMoveRight(alien);
-		for (int i = 0; i < 15; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		alien.endMoveRight();
-		assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
-		assertArrayEquals(doubleArray(0, 0), facade.getAcceleration(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	@Test
-	public void testEndMoveLeft() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(400, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.startMoveLeft(alien);
-		for (int i = 0; i < 15; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		alien.endMoveRight();
-		assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
-		assertArrayEquals(doubleArray(0, 0), facade.getAcceleration(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	@Test
-	public void testJumpWhileJumping() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.startJump(alien);
-		for (int i = 0; i < 5; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		assertArrayEquals(doubleArray(0, -10), facade.getAcceleration(alien),
-				Util.DEFAULT_EPSILON);
-		assertArrayEquals(doubleArray(0, 3), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
-		facade.startJump(alien);
-		// the startJump didn't adapt the velocity or acceleration
-		// because alien wasn't on the ground
-		assertArrayEquals(doubleArray(0, -10), facade.getAcceleration(alien),
-				Util.DEFAULT_EPSILON);
-		assertArrayEquals(doubleArray(0, 3), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	@Test
-	public void testEndJump() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.startJump(alien);
-		for (int i = 0; i < 2; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		facade.endJump(alien);
-		assertArrayEquals(doubleArray(0, 0), facade.getVelocity(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	@Test
-	// TODO werkt nog niet
-	public void testCollidingPlants() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		Plant plant = facade.createPlant(130, 500, spriteArrayForSize(2, 2));
-		facade.addPlant(world, plant);
-		facade.startMoveRight(alien);
-		for (int i = 0; i < 15; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		// the alien collided with the plant, so his hitpoints augmented with 50
-		assertEquals(150, facade.getNbHitPoints(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	@Test
-	// TODO werkt nog niet
-	public void testCollidingSlimes() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		Shark shark = facade.createShark(130, 500, spriteArrayForSize(2, 2));
-		facade.addShark(world, shark);
-		School school = facade.createSchool();
-		Slime slime = facade.createSlime(130, 500, spriteArrayForSize(2, 2), school);
-		facade.addSlime(world, slime);
-		for (int i = 0; i < 15; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		// the alien collided with the slime
-		assertEquals(150, facade.getNbHitPoints(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	@Test
-	// TODO werkt nog niet
-	public void testCollidingSharks() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		Shark shark = facade.createShark(130, 500, spriteArrayForSize(2, 2));
-		facade.addShark(world, shark);
-		facade.startMoveRight(alien);
-		for (int i = 0; i < 15; i++) {
-			facade.advanceTime(world, 0.1);
-		}
-		// the alien collided with the shark
-		assertEquals(150, facade.getNbHitPoints(alien),
-				Util.DEFAULT_EPSILON);
-	}
-	
-	
 }

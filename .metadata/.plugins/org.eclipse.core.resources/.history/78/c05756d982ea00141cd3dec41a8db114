@@ -34,6 +34,7 @@ public class Facade implements IFacadePart2 {
 			throw new ModelException(f.getMessage());
 		}
 	}
+	@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
 			int initStartSpeed, int maxSpeed) {
 		try {return new Mazub(pixelLeftX, pixelBottomY, sprites, initStartSpeed, maxSpeed);}
@@ -200,7 +201,7 @@ public class Facade implements IFacadePart2 {
 	}
 	@Override
 	public Plant createPlant(int x, int y, Sprite[] sprites) {
-		try { return new Plant(x,y,sprites);}
+		try{ return new Plant(x,y,sprites);}
 		catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
 		}

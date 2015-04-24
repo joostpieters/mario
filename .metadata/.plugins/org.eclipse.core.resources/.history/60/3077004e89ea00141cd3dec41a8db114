@@ -200,7 +200,7 @@ public class Facade implements IFacadePart2 {
 	}
 	@Override
 	public Plant createPlant(int x, int y, Sprite[] sprites) {
-		try { return new Plant(x,y,sprites);}
+		try{ return new Plant(x,y,sprites);}
 		catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
 		}

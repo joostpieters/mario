@@ -24,7 +24,6 @@ import jumpingalien.util.Sprite;
 public class Facade implements IFacadePart2 {
 // TODO Hier zou een default constructor moeten staan!!
 	
-	@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
 		try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
 		catch (IllegalPositionException e) {
@@ -200,7 +199,7 @@ public class Facade implements IFacadePart2 {
 	}
 	@Override
 	public Plant createPlant(int x, int y, Sprite[] sprites) {
-		try { return new Plant(x,y,sprites);}
+		try{ return new Plant(x,y,sprites);}
 		catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
 		}
