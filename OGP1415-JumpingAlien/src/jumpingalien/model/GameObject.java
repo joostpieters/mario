@@ -535,7 +535,7 @@ public abstract class GameObject {
 	 *         there are no interactions between the object and enemy objects).
 	 */
 	@Basic 
-	protected boolean isImmune() {
+	public boolean isImmune() {
 		return this.immune;
 	}
 	/**

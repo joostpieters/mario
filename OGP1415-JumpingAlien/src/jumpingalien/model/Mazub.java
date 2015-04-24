@@ -354,16 +354,7 @@ public class Mazub extends GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}	
-	/**
-	 * Returns whether the given alien is currently immune against enemies
-	 * 
-	 * @return True if the given alien is immune against other enemies (i.e.,
-	 *         there are no interactions between the alien and enemy objects).
-	 */
-	@Basic
-	public boolean isImmune() {
-		return immune;
-	}
+	
 	
 //Setters	
 	
