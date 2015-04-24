@@ -5,6 +5,9 @@ import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
@@ -60,32 +63,29 @@ public class PlantTest {
 	@Test(expected = ModelException.class)
 	public void testNotWithinBoundaries() {
 		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		Mazub alien = facade.createMazub(200, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		// the plant is not initiated within the boundaries of the game world
 		Plant plant = facade.createPlant(-5, -20, spriteArrayForSize(1, 1, 2));
-		facade.addPlant(world, plant);
-		for (int i = 0; i < 7; i++) {
-			facade.advanceTime(world, 0.1);
-		}
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testSpriteTooShort() {
+		IFacadePart2 facade = new Facade();
+		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 1));
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testSpriteTooLong() {
+		IFacadePart2 facade = new Facade();
+		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 3));
 	}
 	
 	@Test 
 	public void testDie() {
 		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 502, spriteArrayForSize(3, 3));
-		School school = facade.createSchool();
-		Slime slime = facade.createSlime(999, 999, spriteArrayForSize(2, 2), school);
-//		Probleem in collidingSlimesSharks: ik denk dat hij die allSlimesSharks
-//		niet kan maken als er geen slimes/sharks zijn
-		Shark shark = facade.createShark(1200, 50, spriteArrayForSize(3, 3));
-		Plant plant = facade.createPlant(1, 502, spriteArrayForSize(1, 1, 2));
+		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlant(1, 500, spriteArrayForSize(10, 10, 2));
 		facade.setMazub(world, alien);
-		facade.addShark(world, shark);
-		facade.addSlime(world, slime);
 		facade.addPlant(world, plant);
 		alien.startMoveRight();
 		for (int i = 0; i < 2; i++) {
@@ -94,7 +94,36 @@ public class PlantTest {
 		// Mazub has eaten the plant so his hitpoints augmented with 50
 		assertEquals(alien.getHitpoints(), 150);
 	}
-	// TODO dit laten werken, stomme test
 	
+	@Test 
+	public void testRemove() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlant(1, 500, spriteArrayForSize(10, 10, 2));
+		facade.setMazub(world, alien);
+		facade.addPlant(world, plant);
+		alien.startMoveRight();
+		for (int i = 0; i < 7; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// Mazub has eaten the plant and 0.6 seconds later the plant should be removed
+		assertEquals(world.getPlants(), new CopyOnWriteArrayList<Plant>());
+	}
 	
+	@Test 
+	public void testCorrectSpeed() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlant(500, 1000, spriteArrayForSize(1, 1, 2));
+		facade.setMazub(world, alien);
+		facade.addPlant(world, plant);
+		facade.advanceTime(world, 0.1);
+		assertArrayEquals(doubleArray(0.5, 0), plant.getVelocity(),
+				Util.DEFAULT_EPSILON);
+	}
+		
 }
