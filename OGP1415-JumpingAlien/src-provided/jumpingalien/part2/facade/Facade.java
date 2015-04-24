@@ -6,6 +6,7 @@ import jumpingalien.model.IllegalAmountOfCharactersException;
 import jumpingalien.model.IllegalDtException;
 import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.IllegalPositionException;
+import jumpingalien.model.IllegalSchoolException;
 import jumpingalien.model.IllegalSpeedException;
 import jumpingalien.model.IllegalSpriteException;
 import jumpingalien.model.IllegalTargetTileException;
@@ -266,6 +267,9 @@ public class Facade implements IFacadePart2 {
 		}
 		catch (IllegalSpriteException e) {
 			throw new ModelException(e.getMessage());
+		}
+		catch (IllegalSchoolException f) {
+			throw new ModelException(f.getMessage());
 		}
 		
 	}

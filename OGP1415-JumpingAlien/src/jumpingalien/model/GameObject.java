@@ -241,7 +241,7 @@ public abstract class GameObject {
 	 * @return xAcc
 	 */
 	@Basic @Raw
-	public double getXAcc() {
+	protected double getXAcc() {
 		return xAcc;
 	}
 	/**
@@ -254,7 +254,7 @@ public abstract class GameObject {
 	 * @post xAcc is set
 	 */
 	@Raw 
-	public void setXAcc(double xAcc) {
+	protected void setXAcc(double xAcc) {
 		assert ( ! Double.isNaN(xAcc));
 		assert (xAcc >= 0);	
 		this.xAcc = xAcc;

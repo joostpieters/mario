@@ -22,7 +22,7 @@ public class Shark extends GameObject {
 	 *            An array of sprites for the new shark
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the shark
-	 * 			| !isValidPosition(x_pos,y_pos)
+	 * 			| !isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 

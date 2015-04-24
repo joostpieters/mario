@@ -25,7 +25,7 @@ public class Plant extends GameObject {
 	 * 			| new.setHitpoitns(Plant.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the plant
-	 * 			| ! isValidPosition(x_pos,y_pos)
+	 * 			| ! isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| ! isValidSprite(sprites) 

@@ -45,7 +45,7 @@ public class Mazub extends GameObject {
 	 * 			| new.setHitpoints(Mazub.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
-	 * 			| ! isValidPosition(x_pos,y_pos)
+	 * 			| ! isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| ! isValidSprite(sprites) 
@@ -85,13 +85,13 @@ public class Mazub extends GameObject {
 	 * 			| new.setHitpoints(Mazub.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Mazub
-	 * 			| !isValidPosition(x_pos,y_pos)
+	 * 			| !isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites) 
 	 * @throws IllegalSpeedException
 	 * 			The given maxSpeed and initalStartSpeed are not valid
-	 * 			| ! isValidSpeed()
+	 * 			| ! isValidSpeed(initStartSpeed, maxSpeed)
 	 * The initial velocity will never be changed below 1 m/s so
 	 * we don't need an IllegalInitStartSpeedException or a
 	 * IllegalMaxSpeedException. 
@@ -102,10 +102,12 @@ public class Mazub extends GameObject {
 			int initStartSpeed,int maxSpeed)
 		throws IllegalPositionException,IllegalSpriteException
 			, IllegalSpeedException {
-			super(xPos, yPos, sprites);
-			this.setInitStartSpeed(initStartSpeed);
-			this.setMaxSpeed(maxSpeed);
-			this.setHitpoints(Mazub.getInitHitpoints());
+		super(xPos, yPos, sprites);
+		if( !isValidSpeed(initStartSpeed, maxSpeed))
+			throw new IllegalSpeedException(initStartSpeed, maxSpeed);
+		this.setInitStartSpeed(initStartSpeed);
+		this.setMaxSpeed(maxSpeed);
+		this.setHitpoints(Mazub.getInitHitpoints());
 	}
 	
 	

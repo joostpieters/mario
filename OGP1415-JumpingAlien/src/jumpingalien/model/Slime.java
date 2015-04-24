@@ -33,15 +33,20 @@ public class Slime extends GameObject {
 	 * 			| setMaxSpeed(Slime.getMaxXSpeed())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the slime
-	 * 			| ! isValidPosition(x_pos,y_pos)
+	 * 			| ! isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| ! isValidSprite(sprites) 
+	 * @throws IllegalSchoolException
+	 * 			The given school is not valid
+	 * 			| ! isValidSchool(school)
 	 */
 	@Raw
 	public Slime(int xPos,int yPos, Sprite[] sprites,School school) 
-			throws IllegalPositionException, IllegalSpriteException {
+			throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {
 		super(xPos, yPos, sprites);
+		if (! isValidSchool(school)) 
+			throw new IllegalSchoolException(school);
 		this.setSchool(school);
 		this.getSchool().newSlime(this);
 		this.setHitpoints(Slime.getInitHitpoints());
@@ -135,7 +140,7 @@ public class Slime extends GameObject {
 	 * returns the horizontal acceleration of a Slime
 	 */
 	@Override @Basic @Immutable @Raw
-	public final double getXAcc() {
+	protected final double getXAcc() {
 		return xAcc;
 	}
 	/**
@@ -246,6 +251,10 @@ public class Slime extends GameObject {
 	@Override
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
+	}
+	
+	private boolean isValidSchool(School school) {
+		return school != null;
 	}
 	
 	/**
@@ -631,7 +640,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setXSpeed(0)
 	 * 			| 		 setOrientationRight()
 	 */
-	public void startMoveRight() {
+	private void startMoveRight() {
 		if (this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setOrientationRight();
@@ -646,7 +655,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setXSpeed(0)
 	 * 			| 		 setOrientationLEFT()
 	 */
-	public void startMoveLeft() {
+	private void startMoveLeft() {
 		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setXSpeed(0);
 			this.setOrientationLeft();
@@ -659,7 +668,7 @@ public class Slime extends GameObject {
 	 * @effect the horizontal speed is set to zero
 	 * 			| setXSpeed(0)
 	 */
-	public void stopMove() {
+	private void stopMove() {
 		this.setXSpeed(0);
 	}
 	

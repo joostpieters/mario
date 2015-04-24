@@ -14,17 +14,17 @@ import jumpingalien.util.Sprite;
 public class IllegalSpriteException extends Exception {
 	
 	/**
-	 * The sprites for mazub
+	 * The sprites
 	 */	
 	private final Sprite[] sprites;
 
 	/**
 	 * initialize this new illegal sprite exception with a given sprite
 	 * @param	sprites
-	 * 			the sprites of mazub
+	 * 			the given sprites
 	 * @post	the value of the new illegal sprite exception is equal to 
 	 * 			the given sprites
-	 * 			| new.getSprite = sprites
+	 * 			| this.sprites = sprites
 	 */
 	public IllegalSpriteException(Sprite[] sprites){
 		this.sprites = sprites;
