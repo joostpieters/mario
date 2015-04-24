@@ -431,18 +431,18 @@ public class Slime extends GameObject {
 	 * @param dt
 	 * 			a small time interval
 	 * @effect if this Slime is in contact with magma, it loses hitpoints 
-	 * 			| if (isInContactWithFeature(newXPos,newYPos,3))
-	 * 			| 	then setTimeInMagma(getTimeInMagma() + dt)
-	 * 			| 		 if (getTimeInMagma() >= Slime.getBurnTime())
-	 * 			| 			then loseHitpoints( (int) GameObject.getLossHitpointsInMagma())
-	 * 			| 				 setTimeInMagma(getTimeInMagma() - dt)
+	 * 			| if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3))
+	 * 			| 	then double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
+	 * 			| 							+ this.getHitpointsDifference()
+	 * 			| 		 setHitpointsDifference(toLose - (int) toLose)
+	 * 			| 		 loseHitpoints( (int) toLose)
 	 * @effect if this Slime is in contact with water longer than the drownTime, it loses hitpoints,
 	 * 			else timeInWater is set to zero
 	 * 			| if (this.isInContactWithFeature(newXPos,newYPos,2)) 
 	 * 			| 	then setTimeInWater(this.getTimeInWater() + dt)
 	 * 			| 		 if (this.getTimeInWater() >= Slime.getDrownTime())
 	 * 			| 			then loseHitpoints(Slime.getLossHitpointsInWater())
-	 * 			| 				 setTimeInWater(this.getTimeInWater() - dt)
+	 * 			| 				 setTimeInWater(this.getTimeInWater() - GameObject.getDrownTime())
 	 * 			| else
 	 * 			| 	then setTimeInWater(0)
 	 */

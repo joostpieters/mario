@@ -15,7 +15,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren -> ik haat dit -> klaar hoop/denk ik ==> (medewerkers)feestje :D
 // TODO aparte testfiles
-// TODO invariant van binnen grenzen
+// TODO invarianten overal!!!!
 // TODO Laura nog eens muilen
 public class World {
 
@@ -871,7 +871,16 @@ public class World {
 		return (tileX < this.getNbTilesX()) && (tileY < this.getNbTilesY())
 				&& (tileType >= 0) && (tileType <= 4);
 	}	
-	
+	/**
+	 * Checks if dt has a proper value between 0 and 0.2.
+	 * @param dt
+	 * 			the time interval to check
+	 * @return True if dt is a value between 0 and 0.2 otherwise false.
+	 * 		| (dt <= 0.2 && dt > 0)
+	 */
+	protected boolean isValidDt(double dt) {
+		return ( dt <= 0.2 && dt > 0);
+	}	
 	/**
 	 * Starts the game that is played in the given world.
 	 * After this method has been invoked, no further game objects will be added
@@ -983,7 +992,9 @@ public class World {
 	 * @throws IllegalDtException 
 	 */
 	public void advanceTime(double dt) throws IllegalDtException {
-				
+		if(! isValidDt(dt)) {
+			throw new IllegalDtException(dt);
+		}
 		double minDt = computeMinimalDt(dt);
 		double timePassed = 0;
 		if (minDt < dt) {

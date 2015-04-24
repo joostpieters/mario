@@ -123,7 +123,7 @@ public class SlimeTest {
 		// Mazub has hit the slime should have zero hitpoints after more then 0.6 second
 		assertEquals(slime.getHitpoints(), 0);
 	}
-	// TODO laten werken
+	// TODO dit doen werken
 
 		
 	@Test 
@@ -252,11 +252,12 @@ public class SlimeTest {
 		Slime slime = facade.createSlime(500, 499, spriteArrayForSize(3, 3, 2), school);
 		facade.setMazub(world, alien);
 		facade.addSlime(world, slime);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			facade.advanceTime(world, 0.1);
 		}
-		// 0.4 seconds in magma, so the slimes loses 2 * 50 hitpoints
+		// 0.4 seconds in magma, so the slime loses 2 * 50 hitpoints
 		assertEquals(slime.getHitpoints(), 0);
+		// TODO werkt niet meer, ervoor wel, wtf. Ik snap het niet
 	}
 	
 	
