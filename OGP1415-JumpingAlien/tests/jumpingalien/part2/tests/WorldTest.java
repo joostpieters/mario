@@ -428,7 +428,6 @@ public class WorldTest {
 		facade.addShark(world, shark);	
 		// a shark was added to the world 
 		assertEquals(amountOfSharks + 1, world.getSharks().size());
-
 	}
 	
 	@Test	
@@ -449,11 +448,17 @@ public class WorldTest {
 		assertEquals(amountOfPlants + 1, world.getPlants().size());
 	}
 	
-	@Test
-	// TODO deze functie moet gewoon nog gemaakt worden
-	public void testStartGame() {
-		assertEquals(true, true);
-
+	@Test(expected = ModelException.class)
+	public void testStartGameAddPlant() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
+		facade.addPlant(world, plant);
 	}
 	
 	@Test	
