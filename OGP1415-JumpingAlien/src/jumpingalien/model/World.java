@@ -8,6 +8,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
+import jumpingalien.util.ModelException;
 
 // TODO in facade nog default constructor toevoegen
 // TODO checkers toevoegen in elke getter / setter
@@ -17,7 +18,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO invarianten overal!!!!
 
 public class World {
-
+		//TODO commentaar constructor!!
 	/**
 	 * Create a new world with the given parameters.
 	 * 
@@ -138,6 +139,10 @@ public class World {
 	 * a list of all the slimes in the world
 	 */
 	private List<Slime> slimes = new CopyOnWriteArrayList<Slime>();	
+	/**
+	 * A boolean to reflect or the game has started
+	 */
+	private boolean gameStarted = false;
 	
 //	GETTERS
 	
@@ -316,7 +321,6 @@ public class World {
 				counter++;
 			}
 		}
-		System.out.println(array);
 		return array;
 	}	
 	/**
@@ -434,7 +438,8 @@ public class World {
 	 * @return number of aliens
 	 * 			| 1
 	 */
-	// TODO Dit moet nog iets juist teruggeven
+	// TODO Dit moet nog iets juist teruggeven, Ik snap het niet. Is het niet oke? 
+	// Misschien gewoon wegdoen?
 	@Basic
 	private int getNbAliens() {
 		return 1;
@@ -455,7 +460,14 @@ public class World {
 	private int getYVisibleWindow() {
 		return yVisibleWindow;
 	}
-	
+	/**
+	 * Returns or the game has already started
+	 * @return gameStarted
+	 */
+	@Basic
+	private boolean isGameStarted() {
+		return this.gameStarted;
+	}
 //	SETTERS	
 	
 	/**
@@ -571,7 +583,9 @@ public class World {
 	/**
 	 * Modify the geological type of a specific tile in the given world to a
 	 * given type.
-	 * 
+	 * @throws IllegalSettingException 
+	 * 			A tile can not be set, after the game has started
+	 * 			| this.isGameStarted
 	 * @param tileX
 	 *            The x-position x_T of the tile for which the type needs to be
 	 *            modified
@@ -592,20 +606,52 @@ public class World {
 	 */
 	@Raw
 	public void setGeologicalFeature(int tileX, int tileY, int tileType)
-		throws IllegalTileException {
+		throws IllegalTileException, IllegalSettingException {
 		if ( ! isValidTile(tileX, tileY, tileType)) {
 			throw new IllegalTileException(tileX, tileY, tileType);
+		}
+		if ( this.isGameStarted()) {
+			throw new IllegalSettingException();
 		}
 		this.geologicalFeature[tileY][tileX] = tileType;
 	}
 	/**
+	 * Sets the boolean gameStarted on true
+	 * @param bool
+	 * 			the boolean to set gameStarted to
+	 */
+	private void setGameStarted(boolean bool) {
+		this.gameStarted = true;
+	}
+	/**
 	 * @param the player character
 	 * 			| alien
+	 * @throws IllegalSettingException 
+	 * 			An alien can not be set, after the game has started
+	 * 			| this.isGameStarted
+	 * @throws IllegalPositionException 
+	 * 			The alien has to be within the boundaries of the world
+	 *          | ! alien.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1]))
+	 * @pre	the alien should not be zero
+	 * 			| alien != null
+	 * @pre the world should not have this alien already as alien
+	 * 			| ! this.hasAlien()
+	 * @effect the alien's world is equal to this world
+	 * 			| alien.setWorld(this)
 	 * @post the player character alien is equal to the given Mazub
 	 * 			| this.alien = alien
 	 */
 	@Raw
-	public void setAlien(Mazub alien) {
+	public void setAlien(Mazub alien) throws IllegalSettingException, IllegalPositionException {
+		if ( this.isGameStarted()) {
+			throw new IllegalSettingException();
+		}
+		assert alien != null;
+	    assert ! this.hasAlien(alien);
+	    alien.setWorld(this);
+	    if(! alien.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1])) {
+			throw new IllegalPositionException(alien.getLocation()[0], alien.getLocation()[1]);
+		}
 		this.alien = alien;
 	}
 	/**
@@ -678,60 +724,96 @@ public class World {
 	 * adds the Slime slime to the world
 	 * @param the slime to add
 	 * 			| slime
+	 * @throws IllegalSettingException 
+	 * 			A slime can not be add, after the game has started
+	 * 			| this.isGameStarted
+	 * @throws IllegalPositionException 
+	 * 			The slime has to be within the boundaries of the world
+	 *          | ! slime.isWithinBoundaries(slime.getLocation()[0], slime.getLocation()[1])
 	 * @pre the slime may not be equal to null
 	 * 			| slime != null
-	 * @pre the slime must be added to this world
-	 * 			| slime.getWorld() == this
 	 * @pre the game world may not already contain this slime
 	 * 			| ! hasSlime(slime)
+	 * @effect the slime's world is equal to this world
+	 * 			| slime.setWorld(this)
 	 * @effect the slime is added to slimes
 	 * 			| slimes.add(slime)
 	 */
 	@Raw
-	public void addSlime(Slime slime) {
+	public void addSlime(Slime slime) throws IllegalSettingException, IllegalPositionException {
+		if ( this.isGameStarted()) {
+			throw new IllegalSettingException();
+		}
 		assert slime != null;
-	    assert slime.getWorld() == this;
 	    assert ! this.hasSlime(slime);
+	    slime.setWorld(this);
+	    if(! slime.isWithinBoundaries(slime.getLocation()[0],slime.getLocation()[1])) {
+			throw new IllegalPositionException(slime.getLocation()[0],slime.getLocation()[1]);
+		}
 		this.slimes.add(slime);
 	}
 	/**
 	 * adds the Shark shark to the world
 	 * @param the shark to add
 	 * 			| shark
+	 * @throws IllegalSettingException 
+	 * 			A shark can not be add, after the game has started
+	 * 			| this.isGameStarted
+	 * @throws IllegalPositionException 
+	 * 			The shark has to be within the boundaries of the world
+	 *          | ! shark.isWithinBoundaries(shark.getLocation()[0], shark.getLocation()[1])
 	 * @pre the shark may not be equal to null
 	 * 			| shark != null
-	 * @pre the shark must be added to this world
-	 * 			| shark.getWorld() == this
 	 * @pre the game world may not already contain this shark
 	 * 			| ! hasShark(shark)
+	 * @effect the shark's world is equal to this world
+	 * 			| shark.setWorld(this)
 	 * @effect the shark is added to shark
 	 * 			| sharks.add(shark)
 	 */
 	@Raw
-	public void addShark(Shark shark) {
+	public void addShark(Shark shark) throws IllegalSettingException, IllegalPositionException {
+		if ( this.isGameStarted()) {
+			throw new IllegalSettingException();
+		}
 		assert shark != null;
-	    assert shark.getWorld() == this;
 	    assert ! this.hasShark(shark);
+	    shark.setWorld(this);
+	    if(! shark.isWithinBoundaries(shark.getLocation()[0], shark.getLocation()[1])) {
+			throw new IllegalPositionException(shark.getLocation()[0], shark.getLocation()[1]);
+		}
 		this.sharks.add(shark);
 	}
 	/**
 	 * adds the Plant slime to the world
 	 * @param the plant to add
 	 * 			| plant
+	 * @throws IllegalSettingException 
+	 * 			A plant can not be add, after the game has started
+	 * 			| this.isGameStarted
+	 * @throws IllegalPositionException 
+	 * 			The plant has to be within the boundaries of the world
+	 *          | ! plant.isWithinBoundaries(plant.getLocation()[0],plant.getLocation()[1])
 	 * @pre the plant may not be equal to null
 	 * 			| plant != null
-	 * @pre the plant must be added to this world
-	 * 			| plant.getWorld() == this
 	 * @pre the game world may not already contain this plant
 	 * 			| ! hasPlant(plant)
+	 * @effect the plant's world is equal to this world
+	 * 			| plant.setWorld(this)
 	 * @effect the plant is added to plants
 	 * 			| plants.add(plant)
 	 */
 	@Raw
-	public void addPlant(Plant plant) {
+	public void addPlant(Plant plant) throws IllegalSettingException, IllegalPositionException {
+		if ( this.isGameStarted()) {
+			throw new IllegalSettingException();
+		}
 		assert plant != null;
-	    assert plant.getWorld() == this;
 	    assert ! this.hasPlant(plant);
+	    plant.setWorld(this);
+	    if(! plant.isWithinBoundaries(plant.getLocation()[0], plant.getLocation()[1])) {
+			throw new IllegalPositionException(plant.getLocation()[0], plant.getLocation()[1]);
+		}
 		this.plants.add(plant);
 	}
 	/**
@@ -890,11 +972,11 @@ public class World {
 	 * {@link IFacadePart2#setMazub(World, Mazub)}), and no geological features
 	 * will be changed via
 	 * {@link IFacadePart2#setGeologicalFeature(World, int, int, int)}.
+	 * 
+	 * 		| this.setGameStarted(true);
 	 */
-	// TODO moeten we hier nu nog iets mee doen?
-	// ja ik geloof van we :( ik heb echt geen idee wat
 	public void startGame() {
-		
+		this.setGameStarted(true);
 	}
 	
 	/**
@@ -922,7 +1004,7 @@ public class World {
 	 * 			| else 
 	 * 			| 	then return false
 	 */
-	private boolean didPlayerWin() {
+	public boolean didPlayerWin() {
 		if (this.getAlien() != null) {
 			for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
 					(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),

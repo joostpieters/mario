@@ -406,7 +406,7 @@ public class WorldTest {
 		int amountOfSlimes = world.getSlimes().size();
 		School school = facade.createSchool();
 		Slime slime = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
-		world.addSlime(slime);	
+		facade.addSlime(world, slime);	
 		// a slime was added to the world
 		assertEquals(amountOfSlimes + 1, world.getSlimes().size());
 
@@ -425,7 +425,7 @@ public class WorldTest {
 		facade.setMazub(world, alien);
 		int amountOfSharks = world.getSharks().size();
 		Shark shark = facade.createShark(50, 550, spriteArrayForSize(2, 2, 2));
-		world.addShark(shark);	
+		facade.addShark(world, shark);	
 		// a shark was added to the world 
 		assertEquals(amountOfSharks + 1, world.getSharks().size());
 
@@ -444,7 +444,7 @@ public class WorldTest {
 		facade.setMazub(world, alien);
 		int amountOfPlants = world.getPlants().size();
 		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
-		world.addPlant(plant);
+		facade.addPlant(world, plant);
 		// a plant was added to the worlds
 		assertEquals(amountOfPlants + 1, world.getPlants().size());
 	}
