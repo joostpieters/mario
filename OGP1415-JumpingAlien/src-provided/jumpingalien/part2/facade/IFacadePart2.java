@@ -522,4 +522,6 @@ public interface IFacadePart2 extends jumpingalien.part1.facade.IFacade {
 	 */
 	School getSchool(Slime slime);
 
+	
+
 }

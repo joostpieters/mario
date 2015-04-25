@@ -35,6 +35,7 @@ public class Facade implements IFacadePart2 {
 			throw new ModelException(f.getMessage());
 		}
 	}
+	@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
 			int initStartSpeed, int maxSpeed) {
 		try {return new Mazub(pixelLeftX, pixelBottomY, sprites, initStartSpeed, maxSpeed);}
@@ -193,7 +194,11 @@ public class Facade implements IFacadePart2 {
 	public void setMazub(World world, Mazub alien) {
 		alien.setWorld(world);
 		world.setAlien(alien);
-		
+		if(! alien.isWithinBoundaries(alien.getLocation()[0],alien.getLocation()[1])) {
+			alien.setWorld(null);
+			world.setAlien(null);
+			throw new ModelException("wrong position");
+		}
 	}
 	@Override
 	public boolean isImmune(Mazub alien) {
@@ -213,6 +218,11 @@ public class Facade implements IFacadePart2 {
 	public void addPlant(World world, Plant plant) {
 		plant.setWorld(world);
 		world.addPlant(plant);
+		if(! plant.isWithinBoundaries(plant.getLocation()[0],plant.getLocation()[1])) {
+			plant.setWorld(null);
+			world.setAlien(null);
+			throw new ModelException("wrong position");
+		}
 		
 	}
 	@Override
@@ -241,6 +251,11 @@ public class Facade implements IFacadePart2 {
 	public void addShark(World world, Shark shark) {
 		shark.setWorld(world);
 		world.addShark(shark);
+		if(! shark.isWithinBoundaries(shark.getLocation()[0],shark.getLocation()[1])) {
+			shark.setWorld(null);
+			world.setAlien(null);
+			throw new ModelException("wrong position");
+		}
 		
 	}
 	@Override
@@ -277,6 +292,11 @@ public class Facade implements IFacadePart2 {
 	public void addSlime(World world, Slime slime) {
 		slime.setWorld(world);
 		world.addSlime(slime);
+		if(! slime.isWithinBoundaries(slime.getLocation()[0],slime.getLocation()[1])) {
+			slime.setWorld(null);
+			world.setAlien(null);
+			throw new ModelException("wrong position");
+		}
 		
 	}
 	@Override

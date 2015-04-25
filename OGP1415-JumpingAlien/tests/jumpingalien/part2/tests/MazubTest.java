@@ -454,9 +454,6 @@ public class MazubTest {
 	}
 
 	@Test(expected = ModelException.class)
-	// TODO dit is een fout in de code ergens
-	// Hmm, we kunnen die positie van Mazub mss checken in die setMazub, want in de constructor
-	// van mazub gaat dat niet
 	public void illegalPosition2() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -594,14 +591,14 @@ public class MazubTest {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
+		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(5, 5));
 		facade.setMazub(world, alien);
-		Shark shark = facade.createShark(130, 500, spriteArrayForSize(2, 2, 2));
-		facade.addShark(world, shark);
 		School school = facade.createSchool();
-		Slime slime = facade.createSlime(130, 500, spriteArrayForSize(2, 2, 2), school);
+		Slime slime = facade.createSlime(55, 499, spriteArrayForSize(5, 5, 2), school);
 		facade.addSlime(world, slime);
-		for (int i = 0; i < 15; i++) {
+		facade.startMoveRight(alien);
+
+		for (int i = 0; i < 1; i++) {
 			facade.advanceTime(world, 0.1);
 		}
 		// the alien collided with the slime
@@ -615,12 +612,12 @@ public class MazubTest {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
+		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(5, 5));
 		facade.setMazub(world, alien);
-		Shark shark = facade.createShark(130, 500, spriteArrayForSize(2, 2, 2));
+		Shark shark = facade.createShark(55, 500, spriteArrayForSize(5, 5, 2));
 		facade.addShark(world, shark);
 		facade.startMoveRight(alien);
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 1; i++) {
 			facade.advanceTime(world, 0.1);
 		}
 		// the alien collided with the shark
