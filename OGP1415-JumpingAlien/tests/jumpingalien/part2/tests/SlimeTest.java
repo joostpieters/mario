@@ -248,8 +248,6 @@ public class SlimeTest {
 		}
 		// 0.40004 seconds in magma, so the slime loses 2 * 50 hitpoints
 		assertEquals(slime.getHitpoints(), 0);
-	}
-	
-	
+	}	
 	
 }

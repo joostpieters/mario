@@ -67,6 +67,14 @@ public class PlantTest {
 	}
 	
 	@Test(expected = ModelException.class)
+	public void testTooBigPosition() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(50, 3, 3, 1, 1, 1, 1);
+		Plant plant = facade.createPlant(500, 500, spriteArrayForSize(1, 1, 2));
+		facade.addPlant(world, plant);
+	}
+	
+	@Test(expected = ModelException.class)
 	public void testSpriteTooShort() {
 		IFacadePart2 facade = new Facade();
 		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 1));
