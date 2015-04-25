@@ -449,6 +449,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setTimeInWater(0)
 	 */
 	@Raw
+	//TODO commentaar aanpassen
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
 		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
 			if (this.getTimeInMagma() == 0) {

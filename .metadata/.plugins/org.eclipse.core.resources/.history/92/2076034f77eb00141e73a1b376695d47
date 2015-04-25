@@ -642,8 +642,10 @@ public class Mazub extends GameObject {
 		}			
 	}
 
+
+	// TODO oei die commentaar heeft geen hoofding, maar mijn hoofd is moe
 	/**
-	 * adapts the position taking all Slimes and Sharks into account, it also updates the hitpoints
+	 * 
 	 * @param newXPos
 	 * 			the newly calculated horizontal position
 	 * @param newYPos

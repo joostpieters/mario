@@ -205,6 +205,4 @@ public class SharkTest {
 		// 1.1 seconds in magma, the shark dies and is removed after 0.6 seconds, so no part anymore of world
 		assertEquals(world.getSharks(),  new CopyOnWriteArrayList<Shark>());
 	}
-	
-	
 }

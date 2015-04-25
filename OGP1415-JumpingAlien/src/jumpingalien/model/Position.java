@@ -87,4 +87,6 @@ public class Position {
 	public void setOrientationLeft() {
 		this.orientation = Orientation.LEFT;
 	}
+	
+	
 }

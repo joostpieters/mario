@@ -21,6 +21,8 @@ public class GameObjectTest {
 	public static final int FEATURE_SOLID = 1;
 	public static final int FEATURE_WATER = 2;
 	public static final int FEATURE_MAGMA = 3;
+		
+	
 	
 	
 }

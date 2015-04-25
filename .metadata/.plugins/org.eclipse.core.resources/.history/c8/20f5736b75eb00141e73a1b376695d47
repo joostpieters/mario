@@ -326,7 +326,7 @@ public abstract class GameObject {
 	 * @return hitpoints
 	 */ 
 	@Basic @Raw
-	public int getHitpoints() {
+	protected int getHitpoints() {
 		return this.hitpoints;
 	}
 	/**
@@ -385,7 +385,7 @@ public abstract class GameObject {
 	 * @post the time is set to t
 	 */
 	@Raw
-	protected void setTimeSinceDeath(double t) {
+	public void setTimeSinceDeath(double t) {
 		assert t >= 0;
 		this.timeSinceDeath = t;
 	}	
@@ -770,7 +770,7 @@ public abstract class GameObject {
 	 * 			position y are bigger than or equal to zero
 	 *			| ((x >= 0) && (y >= 0))
 	 */
-	protected boolean isValidPosition(double x, double y) {
+	public boolean isValidPosition(double x, double y) {
 		return ((x >= 0) && (y >= 0));
 	}	
 	/**

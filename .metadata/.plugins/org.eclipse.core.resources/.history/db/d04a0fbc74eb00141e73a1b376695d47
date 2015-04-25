@@ -748,7 +748,7 @@ public class MazubTest {
 		// Mazub starts moving left and does not move right, because endMoveLeft is not invoked
 		facade.startMoveRight(alien);
 		facade.advanceTime(world, 0.1);
-		assertEquals(Orientation.LEFT, alien.getOrientation());	
+		assertEquals(Orientation.LEFT,alien.getOrientation());	
 	}
 	@Test
 	public void testOnTopOfSharks() {
@@ -857,6 +857,4 @@ public class MazubTest {
 		// 0.5 seconds in water, so the alien loses 2 * 2 hitpoints
 		assertEquals(alien.getHitpoints(), 96);
 	}
-	
-	
 }

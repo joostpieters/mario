@@ -857,6 +857,4 @@ public class MazubTest {
 		// 0.5 seconds in water, so the alien loses 2 * 2 hitpoints
 		assertEquals(alien.getHitpoints(), 96);
 	}
-	
-	
 }

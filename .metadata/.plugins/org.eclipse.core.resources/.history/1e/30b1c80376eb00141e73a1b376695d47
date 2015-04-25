@@ -102,6 +102,4 @@ public class SchoolTest {
 		assertEquals(oldSlime1.getHitpoints(), 100);
 		assertEquals(newSlime1.getHitpoints(), 100);
 	}
-	
-	
 }

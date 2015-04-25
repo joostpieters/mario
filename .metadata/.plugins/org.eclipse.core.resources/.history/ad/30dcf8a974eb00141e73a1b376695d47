@@ -216,7 +216,7 @@ public abstract class GameObject {
 	 * @return ySpeed
 	 */
 	@Basic @Raw
-	protected double getYSpeed() {
+	public double getYSpeed() {
 		return this.ySpeed;
 	}
 	/**
@@ -228,7 +228,7 @@ public abstract class GameObject {
 	 * @post the ySpeed is set
 	 */
 	@Raw
-	protected void setYSpeed(double speed) {
+	public void setYSpeed(double speed) {
 		assert this.isValidYSpeed(speed);
 		this.ySpeed = speed;
 	}	
@@ -343,7 +343,7 @@ public abstract class GameObject {
 	 * 			|	then this.hitpoints = this.getMaxHitpoints()
 	 */
 	@Raw
-	protected void setHitpoints(int number) {
+	public void setHitpoints(int number) {
 		assert number >= 0;
 		if ( number < this.getMaxHitpoints()) {
 			this.hitpoints = number;
@@ -385,7 +385,7 @@ public abstract class GameObject {
 	 * @post the time is set to t
 	 */
 	@Raw
-	protected void setTimeSinceDeath(double t) {
+	public void setTimeSinceDeath(double t) {
 		assert t >= 0;
 		this.timeSinceDeath = t;
 	}	
@@ -770,7 +770,7 @@ public abstract class GameObject {
 	 * 			position y are bigger than or equal to zero
 	 *			| ((x >= 0) && (y >= 0))
 	 */
-	protected boolean isValidPosition(double x, double y) {
+	public boolean isValidPosition(double x, double y) {
 		return ((x >= 0) && (y >= 0));
 	}	
 	/**

@@ -57,6 +57,7 @@ public class School {
 		return this.getMembers().size();
 	}
 	
+	// TODO commentaar aanpassen
 	/**
 	 * adds a slime to this School
 	 * @param slime

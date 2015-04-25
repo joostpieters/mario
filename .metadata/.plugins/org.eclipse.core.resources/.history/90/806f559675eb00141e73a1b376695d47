@@ -770,7 +770,7 @@ public abstract class GameObject {
 	 * 			position y are bigger than or equal to zero
 	 *			| ((x >= 0) && (y >= 0))
 	 */
-	protected boolean isValidPosition(double x, double y) {
+	public boolean isValidPosition(double x, double y) {
 		return ((x >= 0) && (y >= 0));
 	}	
 	/**
