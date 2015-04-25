@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MazubTest" project="OGP1415-JumpingAlien" tests="35" started="35" failures="2" errors="3" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.MazubTest" time="0.165">
+    <testcase name="illegalNegativeDt" classname="jumpingalien.part2.tests.MazubTest" time="0.006"/>
+    <testcase name="testEndJump" classname="jumpingalien.part2.tests.MazubTest" time="0.009"/>
+    <testcase name="testFallAcceleration" classname="jumpingalien.part2.tests.MazubTest" time="0.008"/>
+    <testcase name="otherInitStartSpeed" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="illegalInitStartSpeed" classname="jumpingalien.part2.tests.MazubTest" time="0.003">
+      <error>java.lang.Exception: Unexpected exception, expected&lt;jumpingalien.util.ModelException&gt; but was&lt;java.lang.Error&gt;&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:28)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The method createMazub(int, int, Sprite[]) in the type IFacade is not applicable for the arguments (int, int, Sprite[], int, int)
+&#13;
+	at jumpingalien.part2.tests.MazubTest.illegalInitStartSpeed(MazubTest.java:363)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19)&#13;
+	... 15 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testStartDuck" classname="jumpingalien.part2.tests.MazubTest" time="0.01"/>
+    <testcase name="testJumpWhileJumping" classname="jumpingalien.part2.tests.MazubTest" time="0.005"/>
+    <testcase name="testSpeedWhenJumping" classname="jumpingalien.part2.tests.MazubTest" time="0.008"/>
+    <testcase name="testSolidFeatureWallRight" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="testVelocityJumpHighestPoint" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="MaxSpeedAfterDucking" classname="jumpingalien.part2.tests.MazubTest" time="0.003"/>
+    <testcase name="testAccelerationJump" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="testBoundaryGround2" classname="jumpingalien.part2.tests.MazubTest" time="0.004"/>
+    <testcase name="illegalMaxSpeed" classname="jumpingalien.part2.tests.MazubTest" time="0.001">
+      <error>java.lang.Exception: Unexpected exception, expected&lt;jumpingalien.util.ModelException&gt; but was&lt;java.lang.Error&gt;&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:28)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The method createMazub(int, int, Sprite[]) in the type IFacade is not applicable for the arguments (int, int, Sprite[], int, int)
+&#13;
+	at jumpingalien.part2.tests.MazubTest.illegalMaxSpeed(MazubTest.java:378)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19)&#13;
+	... 15 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testSolidFeatureWallLeft" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="illegalPosition" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="JumpAndEndJump" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="testImmunity" classname="jumpingalien.part2.tests.MazubTest" time="0.07"/>
+    <testcase name="illegalSpeed" classname="jumpingalien.part2.tests.MazubTest" time="0.0">
+      <error>java.lang.Exception: Unexpected exception, expected&lt;jumpingalien.util.ModelException&gt; but was&lt;java.lang.Error&gt;&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:28)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The method createMazub(int, int, Sprite[]) in the type IFacade is not applicable for the arguments (int, int, Sprite[], int, int)
+&#13;
+	at jumpingalien.part2.tests.MazubTest.illegalSpeed(MazubTest.java:392)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19)&#13;
+	... 15 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="illegalbigDt" classname="jumpingalien.part2.tests.MazubTest" time="0.0"/>
+    <testcase name="testSpeedWhenJumpingAndDucking" classname="jumpingalien.part2.tests.MazubTest" time="0.003"/>
+    <testcase name="startMoveLeftCorrect" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="testAccellerationZeroWhenNotMoving" classname="jumpingalien.part2.tests.MazubTest" time="0.0"/>
+    <testcase name="testDuckSpriteNotMoving" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="illegalSprite" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="testEndFallLocation" classname="jumpingalien.part2.tests.MazubTest" time="0.003"/>
+    <testcase name="illegalPosition2" classname="jumpingalien.part2.tests.MazubTest" time="0.001">
+      <failure>java.lang.AssertionError: Expected exception: jumpingalien.util.ModelException&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testCollidingPlants" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="startMoveLeftMaxSpeedAtRightTime" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="testCollidingSharks" classname="jumpingalien.part2.tests.MazubTest" time="0.003">
+      <failure>java.lang.AssertionError: expected:&lt;50.0&gt; but was:&lt;0.0&gt;&#13;
+	at org.junit.Assert.fail(Assert.java:88)&#13;
+	at org.junit.Assert.failNotEquals(Assert.java:743)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:494)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:592)&#13;
+	at jumpingalien.part2.tests.MazubTest.testCollidingSharks(MazubTest.java:627)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testCollidingSlimes" classname="jumpingalien.part2.tests.MazubTest" time="0.003"/>
+    <testcase name="testVelocityDucking" classname="jumpingalien.part2.tests.MazubTest" time="0.002"/>
+    <testcase name="testEndMoveRight" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="testBoundaryGround" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+    <testcase name="testEndMoveLeft" classname="jumpingalien.part2.tests.MazubTest" time="0.001"/>
+  </testsuite>
+</testrun>

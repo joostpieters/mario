@@ -734,7 +734,7 @@ public class Mazub extends GameObject {
 	 * 			| {newPos[0], newPos[1]}
 	 */
 	@Raw
-	public double[] colliding(double newXPos, double newYPos,double dt) {	
+	public double[] colliding(double newXPos, double newYPos, double dt) {	
 		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
 		this.collidingPlants(newXPos, newYPos);
 		return new double[] {newPos[0], newPos[1]};
@@ -1016,6 +1016,9 @@ public class Mazub extends GameObject {
 				throw new IllegalDuckException(this.isDucked());
 			this.setDuck(false);
 			this.setMaxSpeed(Mazub.getMaxMovingSpeed());
+			if ( ! (this.getXSpeed() == 0)) {
+				this.setXAcc(Mazub.getMoveAcc());
+			}			
 			if (this.isAgainstRoof(this.getXPos(), this.getYPos())) {
 				this.startDuck();
 				this.setDuckShouldEnd(true);

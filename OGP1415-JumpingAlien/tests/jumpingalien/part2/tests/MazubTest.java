@@ -605,7 +605,7 @@ public class MazubTest {
 			facade.advanceTime(world, 0.1);
 		}
 		// the alien collided with the slime
-		assertEquals(150, facade.getNbHitPoints(alien),
+		assertEquals(50, facade.getNbHitPoints(alien),
 				Util.DEFAULT_EPSILON);
 	}
 	
@@ -624,7 +624,105 @@ public class MazubTest {
 			facade.advanceTime(world, 0.1);
 		}
 		// the alien collided with the shark
-		assertEquals(150, facade.getNbHitPoints(alien),
+		assertEquals(50, facade.getNbHitPoints(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	
+	@Test
+	public void testImmunity() {
+		// because the slimes move in a random way, this test is done multiple times
+		for (int j = 0; j < 15; j++) {
+			IFacadePart2 facade = new Facade();
+			World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+			facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+			facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+			facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+			Mazub alien = facade.createMazub(250, 499, spriteArrayForSize(3, 3));
+			facade.setMazub(world, alien);
+			School school = facade.createSchool();
+			Slime slime1 = facade.createSlime(350, 500, spriteArrayForSize(2, 2, 2), school);
+			Slime slime2 = facade.createSlime(100, 500, spriteArrayForSize(2, 2, 2), school);
+			Slime slime3 = facade.createSlime(450, 500, spriteArrayForSize(2, 2, 2), school);
+			Slime slime4 = facade.createSlime(450, 1200, spriteArrayForSize(2, 2, 2), school);
+			facade.addSlime(world, slime1);
+			facade.addSlime(world, slime2);
+			facade.addSlime(world, slime3);
+			facade.addSlime(world, slime4);		
+			facade.startMoveRight(alien);
+			for (int i = 0; i < 12; i++) {
+				// the time is advanced 0.6 seconds (the time a game object can be immune)
+				facade.advanceTime(world, 0.05);
+				// the hitpoints must be equal to 100 (no collision yet) or 50 (collision and immune)
+				if (facade.getNbHitPoints(alien) == 100) {
+					// no collision
+					assertEquals(1, 1);
+				}
+				else if (facade.getNbHitPoints(alien) == 50 && facade.isImmune(alien)) {
+					// collision and alien is immune
+					assertEquals(1, 1);
+				}
+				else {
+					// something went wrong
+					assertEquals(1, 0);
+				}
+			}
+		}		
+	}
+	
+	@Test 
+	public void testStartDuckAndDuckJump() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(20, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 30; i++) {
+			facade.advanceTime(world, 0.09);
+		}
+		// alien moves horizontally at maxspeed
+		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+		facade.startDuck(alien);
+		facade.advanceTime(world, 0.05);
+		// alien is ducked so his horizontal speed is down to 1
+		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+		facade.startJump(alien);
+		facade.advanceTime(world, 0.001);
+		// while jumping the horizontal max speed stays 1 m/s
+		assertArrayEquals(doubleArray(1, 8), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	
+	@Test 
+	public void testEndDuck() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(20, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 30; i++) {
+			facade.advanceTime(world, 0.09);
+		}
+		// alien moves horizontally at maxspeed
+		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+		facade.startDuck(alien);
+		facade.advanceTime(world, 0.05);
+		// alien is ducked so his horizontal speed is down to 1
+		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+		facade.endDuck(alien);
+		for (int i = 0; i < 30; i++) {
+			facade.advanceTime(world, 0.09);
+		}
+		// the alien's duck is ended and after a while is moving at max speed
+		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
 	

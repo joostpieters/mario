@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="createMazub" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="createMazub"/>
 			<item value="mazub"/>
 			<item value="fall"/>
 			<item value="check"/>
@@ -15,7 +16,6 @@
 			<item value="remove"/>
 			<item value="die"/>
 			<item value="checkIfWithinBoundaries"/>
-			<item value="Game Over"/>
 		</list>
 		<list key="replacehistory">
 		</list>
