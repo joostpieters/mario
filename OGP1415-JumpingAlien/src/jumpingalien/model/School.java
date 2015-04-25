@@ -61,20 +61,22 @@ public class School {
 	 * adds a slime to this School
 	 * @param slime
 	 * 			the Slime to add
+	 * @pre the slime should not be null
+	 * 			| slime != null
 	 * @pre the slime may not be already part of the School
 	 * 			| ! members.contains(slime)
 	 * @effect the hitpoints of the Slime that joins the school are adapted
-	 * 			| slime.setHitpoints(slime.getHitpoints() + slime.getSchool().getLength() - this.getLength())
-	 * @effect every Slime that was already part of the School loses 1 hitpoint
+	 * 			| slime.setHitpoints(slime.getHitpoints()  - slime.getSchool().getSize() + 1 + this.getSize())
+	 * @effect every Slime that was already part of the School wins 1 hitpoint
 	 * 			| for each Slime oldMember: school.getMembers():
-	 * 			| 	oldmember.setHitpoints(oldMember.getHitpoints() - Slime.getSchoolDamage())
-	 * @effect every new member of the School recieves 1 hitpoint
+	 * 			| 	oldmember.setHitpoints(oldMember.getHitpoints() + Slime.getSchoolDamage())
+	 * @effect every new member of the School loses 1 hitpoint
 	 * 			| for each Slime newMember: this.getMembers():
-	 * 			| 	newMember.setHitpoints(newMember.getHitpoints() + 1))
+	 * 			| 	newMember.setHitpoints(newMember.getHitpoints() - Slime.getSchoolDamge()))
 	 * @effect the Slime slime gets removed from it's old school, it's school is set to this and slime is added
-	 * 			| slime.getSchool().members.remove(slime)
+	 * 			| slime.getSchool().removeSlime(slime)
 	 * 			| slime.setSchool(this)
-	 * 			| this.members.add(slime)
+	 * 			| this.newSlime(slime)
 	 */
 	public void addSlime(Slime slime) {
 		assert slime != null;
@@ -82,11 +84,11 @@ public class School {
 		slime.setHitpoints(slime.getHitpoints() - slime.getSchool().getSize() + 1 + this.getSize());
 		for (Slime oldMember: slime.getSchool().getMembers()) {
 			if (oldMember != slime) {
-				oldMember.setHitpoints(oldMember.getHitpoints() + 1);
+				oldMember.setHitpoints(oldMember.getHitpoints() + Slime.getSchoolDamage());
 			}
 		}
 		for (Slime newMember: this.getMembers()) {
-			newMember.setHitpoints(newMember.getHitpoints() - 1);
+			newMember.setHitpoints(newMember.getHitpoints() - Slime.getSchoolDamage());
 		}
 		slime.getSchool().removeSlime(slime);
 		slime.setSchool(this);

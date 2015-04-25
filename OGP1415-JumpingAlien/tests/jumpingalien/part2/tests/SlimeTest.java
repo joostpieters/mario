@@ -6,7 +6,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import jumpingalien.model.Mazub;
-import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.Slime;
 import jumpingalien.model.World;
@@ -24,6 +23,7 @@ public class SlimeTest {
 	public static final int FEATURE_MAGMA = 3;
 
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
 	public void testNegativePosition() {
 		IFacadePart2 facade = new Facade();
 		School school = facade.createSchool();
@@ -42,6 +42,7 @@ public class SlimeTest {
 	
 	
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
 	public void testSpriteTooShort() {
 		IFacadePart2 facade = new Facade();
 		School school = facade.createSchool();
@@ -49,6 +50,7 @@ public class SlimeTest {
 	}
 	
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
 	public void testSpriteTooLong() {
 		IFacadePart2 facade = new Facade();
 		School school = facade.createSchool();
@@ -56,6 +58,7 @@ public class SlimeTest {
 	}
 	
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
 	public void testNullSchool() {
 		IFacadePart2 facade = new Facade();
 		Slime slime = facade.createSlime(0, 0, spriteArrayForSize(1, 1, 3), null);

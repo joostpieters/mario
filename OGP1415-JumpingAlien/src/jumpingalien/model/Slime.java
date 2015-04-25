@@ -434,10 +434,12 @@ public class Slime extends GameObject {
 	 * 			a small time interval
 	 * @effect if this Slime is in contact with magma, it loses hitpoints 
 	 * 			| if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3))
-	 * 			| 	then double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
-	 * 			| 							+ this.getHitpointsDifference()
-	 * 			| 		 setHitpointsDifference(toLose - (int) toLose)
-	 * 			| 		 loseHitpoints( (int) toLose)
+	 * 			| 	then 	if (this.getTimeInMagma() == 0) 
+	 * 			| 				then this.loseHitpoints(Slime.getLossHitpointsInMagma());		
+	 * 			| 			else if (this.getTimeInMagma() >= Slime.getBurnTime()) 
+	 * 			| 				then this.loseHitpoints(Slime.getLossHitpointsInMagma());
+	 * 			| 				then this.setTimeInWater(this.getTimeInWater() - GameObject.getDrownTime());
+	 * 			| 	then 	this.setTimeInMagma(this.getTimeInMagma() + dt);
 	 * @effect if this Slime is in contact with water longer than the drownTime, it loses hitpoints,
 	 * 			else timeInWater is set to zero
 	 * 			| if (this.isInContactWithFeature(newXPos,newYPos,2)) 
@@ -688,14 +690,14 @@ public class Slime extends GameObject {
 	 * @effect every other Slime in the school is affected
 	 * 			| for each Slime other in school.getMembers():
 	 * 			| 	if (other != this)
-	 * 			| 		then other.setHitpoints(other.getHitpoints() - 1)
+	 * 			| 		then other.setHitpoints(other.getHitpoints() - Slime.getSchoolDamga())
 	 */
 	@Override @Raw
 	public void loseHitpoints(int nb) {
 		this.setHitpoints(this.getHitpoints() - nb);
 		for (Slime other: this.getSchool().getMembers()) {
 			if (other != this) {
-				other.setHitpoints(other.getHitpoints() - 1);
+				other.setHitpoints(other.getHitpoints() - Slime.getSchoolDamage());
 			}
 		}
 	}
