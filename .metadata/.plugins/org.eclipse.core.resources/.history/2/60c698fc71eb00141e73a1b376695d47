@@ -188,12 +188,13 @@ public class WorldTest {
 		assertArrayEquals(intArray(500, 500), world.getBottomLeftPixelOfTile(1, 1));
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
+	// TODO dit werkt nog niet
 	public void testGetTilePositionsIn() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
-		// tile (0,0) and (1,0)
-		assertArrayEquals(world.getTilePositionsIn(1, 1, 505, 40), new int[][]{{0,0},{1,0}});
+		assertEquals(world.getTilePositionsIn(1, 1, 505, 40), new int[[0,0],[1,0]]);
 		
 	}
 	

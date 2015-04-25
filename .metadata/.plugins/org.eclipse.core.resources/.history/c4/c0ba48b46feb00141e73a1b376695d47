@@ -9,11 +9,12 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
+// TODO protected/ public /private maken #randomspaties -> spaties mogen niet random zijn - autisme is peaking
 // TODO in facade nog default constructor toevoegen
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren -> ik haat dit -> klaar hoop/denk ik ==> (medewerkers)feestje :D
-// TODO alle klassen nog eens checken voor todotjes
+// TODO aparte testfiles
 // TODO invarianten overal!!!!
 
 public class World {
@@ -310,13 +311,12 @@ public class World {
 		int[][] array = new int[(posRight - posLeft + 1) * (posTop - posBottom +1)][2];		
 		int counter = 0;
 		for (int i = posBottom; i <= posTop; i++ ) {
-			for (int j = posLeft; j <= posRight; j++){
+			for (int j = posLeft; j <= posRight;j++){
 				array[counter][0] = j;
 				array[counter][1] = i;
 				counter++;
 			}
 		}
-		System.out.println(array);
 		return array;
 	}	
 	/**
