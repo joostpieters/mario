@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SchoolTest" project="OGP1415-JumpingAlien" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.SchoolTest" time="0.031">
+    <testcase name="testLoseHitpoints" classname="jumpingalien.part2.tests.SchoolTest" time="0.015"/>
+    <testcase name="testEquallyLargeSchools" classname="jumpingalien.part2.tests.SchoolTest" time="0.016"/>
+    <testcase name="testJoinSchool" classname="jumpingalien.part2.tests.SchoolTest" time="0.0"/>
+  </testsuite>
+</testrun>

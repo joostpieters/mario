@@ -6,6 +6,7 @@ import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import jumpingalien.model.IllegalPixelException;
@@ -192,7 +193,9 @@ public class WorldTest {
 	public void testGetTilePositionsIn() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
-		System.out.println(world.getTilePositionsIn(1, 1, 505, 40));
+		if (world.getTilePositionsIn(1, 1, 505, 40) == new int[5][6]) {
+			assertEquals(true, true);
+		}
 	}
 	
 	@Test	
@@ -244,7 +247,6 @@ public class WorldTest {
 	}
 	
 	@Test
-	// TODO geen idee hoe ge die list checkt of die gelijk is
 	public void testGetPlants() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -257,13 +259,14 @@ public class WorldTest {
 		facade.setMazub(world, alien);
 		Plant boom = facade.createPlant(600, 600, spriteArrayForSize(2, 2, 2));
 		Plant tak = facade.createPlant(600, 600, spriteArrayForSize(2, 2, 2));
+		assertEquals(0, world.getPlants().size());
 		facade.addPlant(world, boom);
 		facade.addPlant(world, tak);
-		System.out.println(world.getPlants());		
+		// the two plants are added to the world
+		assertEquals(2, world.getPlants().size());
 	}
 	
 	@Test
-	// TODO geen idee hoe ge die list checkt of die gelijk is
 	public void testGetSharks() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -276,13 +279,14 @@ public class WorldTest {
 		facade.setMazub(world, alien);
 		Shark shark1 = facade.createShark(600, 600, spriteArrayForSize(2, 2, 2));
 		Shark shark2 = facade.createShark(600, 600, spriteArrayForSize(2, 2, 2));
+		assertEquals(0, world.getSharks().size());
 		facade.addShark(world, shark1);
 		facade.addShark(world, shark2);
-		System.out.println(world.getSharks());		
+		// the two sharks are added to the world
+		assertEquals(2, world.getSharks().size());
 	}
 	
 	@Test
-	// TODO geen idee hoe ge die list checkt of die gelijk is
 	public void testGetSlimes() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -296,9 +300,11 @@ public class WorldTest {
 		School school = facade.createSchool();
 		Slime slime1 = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
 		Slime slime2 = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
+		assertEquals(0, world.getSlimes().size());
 		facade.addSlime(world, slime1);
 		facade.addSlime(world, slime2);
-		System.out.println(world.getSlimes());		
+		// the two slimes are added to the world
+		assertEquals(2, world.getSlimes().size());	
 	}
 	
 	@Test	

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SharkTest" project="OGP1415-JumpingAlien" tests="12" started="12" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.SharkTest" time="0.082">
+    <testcase name="testDie" classname="jumpingalien.part2.tests.SharkTest" time="0.062"/>
+    <testcase name="testLoseHitpoints" classname="jumpingalien.part2.tests.SharkTest" time="0.003"/>
+    <testcase name="testSpriteTooLong" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testLongInMagma" classname="jumpingalien.part2.tests.SharkTest" time="0.003"/>
+    <testcase name="testSpriteTooShort" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testShortInMagma" classname="jumpingalien.part2.tests.SharkTest" time="0.002"/>
+    <testcase name="testIsImmune" classname="jumpingalien.part2.tests.SharkTest" time="0.002"/>
+    <testcase name="testLongInAir" classname="jumpingalien.part2.tests.SharkTest" time="0.005"/>
+    <testcase name="testShortInAir" classname="jumpingalien.part2.tests.SharkTest" time="0.002"/>
+    <testcase name="testNegativePosition" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testTooBigPosition" classname="jumpingalien.part2.tests.SharkTest" time="0.001"/>
+    <testcase name="testRemoveAfterDeath" classname="jumpingalien.part2.tests.SharkTest" time="0.002"/>
+  </testsuite>
+</testrun>

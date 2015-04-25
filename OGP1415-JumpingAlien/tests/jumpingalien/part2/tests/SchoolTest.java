@@ -17,6 +17,7 @@ public class SchoolTest {
 	public static final int FEATURE_SOLID = 1;
 	public static final int FEATURE_WATER = 2;
 	public static final int FEATURE_MAGMA = 3;
+	
 	@Test 
 	public void testLoseHitpoints() {
 		IFacadePart2 facade = new Facade();

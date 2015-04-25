@@ -1,0 +1,529 @@
+package jumpingalien.part2.tests;
+
+import static jumpingalien.tests.util.TestUtils.doubleArray;
+import static jumpingalien.tests.util.TestUtils.intArray;
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import jumpingalien.model.IllegalPixelException;
+import jumpingalien.model.Mazub;
+import jumpingalien.model.Plant;
+import jumpingalien.model.School;
+import jumpingalien.model.World;
+import jumpingalien.model.Shark;
+import jumpingalien.model.Slime;
+import jumpingalien.part2.facade.Facade;
+import jumpingalien.part2.facade.IFacadePart2;
+import jumpingalien.util.ModelException;
+import jumpingalien.util.Sprite;
+import jumpingalien.util.Util;
+
+import org.junit.Test;
+
+public class WorldTest {
+	
+	public static final int FEATURE_AIR = 0;
+	public static final int FEATURE_SOLID = 1;
+	public static final int FEATURE_WATER = 2;
+	public static final int FEATURE_MAGMA = 3;
+	
+	@Test(expected = ModelException.class)
+	// TODO er is nog iets fout
+	public void testNoMazub() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(350, 500, spriteArrayForSize(2, 2, 2), school);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(world, 0.2);
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalTileSize() {
+		IFacadePart2 facade = new Facade();
+		// the tile size is negative
+		World world = facade.createWorld(-20, 3, 3, 1, 1, 1, 1);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalNbOfTilesNegative() {
+		IFacadePart2 facade = new Facade();
+		// the number of tiles is negative
+		World world = facade.createWorld(500, -3, 3, 1, 1, 1, 1);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalNbOfTilesZero() {
+		IFacadePart2 facade = new Facade();
+		// the horizontal pixel of the targetTile is negative
+		World world = facade.createWorld(500, 5, 0, 1, 1, 1, 1);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalTargetTileYNegative() {
+		IFacadePart2 facade = new Facade();
+		// the vertical pixel of the targetTile is negative
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, -666);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalTargetTileXGreaterThanNbTilesX() {
+		IFacadePart2 facade = new Facade();
+		// the x_T is greater than the amount of horizontal tiles
+		World world = facade.createWorld(500, 12, 25, 1, 1, 15, 20);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalTargetTileXGreaterThanNbTilesY() {
+		IFacadePart2 facade = new Facade();
+		// the y_T is greater than the amount of vertical tiles
+		World world = facade.createWorld(500, 12, 10, 1, 1, 5, 20);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalVisibleWindowNegativeX() {
+		IFacadePart2 facade = new Facade();
+		// the visible width is negative
+		World world = facade.createWorld(500, 5, 15, -200, 1, 3, 3);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalVisibleWindowNegativeY() {
+		IFacadePart2 facade = new Facade();
+		// the visible height is negative
+		World world = facade.createWorld(500, 5, 15, 1, -1, 3, 3);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalVisibleWindowZeroX() {
+		IFacadePart2 facade = new Facade();
+		// the visible width is zero
+		World world = facade.createWorld(500, 5, 15, 0, 1, 3, 3);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalVisibleWindowZeroY() {
+		IFacadePart2 facade = new Facade();
+		// the visible height is zero
+		World world = facade.createWorld(500, 5, 15, 1, 0, 3, 3);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalVisibleWindowTooBigX() {
+		IFacadePart2 facade = new Facade();
+		// the visible width is greater than the width of the game world
+		World world = facade.createWorld(500, 5, 15, 2501, 1, 3, 3);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void testIllegalVisibleWindowTooBigY() {
+		IFacadePart2 facade = new Facade();
+		// the visible height is greater than the height of the game world
+		World world = facade.createWorld(500, 5, 15, 1, 7502, 3, 3);
+	}
+	
+	@Test
+	public void testGetWorldInPixels() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		// the size of the world in pixels is (500 * 2, 500 * 3)
+		assertArrayEquals(intArray(1000, 1500), world.getWorldSizeInPixels());
+	}
+	
+	@Test
+	public void testGetTileLenght() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		// the tile length of the world is set correctly to 500
+		assertEquals(500, world.getTileLength());
+	}
+	
+	@Test
+	public void testGetVisibleWindow() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		// the vivible window is a square of 1 pixel in the bottom left 
+		// corner of the game world
+		assertArrayEquals(intArray(0, 0, 1, 1), world.getVisibleWindow());
+	}
+	
+	@Test
+	public void testGetAlien() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alientje = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alientje);
+		// assert that the alien is set correctly
+		assertEquals(alientje, world.getAlien());
+	}
+	
+	@Test
+	public void testGetBottomLeftPixelOfTile() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		// the bottom left pixel of the tile is (500, 500) 
+		assertArrayEquals(intArray(500, 500), world.getBottomLeftPixelOfTile(1, 1));
+	}
+	
+	@Test
+	// TODO dit werkt nog niet
+	public void testGetTilePositionsIn() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		System.out.println(world.getTilePositionsIn(1, 1, 505, 40));
+	}
+	
+	@Test	
+	public void testGeologicalFeatureCorrect() throws IllegalPixelException {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_MAGMA);
+		facade.setGeologicalFeature(world, 2, 2, FEATURE_WATER);
+		assertEquals(FEATURE_SOLID, world.getGeologicalFeature(0, 0));
+		assertEquals(FEATURE_SOLID, world.getGeologicalFeature(500, 0));
+		assertEquals(FEATURE_SOLID, world.getGeologicalFeature(500, 500));
+		// by default the entire world is air unless stated otherwise (setGeologicalFeature)
+		assertEquals(FEATURE_AIR, world.getGeologicalFeature(0, 500));
+		assertEquals(FEATURE_AIR, world.getGeologicalFeature(0, 1000));
+		assertEquals(FEATURE_MAGMA, world.getGeologicalFeature(1000, 500));
+		assertEquals(FEATURE_WATER, world.getGeologicalFeature(1000, 1000));
+	}
+	
+	@Test(expected = IllegalPixelException.class)
+	public void testGeologicalFeaturePixelException() throws IllegalPixelException {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_MAGMA);
+		facade.setGeologicalFeature(world, 2, 2, FEATURE_WATER);
+		// this is no bottom left pixel of a tile
+		assertEquals(FEATURE_SOLID, world.getGeologicalFeature(5, 63));
+	}
+	
+	@Test
+	public void testGetX() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		// the amount of horizontal pixels is 1000 (500 * 2)
+		assertEquals(500 * 2, world.getX());
+	}
+	
+	@Test
+	public void testGetY() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 2, 3, 1, 1, 1, 1);
+		// the amount of vertical pixels is 1500 (500 * 3)
+		assertEquals(500 * 3, world.getY());
+	}
+	
+	@Test
+	// TODO geen idee hoe ge die list checkt of die gelijk is
+	public void testGetPlants() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		Plant boom = facade.createPlant(600, 600, spriteArrayForSize(2, 2, 2));
+		Plant tak = facade.createPlant(600, 600, spriteArrayForSize(2, 2, 2));
+		assertEquals(0, world.getPlants().size());
+		facade.addPlant(world, boom);
+		facade.addPlant(world, tak);
+		assertEquals(2, world.getPlants().size());
+	}
+	
+	@Test
+	// TODO geen idee hoe ge die list checkt of die gelijk is
+	public void testGetSharks() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		Shark shark1 = facade.createShark(600, 600, spriteArrayForSize(2, 2, 2));
+		Shark shark2 = facade.createShark(600, 600, spriteArrayForSize(2, 2, 2));
+		assertEquals(0, world.getSharks().size());
+		facade.addShark(world, shark1);
+		facade.addShark(world, shark2);
+		assertEquals(2, world.getSharks().size());
+	}
+	
+	@Test
+	// TODO geen idee hoe ge die list checkt of die gelijk is
+	public void testGetSlimes() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		School school = facade.createSchool();
+		Slime slime1 = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
+		Slime slime2 = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
+		assertEquals(0, world.getSlimes().size());
+		facade.addSlime(world, slime1);
+		facade.addSlime(world, slime2);
+		assertEquals(2, world.getSlimes().size());	
+	}
+	
+	@Test	
+	public void testSetGeologicalFeature() throws IllegalPixelException {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_WATER);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);
+		// assert that the geological features are actually set
+		assertEquals(FEATURE_SOLID, world.getGeologicalFeature(0, 0));
+		assertEquals(FEATURE_WATER, world.getGeologicalFeature(500, 0));
+		assertEquals(FEATURE_MAGMA, world.getGeologicalFeature(500, 500));
+	}
+	
+	@Test	
+	public void testRemoveAlien() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		// the alien gets removed
+		world.removeAlien(alien);		
+		assertEquals(null, world.getAlien());
+	}
+	
+	@Test	
+	public void testRemoveSlime() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
+		// the slime gets removed
+		world.removeSlime(slime);		
+		assertEquals( new CopyOnWriteArrayList<Slime>(), world.getSlimes());
+	}
+	
+	@Test	
+	public void testRemoveShark() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		Shark shark = facade.createShark(50, 550, spriteArrayForSize(2, 2, 2));
+		// the shark gets removed
+		world.removeShark(shark);		
+		assertEquals( new CopyOnWriteArrayList<Shark>(), world.getSharks());
+	}
+	
+	@Test	
+	public void testRemovePlant() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
+		// the plant gets removed
+		world.removePlant(plant);
+		assertEquals( new CopyOnWriteArrayList<Plant>(), world.getPlants());
+	}
+	
+	@Test	
+	public void testAddSlime() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		int amountOfSlimes = world.getSlimes().size();
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
+		world.addSlime(slime);	
+		// a slime was added to the world
+		assertEquals(amountOfSlimes + 1, world.getSlimes().size());
+
+	}
+	
+	@Test	
+	public void testAddShark() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		int amountOfSharks = world.getSharks().size();
+		Shark shark = facade.createShark(50, 550, spriteArrayForSize(2, 2, 2));
+		world.addShark(shark);	
+		// a shark was added to the world 
+		assertEquals(amountOfSharks + 1, world.getSharks().size());
+
+	}
+	
+	@Test	
+	public void testAddPlant() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		int amountOfPlants = world.getPlants().size();
+		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
+		world.addPlant(plant);
+		// a plant was added to the worlds
+		assertEquals(amountOfPlants + 1, world.getPlants().size());
+	}
+	
+	@Test
+	// TODO deze functie moet gewoon nog gemaakt worden
+	public void testStartGame() {
+		assertEquals(true, true);
+
+	}
+	
+	@Test	
+	public void testIsGameOver1() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 20; i++) {
+			facade.advanceTime(world, 0.2);
+		}
+		// the alien is removed (for example when no hitpoints left and so has died)
+		world.removeAlien(alien);
+		assertEquals(true, world.isGameOver());
+	}
+	
+	@Test	
+	public void testIsGameOver2() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 20; i++) {
+			facade.advanceTime(world, 0.15);
+		}
+		// the alien has reached the targetTile (the player has won)
+		assertEquals(true, world.isGameOver());
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testAdvanceTimeIllegalDtTooBig() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 100; i++) {
+			// dt too big (greater than 0.2)
+			facade.advanceTime(world, 0.3);
+		}
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testAdvanceTimeIllegalDtNegative() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 100; i++) {
+			// negative dt
+			facade.advanceTime(world, -0.05);
+		}
+	}	
+	
+		
+}

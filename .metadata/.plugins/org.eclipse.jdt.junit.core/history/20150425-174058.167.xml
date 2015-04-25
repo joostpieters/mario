@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SlimeTest" project="OGP1415-JumpingAlien" tests="14" started="14" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.SlimeTest" time="0.078">
+    <testcase name="testDie" classname="jumpingalien.part2.tests.SlimeTest" time="0.046"/>
+    <testcase name="testLoseHitpoints" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testSpriteTooLong" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testDieInWater" classname="jumpingalien.part2.tests.SlimeTest" time="0.016"/>
+    <testcase name="testLongInMagma" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testLongInWater" classname="jumpingalien.part2.tests.SlimeTest" time="0.016"/>
+    <testcase name="testSpriteTooShort" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testShortInMagma" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testShortInWater" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testIsImmune" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testNegativePosition" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testTooBigPosition" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testNullSchool" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+    <testcase name="testRemoveAfterDeath" classname="jumpingalien.part2.tests.SlimeTest" time="0.0"/>
+  </testsuite>
+</testrun>
