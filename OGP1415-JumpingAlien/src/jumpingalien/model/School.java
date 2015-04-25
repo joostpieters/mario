@@ -20,7 +20,6 @@ public class School {
 		
 	}
 	
-	
 	/**
 	 * a list containing all the Slimes in this school
 	 */
@@ -32,7 +31,7 @@ public class School {
 	 */
 	@Basic 
 	public List<Slime> getMembers() {
-		return this.members;
+		return new CopyOnWriteArrayList<Slime>(this.members);
 	}
 	
 	/**
@@ -43,6 +42,8 @@ public class School {
 	 * 			| this.members.add(slime)
 	 */
 	public void newSlime(Slime slime) {
+		assert slime != null;
+		assert ( ! this.hasSlime(slime));
 		this.members.add(slime);
 	}
 	
@@ -52,10 +53,11 @@ public class School {
 	 * 			| this.getMembers().size()
 	 */
 	@Basic 
-	public int getLength() {
+	public int getSize() {
 		return this.getMembers().size();
 	}
 	
+	// TODO commentaar aanpassen
 	/**
 	 * adds a slime to this School
 	 * @param slime
@@ -76,18 +78,21 @@ public class School {
 	 * 			| this.members.add(slime)
 	 */
 	public void addSlime(Slime slime) {
-		assert ( ! this.getMembers().contains(slime));
-		slime.setHitpoints(slime.getHitpoints() + slime.getSchool().getLength() - this.getLength());
+		assert slime != null;
+		assert ( ! this.hasSlime(slime));
+		slime.setHitpoints(slime.getHitpoints() - slime.getSchool().getSize() + 1 + this.getSize());
 		for (Slime oldMember: slime.getSchool().getMembers()) {
-			oldMember.setHitpoints(oldMember.getHitpoints() - Slime.getSchoolDamage());
+			if (oldMember != slime) {
+				oldMember.setHitpoints(oldMember.getHitpoints() + 1);
+			}
 		}
 		for (Slime newMember: this.getMembers()) {
-			newMember.setHitpoints(newMember.getHitpoints() + 1);
+			newMember.setHitpoints(newMember.getHitpoints() - 1);
 		}
 		// TODO dit is nogal rommelig
-		slime.getSchool().members.remove(slime);
+		slime.getSchool().removeSlime(slime);
 		slime.setSchool(this);
-		this.members.add(slime);
+		this.newSlime(slime);
 	}
 	
 	/**

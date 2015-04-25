@@ -241,6 +241,7 @@ public class Slime extends GameObject {
 	}
 	
 	
+	
 //	VALIDATIONS
 	
 	/**
@@ -322,9 +323,9 @@ public class Slime extends GameObject {
 	 * 			or the schools are adapted if other is a Slime
 	 * 			| if ((touched == 1) && ( ! other.isDying()))
 	 * 			| 	then if (other instanceof Slime) 
-	 * 			| 			then if (this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) 
+	 * 			| 			then if (this.getSchool().getSize() > ((Slime) other).getSchool().getSize()) 
 	 * 			|					then school.addSlime((Slime) other)
-	 * 			| 				 else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) 
+	 * 			| 				 else if (this.getSchool().getsize() < ((Slime) other).getSchool().getSize()) 
 	 * 			| 					then ((Slime) other).getSchool().addSlime(this)
 	 * 			| 		 else 	
 	 * 			| 			then this.contactDamage(dt)
@@ -336,11 +337,15 @@ public class Slime extends GameObject {
 	private void adjustHitpoints(GameObject other, double touched, double dt, double newXPos, double newYPos) {
 		if ((touched == 1) && ( ! other.isDying())) {
 			if (other instanceof Slime) {
-				if (this.getSchool().getLength() > ((Slime) other).getSchool().getLength()) {
+				System.out.println("adjusthit");
+				System.out.println(this.getHitpoints());
+				if (this.getSchool().getSize() > ((Slime) other).getSchool().getSize()) {
 					this.getSchool().addSlime((Slime) other);
+					
 				}
-				else if (this.getSchool().getLength() < ((Slime) other).getSchool().getLength()) {
+				else if (this.getSchool().getSize() < ((Slime) other).getSchool().getSize()) {
 					((Slime) other).getSchool().addSlime(this);
+					System.out.println(this.getHitpoints());
 				}
 			}
 			else   {
@@ -447,12 +452,20 @@ public class Slime extends GameObject {
 	 * 			| 	then setTimeInWater(0)
 	 */
 	@Raw
+	//TODO commentaar aanpassen
 	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
 		if (this.isInContactWithFeature(this.getXPos(), this.getYPos(), 3)) {
-			double toLose = (GameObject.getLossHitpointsInMagma() * (dt / GameObject.getBurnTime())) 
-								+ this.getHitpointsDifference();
-			this.setHitpointsDifference(toLose - (int) toLose);
-			this.loseHitpoints( (int) toLose);
+			if (this.getTimeInMagma() == 0) {
+				this.loseHitpoints(Slime.getLossHitpointsInMagma());
+			}		
+			else if (this.getTimeInMagma() >= Slime.getBurnTime()) {
+				this.loseHitpoints(Slime.getLossHitpointsInMagma());
+				this.setTimeInWater(this.getTimeInWater() - GameObject.getDrownTime());
+			}
+			this.setTimeInMagma(this.getTimeInMagma() + dt);
+		}
+		else {
+			this.setTimeInMagma(0);
 		}
 		if (this.isInContactWithFeature(newXPos,newYPos,2)) {
 			this.setTimeInWater(this.getTimeInWater() + dt);
@@ -690,7 +703,6 @@ public class Slime extends GameObject {
 			}
 		}
 	}
-	
-	
+
 }
 	

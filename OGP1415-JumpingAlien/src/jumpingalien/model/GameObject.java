@@ -671,13 +671,13 @@ public abstract class GameObject {
 	/**
 	 * The amount of hitpoints an object loses when touching magma
 	 */
-	protected static final double LOSS_HITPOINTS_IN_MAGMA = 50;
+	protected static final int LOSS_HITPOINTS_IN_MAGMA = 50;
 	/**
 	 * Returns the amount of hitpoints an object loses when touching magma
 	 * @return LOSS_HITPOINTS_IN_MAGMA
 	 */
 	@Basic @Immutable 
-	protected static final double getLossHitpointsInMagma() {
+	protected static final int getLossHitpointsInMagma() {
 		return LOSS_HITPOINTS_IN_MAGMA;
 	}
 	/**

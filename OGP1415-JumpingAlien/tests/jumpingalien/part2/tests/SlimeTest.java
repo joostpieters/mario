@@ -224,8 +224,8 @@ public class SlimeTest {
 		for (int i = 0; i < 1; i++) {
 			facade.advanceTime(world, 0.1);
 		}		
-		//0.1 second in magma, so the slime loses 25 hitpoints
-		assertEquals(slime.getHitpoints(), 75);
+		//0.1 second in magma, so the slime loses 50 hitpoints
+		assertEquals(slime.getHitpoints(), 50);
 	}
 	
 	@Test 
