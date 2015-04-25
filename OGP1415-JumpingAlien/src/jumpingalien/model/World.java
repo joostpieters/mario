@@ -922,7 +922,7 @@ public class World {
 	 * 			| else 
 	 * 			| 	then return false
 	 */
-	private boolean didPlayerWin() {
+	public boolean didPlayerWin() {
 		if (this.getAlien() != null) {
 			for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
 					(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),

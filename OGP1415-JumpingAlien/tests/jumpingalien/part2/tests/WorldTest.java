@@ -41,7 +41,6 @@ public class WorldTest {
 		School school = facade.createSchool();
 		Slime slime = facade.createSlime(350, 500, spriteArrayForSize(2, 2, 2), school);
 		facade.addSlime(world, slime);
-		
 		for (int i = 0; i < 100; i++) {
 			facade.advanceTime(world, 0.2);
 		}
@@ -346,7 +345,7 @@ public class WorldTest {
 		Slime slime = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
 		// the slime gets removed
 		world.removeSlime(slime);		
-		assertEquals(null, world.getSlimes());
+		assertEquals( new CopyOnWriteArrayList<Slime>(), world.getSlimes());
 	}
 	
 	@Test	
@@ -363,7 +362,7 @@ public class WorldTest {
 		Shark shark = facade.createShark(50, 550, spriteArrayForSize(2, 2, 2));
 		// the shark gets removed
 		world.removeShark(shark);		
-		assertEquals(null, world.getSharks());
+		assertEquals( new CopyOnWriteArrayList<Shark>(), world.getSharks());
 	}
 	
 	@Test	
@@ -380,7 +379,7 @@ public class WorldTest {
 		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
 		// the plant gets removed
 		world.removePlant(plant);
-		assertEquals(null, world.getPlants());
+		assertEquals( new CopyOnWriteArrayList<Plant>(), world.getPlants());
 	}
 	
 	@Test	
