@@ -27,6 +27,7 @@ public class SharkTest {
 	public static final int FEATURE_MAGMA = 3;
 
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
 	public void testNegativePosition() {
 		IFacadePart2 facade = new Facade();
 		Shark shark = facade.createShark(-5, -20, spriteArrayForSize(1, 1, 2));
@@ -41,12 +42,16 @@ public class SharkTest {
 	}
 	
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
+
 	public void testSpriteTooShort() {
 		IFacadePart2 facade = new Facade();
 		Shark shark = facade.createShark(0, 0, spriteArrayForSize(1, 1, 1));
 	}
 	
 	@Test(expected = ModelException.class)
+	@SuppressWarnings("unused")
+
 	public void testSpriteTooLong() {
 		IFacadePart2 facade = new Facade();
 		Shark shark = facade.createShark(0, 0, spriteArrayForSize(1, 1, 3));

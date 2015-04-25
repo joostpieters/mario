@@ -6,6 +6,8 @@ import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import jumpingalien.model.IllegalPixelException;
@@ -244,7 +246,6 @@ public class WorldTest {
 	}
 	
 	@Test
-	// TODO geen idee hoe ge die list checkt of die gelijk is
 	public void testGetPlants() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -259,11 +260,13 @@ public class WorldTest {
 		Plant tak = facade.createPlant(600, 600, spriteArrayForSize(2, 2, 2));
 		facade.addPlant(world, boom);
 		facade.addPlant(world, tak);
-		System.out.println(world.getPlants());		
+		Collection<Plant> plants = new CopyOnWriteArrayList<Plant>();
+		plants.add(boom);
+		plants.add(tak);
+		assertEquals(plants, world.getPlants());	
 	}
 	
 	@Test
-	// TODO geen idee hoe ge die list checkt of die gelijk is
 	public void testGetSharks() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -278,11 +281,13 @@ public class WorldTest {
 		Shark shark2 = facade.createShark(600, 600, spriteArrayForSize(2, 2, 2));
 		facade.addShark(world, shark1);
 		facade.addShark(world, shark2);
-		System.out.println(world.getSharks());		
+		Collection<Shark> sharks = new CopyOnWriteArrayList<Shark>();
+		sharks.add(shark1);
+		sharks.add(shark2);
+		assertEquals(sharks, world.getSharks());	
 	}
 	
 	@Test
-	// TODO geen idee hoe ge die list checkt of die gelijk is
 	public void testGetSlimes() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -298,7 +303,10 @@ public class WorldTest {
 		Slime slime2 = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
 		facade.addSlime(world, slime1);
 		facade.addSlime(world, slime2);
-		System.out.println(world.getSlimes());		
+		Collection<Slime> slimes = new CopyOnWriteArrayList<Slime>();
+		slimes.add(slime1);
+		slimes.add(slime2);
+		assertEquals(slimes, world.getSlimes());		
 	}
 	
 	@Test	
