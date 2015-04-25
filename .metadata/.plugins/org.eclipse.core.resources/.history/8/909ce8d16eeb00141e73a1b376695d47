@@ -5,8 +5,15 @@ import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+<<<<<<< HEAD
+import java.util.ArrayList;
+=======
 import java.util.Collection;
+import java.util.List;
+>>>>>>> 7a8500616e9d69afa67f93afbf76b574287af3c9
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
@@ -260,10 +267,15 @@ public class WorldTest {
 		assertEquals(0, world.getPlants().size());
 		facade.addPlant(world, boom);
 		facade.addPlant(world, tak);
+<<<<<<< HEAD
+		// the two plants are added to the world
+		assertEquals(2, world.getPlants().size());
+=======
 		Collection<Plant> plants = new CopyOnWriteArrayList<Plant>();
 		plants.add(boom);
 		plants.add(tak);
 		assertEquals(plants, world.getPlants());	
+>>>>>>> 7a8500616e9d69afa67f93afbf76b574287af3c9
 	}
 	
 	@Test
@@ -282,10 +294,15 @@ public class WorldTest {
 		assertEquals(0, world.getSharks().size());
 		facade.addShark(world, shark1);
 		facade.addShark(world, shark2);
+<<<<<<< HEAD
+		// the two sharks are added to the world
+		assertEquals(2, world.getSharks().size());
+=======
 		Collection<Shark> sharks = new CopyOnWriteArrayList<Shark>();
 		sharks.add(shark1);
 		sharks.add(shark2);
-		assertEquals(sharks, world.getSharks());
+		assertEquals(sharks, world.getSharks());	
+>>>>>>> 7a8500616e9d69afa67f93afbf76b574287af3c9
 	}
 	
 	@Test
@@ -305,10 +322,15 @@ public class WorldTest {
 		assertEquals(0, world.getSlimes().size());
 		facade.addSlime(world, slime1);
 		facade.addSlime(world, slime2);
+<<<<<<< HEAD
+		// the two slimes are added to the world
+		assertEquals(2, world.getSlimes().size());	
+=======
 		Collection<Slime> slimes = new CopyOnWriteArrayList<Slime>();
 		slimes.add(slime1);
 		slimes.add(slime2);
-		assertEquals(slimes, world.getSlimes());	
+		assertEquals(slimes, world.getSlimes());		
+>>>>>>> 7a8500616e9d69afa67f93afbf76b574287af3c9
 	}
 	
 	@Test	

@@ -5,8 +5,15 @@ import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+<<<<<<< HEAD
+import java.util.ArrayList;
+=======
 import java.util.Collection;
+import java.util.List;
+>>>>>>> 7a8500616e9d69afa67f93afbf76b574287af3c9
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;

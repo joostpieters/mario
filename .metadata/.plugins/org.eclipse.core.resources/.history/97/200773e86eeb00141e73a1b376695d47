@@ -5,8 +5,10 @@ import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
