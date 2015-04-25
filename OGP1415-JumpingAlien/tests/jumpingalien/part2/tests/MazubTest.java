@@ -6,6 +6,7 @@ import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import jumpingalien.model.Mazub;
+import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.World;
@@ -454,9 +455,6 @@ public class MazubTest {
 	}
 
 	@Test(expected = ModelException.class)
-	// TODO dit is een fout in de code ergens
-	// Hmm, we kunnen die positie van Mazub mss checken in die setMazub, want in de constructor
-	// van mazub gaat dat niet
 	public void illegalPosition2() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -590,14 +588,14 @@ public class MazubTest {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
+		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(5, 5));
 		facade.setMazub(world, alien);
-		Shark shark = facade.createShark(130, 500, spriteArrayForSize(2, 2, 2));
-		facade.addShark(world, shark);
 		School school = facade.createSchool();
-		Slime slime = facade.createSlime(130, 500, spriteArrayForSize(2, 2, 2), school);
+		Slime slime = facade.createSlime(55, 499, spriteArrayForSize(5, 5, 2), school);
 		facade.addSlime(world, slime);
-		for (int i = 0; i < 15; i++) {
+		facade.startMoveRight(alien);
+
+		for (int i = 0; i < 1; i++) {
 			facade.advanceTime(world, 0.1);
 		}
 		// the alien collided with the slime
@@ -610,12 +608,12 @@ public class MazubTest {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(3, 3));
+		Mazub alien = facade.createMazub(50, 499, spriteArrayForSize(5, 5));
 		facade.setMazub(world, alien);
-		Shark shark = facade.createShark(130, 500, spriteArrayForSize(2, 2, 2));
+		Shark shark = facade.createShark(55, 500, spriteArrayForSize(5, 5, 2));
 		facade.addShark(world, shark);
 		facade.startMoveRight(alien);
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 1; i++) {
 			facade.advanceTime(world, 0.1);
 		}
 		// the alien collided with the shark
@@ -720,6 +718,143 @@ public class MazubTest {
 		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
+	@Test
+	public void moveRightNotLeft() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(20, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 3; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// Mazub starts moving right and does not move left, because endMoveRight is not invoked
+		facade.startMoveLeft(alien);
+		facade.advanceTime(world, 0.1);
+		assertEquals(Orientation.RIGHT,alien.getOrientation());	
+	}
+	@Test
+	public void moveLeftNotRight() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(400, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveLeft(alien);
+		for (int i = 0; i < 3; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// Mazub starts moving left and does not move right, because endMoveLeft is not invoked
+		facade.startMoveRight(alien);
+		facade.advanceTime(world, 0.1);
+		assertEquals(Orientation.LEFT,alien.getOrientation());	
+	}
+	@Test
+	public void testOnTopOfSharks() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(50, 504, spriteArrayForSize(5, 5));
+		facade.setMazub(world, alien);
+		Shark shark = facade.createShark(50, 499, spriteArrayForSize(5, 5, 2));
+		facade.addShark(world, shark);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// the alien is on top of the shark and should not lose hitpoints
+		assertEquals(100, facade.getNbHitPoints(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	@Test
+	public void testOnTopOfSlimes() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(50, 504, spriteArrayForSize(5, 5));
+		facade.setMazub(world, alien);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(50, 499, spriteArrayForSize(5, 5, 2), school);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// the alien is on top of the slime and should not lose hitpoints
+		assertEquals(100, facade.getNbHitPoints(alien),
+				Util.DEFAULT_EPSILON);
+	}
 	
+	@Test 
+	public void testShortInMagma() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s m s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);		
+		//0.1 second, so the alien loses 50 hitpoints
+		assertEquals(alien.getHitpoints(), 75);
+	}
 	
+	@Test 
+	public void testLongInMagma() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s m s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 4; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.4 seconds in magma, so the alien loses 2 * 50 hitpoints
+		assertEquals(alien.getHitpoints(), 0);
+	}
+	
+	@Test 
+	public void testShortInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}		
+		//0.1 second, so the alien does not lose hitpoints
+		assertEquals(alien.getHitpoints(), 100);
+	}
+	
+	@Test 
+	public void testLongInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 5; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.5 seconds in water, so the alien loses 2 * 2 hitpoints
+		assertEquals(alien.getHitpoints(), 96);
+	}
 }

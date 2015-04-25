@@ -24,11 +24,22 @@ public class SlimeTest {
 	public static final int FEATURE_MAGMA = 3;
 
 	@Test(expected = ModelException.class)
-	public void testNotWithinBoundaries() {
+	public void testNegativePosition() {
 		IFacadePart2 facade = new Facade();
 		School school = facade.createSchool();
 		Slime slime = facade.createSlime(-5, -20, spriteArrayForSize(1, 1, 2), school);
 	}
+	
+	@Test(expected = ModelException.class)
+	public void testTooBigPosition() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(50, 3, 3, 1, 1, 1, 1);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(500, 500, spriteArrayForSize(1, 1, 2), school);
+		facade.addSlime(world, slime);
+	}
+	
+	
 	
 	@Test(expected = ModelException.class)
 	public void testSpriteTooShort() {
@@ -81,25 +92,6 @@ public class SlimeTest {
 		// Mazub has hit the slime so the slime get Immune
 		assertEquals(slime.isImmune(), true);
 	}
-//	@Test 
-//	public void testNotImmune() {
-//		IFacadePart2 facade = new Facade();
-//		World world = facade.createWorld(500, 5, 5, 1, 1, 2, 2);
-//		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);	
-//		School school = facade.createSchool();
-//		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-//		Slime slime = facade.createSlime(3, 499, spriteArrayForSize(3, 3, 2), school);
-//		facade.setMazub(world, alien);
-//		facade.addSlime(world, slime);
-//		alien.startMoveRight();
-//		for (int i = 0; i < 7; i++) {
-//			facade.advanceTime(world, 0.1);
-//			alien.startJump();
-//		}
-//		// Mazub has hit the slime so the slime gets Immune and after 0.6 second not anymore
-//		assertEquals(slime.isImmune(), false);
-//	}
-	//werkt niet altijd omdat die random bewegingen alles verpesten
 	
 	@Test 
 	public void testDie() {
@@ -111,8 +103,8 @@ public class SlimeTest {
 		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
 		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);	
 		School school = facade.createSchool();
-		Mazub alien = facade.createMazub(49, 502, spriteArrayForSize(50, 3));
-		Slime slime = facade.createSlime(49, 499, spriteArrayForSize(50, 3, 2), school);
+		Mazub alien = facade.createMazub(50, 52, spriteArrayForSize(50, 3));
+		Slime slime = facade.createSlime(50, 49, spriteArrayForSize(50, 3, 2), school);
 		facade.setMazub(world, alien);
 		facade.addSlime(world, slime);
 		alien.startMoveRight();
@@ -120,10 +112,9 @@ public class SlimeTest {
 			facade.advanceTime(world, 0.1);
 			alien.startJump();
 		}
-		// Mazub has hit the slime should have zero hitpoints after more then 0.6 second
+		// Mazub has hit the slime twice, so the slime should have zero hitpoints after 0.7 second
 		assertEquals(slime.getHitpoints(), 0);
 	}
-	// TODO dit doen werken
 
 		
 	@Test 
@@ -253,13 +244,10 @@ public class SlimeTest {
 		facade.setMazub(world, alien);
 		facade.addSlime(world, slime);
 		for (int i = 0; i < 4; i++) {
-			facade.advanceTime(world, 0.1);
+			facade.advanceTime(world, 0.10001);
 		}
-		// 0.4 seconds in magma, so the slime loses 2 * 50 hitpoints
+		// 0.40004 seconds in magma, so the slime loses 2 * 50 hitpoints
 		assertEquals(slime.getHitpoints(), 0);
-		// TODO werkt niet meer, ervoor wel, wtf. Ik snap het niet
-	}
-	
-	
+	}	
 	
 }

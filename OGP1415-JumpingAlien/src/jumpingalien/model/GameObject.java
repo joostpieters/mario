@@ -834,7 +834,7 @@ public abstract class GameObject {
 	 * @return true if x and y are within their boundaries
 	 * 			| isWithinBoundariesX(x) && isWithinBoundariesY(y)
 	 */
-	protected boolean isWithinBoundaries(double x, double y) {
+	public boolean isWithinBoundaries(double x, double y) {
 		return isWithinBoundariesX(x) && isWithinBoundariesY(y);
 	}	
 	
