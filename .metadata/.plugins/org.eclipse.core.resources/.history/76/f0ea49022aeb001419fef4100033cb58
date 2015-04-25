@@ -988,7 +988,7 @@ public class Mazub extends GameObject {
 	 * 		| 		setDuckShouldEnd(false)
 	 * 		| 		setMaxSpeed(getMaxSpeedDuck())
 	 * 		| } catch (IllegalDuckException exc) {
-	 * 		| 		assert(false)
+	 * 		| 		assert(false);
 	 * 		| }
 	 */
 	public void startDuck() {
@@ -1007,19 +1007,8 @@ public class Mazub extends GameObject {
 	 * Ends the ducking of Mazub by setting the boolean duck on false 
 	 * and the maxSpeed back to MAX_SPEED
 	 * @effect
-	 * 			| try 
-	 * 			| 	if ( ! isDucked())
-	 * 			| 		then throw new IllegalDuckException(isDucked())
-	 * 			| 	setDuck(false)
-	 * 			| 	setMaxSpeed(Mazub.getMaxMovingSpeed())
-	 * 			| 	if ( ! (getXSpeed() == 0))
-	 * 			| 		then setXAcc(Mazub.getMoveAcc())
-	 * 			| 	if (isAgainstRoof(getXPos(), getYPos()))
-	 * 			| 		then startDuck()
-	 * 			| 			 setDuckShouldEnd(true)
-	 * 			| catch (IllegalDuckException exc) 
-	 * 			| 	then assert (false)
-		}
+	 * 			| duck == false
+	 * 			| maxSpeed == MAX_SPEED
 	 */
 	public void endDuck() {
 		try {
