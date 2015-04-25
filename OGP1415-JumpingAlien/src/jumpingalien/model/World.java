@@ -922,7 +922,7 @@ public class World {
 	 * 			| else 
 	 * 			| 	then return false
 	 */
-	public boolean didPlayerWin() {
+	private boolean didPlayerWin() {
 		if (this.getAlien() != null) {
 			for (int[] tile: this.getTilePositionsIn( (int) this.getAlien().getXPos(), 
 					(int) this.getAlien().getYPos(), (int) this.getAlien().getXPos() + this.getAlien().getXDim(),
@@ -992,7 +992,7 @@ public class World {
 	 * @throws IllegalDtException 
 	 */
 	public void advanceTime(double dt) throws IllegalDtException {
-		if(! isValidDt(dt)) {
+		if( ! isValidDt(dt)) {
 			throw new IllegalDtException(dt);
 		}
 		double minDt = computeMinimalDt(dt);
