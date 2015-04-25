@@ -1019,6 +1019,7 @@ public class Mazub extends GameObject {
 	 * 			| 			 setDuckShouldEnd(true)
 	 * 			| catch (IllegalDuckException exc) 
 	 * 			| 	then assert (false)
+		}
 	 */
 	public void endDuck() {
 		try {
