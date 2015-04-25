@@ -89,7 +89,6 @@ public class School {
 		for (Slime newMember: this.getMembers()) {
 			newMember.setHitpoints(newMember.getHitpoints() - 1);
 		}
-		// TODO dit is nogal rommelig
 		slime.getSchool().removeSlime(slime);
 		slime.setSchool(this);
 		this.newSlime(slime);

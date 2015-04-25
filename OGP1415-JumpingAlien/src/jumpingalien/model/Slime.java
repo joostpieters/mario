@@ -337,15 +337,12 @@ public class Slime extends GameObject {
 	private void adjustHitpoints(GameObject other, double touched, double dt, double newXPos, double newYPos) {
 		if ((touched == 1) && ( ! other.isDying())) {
 			if (other instanceof Slime) {
-				System.out.println("adjusthit");
-				System.out.println(this.getHitpoints());
 				if (this.getSchool().getSize() > ((Slime) other).getSchool().getSize()) {
 					this.getSchool().addSlime((Slime) other);
 					
 				}
 				else if (this.getSchool().getSize() < ((Slime) other).getSchool().getSize()) {
 					((Slime) other).getSchool().addSlime(this);
-					System.out.println(this.getHitpoints());
 				}
 			}
 			else   {
