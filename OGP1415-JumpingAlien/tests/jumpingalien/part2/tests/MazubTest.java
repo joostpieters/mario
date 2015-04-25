@@ -568,9 +568,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO werkt nog niet
-	// Nu wel. Bij planten/slimes/sharks moet er nog een ,2 in spritearrayforsize, zodat die maar
-	// 2 sprites hebben
 	public void testCollidingPlants() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -589,7 +586,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO werkt nog niet, geen zin om te rekenen, maar als ge het nummertje uitrekent zal het wel werken
 	public void testCollidingSlimes() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -610,7 +606,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO werkt nog niet, geen zin om te rekenen, maar als ge het nummertje uitrekent zal het wel werken
 	public void testCollidingSharks() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);

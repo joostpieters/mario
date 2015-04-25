@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="WorldTest" project="OGP1415-JumpingAlien" tests="35" started="35" failures="3" errors="1" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.WorldTest" time="0.031">
+    <testcase name="testIllegalVisibleWindowZeroX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowZeroY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetAlien" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTargetTileXGreaterThanNbTilesX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTargetTileXGreaterThanNbTilesY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowNegativeX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowNegativeY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetVisibleWindow" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testSetGeologicalFeature" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testRemoveAlien" classname="jumpingalien.part2.tests.WorldTest" time="0.016"/>
+    <testcase name="testRemovePlant" classname="jumpingalien.part2.tests.WorldTest" time="0.0">
+      <failure>java.lang.AssertionError: expected:&lt;null&gt; but was:&lt;[]&gt;&#13;
+	at org.junit.Assert.fail(Assert.java:88)&#13;
+	at org.junit.Assert.failNotEquals(Assert.java:743)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:118)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:144)&#13;
+	at jumpingalien.part2.tests.WorldTest.testRemovePlant(WorldTest.java:389)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testRemoveShark" classname="jumpingalien.part2.tests.WorldTest" time="0.0">
+      <failure>java.lang.AssertionError: expected:&lt;null&gt; but was:&lt;[]&gt;&#13;
+	at org.junit.Assert.fail(Assert.java:88)&#13;
+	at org.junit.Assert.failNotEquals(Assert.java:743)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:118)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:144)&#13;
+	at jumpingalien.part2.tests.WorldTest.testRemoveShark(WorldTest.java:373)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testRemoveSlime" classname="jumpingalien.part2.tests.WorldTest" time="0.0">
+      <failure>java.lang.AssertionError: expected:&lt;null&gt; but was:&lt;[]&gt;&#13;
+	at org.junit.Assert.fail(Assert.java:88)&#13;
+	at org.junit.Assert.failNotEquals(Assert.java:743)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:118)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:144)&#13;
+	at jumpingalien.part2.tests.WorldTest.testRemoveSlime(WorldTest.java:357)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testSolidFeatureWallRight" classname="jumpingalien.part2.tests.WorldTest" time="0.015"/>
+    <testcase name="testGetTilePositionsIn" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testAddPlant" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testAddShark" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testAddSlime" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGeologicalFeaturePixelException" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetWorldInPixels" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetBottomLeftPixelOfTile" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTargetTileYNegative" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetTileLenght" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowTooBigX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowTooBigY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGeologicalFeatureCorrect" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTileSize" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetPlants" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetSharks" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetSlimes" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testNoMazub" classname="jumpingalien.part2.tests.WorldTest" time="0.0">
+      <error>java.lang.Exception: Unexpected exception, expected&lt;jumpingalien.util.ModelException&gt; but was&lt;java.lang.NullPointerException&gt;&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:28)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+Caused by: java.lang.NullPointerException&#13;
+	at jumpingalien.model.World.computeMinimalDt(World.java:961)&#13;
+	at jumpingalien.model.World.advanceTime(World.java:998)&#13;
+	at jumpingalien.part2.facade.Facade.advanceTime(Facade.java:159)&#13;
+	at jumpingalien.part2.tests.WorldTest.testNoMazub(WorldTest.java:65)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19)&#13;
+	... 15 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testIllegalNbOfTilesZero" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalNbOfTilesNegative" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+  </testsuite>
+</testrun>

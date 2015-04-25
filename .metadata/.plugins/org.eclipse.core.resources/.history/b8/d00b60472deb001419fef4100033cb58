@@ -1,0 +1,53 @@
+package jumpingalien.part2.tests;
+
+import static jumpingalien.tests.util.TestUtils.doubleArray;
+import static jumpingalien.tests.util.TestUtils.intArray;
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import jumpingalien.model.Mazub;
+import jumpingalien.model.Plant;
+import jumpingalien.model.World;
+import jumpingalien.model.Shark;
+import jumpingalien.model.Slime;
+import jumpingalien.part2.facade.Facade;
+import jumpingalien.part2.facade.IFacadePart2;
+import jumpingalien.util.Sprite;
+import jumpingalien.util.Util;
+
+import org.junit.Test;
+
+public class WorldTest {
+	
+	@Test
+	public void testSolidFeatureWallRight() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		// walking till the right end of the tile (and to a wall)
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(world, 0.2);
+		}
+		assertArrayEquals(intArray(498, 499), facade.getLocation(alien));
+	}
+	
+	@Test
+	public void testNoMazub() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
+		for (int i = 0; i < 100; i++) {
+			facade.advanceTime(world, 0.2);
+		}
+	}
+	
+}

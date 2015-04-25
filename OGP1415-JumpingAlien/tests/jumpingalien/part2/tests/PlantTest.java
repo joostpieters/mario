@@ -125,5 +125,6 @@ public class PlantTest {
 		assertArrayEquals(doubleArray(0.5, 0), plant.getVelocity(),
 				Util.DEFAULT_EPSILON);
 	}
-		
+	
+	
 }

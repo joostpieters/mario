@@ -16,7 +16,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO Commentaren -> ik haat dit -> klaar hoop/denk ik ==> (medewerkers)feestje :D
 // TODO aparte testfiles
 // TODO invarianten overal!!!!
-// TODO Laura nog eens muilen
+
 public class World {
 
 	/**
@@ -169,7 +169,7 @@ public class World {
 	 * 			| nbTilesX
 	 */
 	@Basic @Immutable 
-	public int getNbTilesX() {
+	private int getNbTilesX() {
 		return nbTilesX;
 	}
 	/**
@@ -270,8 +270,7 @@ public class World {
 	}
 	/**
 	 * Returns the tile positions of all tiles within the given rectangular
-	 * region.
-	 * 
+	 * region. 
 	 * @param pixelLeft
 	 *            The x-coordinate of the left side of the rectangular region.
 	 * @param pixelBottom
@@ -435,6 +434,7 @@ public class World {
 	 * @return number of aliens
 	 * 			| 1
 	 */
+	// TODO Dit moet nog iets juist teruggeven
 	@Basic
 	private int getNbAliens() {
 		return 1;
@@ -810,13 +810,13 @@ public class World {
 	 * @param nbTilesY
 	 * 			the number of vertical tiles
 	 * @return ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
-				<=  tileSize * nbTilesY))
+	 *			<=  tileSize * nbTilesY) && visiblewindowWidth > 0 && visibleWindowHeight > 0))
 	 */
 	@Raw
 	private boolean isValidVisibleWindow(int visiblewindowWidth,int visibleWindowHeight,
 				int tileSize, int nbTilesX, int nbTilesY){
 		return  ((visiblewindowWidth <=  tileSize * nbTilesX) && (visibleWindowHeight
-				<=  tileSize * nbTilesY));
+				<=  tileSize * nbTilesY) && visiblewindowWidth > 0 && visibleWindowHeight > 0);
 	}
 	/**
 	 * returns true if the given coordinate of the bottom left pixel is valid
