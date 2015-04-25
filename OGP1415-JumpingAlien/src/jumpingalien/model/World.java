@@ -1077,6 +1077,9 @@ public class World {
 		if( ! isValidDt(dt)) {
 			throw new IllegalDtException(dt);
 		}
+		if(!isGameStarted()) {
+			this.startGame();
+		}
 		double minDt = computeMinimalDt(dt);
 		double timePassed = 0;
 		if (minDt < dt) {
