@@ -783,4 +783,78 @@ public class MazubTest {
 		assertEquals(100, facade.getNbHitPoints(alien),
 				Util.DEFAULT_EPSILON);
 	}
+	
+	@Test 
+	public void testShortInMagma() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s m s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);		
+		//0.1 second, so the alien loses 50 hitpoints
+		assertEquals(alien.getHitpoints(), 75);
+	}
+	
+	@Test 
+	public void testLongInMagma() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s m s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_MAGMA);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 4; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.4 seconds in magma, so the alien loses 2 * 50 hitpoints
+		assertEquals(alien.getHitpoints(), 0);
+	}
+	
+	@Test 
+	public void testShortInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}		
+		//0.1 second, so the alien does not lose hitpoints
+		assertEquals(alien.getHitpoints(), 100);
+	}
+	
+	@Test 
+	public void testLongInWater() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
+		// s w s
+		// a s a
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);		
+		Mazub alien = facade.createMazub(550, 499, spriteArrayForSize(50, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 5; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// 0.5 seconds in water, so the alien loses 2 * 2 hitpoints
+		assertEquals(alien.getHitpoints(), 96);
+	}
 }
