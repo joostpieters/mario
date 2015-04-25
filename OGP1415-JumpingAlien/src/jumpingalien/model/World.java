@@ -8,7 +8,6 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
-import jumpingalien.util.ModelException;
 
 // TODO in facade nog default constructor toevoegen
 // TODO checkers toevoegen in elke getter / setter
@@ -16,6 +15,8 @@ import jumpingalien.util.ModelException;
 // TODO Commentaren -> ik haat dit -> klaar hoop/denk ik ==> (medewerkers)feestje :D
 // TODO alle klassen nog eens checken voor todotjes
 // TODO invarianten overal!!!!
+// TODO IllegalDingens is nakijken op slechte naamgeving en mss een message geven
+
 
 public class World {
 		//TODO commentaar constructor!!
