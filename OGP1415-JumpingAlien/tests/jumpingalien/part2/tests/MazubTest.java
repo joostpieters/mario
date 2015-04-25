@@ -6,6 +6,7 @@ import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import jumpingalien.model.Mazub;
+import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.World;
@@ -565,9 +566,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO werkt nog niet
-	// Nu wel. Bij planten/slimes/sharks moet er nog een ,2 in spritearrayforsize, zodat die maar
-	// 2 sprites hebben
 	public void testCollidingPlants() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -586,7 +584,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO werkt nog niet, geen zin om te rekenen, maar als ge het nummertje uitrekent zal het wel werken
 	public void testCollidingSlimes() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -607,7 +604,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO werkt nog niet, geen zin om te rekenen, maar als ge het nummertje uitrekent zal het wel werken
 	public void testCollidingSharks() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -722,6 +718,69 @@ public class MazubTest {
 		assertArrayEquals(doubleArray(3, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
-	
-	
+	@Test
+	public void moveRightNotLeft() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(20, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		for (int i = 0; i < 3; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// Mazub starts moving right and does not move left, because endMoveRight is not invoked
+		facade.startMoveLeft(alien);
+		facade.advanceTime(world, 0.1);
+		assertEquals(Orientation.RIGHT,alien.getOrientation());	
+	}
+	@Test
+	public void moveLeftNotRight() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(400, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveLeft(alien);
+		for (int i = 0; i < 3; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// Mazub starts moving left and does not move right, because endMoveLeft is not invoked
+		facade.startMoveRight(alien);
+		facade.advanceTime(world, 0.1);
+		assertEquals(Orientation.LEFT,alien.getOrientation());	
+	}
+	@Test
+	public void testOnTopOfSharks() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(50, 504, spriteArrayForSize(5, 5));
+		facade.setMazub(world, alien);
+		Shark shark = facade.createShark(50, 499, spriteArrayForSize(5, 5, 2));
+		facade.addShark(world, shark);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// the alien is on top of the shark and should not lose hitpoints
+		assertEquals(100, facade.getNbHitPoints(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	@Test
+	public void testOnTopOfSlimes() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		Mazub alien = facade.createMazub(50, 504, spriteArrayForSize(5, 5));
+		facade.setMazub(world, alien);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(50, 499, spriteArrayForSize(5, 5, 2), school);
+		facade.addSlime(world, slime);
+		for (int i = 0; i < 1; i++) {
+			facade.advanceTime(world, 0.1);
+		}
+		// the alien is on top of the slime and should not lose hitpoints
+		assertEquals(100, facade.getNbHitPoints(alien),
+				Util.DEFAULT_EPSILON);
+	}
 }
