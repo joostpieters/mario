@@ -1,6 +1,5 @@
 package jumpingalien.part2.tests;
 
-import static jumpingalien.tests.util.TestUtils.doubleArray;
 import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
@@ -20,7 +19,6 @@ import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;
 import jumpingalien.util.Sprite;
-import jumpingalien.util.Util;
 
 import org.junit.Test;
 
@@ -459,6 +457,58 @@ public class WorldTest {
 		facade.advanceTime(world, 0.1);
 		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
 		facade.addPlant(world, plant);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testStartGameAddShark() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		Shark shark = facade.createShark(50, 550, spriteArrayForSize(2, 2, 2));
+		facade.addShark(world, shark);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testStartGameAddSlime() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(50, 550, spriteArrayForSize(2, 2, 2), school);
+		facade.addSlime(world, slime);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testStartGameSetAlien() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		Mazub ET = facade.createMazub(400, 400, sprites);
+		facade.setMazub(world, ET);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testStartGameSetTile() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 	}
 	
 	@Test	
