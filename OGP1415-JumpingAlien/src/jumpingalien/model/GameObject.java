@@ -156,7 +156,7 @@ public abstract class GameObject {
 	 */
 	@Basic @Raw
 	protected Sprite[] getSprite() {
-		return sprites;
+		return this.sprites.clone();
 	}
 	/**
 	 * Sets the sprites to a new set of sprites
