@@ -18,11 +18,6 @@ import jumpingalien.util.Sprite;
  * A class that describes the movement of the rectangular player
  * character Mazub in a game world. 
  * 
- * @invar The lowest left corner of mazub (x_pos,y_pos) has to stay
- * 			in the game world. Mazub also has to stay in passable terrain.
- * 		| isValidPosition(getXPos(), getYPos())
- * @invar The speed has to be limited to a maximum speed
- * 		| isValidSpeed(getXSpeed(), getYSpeed())
  * @author Pieter Van den Berghe, Ward Romanus
  */
 public class Mazub extends GameObject {
@@ -36,7 +31,7 @@ public class Mazub extends GameObject {
 	 * 			The y position in the field for the new Mazub
 	 * @param sprites
 	 * 			The sprites for the new Mazub
-	 * @effect the mazub is created at (x_pos,y_pos) with a given set of sprites
+	 * @effect the mazub is created at (xPos,yPos) with a given set of sprites
 	 * 			| super(xPos, yPos, sprites)
 	 * @effect the initial startspeed, maximum speed and hitpoints are
 	 * 			set to the default values

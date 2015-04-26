@@ -1056,8 +1056,10 @@ public class World {
 				dt = slime.computeDt(dtGiven);			
 			}		
 		}
-		if (alien.computeDt(dtGiven) < dt) {
-			dt = alien.computeDt(dtGiven);
+		if (this.getAlien() != null) {
+			if (this.getAlien().computeDt(dtGiven) < dt) {
+				dt = this.getAlien().computeDt(dtGiven);
+			}
 		}	
 		return dt;
 	}

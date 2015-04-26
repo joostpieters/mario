@@ -8,7 +8,15 @@ import jumpingalien.util.Sprite;
 /**
  * A class that describes a game object
  * @author Pieter Van den Berghe, Ward Romanus
- *
+ * 
+ * @invar The sprites are always valid
+ * 			| isValidSprite(getSprite())
+ * @invar the position is always valid
+ * 			| isValidPosition(getXpos(), getYPos)
+ * @invar the horizontal speed is always valid
+ * 			| isValidXSpeed(getXspeed)
+ * @invar the vertical speed is always valid
+ * 			| isValidYSpeed(getYSpeed) 
  */
 public abstract class GameObject {
 	
@@ -28,7 +36,7 @@ public abstract class GameObject {
 	 *			| this.setSprite(sprites)
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the gameObject
-	 * 			| !isValidPosition(x_pos,y_pos)
+	 * 			| !isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| !isValidSprite(sprites)  	

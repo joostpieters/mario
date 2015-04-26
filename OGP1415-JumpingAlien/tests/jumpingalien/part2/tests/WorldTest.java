@@ -29,22 +29,6 @@ public class WorldTest {
 	public static final int FEATURE_WATER = 2;
 	public static final int FEATURE_MAGMA = 3;
 	
-	@Test(expected = ModelException.class)
-	// TODO er is nog iets fout
-	public void testNoMazub() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
-		facade.setGeologicalFeature(world, 1, 1, FEATURE_SOLID);
-		School school = facade.createSchool();
-		Slime slime = facade.createSlime(350, 500, spriteArrayForSize(2, 2, 2), school);
-		facade.addSlime(world, slime);
-		for (int i = 0; i < 100; i++) {
-			facade.advanceTime(world, 0.2);
-		}
-	}
-	
 	@SuppressWarnings("unused")
 	@Test(expected = ModelException.class)
 	public void testIllegalTileSize() {

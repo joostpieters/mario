@@ -12,6 +12,8 @@ import jumpingalien.util.Sprite;
  * A class that describes the GameObject Slime
  * @author Ward Romanus, Pieter Van den Berghe
  *
+ * @invar The school is always valid
+ * 			| isValidSchool(this.getSchool)
  */
 public class Slime extends GameObject {
 	
@@ -223,11 +225,14 @@ public class Slime extends GameObject {
 	 * sets the School of this Slime to school
 	 * @param school
 	 * 			the new value for the School school
+	 * @pre The new school has to be valid
+	 * 			| isValidSchool(school)
 	 * @post the School is equal to the given School school
 	 * 			| this.school = school
 	 */
 	@Raw
 	public void setSchool(School school) {
+		assert this.isValidSchool(school);
 		this.school = school;
 	}
 	/**
