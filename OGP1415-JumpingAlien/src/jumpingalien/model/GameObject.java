@@ -6,7 +6,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
 /**
- * 
+ * A class that describes a game object
  * @author Pieter Van den Berghe, Ward Romanus
  *
  */
@@ -1123,7 +1123,8 @@ public abstract class GameObject {
 		}
 		return false;
 	}
-	//TODO in de volgende functies try/catch weghalen. Of mss moeten we dat maar gewoon zo laten. Wat denk jij? -> ik wist niet waarom 
+	//TODO in de volgende functies try/catch weghalen. Of mss moeten we dat maar gewoon zo laten. 
+	// Wat denk jij? -> ik wist niet waarom, pakt da we het weglaten?
 	/**
 	 * Checks or the object is against the left wall
 	 * @param xPos

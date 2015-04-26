@@ -10,10 +10,11 @@ package jumpingalien.model;
  */
 @SuppressWarnings("serial")
 public class IllegalSettingException extends Exception {
+	
 	/**
 	 * Initializes the new IllegalSettingException
 	 */
 	public IllegalSettingException() {
-		
+		 System.out.println("the game has already started");
 	}
 }

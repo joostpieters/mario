@@ -4,8 +4,8 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 
 /**
- * 
- * @author Pieter
+ * A class that describes the position of a gameObject
+ * @author Pieter Van den Berghe, Ward Romanus
  *
  */
 public class Position {

@@ -30,7 +30,7 @@ public class IllegalDimensionException extends Exception {
 		this.dimension = dimension;
 	}
 	
-	public int[] dimension() {
+	public int[] getDimension() {
 		return dimension;
 	}
 	

@@ -40,9 +40,19 @@ public class IllegalPixelException extends Exception {
 		this.pixelY = pixelY;
 	}
 	
+	/**
+	 * returns the horizontal pixel
+	 * @return the x coordinate
+	 * 			| pixelX
+	 */
 	public int getPixelX() {
 		return pixelX;
 	}
+	/**
+	 * returns the vertical pixel
+	 * @return the y coordinate
+	 * 			| pixelY
+	 */
 	public int getPixelY() {
 		return pixelY;
 	}

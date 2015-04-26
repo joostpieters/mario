@@ -12,14 +12,17 @@ import jumpingalien.part2.facade.IFacadePart2;
 // TODO in facade nog default constructor toevoegen
 // TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
-// TODO Commentaren -> ik haat dit -> klaar hoop/denk ik ==> (medewerkers)feestje :D
-// TODO alle klassen nog eens checken voor todotjes
+// TODO Commentaren: klaar denk ik?
+// TODO in World en GameObject nog todotjes
 // TODO invarianten overal!!!!
-// TODO IllegalDingens is nakijken op slechte naamgeving en mss een message geven
 
-
+/**
+ * A class that describes the game world
+ * @author Pieter Van den Berghe, Ward Romanus
+ *
+ */
 public class World {
-		//TODO commentaar constructor!!
+	
 	/**
 	 * Create a new world with the given parameters.
 	 * 
@@ -38,10 +41,20 @@ public class World {
 	 * @param targetTileY
 	 *            Tile y-coordinate of the target tile of the created world
 	 * @throws IllegalAmountOfCharactersException
+	 * 			the amount of characters isn't valid
+	 * 			| ! isValidAmountOfCharacters()
 	 * @throws IllegalTileSizeException
+	 * 			the given tile size isn't valid
+	 * 			| ! isValidTileSize(tileSize)
 	 * @throws IllegalTargetTileException
+	 * 			the given targetTile isn't valid
+	 * 			| ! isValidTargetTile(targetTileX, targetTileY, nbTilesX, nbTilesY)
 	 * @throws IllegalVisibleWindowException
+	 * 			the given visible window isn't valid
+	 * 			| ! isValidTargetTile(targetTileX, targetTileY, nbTilesX, nbTilesY)
 	 * @throws IllegalArgumentException
+	 * 			the given number of tiles isn't valid
+	 * 			| ! isValidNbTiles(nbTilesX) || ! isValidNbTiles(nbTilesY)
 	 * @effect the new game world is created
 	 * 			| setTileSize)
 	 * 			| this.setNbTilesX(nbTilesX)
@@ -61,7 +74,8 @@ public class World {
 				IllegalTileSizeException, IllegalTargetTileException,
 				IllegalVisibleWindowException, IllegalArgumentException {
 			if ( ! isValidAmountOfCharacters())
-				throw new  IllegalAmountOfCharactersException();
+				throw new  IllegalAmountOfCharactersException(this.getNbAliens() + this.getNbSlimes()
+								+ this.getNbPlants() + this.getNbSharks());
 			if ( ! isValidTileSize(tileSize))
 				throw new  IllegalTileSizeException(tileSize);
 			if  ( ! isValidNbTiles(nbTilesX))
@@ -440,7 +454,7 @@ public class World {
 	 * 			| 1
 	 */
 	// TODO Dit moet nog iets juist teruggeven, Ik snap het niet. Is het niet oke? 
-	// Misschien gewoon wegdoen?
+	// Misschien gewoon wegdoen? Uhu miss wel... (ik vind het wel stom!)
 	@Basic
 	private int getNbAliens() {
 		return 1;
@@ -469,6 +483,7 @@ public class World {
 	private boolean isGameStarted() {
 		return this.gameStarted;
 	}
+	
 //	SETTERS	
 	
 	/**

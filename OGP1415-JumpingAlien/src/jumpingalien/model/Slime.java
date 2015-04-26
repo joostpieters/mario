@@ -8,6 +8,11 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
+/**
+ * A class that describes the GameObject Slime
+ * @author Ward Romanus, Pieter Van den Berghe
+ *
+ */
 public class Slime extends GameObject {
 	
 	/**
@@ -45,7 +50,7 @@ public class Slime extends GameObject {
 	public Slime(int xPos,int yPos, Sprite[] sprites,School school) 
 			throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {
 		super(xPos, yPos, sprites);
-		if (! isValidSchool(school)) 
+		if ( ! isValidSchool(school)) 
 			throw new IllegalSchoolException(school);
 		this.setSchool(school);
 		this.getSchool().newSlime(this);
@@ -238,9 +243,7 @@ public class Slime extends GameObject {
 	@Basic @Immutable 
 	protected final int getMaxHitpoints() {
 		return MAX_HITPOINTS;
-	}
-	
-	
+	}	
 	
 //	VALIDATIONS
 	

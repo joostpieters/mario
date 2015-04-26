@@ -1,7 +1,5 @@
 package jumpingalien.model;
 
-import jumpingalien.util.Sprite;
-
 /**
  * 
  * A class to check for an illegal school

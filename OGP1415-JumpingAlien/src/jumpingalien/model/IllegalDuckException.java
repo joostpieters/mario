@@ -8,8 +8,17 @@ package jumpingalien.model;
  *
  */
 @SuppressWarnings("serial")
-public class IllegalDuckException extends Exception{
+public class IllegalDuckException extends Exception {
+	
+	/**
+	 * a boolean indicating if the Mazub is ducked
+	 */
 	private boolean duck;
+	/**
+	 * returns true if the Mazub is ducked
+	 * @return 
+	 * 			| duck
+	 */
 	public boolean getDuck() {
 		return duck;
 	}

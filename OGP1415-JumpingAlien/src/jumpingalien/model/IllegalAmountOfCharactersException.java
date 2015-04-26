@@ -11,11 +11,24 @@ package jumpingalien.model;
  */
 @SuppressWarnings("serial")
 public class IllegalAmountOfCharactersException extends Exception {
-
+	
 	/**
-	 * initialize this new illegal amount of characters exception 
+	 * initialize this new illegal amount of characters exception with the given value
 	 */
-	public IllegalAmountOfCharactersException(){
-		
+	public IllegalAmountOfCharactersException(int amount){
+		this.amountOfCharacters = amount;
 	}
+	
+	
+	/**
+	 * the amount of characters
+	 */
+	private final int amountOfCharacters;
+	/**
+	 * 
+	 */
+	public int getAmountOfCharacters() {
+		return this.amountOfCharacters;
+	}
+	
 }

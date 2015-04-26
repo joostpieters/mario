@@ -11,6 +11,7 @@ package jumpingalien.model;
  */
 @SuppressWarnings("serial")
 public class IllegalVisibleWindowException extends Exception {
+	
 	/**
 	 * the (vertical) visible height of the screen;
 	 */
@@ -19,6 +20,7 @@ public class IllegalVisibleWindowException extends Exception {
 	 * the (horizontal) visible width of the screen;
 	 */
 	private final int visibleWidth;
+	
 	/**
 	 * initialize this new illegal visibleHeight exception with a given
 	 * visible width 
@@ -46,4 +48,6 @@ public class IllegalVisibleWindowException extends Exception {
 	public int getVisibleWidth() {
 		return visibleWidth;
 	}
+	
+	
 }

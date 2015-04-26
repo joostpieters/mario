@@ -19,7 +19,7 @@ import jumpingalien.util.Sprite;
  * character Mazub in a game world. 
  * 
  * @invar The lowest left corner of mazub (x_pos,y_pos) has to stay
- * 			in the game world.
+ * 			in the game world. Mazub also has to stay in passable terrain.
  * 		| isValidPosition(getXPos(), getYPos())
  * @invar The speed has to be limited to a maximum speed
  * 		| isValidSpeed(getXSpeed(), getYSpeed())
@@ -354,7 +354,6 @@ public class Mazub extends GameObject {
 	protected int getMaxHitpoints() {
 		return MAX_HITPOINTS;
 	}	
-	
 	
 //Setters	
 	

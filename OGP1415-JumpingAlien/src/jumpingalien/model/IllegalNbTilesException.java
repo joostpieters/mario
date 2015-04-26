@@ -21,6 +21,11 @@ public class IllegalNbTilesException extends Exception {
 		this.nbTiles = nbTiles;
 	}
 	
+	/**
+	 * returns the amount of tiles
+	 * @return number of tiles
+	 * 			| nbTiles
+	 */
 	public double getNbTiles() {
 		return nbTiles;
 	}

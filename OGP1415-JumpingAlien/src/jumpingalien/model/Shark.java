@@ -8,6 +8,11 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.util.Sprite;
 
+/**
+ * A class that describes the GameObject Shark
+ * @author Ward Romanus, Pieter Van den Berghe
+ *
+ */
 public class Shark extends GameObject {
 	
 	/**

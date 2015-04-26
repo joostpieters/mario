@@ -16,33 +16,33 @@ public class IllegalPositionException extends Exception {
 		 * Variable registering the x-position evolved in this illegal 
 		 * position exception.
 		 */
-		private final int x_pos;
+		private final int xPos;
 		/**
 		 * Variable registering the y-position evolved in this illegal 
 		 * position exception.
 		 */
-		private final int y_pos;
+		private final int yPos;
 
 		/**
 		 * initialize this new illegal position exception with a given position
-		 * @param	x_pos
+		 * @param	xPos
 		 * 			the x position
-		 * @param 	y_pos
+		 * @param 	yPos
 		 * 			the y position
 		 * @post	the value of the new illegal position exception is equal to 
 		 * 			the given positions
-		 * 			| new.getXPos() = x_pos
-		 * 			| new.getYPos() = y_pos
+		 * 			| new.getXPos() = xPos
+		 * 			| new.getYPos() = yPos
 		 */
-		public IllegalPositionException(int x_pos, int y_pos){
-			this.x_pos = x_pos;
-			this.y_pos = y_pos;
+		public IllegalPositionException(int xPos, int yPos){
+			this.xPos = xPos;
+			this.yPos = yPos;
 		}
 		
 		public int getXPos() {
-			return x_pos;
+			return xPos;
 		}
 		public int getYPos() {
-			return y_pos;
+			return yPos;
 		}
 }
