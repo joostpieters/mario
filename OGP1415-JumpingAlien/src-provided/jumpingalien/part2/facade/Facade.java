@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import jumpingalien.model.IllegalAmountOfCharactersException;
 import jumpingalien.model.IllegalDtException;
+import jumpingalien.model.IllegalNbTilesException;
 import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.IllegalPositionException;
 import jumpingalien.model.IllegalSchoolException;
@@ -127,7 +128,7 @@ public class Facade implements IFacadePart2 {
 		catch(IllegalVisibleWindowException h) {
 			throw new ModelException(h.getMessage());
 		}
-		catch(IllegalArgumentException i) {
+		catch(IllegalNbTilesException i) {
 			throw new ModelException(i.getMessage());
 		}
 	}

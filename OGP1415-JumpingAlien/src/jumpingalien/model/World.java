@@ -9,11 +9,13 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
-// TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
-
 /**
  * A class that describes the game world
  * @author Pieter Van den Berghe, Ward Romanus
+ * @invar the tile size is always valid
+ * 			| isValidTileSize(this.getTileLength())
+ * @invar the horizontal and vertical number of tiles are always valid
+ * 			| isValidNbTiles(this.getNbTilesX()) && isValidNbTiles(this.getNbTilesY())
  * @invar the visible window must at all times be in the world
  * 			| (xVisibleWindow >= 0) 
  * 			| 	&& xVisibleWindow < (this.getWorldSizeInPixels()[0] 
@@ -21,6 +23,11 @@ import jumpingalien.part2.facade.IFacadePart2;
  * 			| (yVisibleWindow >= 0) 
  * 			| 	&& yVisibleWindow < (this.getWorldSizeInPixels()[1] 
  * 			| 	- this.getVisibleWindowHeight())
+ * @invar the amount of characters in the world is always valid
+ * 			| let 
+ * 			| 	amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks()
+ * 			| in
+ * 			| 	! this.isValidAmountOfCharacters(amountOfCharacters)
  */
 public class World {
 	
@@ -50,11 +57,11 @@ public class World {
 	 * @throws IllegalVisibleWindowException
 	 * 			the given visible window isn't valid
 	 * 			| ! isValidTargetTile(targetTileX, targetTileY, nbTilesX, nbTilesY)
-	 * @throws IllegalArgumentException
+	 * @throws IllegalNbTilesException
 	 * 			the given number of tiles isn't valid
 	 * 			| ! isValidNbTiles(nbTilesX) || ! isValidNbTiles(nbTilesY)
-	 * @effect the new game world is created
-	 * 			| setTileSize)
+	 * @effect the new game world is created, the geological features of the entire world are by default air (0)
+	 * 			| this.setTileSize(tileSize)
 	 * 			| this.setNbTilesX(nbTilesX)
 	 * 			| this.setNbTilesY(nbTilesY)
 	 * 			| this.setVisibleWindowWidth(visibleWindowWidth)
@@ -62,20 +69,19 @@ public class World {
 	 * 			| this.setTargetTileX(targetTileX)
 	 * 			| this.setTargetTileY(targetTileY)
 	 * 			| this.geologicalFeature = new int[nbTilesY][nbTilesX]
-	 *  		| the geological features of the entire world are by default air (0)
 	 */
 	@Raw
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
 			int targetTileY) 
 		throws IllegalTileSizeException, IllegalTargetTileException,
-				IllegalVisibleWindowException, IllegalArgumentException {
+				IllegalVisibleWindowException, IllegalArgumentException, IllegalNbTilesException {
 			if ( ! isValidTileSize(tileSize))
 				throw new IllegalTileSizeException(tileSize);
 			if  ( ! isValidNbTiles(nbTilesX))
-				throw new IllegalArgumentException();
+				throw new IllegalNbTilesException(nbTilesX);
 			if ( ! isValidNbTiles(nbTilesY))
-				throw new IllegalArgumentException();
+				throw new IllegalNbTilesException(nbTilesY);
 			if ( ! isValidTargetTile(targetTileX, targetTileY, nbTilesX, nbTilesY))
 				throw new IllegalTargetTileException(targetTileX, targetTileY, nbTilesX, nbTilesY);
 			if ( ! isValidVisibleWindow(visibleWindowWidth, visibleWindowHeight,tileSize, nbTilesX, nbTilesY))
@@ -471,38 +477,47 @@ public class World {
 	
 	/**
 	 * @param tileSize the tileSize to set
-	 * @pre tileSize should be positive
-	 * 			| tileSize > 0
+	 * @throws IllegalTileSizeException 
+	 * 			The tileSize must be valid
+	 * 			| ! isValidTileSize(tileSize)
 	 * @post the tileSize is set to the given value
 	 * 			| this.tileSize = tileSize
 	 */
 	@Raw
-	private void setTileSize(int tileSize) {
-		assert tileSize > 0;
+	private void setTileSize(int tileSize) throws IllegalTileSizeException {
+		if ( ! this.isValidTileSize(tileSize)) {
+			throw new IllegalTileSizeException(tileSize);
+		}
 		this.tileSize = tileSize;
 	}
 	/**
 	 * @param nbTilesX the nbTilesX to set
-	 * @pre nbTilesX should be positive
-	 * 			| nbTilesX > 0
+	 * @throws IllegalNbTilesException 
+	 * 			The horizontal number of tiles has to be valid
+	 * 			| ! isValidNbTiles(nbTilesX)
 	 * @post the number of tiles (horizontally) is set to the given amount
 	 * 			| this.nbTilesX = nbTilesX
 	 */
 	@Raw
-	private void setNbTilesX(int nbTilesX) {
-		assert nbTilesX > 0;
+	private void setNbTilesX(int nbTilesX) throws IllegalNbTilesException {
+		if( ! this.isValidNbTiles(nbTilesX)) {
+			throw new IllegalNbTilesException(nbTilesX);
+		}
 		this.nbTilesX = nbTilesX;
 	}
 	/**
 	 * @param nbTilesY the nbTilesY to set
-	 * @pre nbTilesY should be positive
-	 * 			| nbTilesY > 0
+	 * @throws IllegalNbTilesException 
+	 * 			The vertical number of tiles has to be valid
+	 * 			| ! isValidNbTiles(nbTilesY)
 	 * @post the number of tiles (vertically) is set to the given amount
 	 * 			| this.nbTilesY = nbTilesY
 	 */
 	@Raw
-	private void setNbTilesY(int nbTilesY) {
-		assert nbTilesY > 0;
+	private void setNbTilesY(int nbTilesY) throws IllegalNbTilesException {
+		if( ! this.isValidNbTiles(nbTilesY)) {
+			throw new IllegalNbTilesException(nbTilesY);
+		}
 		this.nbTilesY = nbTilesY;
 	}
 	/**
