@@ -10,7 +10,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
 // TODO in facade nog default constructor toevoegen
-// TODO checkers toevoegen in elke setter
+// TODO checkers toevoegen in elke getter / setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 // TODO Commentaren: klaar denk ik?
 // TODO in World en GameObject nog todotjes
@@ -19,13 +19,7 @@ import jumpingalien.part2.facade.IFacadePart2;
 /**
  * A class that describes the game world
  * @author Pieter Van den Berghe, Ward Romanus
- * @invar the visible window must at all times be in the world
- * 			| (xVisibleWindow >= 0) 
- * 			| 	&& xVisibleWindow < (this.getWorldSizeInPixels()[0] 
- * 			| 	- this.getVisibleWindowWidth())
- * 			| (yVisibleWindow >= 0) 
- * 			| 	&& yVisibleWindow < (this.getWorldSizeInPixels()[1] 
- * 			| 	- this.getVisibleWindowHeight())
+ * @invar 
  */
 public class World {
 	
@@ -587,7 +581,6 @@ public class World {
 	@Raw
 	private void setXVisibleWindow(int xVisibleWindow) {
 		assert xVisibleWindow >= 0;
-		assert xVisibleWindow < (this.getWorldSizeInPixels()[0] - this.getVisibleWindowWidth());
 		this.xVisibleWindow = xVisibleWindow;
 	}
 	/**
@@ -601,7 +594,6 @@ public class World {
 	@Raw
 	private void setYVisibleWindow(int yVisibleWindow) {
 		assert yVisibleWindow >= 0;
-		assert yVisibleWindow < (this.getWorldSizeInPixels()[1] - this.getVisibleWindowHeight());
 		this.yVisibleWindow = yVisibleWindow;
 	}
 	/**

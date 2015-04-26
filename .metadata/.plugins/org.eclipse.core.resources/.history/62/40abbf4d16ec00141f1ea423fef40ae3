@@ -79,7 +79,6 @@ public abstract class GameObject {
 	 */
 	@Raw 
 	protected void setXPos(double x) {
-		assert  ! Double.isNaN(x);
 		assert x >= 0;
 		assert x <= this.getWorld().getX();
 		this.xPos = x;
@@ -109,7 +108,6 @@ public abstract class GameObject {
 	 */	
 	@Raw 
 	protected void setYPos(double y) {
-		assert  ! Double.isNaN(y);
 		assert y >= 0;
 		assert y <= this.getWorld().getY();
 		this.yPos = y;
@@ -189,7 +187,6 @@ public abstract class GameObject {
 	 */
 	@Raw
 	public void setWorld(World world) {
-		assert world != null;
 		this.world = world;
 	}	
 	/**
@@ -397,7 +394,6 @@ public abstract class GameObject {
 	 */
 	@Raw
 	protected void setTimeSinceDeath(double t) {
-		assert  ! Double.isNaN(t);
 		assert t >= 0;
 		this.timeSinceDeath = t;
 	}	
@@ -589,7 +585,6 @@ public abstract class GameObject {
 	 */
 	@Raw
 	protected void setTimeSinceImmune(double t) {
-		assert  ! Double.isNaN(t);
 		assert t >= 0;
 		this.timeSinceImmune = t;
 	}
@@ -640,7 +635,6 @@ public abstract class GameObject {
 	 */
 	@Raw
 	protected void setTimeInMagma(double t) {
-		assert  ! Double.isNaN(t);
 		assert t >= 0;
 		this.timeInMagma = t;
 	}	
@@ -667,7 +661,6 @@ public abstract class GameObject {
 	 */
 	@Raw
 	protected void setTimeInWater(double t) {
-		assert  ! Double.isNaN(t);
 		assert t >= 0;
 		this.timeInWater = t;
 	}
@@ -746,7 +739,7 @@ public abstract class GameObject {
 	 */
 	@Raw
 	protected void setHitpointsDifference(double difference) {
-		assert ! Double.isNaN(difference);
+		assert !Double.isNaN(difference);
 		assert difference < 1 && difference > -1;
 		this.hitpointsDifference = difference;
 	}
@@ -786,7 +779,7 @@ public abstract class GameObject {
 	 *			| ((x >= 0) && (y >= 0))
 	 */
 	protected boolean isValidPosition(double x, double y) {
-		return ((x >= 0) && (y >= 0) && ! Double.isNaN(x) && ! Double.isNaN(y));
+		return ((x >= 0) && (y >= 0));
 	}	
 	/**
 	 * Checks if dt has a proper value between 0 and 0.2.
@@ -796,7 +789,7 @@ public abstract class GameObject {
 	 * 		| (dt <= 0.2 && dt > 0)
 	 */
 	protected boolean isValidDt(double dt) {
-		return ( dt <= 0.2 && dt > 0 && ! Double.isNaN(dt));
+		return ( dt <= 0.2 && dt > 0);
 	}	
 	/**
 	 * Checks or the amount of hitpoints for an object is valid
