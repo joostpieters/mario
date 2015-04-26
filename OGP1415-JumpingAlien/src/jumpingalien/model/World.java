@@ -522,26 +522,32 @@ public class World {
 	}
 	/**
 	 * @param visibleWindowWidth the visibleWindowWidth to set
-	 * @pre visibleWindowWidth should be positive
+	 * @pre visibleWindowWidth should be positive and smaller than
+	 * 		the width of the world
 	 * 			| visibleWindowWidth > 0
+	 * 			| visibleWindowWidth <= this.getX()
 	 * @post the width of the visible window is equal to the given int
 	 * 			| this.visibleWindowWidth = visibleWindowWidth
 	 */
 	@Raw
 	private void setVisibleWindowWidth(int visibleWindowWidth) {
 		assert visibleWindowWidth > 0;
+		assert visibleWindowWidth <= this.getX();
 		this.visibleWindowWidth = visibleWindowWidth;
 	}
 	/**
 	 * @param visibleWindowHeight the visibleWindowHeight to set
-	 * @pre visibleWindowHeight should be positive
+	 * @pre visibleWindowHeight should be positive and smaller than the
+	 * 		height of the world
 	 * 			| visibleWindowHeight > 0
+	 * 			| visibleWindowHeight <= this.getY()
 	 * @post the height of the visible window is equal to the given int
 	 * 			| this.visibleWindowHeight = visibleWindowHeight
 	 */
 	@Raw
 	private void setVisibleWindowHeight(int visibleWindowHeight) {
 		assert visibleWindowHeight > 0;
+		assert visibleWindowHeight <= this.getY();
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
 	/**
