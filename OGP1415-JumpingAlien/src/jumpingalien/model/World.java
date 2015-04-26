@@ -40,9 +40,6 @@ public class World {
 	 *            Tile x-coordinate of the target tile of the created world
 	 * @param targetTileY
 	 *            Tile y-coordinate of the target tile of the created world
-	 * @throws IllegalAmountOfCharactersException
-	 * 			the amount of characters isn't valid
-	 * 			| ! isValidAmountOfCharacters()
 	 * @throws IllegalTileSizeException
 	 * 			the given tile size isn't valid
 	 * 			| ! isValidTileSize(tileSize)
@@ -70,12 +67,8 @@ public class World {
 	public World(int tileSize, int nbTilesX, int nbTilesY,
 			int visibleWindowWidth, int visibleWindowHeight, int targetTileX,
 			int targetTileY) 
-		throws IllegalAmountOfCharactersException,
-				IllegalTileSizeException, IllegalTargetTileException,
+		throws IllegalTileSizeException, IllegalTargetTileException,
 				IllegalVisibleWindowException, IllegalArgumentException {
-			if ( ! isValidAmountOfCharacters())
-				throw new  IllegalAmountOfCharactersException(this.getNbAliens() + this.getNbSlimes()
-								+ this.getNbPlants() + this.getNbSharks());
 			if ( ! isValidTileSize(tileSize))
 				throw new  IllegalTileSizeException(tileSize);
 			if  ( ! isValidNbTiles(nbTilesX))
@@ -743,6 +736,12 @@ public class World {
 	 * @throws IllegalSettingException 
 	 * 			A slime can not be add, after the game has started
 	 * 			| this.isGameStarted
+	 * @throws IllegalAmountOfCharactersException 
+	 * 			The amount of characters has to be valid
+	 * 			| let 
+	 * 			| 	amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks() + 1
+	 * 			| in
+	 * 			| 	! this.isValidAmountOfCharacters(amountOfCharacters)
 	 * @throws IllegalPositionException 
 	 * 			The slime has to be within the boundaries of the world
 	 *          | ! slime.isWithinBoundaries(slime.getLocation()[0], slime.getLocation()[1])
@@ -756,9 +755,14 @@ public class World {
 	 * 			| slimes.add(slime)
 	 */
 	@Raw
-	public void addSlime(Slime slime) throws IllegalSettingException, IllegalPositionException {
+	public void addSlime(Slime slime) throws IllegalSettingException, 
+				IllegalPositionException, IllegalAmountOfCharactersException {
 		if ( this.isGameStarted()) {
 			throw new IllegalSettingException();
+		}
+		int amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks() + 1;
+		if( ! this.isValidAmountOfCharacters(amountOfCharacters)) {
+			throw new IllegalAmountOfCharactersException(amountOfCharacters);
 		}
 		assert slime != null;
 	    assert ! this.hasSlime(slime);
@@ -778,6 +782,12 @@ public class World {
 	 * @throws IllegalPositionException 
 	 * 			The shark has to be within the boundaries of the world
 	 *          | ! shark.isWithinBoundaries(shark.getLocation()[0], shark.getLocation()[1])
+	 * @throws IllegalAmountOfCharactersException 
+	 * 			The amount of characters has to be valid
+	 * 			| let 
+	 * 			| 	amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks() + 1
+	 * 			| in
+	 * 			| 	! this.isValidAmountOfCharacters(amountOfCharacters)
 	 * @pre the shark may not be equal to null
 	 * 			| shark != null
 	 * @pre the game world may not already contain this shark
@@ -788,9 +798,14 @@ public class World {
 	 * 			| sharks.add(shark)
 	 */
 	@Raw
-	public void addShark(Shark shark) throws IllegalSettingException, IllegalPositionException {
+	public void addShark(Shark shark) throws IllegalSettingException, 
+				IllegalPositionException, IllegalAmountOfCharactersException {
 		if ( this.isGameStarted()) {
 			throw new IllegalSettingException();
+		}
+		int amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks() + 1;
+		if( ! this.isValidAmountOfCharacters(amountOfCharacters)) {
+			throw new IllegalAmountOfCharactersException(amountOfCharacters);
 		}
 		assert shark != null;
 	    assert ! this.hasShark(shark);
@@ -806,10 +821,16 @@ public class World {
 	 * 			| plant
 	 * @throws IllegalSettingException 
 	 * 			A plant can not be add, after the game has started
-	 * 			| this.isGameStarted
+	 * 			| ! this.isGameStarted
 	 * @throws IllegalPositionException 
 	 * 			The plant has to be within the boundaries of the world
 	 *          | ! plant.isWithinBoundaries(plant.getLocation()[0],plant.getLocation()[1])
+	 * @throws IllegalAmountOfCharactersException 
+	 * 			The amount of characters has to be valid
+	 * 			| let 
+	 * 			| 	amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks() + 1
+	 * 			| in
+	 * 			| 	! this.isValidAmountOfCharacters(amountOfCharacters)
 	 * @pre the plant may not be equal to null
 	 * 			| plant != null
 	 * @pre the game world may not already contain this plant
@@ -820,9 +841,14 @@ public class World {
 	 * 			| plants.add(plant)
 	 */
 	@Raw
-	public void addPlant(Plant plant) throws IllegalSettingException, IllegalPositionException {
+	public void addPlant(Plant plant) throws IllegalSettingException, IllegalPositionException,
+				IllegalAmountOfCharactersException {
 		if ( this.isGameStarted()) {
 			throw new IllegalSettingException();
+		}
+		int amountOfCharacters = this.getNbPlants() + this.getNbSlimes() + this.getNbSharks() + 1;
+		if( ! this.isValidAmountOfCharacters(amountOfCharacters)) {
+			throw new IllegalAmountOfCharactersException(amountOfCharacters);
 		}
 		assert plant != null;
 	    assert ! this.hasPlant(plant);
@@ -831,6 +857,7 @@ public class World {
 			throw new IllegalPositionException(plant.getLocation()[0], plant.getLocation()[1]);
 		}
 		this.plants.add(plant);
+		
 	}
 	/**
 	 * returns true if this world has a Plant plant
@@ -929,13 +956,11 @@ public class World {
 		return ((pixelX % this.getTileLength() == 0) && (pixelY % this.getTileLength() == 0));
 	}
 	/**
-	 * returns true if there is at least one player character Mazub and if there are no
-	 * more than 100 other game objects
-	 * @return ((getNbPlants() + getNbSharks() + getNbSlimes() <= 100) && (getNbAliens() >= 1) )
+	 * returns true if there are no more than 100 game objects that are not a Mazub
+	 * @return (getNbPlants() + getNbSharks() + getNbSlimes() <= 100) 
 	 */
-	private boolean isValidAmountOfCharacters() {
-		return ((this.getNbPlants() + this.getNbSharks() + 
-				this.getNbSlimes() <= 100) && (this.getNbAliens() >= 1) );
+	private boolean isValidAmountOfCharacters(int amount) {
+		return amount <= 100;
 	}
 	/**
 	 * returns true if the given target tile is valid

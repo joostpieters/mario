@@ -119,12 +119,8 @@ public class Facade implements IFacadePart2 {
 			int targetTileY) {
 		try { return new World(tileSize, nbTilesX,nbTilesY, visibleWindowWidth, 
 				visibleWindowHeight, targetTileX, targetTileY);}
-// TODO andere exceptions nog toevoegen
 		catch(IllegalTileSizeException e) {
 			throw new ModelException(e.getMessage());
-		}
-		catch(IllegalAmountOfCharactersException f) {
-			throw new ModelException(f.getMessage());
 		}
 		catch(IllegalTargetTileException g) {
 			throw new ModelException(g.getMessage());
@@ -225,6 +221,8 @@ public class Facade implements IFacadePart2 {
 		throw new ModelException(f.getMessage());
 	} catch (IllegalPositionException e) {
 		throw new ModelException(e.getMessage());
+	} catch (IllegalAmountOfCharactersException g) {
+		throw new ModelException(g.getMessage());
 	}
 		
 		
@@ -260,7 +258,10 @@ public class Facade implements IFacadePart2 {
 			throw new ModelException(f.getMessage());
 		} catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
+		} catch (IllegalAmountOfCharactersException g) {
+			throw new ModelException(g.getMessage());
 		}
+		
 		
 	}
 	@Override
@@ -301,6 +302,8 @@ public class Facade implements IFacadePart2 {
 			throw new ModelException(f.getMessage());
 		} catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
+		} catch (IllegalAmountOfCharactersException g) {
+			throw new ModelException(g.getMessage());
 		}
 	}
 	@Override
