@@ -579,7 +579,7 @@ public class Shark extends GameObject {
 	 * 			| if (isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
-	public void moveRight(){
+	private void moveRight(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationRight();
 		if (isInWater()) {
@@ -597,7 +597,7 @@ public class Shark extends GameObject {
 	 * 			| if (isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
-	public void moveLeft(){
+	private void moveLeft(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
 		if (isInWater()) {
@@ -612,7 +612,7 @@ public class Shark extends GameObject {
 	 * 			| setYSpeed(Shark.getJumpSpeed())
 	 * 			| setOrientationRight()
 	 */
-	public void jumpRight(){
+	private void jumpRight(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setYSpeed(Shark.getJumpSpeed());
 		this.setOrientationRight();
@@ -625,7 +625,7 @@ public class Shark extends GameObject {
 	 * 			| setYSpeed(Shark.getJumpSpeed())
 	 * 			| setOrientationLeft()
 	 */
-	public void jumpLeft(){
+	private void jumpLeft(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setYSpeed(Shark.getJumpSpeed());
 		this.setOrientationLeft();
@@ -639,7 +639,7 @@ public class Shark extends GameObject {
 	 * 			| if ( ! isFalling())
 	 * 			| 	then setYAcc(0)
 	 */
-	public void stopMove() {
+	private void stopMove() {
 		this.setXSpeed(0);
 		if ( ! isFalling()) {
 			this.setYAcc(0);
