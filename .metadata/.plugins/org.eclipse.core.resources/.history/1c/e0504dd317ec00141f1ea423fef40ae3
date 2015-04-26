@@ -9,7 +9,12 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
+// TODO in facade nog default constructor toevoegen
+// TODO checkers toevoegen in elke setter
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
+// TODO Commentaren: klaar denk ik?
+// TODO in World en GameObject nog todotjes
+// TODO invarianten overal!!!!
 
 /**
  * A class that describes the game world
@@ -442,6 +447,17 @@ public class World {
 	private int getNbSlimes() {
 		return slimes.size();
 	}
+	/**
+	 * the amount of aliens in the world
+	 * @return number of aliens
+	 * 			| 1
+	 */
+	// TODO Dit moet nog iets juist teruggeven, Ik snap het niet. Is het niet oke? 
+	// Misschien gewoon wegdoen? Uhu miss wel... (ik vind het wel stom!)
+	@Basic
+	private int getNbAliens() {
+		return 1;
+	}	
 	/**
 	 * @return the horizontal amount of pixels of the VisibleWindow
 	 * 			| XVisibleWindow

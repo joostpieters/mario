@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="WorldTest" project="OGP1415-JumpingAlien" tests="42" started="42" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.WorldTest" time="0.03">
+    <testcase name="testIllegalVisibleWindowZeroX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowZeroY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetAlien" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTargetTileXGreaterThanNbTilesX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTargetTileXGreaterThanNbTilesY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowNegativeX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowNegativeY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetVisibleWindow" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetY" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testSetGeologicalFeature" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testRemoveAlien" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testRemovePlant" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testRemoveShark" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testRemoveSlime" classname="jumpingalien.part2.tests.WorldTest" time="0.003"/>
+    <testcase name="testGetTilePositionsIn" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testAddPlant" classname="jumpingalien.part2.tests.WorldTest" time="0.002"/>
+    <testcase name="testAddShark" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testAddSlime" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testGeologicalFeaturePixelException" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetWorldInPixels" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testStartGameSetTile" classname="jumpingalien.part2.tests.WorldTest" time="0.002"/>
+    <testcase name="testGetBottomLeftPixelOfTile" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testAdvanceTimeIllegalDtNegative" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testStartGameSetAlien" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testIllegalTargetTileYNegative" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetTileLenght" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowTooBigX" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalVisibleWindowTooBigY" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testGeologicalFeatureCorrect" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalTileSize" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testGetPlants" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testGetSharks" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testGetSlimes" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testIsGameOver1" classname="jumpingalien.part2.tests.WorldTest" time="0.004"/>
+    <testcase name="testIsGameOver2" classname="jumpingalien.part2.tests.WorldTest" time="0.004"/>
+    <testcase name="testAdvanceTimeIllegalDtTooBig" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testStartGameAddPlant" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testStartGameAddShark" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testStartGameAddSlime" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+    <testcase name="testIllegalNbOfTilesZero" classname="jumpingalien.part2.tests.WorldTest" time="0.0"/>
+    <testcase name="testIllegalNbOfTilesNegative" classname="jumpingalien.part2.tests.WorldTest" time="0.001"/>
+  </testsuite>
+</testrun>

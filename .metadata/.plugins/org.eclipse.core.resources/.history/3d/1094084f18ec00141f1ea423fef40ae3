@@ -24,6 +24,7 @@ import jumpingalien.util.ModelException;
 import jumpingalien.util.Sprite;
 
 public class Facade implements IFacadePart2 {
+// TODO Hier zou een default constructor moeten staan!!
 	
 	@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){

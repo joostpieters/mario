@@ -1138,6 +1138,8 @@ public abstract class GameObject {
 		}
 		return false;
 	}
+	//TODO in de volgende functies try/catch weghalen. Of mss moeten we dat maar gewoon zo laten. 
+	// Wat denk jij? -> ik wist niet waarom, pakt da we het weglaten?
 	/**
 	 * Checks or the object is against the left wall
 	 * @param xPos

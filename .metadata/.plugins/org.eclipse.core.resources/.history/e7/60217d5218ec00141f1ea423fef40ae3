@@ -9,6 +9,7 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.part2.facade.IFacadePart2;
 
+// TODO in facade nog default constructor toevoegen
 // TODO Kopie van sprites teruggeven, eigenlijk van elke array een kopie maken geloof ik
 
 /**
