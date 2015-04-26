@@ -186,7 +186,6 @@ public class MazubTest {
 				Util.DEFAULT_EPSILON);
 	}
 	@Test
-	// TODO laten werken, twerkt toch
 	public void testVelocityJumpHighestPoint() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -207,7 +206,6 @@ public class MazubTest {
 	}
 	
 	@Test
-	// TODO laten werken, twerkt toch?
 	public void testAccelerationJump() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
