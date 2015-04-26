@@ -396,8 +396,7 @@ public abstract class GameObject {
 	 * sets the timeSinceDeath to a new value
 	 * @param t
 	 * 		the time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 		| ! Double.isNaN(t)
+	 * @pre the time t should be bigger than or equal to zero
 	 * 		| t >= 0
 	 * @post the time is set to t
 	 */
@@ -588,11 +587,10 @@ public abstract class GameObject {
 	 * Sets a new value to the timeSinceImmune
 	 * @param t
 	 * 			the new time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 			| ! Double.isNaN(t)
-	 * 			 | t >= 0
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
 	 * @post timeSinceImmune is set to t
-	 * 			 | this.timeSinceImmune = t
+	 * 		 | this.timeSinceImmune = t
 	 */
 	@Raw
 	protected void setTimeSinceImmune(double t) {
@@ -640,11 +638,10 @@ public abstract class GameObject {
 	 * Sets the timeInMagma to a new value t
 	 * @param t
 	 * 			the new time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 			| ! Double.isNaN(t)
-	 * 			| t >= 0
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
 	 * @post timeInMagma is set to t
-	 * 			| this.timeInMagma = t
+	 * 		 | this.timeInMagma = t
 	 */
 	@Raw
 	protected void setTimeInMagma(double t) {
@@ -668,11 +665,10 @@ public abstract class GameObject {
 	 * Sets the timeInWater to a new value t
 	 * @param t
 	 * 			the new time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 			| ! Double.isNaN(t)
-	 * 			| t >= 0
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
 	 * @post timeInWater is set to t
-	 * 		 	| this.timeInWater = t
+	 * 		 | this.timeInWater = t
 	 */
 	@Raw
 	protected void setTimeInWater(double t) {
@@ -747,7 +743,7 @@ public abstract class GameObject {
 	 * @param difference	
 	 * 			the difference to set
 	 * @pre	the difference should be a number between -1 and 1
-	 * 			| ! Double.isNaN(difference)
+	 * 			| !Double.isNaN(difference)
 	 * 			| difference < 1 && difference > -1
 	 * @post the difference is set
 	 * 			| this.hitpointsDifference = difference
@@ -802,7 +798,7 @@ public abstract class GameObject {
 	 * @param dt
 	 * 			the time interval to check
 	 * @return True if dt is a value between 0 and 0.2 otherwise false.
-	 * 		| (dt <= 0.2 && dt > 0 && ! Double.isNaN(dt))
+	 * 		| (dt <= 0.2 && dt > 0)
 	 */
 	protected boolean isValidDt(double dt) {
 		return ( dt <= 0.2 && dt > 0 && ! Double.isNaN(dt));

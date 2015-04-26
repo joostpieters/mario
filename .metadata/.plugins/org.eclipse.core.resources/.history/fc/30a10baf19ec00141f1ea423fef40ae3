@@ -71,12 +71,11 @@ public abstract class GameObject {
 	 * @param x
 	 * 			The new value for the horizontal position
 	 * @pre the position x should  be bigger than or equal to zero and 
-	 * 		smaller than the boundary of the world and not null
-	 * 			| ! Double.isNaN(x)
-	 * 			| x >= 0
-	 * 			| x <= this.getWorld().getX()
+	 * 		smaller than the boundary of the world
+	 * 		| x >= 0
+	 * 		| x <= this.getWorld().getX()
 	 * @post the position is set
-	 * 			| this.xPos = x
+	 * 		| this.xPos = x
 	 */
 	@Raw 
 	protected void setXPos(double x) {
@@ -102,12 +101,11 @@ public abstract class GameObject {
 	 * @param y
 	 * 			The new value for the vertical position
 	 * @pre the position y should  be bigger than or equal to zero and 
-	 * 		smaller than the boundary of the world and not null
-	 * 			| ! Double.isNaN(y	)
-	 * 			| y >= 0
-	 * 			| y <= this.getWorld().getY()
+	 * 		smaller than the boundary of the world
+	 * 		| y >= 0
+	 * 		| y <= this.getWorld().getY()
 	 * @post the position is set
-	 * 			| this.yPos = y
+	 * 		| this.yPos = y
 	 */	
 	@Raw 
 	protected void setYPos(double y) {
@@ -163,7 +161,7 @@ public abstract class GameObject {
 	 * @param sprites 
 	 * 			the sprites to set
 	 * @pre the sprites should be valid
-	 * 			| this.isValidSprite(sprites)
+	 * 		| this.isValidSprite(sprites)
 	 * @post the sprites are set
 	 */
 	private void setSprite(Sprite[] sprites) {
@@ -186,10 +184,8 @@ public abstract class GameObject {
 	 * Sets the world to the givan value world
 	 * @param world
 	 * 		the world to set
-	 * @pre the given World world may not be null
-	 * 			| world != null
 	 * @post world is set
-	 * 			| this.world = world
+	 * 		| this.world = world
 	 */
 	@Raw
 	public void setWorld(World world) {
@@ -213,7 +209,7 @@ public abstract class GameObject {
 	 * @param speed
 	 * 		the speed to set
 	 * @pre the speed should be valid
-	 * 			| this.isValidXSpeed(speed)
+	 * 		| this.isValidXSpeed(speed)
 	 * @post the xSpeed is set
 	 */
 	@Raw
@@ -239,7 +235,7 @@ public abstract class GameObject {
 	 * @param speed
 	 * 		the speed to set
 	 * @pre the speed should be valid
-	 * 			| this.isValidYSpeed(speed)
+	 * 		| this.isValidYSpeed(speed)
 	 * @post the ySpeed is set
 	 */
 	@Raw
@@ -263,7 +259,7 @@ public abstract class GameObject {
 	 * Sets the horizontal acceleration to a new value
 	 * @param xAcc
 	 * 			the new value of the horizontal acceleration
-	 * @pre xAcc should be a number and bigger than or equal to zero and not null
+	 * @pre xAcc should be a number and bigger than or equal to zero
 	 * 			| ( ! Double.isNaN(xAcc))
 	 * 			|  (xAcc >= 0)
 	 * @post xAcc is set
@@ -349,7 +345,6 @@ public abstract class GameObject {
 	 * @param number
 	 * 			the value for hitpoints to set
 	 * @pre number should be bigger than or equal to zero
-	 * 			| number >= 0
 	 * @post hitpoints is set to number if number is smaller than the maximum amount of
 	 * 			hitpoints, otherwise hitpoints is set to the maximum amount of hitpoints
 	 * 			the object can posses
@@ -396,8 +391,7 @@ public abstract class GameObject {
 	 * sets the timeSinceDeath to a new value
 	 * @param t
 	 * 		the time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 		| ! Double.isNaN(t)
+	 * @pre the time t should be bigger than or equal to zero
 	 * 		| t >= 0
 	 * @post the time is set to t
 	 */
@@ -588,11 +582,10 @@ public abstract class GameObject {
 	 * Sets a new value to the timeSinceImmune
 	 * @param t
 	 * 			the new time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 			| ! Double.isNaN(t)
-	 * 			 | t >= 0
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
 	 * @post timeSinceImmune is set to t
-	 * 			 | this.timeSinceImmune = t
+	 * 		 | this.timeSinceImmune = t
 	 */
 	@Raw
 	protected void setTimeSinceImmune(double t) {
@@ -640,11 +633,10 @@ public abstract class GameObject {
 	 * Sets the timeInMagma to a new value t
 	 * @param t
 	 * 			the new time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 			| ! Double.isNaN(t)
-	 * 			| t >= 0
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
 	 * @post timeInMagma is set to t
-	 * 			| this.timeInMagma = t
+	 * 		 | this.timeInMagma = t
 	 */
 	@Raw
 	protected void setTimeInMagma(double t) {
@@ -668,11 +660,10 @@ public abstract class GameObject {
 	 * Sets the timeInWater to a new value t
 	 * @param t
 	 * 			the new time to set
-	 * @pre the time t should be bigger than or equal to zero and not null
-	 * 			| ! Double.isNaN(t)
-	 * 			| t >= 0
+	 * @pre the time t should be bigger than or equal to zero
+	 * 		 | t >= 0
 	 * @post timeInWater is set to t
-	 * 		 	| this.timeInWater = t
+	 * 		 | this.timeInWater = t
 	 */
 	@Raw
 	protected void setTimeInWater(double t) {
@@ -747,7 +738,7 @@ public abstract class GameObject {
 	 * @param difference	
 	 * 			the difference to set
 	 * @pre	the difference should be a number between -1 and 1
-	 * 			| ! Double.isNaN(difference)
+	 * 			| !Double.isNaN(difference)
 	 * 			| difference < 1 && difference > -1
 	 * @post the difference is set
 	 * 			| this.hitpointsDifference = difference
@@ -802,7 +793,7 @@ public abstract class GameObject {
 	 * @param dt
 	 * 			the time interval to check
 	 * @return True if dt is a value between 0 and 0.2 otherwise false.
-	 * 		| (dt <= 0.2 && dt > 0 && ! Double.isNaN(dt))
+	 * 		| (dt <= 0.2 && dt > 0)
 	 */
 	protected boolean isValidDt(double dt) {
 		return ( dt <= 0.2 && dt > 0 && ! Double.isNaN(dt));
