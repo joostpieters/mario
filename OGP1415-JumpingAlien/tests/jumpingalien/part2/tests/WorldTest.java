@@ -570,5 +570,35 @@ public class WorldTest {
 		}
 	}	
 	
+	@Test(expected = ModelException.class)
+	public void illegalAmountOfPlants() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		//Add 101 plants
+		for (int i = 0; i < 101; i++) {
+			facade.addPlant(world, facade.createPlant(0, 0, spriteArrayForSize(2,2,2)));
+		}
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalAmountOfCharacters() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		Sprite[] sprites = spriteArrayForSize(2,2,2);
+		School school = facade.createSchool();
+		//Add 40 plants
+		for (int i = 0; i < 40; i++) {
+			facade.addPlant(world, facade.createPlant(0, 0, sprites));
+		}
+		//Add 40 slimes
+		for (int i = 0; i < 40; i++) {
+			facade.addSlime(world, facade.createSlime(0, 0, sprites, school));
+		}
+		//Add 21 sharks. Total amount of characters is 101
+		for (int i = 0; i < 21; i++) {
+			facade.addShark(world, facade.createShark(0, 0, sprites));
+		}
 		
+	}	
+	
 }

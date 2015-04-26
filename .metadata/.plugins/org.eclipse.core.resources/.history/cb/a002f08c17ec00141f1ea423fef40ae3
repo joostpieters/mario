@@ -75,6 +75,12 @@ public class World {
 			int targetTileY) 
 		throws IllegalTileSizeException, IllegalTargetTileException,
 				IllegalVisibleWindowException, IllegalArgumentException {
+<<<<<<< HEAD
+			if ( ! isValidAmountOfCharacters())
+				throw new IllegalAmountOfCharactersException(this.getNbAliens() + this.getNbSlimes()
+								+ this.getNbPlants() + this.getNbSharks());
+=======
+>>>>>>> 815ec1602686a35eea6e014094a5960f2acdf68e
 			if ( ! isValidTileSize(tileSize))
 				throw new IllegalTileSizeException(tileSize);
 			if  ( ! isValidNbTiles(nbTilesX))
