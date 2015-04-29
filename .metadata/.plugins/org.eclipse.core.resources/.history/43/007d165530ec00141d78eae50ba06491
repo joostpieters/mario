@@ -12,5 +12,5 @@ import org.junit.runners.Suite;
    WorldTest.class
 }) 
 public class JUnitTestSuite {
-	
+
 }
