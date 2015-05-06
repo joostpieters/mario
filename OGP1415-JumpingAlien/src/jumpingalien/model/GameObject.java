@@ -19,7 +19,6 @@ import jumpingalien.util.Sprite;
  * 			| isValidYSpeed(getYSpeed) 
  */
 public abstract class GameObject {
-	
 	/**
 	 * Creates a new gameObject, located at the provided pixel location (x, y).
 	 * The returned gameObject should not belong to a world.
@@ -51,6 +50,40 @@ public abstract class GameObject {
 		this.setXPos(xPos);
 		this.setYPos(yPos);
 		this.setSprite(sprites);
+	}
+	// TODO commentaar
+	/**
+	 * Creates a new gameObject, located at the provided pixel location (x, y).
+	 * The returned gameObject should not belong to a world.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the gameObject's initial position
+	 * @param y
+	 *            The y-coordinate of the gameObject's initial position
+	 * @param sprites
+	 *            An array of sprites for the new gameObject
+	 * @effect the x and y position and the sprites are set
+	 * 			| this.setXPos(xPos)
+	 * 			| this.setYPos(yPos)
+	 *			| this.setSprite(sprites)
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the gameObject
+	 * 			| !isValidPosition(xPos,yPos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites)  	
+	 */
+	@Raw
+	protected GameObject(int xPos,int yPos, Sprite[] sprites, Program program) 
+			throws IllegalPositionException, IllegalSpriteException {
+				if( ! isValidPosition(xPos,yPos))
+					throw new IllegalPositionException(xPos,yPos); 
+				if ( ! isValidSprite(sprites))
+					throw new IllegalSpriteException(sprites);
+		this.setXPos(xPos);
+		this.setYPos(yPos);
+		this.setSprite(sprites);
+		this.setProgram(program);
 	}
 		
 	
@@ -169,7 +202,19 @@ public abstract class GameObject {
 	private void setSprite(Sprite[] sprites) {
 		assert this.isValidSprite(sprites);
 		this.sprites = sprites;
-	}	
+	}
+	/**
+	 * The program of the object
+	 */
+	protected Program program;
+	// TODO fucking commentaren
+	protected Program getProgram() {
+		return this.program;
+	}
+	protected void setProgram(Program program) {
+		// TODO checkers
+		this.program = program;
+	}
 	/**
 	 * the world where the object appears
 	 */
