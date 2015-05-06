@@ -20,7 +20,8 @@ public class Buzam extends Mazub {
 	
 	public Buzam(int xPos, int yPos, Sprite[] sprites, Program program)
 			throws IllegalPositionException, IllegalSpriteException {
-		super(xPos, yPos, sprites, program);
+		super(xPos, yPos, sprites);
+		this.setProgram(program);
 		this.setInitStartSpeed(Mazub.getStartSpeed());
 		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
 		this.setHitpoints(Mazub.getInitHitpoints());
