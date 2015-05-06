@@ -245,8 +245,9 @@ public class Mazub extends GameObject {
 	 * Returns the maximum horizontal speed of mazub
 	 * @return MAX_SPEED
 	 */
-	@Basic @Immutable @Raw 
-	private static final int getMaxMovingSpeed() {
+	@Basic @Immutable @Raw
+	protected 
+	static final int getMaxMovingSpeed() {
 		return MAX_MOVING_SPEED;
 	}
 	/**
@@ -261,8 +262,9 @@ public class Mazub extends GameObject {
 	 * Returns the starting speed for running
 	 * @return START_SPEED
 	 */
-	@Basic @Immutable @Raw 
-	private static final int getStartSpeed() {
+	@Basic @Immutable @Raw
+	protected 
+	static final int getStartSpeed() {
 		return START_SPEED;
 	}
 	/**
@@ -329,7 +331,8 @@ public class Mazub extends GameObject {
 	 * @return INITHITPOINTS
 	 */
 	@Immutable
-	private static int getInitHitpoints() {
+	protected
+	static int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
 	/**
@@ -360,8 +363,8 @@ public class Mazub extends GameObject {
 	 * 		|  initstartspeed >= 0
 	 * @post initStartSpeed is equal to the given speed
 	 */
-	@Raw 
-	private void setInitStartSpeed(int initstartspeed) {
+	@Raw
+	protected void setInitStartSpeed(int initstartspeed) {
 		assert initstartspeed >= 0;
 		this.initStartSpeed = initstartspeed;
 	}

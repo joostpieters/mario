@@ -141,7 +141,10 @@ public class World {
 	 * the player character alien
 	 */
 	private Mazub alien;
-	
+	/**
+	 * the evil brother of the alien
+	 */
+	private Buzam buzam;
 	/**
 	 * a list of all the sharks in the world
 	 */
@@ -254,7 +257,16 @@ public class World {
 	@Basic @Raw
 	public Mazub getAlien() {
 		return this.alien;
-	}	
+	}
+	/**
+	 * returns the buzam
+	 * @return the buzam
+	 * 			| buzam
+	 */
+	@Basic @Raw
+	public Buzam getBuzam() {
+		return this.buzam;
+	}
 	/**
 	 * Returns the bottom left pixel coordinate of the tile at the given tile
 	 * position.
@@ -676,6 +688,38 @@ public class World {
 		}
 		this.alien = alien;
 	}
+	// TODO commentaar
+	/**
+	 * @param the player character
+	 * 			| alien
+	 * @throws IllegalSettingException 
+	 * 			An alien can not be set, after the game has started
+	 * 			| this.isGameStarted
+	 * @throws IllegalPositionException 
+	 * 			The alien has to be within the boundaries of the world
+	 *          | ! alien.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1]))
+	 * @pre	the alien should not be zero
+	 * 			| alien != null
+	 * @pre the world should not have this alien already as alien
+	 * 			| ! this.hasAlien()
+	 * @effect the alien's world is equal to this world
+	 * 			| alien.setWorld(this)
+	 * @post the player character alien is equal to the given Mazub
+	 * 			| this.alien = alien
+	 */
+	@Raw
+	public void setBuzam(Buzam buzam) throws IllegalSettingException, IllegalPositionException {
+		if ( this.isGameStarted()) {
+			throw new IllegalSettingException();
+		}
+		assert buzam != null;
+	    assert ! this.hasBuzam(buzam);
+	    buzam.setWorld(this);
+	    if(! buzam.isWithinBoundaries(buzam.getLocation()[0], buzam.getLocation()[1])) {
+			throw new IllegalPositionException(buzam.getLocation()[0], buzam.getLocation()[1]);
+		}
+		this.buzam = buzam;
+	}
 	/**
 	 * removes the Mazub alien from the game world
 	 * @param the player character
@@ -690,6 +734,22 @@ public class World {
 		assert this.hasAlien(alien);
 		assert alien != null;
 		this.alien = null;
+	}
+	//TODO commentaar
+	/**
+	 * removes the Mazub alien from the game world
+	 * @param the player character
+	 * 			| alien
+	 * @pre the alien has to exist
+	 * 			| alien != null
+	 * @post the alien is set to null
+	 * 			| this.alien = null
+	 */
+	@Raw
+	public void removeBuzam(@Raw Buzam buzam) {
+		assert this.hasBuzam(buzam);
+		assert buzam != null;
+		this.buzam = null;
 	}
 	/**
 	 * removes the Slime slime from the game world
@@ -913,6 +973,18 @@ public class World {
 	private boolean hasAlien(Mazub alien) {
 		return this.getAlien() == alien;
 	}
+	// TODO commentaar
+	/**
+	 * Returns true if this world has the given alien as alien
+	 * @param alien
+	 * 			the alien to check
+	 * @return true if the alien of the world equals the given alien
+	 * 			|  this.getAlien() == alien
+	 */
+	@Raw
+	private boolean hasBuzam(Buzam buzam) {
+		return this.getBuzam() == buzam;
+	}
 	
 //	VALIDATIONS
 	
@@ -1094,6 +1166,11 @@ public class World {
 				dt = slime.computeDt(dtGiven);			
 			}		
 		}
+		if (this.getBuzam() != null) {
+			if (this.getBuzam().computeDt(dtGiven) < dt) {
+				dt = this.getBuzam().computeDt(dtGiven);
+			}
+		}
 		if (this.getAlien() != null) {
 			if (this.getAlien().computeDt(dtGiven) < dt) {
 				dt = this.getAlien().computeDt(dtGiven);
@@ -1118,6 +1195,8 @@ public class World {
 			for (Slime slime: this.getSlimes()) {
 				slime.advanceTime(dt);
 			}
+			if (this.getBuzam() != null)
+				this.getBuzam().advanceTime(dt);
 			this.getAlien().advanceTime(dt);
 			
 	

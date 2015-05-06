@@ -8,12 +8,22 @@ import jumpingalien.util.Sprite;
  * @author Ward Romanus, Pieter Van den Berghe
  *
  */
-public class Buzam extends GameObject 
+public class Buzam extends Mazub 
 					implements InterfaceMazubBuzam {
 
-	protected Buzam(int xPos, int yPos, Sprite[] sprites)
+	public Buzam(int xPos, int yPos, Sprite[] sprites)
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
+		this.setInitStartSpeed(Mazub.getStartSpeed());
+		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
+		this.setHitpoints(Mazub.getInitHitpoints());
+	}
+	
+	@Override
+	@Raw
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);	
 	}
 	
 	

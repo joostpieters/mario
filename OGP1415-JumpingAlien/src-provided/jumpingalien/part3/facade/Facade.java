@@ -1,7 +1,8 @@
-package jumpingalien.part2.facade;
+package jumpingalien.part3.facade;
 
 import java.util.Collection;
 
+import jumpingalien.model.Buzam;
 import jumpingalien.model.IllegalAmountOfCharactersException;
 import jumpingalien.model.IllegalDtException;
 import jumpingalien.model.IllegalNbTilesException;
@@ -17,14 +18,16 @@ import jumpingalien.model.IllegalTileSizeException;
 import jumpingalien.model.IllegalVisibleWindowException;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
+import jumpingalien.model.Program;
 import jumpingalien.model.School;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
 import jumpingalien.model.World;
+import jumpingalien.part3.programs.ParseOutcome;
 import jumpingalien.util.ModelException;
 import jumpingalien.util.Sprite;
 
-public class Facade implements IFacadePart2 {
+public class Facade implements IFacadePart3 {
 	
 	@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
@@ -321,6 +324,84 @@ public class Facade implements IFacadePart2 {
 	@Override
 	public School getSchool(Slime slime) {
 		return slime.getSchool();
+	}
+	@Override
+	public Buzam createBuzam(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
+		try {return new Buzam(pixelLeftX, pixelBottomY,sprites);}
+		catch (IllegalPositionException e) {
+			throw new ModelException(e.getMessage());
+		}
+		catch (IllegalSpriteException f) {
+			throw new ModelException(f.getMessage());
+		}		
+	}
+	@Override
+	public Buzam createBuzamWithProgram(int pixelLeftX, int pixelBottomY,
+			Sprite[] sprites, Program program) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Plant createPlantWithProgram(int x, int y, Sprite[] sprites,
+			Program program) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Shark createSharkWithProgram(int x, int y, Sprite[] sprites,
+			Program program) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Slime createSlimeWithProgram(int x, int y, Sprite[] sprites,
+			School school, Program program) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ParseOutcome<?> parse(String text) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isWellFormed(Program program) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void addBuzam(World world, Buzam buzam) {
+		try {
+			world.setBuzam(buzam);
+		} catch (IllegalSettingException f) {
+			throw new ModelException(f.getMessage());
+		} catch (IllegalPositionException e) {
+			throw new ModelException(e.getMessage());
+		}		
+	}
+	@Override
+	public int[] getLocation(Buzam alien) {
+		return alien.getLocation();
+	}
+	@Override
+	public double[] getVelocity(Buzam alien) {
+		return alien.getVelocity();
+	}
+	@Override
+	public double[] getAcceleration(Buzam alien) {
+		return alien.getAcceleration();
+	}
+	@Override
+	public int[] getSize(Buzam alien) {
+		return alien.getSize();
+	}
+	@Override
+	public Sprite getCurrentSprite(Buzam alien) {
+		return alien.getCurrentSprite();
+	}
+	@Override
+	public int getNbHitPoints(Buzam alien) {
+		return alien.getHitpoints();
 	}
 
 }
