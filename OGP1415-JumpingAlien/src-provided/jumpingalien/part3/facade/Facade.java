@@ -338,9 +338,13 @@ public class Facade implements IFacadePart3 {
 	@Override
 	public Buzam createBuzamWithProgram(int pixelLeftX, int pixelBottomY,
 			Sprite[] sprites, Program program) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		try {return new Buzam(pixelLeftX, pixelBottomY,sprites, program);}
+		catch (IllegalPositionException e) {
+			throw new ModelException(e.getMessage());
+		}
+		catch (IllegalSpriteException f) {
+			throw new ModelException(f.getMessage());
+		}	}
 	@Override
 	public Plant createPlantWithProgram(int x, int y, Sprite[] sprites,
 			Program program) {
