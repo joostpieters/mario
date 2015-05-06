@@ -40,6 +40,13 @@ public class Shark extends GameObject {
 		this.setMaxSpeed(Shark.getMaxXSpeed());
 	}
 	
+	public Shark(int xPos,int yPos, Sprite[] sprites, Program program) 
+			throws IllegalPositionException, IllegalSpriteException {
+		super(xPos,yPos,sprites, program);
+		this.setHitpoints(Shark.getInitHitpoints());
+		this.setMaxSpeed(Shark.getMaxXSpeed());
+	}
+	
 	/**
 	 * the initial amount of hitpoints a shark possesses
 	 */

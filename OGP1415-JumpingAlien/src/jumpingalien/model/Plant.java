@@ -37,6 +37,13 @@ public class Plant extends GameObject {
 		this.setXSpeed(0.5);
 		this.setHitpoints(Plant.getInitHitpoints());
 	}
+	
+	public Plant(int xPos,int yPos, Sprite[] sprites, Program program ) 
+			throws IllegalPositionException, IllegalSpriteException {
+		super(xPos,yPos,sprites, program);
+		this.setXSpeed(0.5);
+		this.setHitpoints(Plant.getInitHitpoints());
+	}
 
 	/**
 	 * the initial amount of hitpoints a plant possesses

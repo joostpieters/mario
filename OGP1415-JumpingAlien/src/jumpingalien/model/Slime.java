@@ -60,6 +60,18 @@ public class Slime extends GameObject {
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
 	
+	@Raw
+	public Slime(int xPos,int yPos, Sprite[] sprites,School school, Program program) 
+			throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {
+		super(xPos, yPos, sprites, program);
+		if ( ! isValidSchool(school)) 
+			throw new IllegalSchoolException(school);
+		this.setSchool(school);
+		this.getSchool().newSlime(this);
+		this.setHitpoints(Slime.getInitHitpoints());
+		this.setMaxSpeed(Slime.getMaxXSpeed());
+	}
+	
 	
 	/**
 	 * the amount of hitpoints a slime loses when drowning (per 0.2 seconds)
