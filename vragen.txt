@@ -1,26 +1,6 @@
-1. aantal mazubs
-2. wat is abstract eig???? :o:o:o xoxoxoxoxo -> heeft te maken met overerving: als ge een superklasse maakt die geen klasse op zichzelf is
-						bv gameobject bij ons? -> als abstractie in combinatie met subklasse
-3. wanneer protected of public gebruiken? -> protected voor klassen die overerven van superklasse, enkel publieke methodes
-						moeten getest worden!! 
-4. bij advanceTime in world: kunnen er meerdere mazubs zijn? dus moeten we daar een forloop gebruiken?
-6. moet een stervende slime nog vallen?
-7. wat doen als mazub gewonnen is? (didPlayerWin()) -> als mazub de target tile aanraakt of helemaal erop staat?
-							-> staat niet duidelijk id opgave/Ifacade ==> vanaf een overlapping (zoals nu)
-8. Wat is het maximum aantal hitpoints van een slime? -> 500
-9. als mazub op een shark springt, moet de shark (en mazub) dan naar beneden gaan ofzo?
-10. testfiles: voor elke uitzondering test maken? en alle tests in 1 bestand of verschillende bestanden? -> per klasse file maken
-11. hoelang mogen functies ongeveer zijn? -> ongeveer 25 lijnen 
-12. Hoe moeten die overlappingen?
-13. start- en endDuck in mazub: hoe defensief maken
+1. value opslaan of expressions en operation?
+2. Is organisatie klassen oké?
+3. Hoe werken statements?
+4. Is organisatie aparte enums oké?
 
-14. Wanneer een getter niet @Basic maken?
-
-
-
-Als we magisch 3 uur over hebben: mazub die rare dingen doet als er een slime opvalt (alle soms toch)
-	-> probleem ergens bij positie mazub aanpassen en collision detection
-
-algemene opmerking: blz 4 vd opgave: the outer layer of a game object's pixels is allowed to overlap with impassable terrain and game objects
-TODO: overal @override in facade
 
