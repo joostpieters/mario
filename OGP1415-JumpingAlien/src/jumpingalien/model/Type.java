@@ -1,5 +1,10 @@
 package jumpingalien.model;
 
-public class Type {
-
+// Geen idee of dit juist is
+public enum Type {
+		BOOL,
+		DOUBLE,
+		OBJECT {},
+		DIRECTION{} ;
+	
 }
