@@ -2,8 +2,8 @@ package jumpingalien.model;
 
 public class DoubleDoubleExpression extends DoubleExpression {
 
-	public DoubleDoubleExpression(Type type) {
-		super(type);
+	public DoubleDoubleExpression() {
+		
 	}
 
 	@Override

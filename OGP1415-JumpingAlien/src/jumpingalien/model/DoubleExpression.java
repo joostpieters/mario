@@ -3,10 +3,13 @@ package jumpingalien.model;
 
 public abstract class DoubleExpression extends Expression {
 	
-	public DoubleExpression(Type type) {
-		super(type);
+	public DoubleExpression() {
+		
 	}
 
+//	@Override
+	public Type type = Type.DOUBLE;
+	
 	public abstract double evaluate();
 	
 }

@@ -2,9 +2,8 @@ package jumpingalien.model;
 
 public class ObjectDoubleExpression extends DoubleExpression{
 
-	public ObjectDoubleExpression(Type type) {
-		super(type);
-		// TODO Auto-generated constructor stub
+	public ObjectDoubleExpression() {
+		
 	}
 
 	@Override

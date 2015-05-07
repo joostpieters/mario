@@ -4,7 +4,7 @@ package jumpingalien.model;
 public enum Type {
 		BOOL,
 		DOUBLE,
-		OBJECT {},
-		DIRECTION{} ;
+		OBJECT,
+		DIRECTION;
 	
 }

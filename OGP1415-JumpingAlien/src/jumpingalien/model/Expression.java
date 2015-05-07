@@ -1,8 +1,7 @@
 package jumpingalien.model;
 
 public abstract class Expression {
-	public Expression(Type type) {
-		this.setType(type);
+	public Expression() {
 	}
 	
 	public Type type;
