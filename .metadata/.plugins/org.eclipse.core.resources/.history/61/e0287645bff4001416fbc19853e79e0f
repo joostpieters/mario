@@ -26,24 +26,15 @@ public class DoubleExpression extends Expression {
 	private double value;
 	
 	private void setValue(DoubleOperation operation, Expression expression) {
-		if (expression.getType() == Type.DOUBLE) {
-			if (operation == DoubleOperation.CONSTANT) {
-				this.value = expression.evaluate();
-			}
-			else if (operation == DoubleOperation.RANDOM) {
-				this.value = Math.random() * expression.evaluate();
-			}
-			else if (operation == DoubleOperation.SQRT) {
-				this.value = Math.sqrt(expression.evaluate());
-			}
-			else {
-				// TODO throw
-			}
-		else if (expression.getType() != Type.OBJECT) {
-			if (operation == DoubleOperation.GETX) {
-				
-			}
-			}
+		if (operation == DoubleOperation.CONSTANT) {
+			this.value = expression.evaluate();
+		}
+		else if (operation == DoubleOperation.RANDOM) {
+			this.value = Math.random() * expression.evaluate();
+		}
+		else if (operation == DoubleOperation.SQRT) {
+			this.value = Math.sqrt(expression.evaluate());
+		}
 		else {
 			//TODO throw...
 		}

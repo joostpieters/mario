@@ -1,0 +1,8 @@
+package jumpingalien.model;
+
+public enum DoubleOperations {
+	ADDITION,
+	SUBTRACTION,
+	MULTIPLICATION,
+	DIVISION;
+}

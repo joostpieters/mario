@@ -1,0 +1,38 @@
+package jumpingalien.model;
+
+// TODO femke muilen
+
+public class DoubleExpression extends Expression {
+	
+	public DoubleExpression(DoubleOperation operation, Expression expression) {
+		// TODO type checkers
+		this.setValue(operation, expression);
+	}
+	
+	private double value;
+	
+	private void setValue(DoubleOperation operation, Expression expression) {
+		if (operation == DoubleOperation.CONSTANT) {
+			this.value = expression.evaluate();
+		}
+		else if (operation == DoubleOperation.RANDOM) {
+			this.value = Math.random() * expression.evaluate();
+		}
+		else if (operation == DoubleOperation.SQRT) {
+			this.value = Math.sqrt(expression);
+		}
+		else {
+			//TODO throw...
+		}
+	}
+	
+	
+	
+//	@Override
+	public Type type = Type.DOUBLE;
+	
+	public double evaluate() {
+		return this.value;
+	}
+	
+}

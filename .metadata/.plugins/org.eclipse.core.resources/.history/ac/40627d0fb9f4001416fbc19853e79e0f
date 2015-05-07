@@ -1,0 +1,16 @@
+package jumpingalien.model;
+
+// TODO femke muilen
+
+public class DoubleExpression extends Expression {
+	
+	public DoubleExpression(DoubleOperation operation, Epression expression) {
+		
+	}
+
+//	@Override
+	public Type type = Type.DOUBLE;
+	
+	public double evaluate();
+	
+}

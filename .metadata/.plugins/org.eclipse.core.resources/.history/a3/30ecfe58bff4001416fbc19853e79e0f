@@ -14,5 +14,6 @@ public abstract class Expression {
 		this.type = type;
 	}
 	
+	//public abstract Expression getValue();
 	
 }

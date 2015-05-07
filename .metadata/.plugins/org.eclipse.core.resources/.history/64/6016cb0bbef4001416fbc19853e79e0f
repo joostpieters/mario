@@ -1,0 +1,10 @@
+package jumpingalien.model;
+
+public enum BoolOperation {
+	SMALLER,
+	SMALLEREQUALS,
+	BIGGER,
+	BIGGEREQUALS,
+	EQUALS,
+	DISTINCT;
+}

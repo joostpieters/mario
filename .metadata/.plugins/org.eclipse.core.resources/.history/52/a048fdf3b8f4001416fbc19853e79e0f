@@ -1,0 +1,11 @@
+package jumpingalien.model;
+
+public enum DoubleOperations {
+	CONSTANT,
+	RANDOM,
+	SQRT,
+	ADDITION,
+	SUBTRACTION,
+	MULTIPLICATION,
+	DIVISION;
+}
