@@ -7,6 +7,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.model.exceptions.IllegalAmountOfCharactersException;
+import jumpingalien.model.exceptions.IllegalDtException;
+import jumpingalien.model.exceptions.IllegalNbTilesException;
+import jumpingalien.model.exceptions.IllegalPixelException;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSettingException;
+import jumpingalien.model.exceptions.IllegalTargetTileException;
+import jumpingalien.model.exceptions.IllegalTileException;
+import jumpingalien.model.exceptions.IllegalTileSizeException;
+import jumpingalien.model.exceptions.IllegalVisibleWindowException;
 import jumpingalien.part2.facade.IFacadePart2;
 
 /**

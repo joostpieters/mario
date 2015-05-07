@@ -8,13 +8,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import jumpingalien.model.IllegalPixelException;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
+import jumpingalien.model.exceptions.IllegalPixelException;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;

@@ -1,4 +1,4 @@
-package jumpingalien.model;
+package jumpingalien.model.exceptions;
 /**
  * 
  * A class to check for an when the given tiles and tiletype are valid * 

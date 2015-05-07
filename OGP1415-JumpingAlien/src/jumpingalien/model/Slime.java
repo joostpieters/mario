@@ -6,6 +6,10 @@ import java.util.List;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.model.exceptions.IllegalDtException;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSchoolException;
+import jumpingalien.model.exceptions.IllegalSpriteException;
 import jumpingalien.util.Sprite;
 
 /**

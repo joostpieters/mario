@@ -1,4 +1,4 @@
-package jumpingalien.model;
+package jumpingalien.model.exceptions;
 /**
  * 
  * A class to check for an illegal initSartSpeed or maxSpeed 

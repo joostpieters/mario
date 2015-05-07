@@ -1,4 +1,4 @@
-package jumpingalien.model;
+package jumpingalien.model.exceptions;
 
 @SuppressWarnings("serial")
 public class IllegalNbTilesException extends Exception {

@@ -2,11 +2,11 @@ package jumpingalien.part1.facade;
 
 
 import jumpingalien.util.ModelException;
-import jumpingalien.model.IllegalDtException;
-import jumpingalien.model.IllegalPositionException;
-import jumpingalien.model.IllegalSpeedException;
-import jumpingalien.model.IllegalSpriteException;
 import jumpingalien.model.Mazub;
+import jumpingalien.model.exceptions.IllegalDtException;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSpeedException;
+import jumpingalien.model.exceptions.IllegalSpriteException;
 import jumpingalien.util.Sprite;
 
 
