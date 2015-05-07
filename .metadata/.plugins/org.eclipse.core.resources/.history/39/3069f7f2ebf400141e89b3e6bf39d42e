@@ -14,21 +14,6 @@ public class DoubleExpression extends Expression {
 		this.setOperation(operation);
 	}
 	
-	public enum DoubleOperation {
-		CONSTANT,
-		RANDOM,
-		SQRT,
-		ADDITION,
-		SUBTRACTION,
-		MULTIPLICATION,
-		DIVISION,
-		GETX,
-		GETY,
-		GETWIDTH,
-		GETHEIGHT,
-		GETHP;
-	}
-	
 	private Expression expression1;
 	
 	protected Expression getExpression1() {
@@ -41,7 +26,7 @@ public class DoubleExpression extends Expression {
 	
 	private DoubleOperation operation;
 	
-	protected DoubleOperation getOperation() {
+	private DoubleOperation getOperation() {
 		return this.operation;
 	}
 	
@@ -63,12 +48,11 @@ public class DoubleExpression extends Expression {
 			else {
 				// TODO throw
 			}
-		}
 		else if (expression.getType() != Type.OBJECT) {
 			if (operation == DoubleOperation.GETX) {
 				
 			}
-		}
+			}
 		else {
 			//TODO throw...
 		}

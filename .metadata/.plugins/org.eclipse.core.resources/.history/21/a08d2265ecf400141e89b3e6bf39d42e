@@ -26,10 +26,10 @@ public class DoubleDoubleExpression extends DoubleExpression {
 	@Override
 	public double evaluate() {
 		if ((this.getExpression1().getType() == Type.DOUBLE) || (this.getExpression2().getType() == Type.DOUBLE)) {
-			if (this.getOperation() == DoubleOperation.ADDITION) {
+			if (this.getOperation() == DoubleOperation.SUM) {
 				return this.getExpression1().evaluate() + this.getExpression2().evaluate();
 			}
-			else if (this.getOperation() == DoubleOperation.SUBTRACTION) {
+			else if (this.getOperation() == DoubleOperation.MIN) {
 				return this.getExpression1().evaluate() - this.getExpression2().evaluate();
 			}
 			else if (this.getOperation() == DoubleOperation.MULTIPLICATION) {
@@ -38,11 +38,11 @@ public class DoubleDoubleExpression extends DoubleExpression {
 			else if (this.getOperation() == DoubleOperation.DIVISION) {
 				return this.getExpression1().evaluate() / this.getExpression2().evaluate();
 			}
-		}
-		else {
-			// TODO throw
-		}
+			else {
+				// TODO throw
+			}
 			
+		}
 	}
 
 	

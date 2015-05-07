@@ -3,7 +3,6 @@ package jumpingalien.model;
 import java.util.List;
 import java.util.Map;
 
-import jumpingalien.model.DoubleExpression.DoubleOperation;
 import jumpingalien.part3.programs.IProgramFactory;
 import jumpingalien.part3.programs.SourceLocation;
 
@@ -52,7 +51,8 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	public Expression createDirectionConstant(
 			jumpingalien.part3.programs.IProgramFactory.Direction value,
 			SourceLocation sourceLocation) {
-		return new DirectionExpression(value);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Expression createRandom(Expression maxValue,
 			SourceLocation sourceLocation) {
-		return new DoubleExpression(DoubleOperation.RANDOM, maxValue);
+		return new DoubleExpression(DoubleOperation.RANDOM, expr);
 	}
 
 	@Override

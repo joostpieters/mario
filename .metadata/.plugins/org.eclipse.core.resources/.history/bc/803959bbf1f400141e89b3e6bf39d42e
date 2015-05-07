@@ -52,7 +52,8 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	public Expression createDirectionConstant(
 			jumpingalien.part3.programs.IProgramFactory.Direction value,
 			SourceLocation sourceLocation) {
-		return new DirectionExpression(value);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

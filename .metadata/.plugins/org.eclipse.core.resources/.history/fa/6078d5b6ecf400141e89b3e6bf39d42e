@@ -8,9 +8,5 @@ public class BoolExpression extends Expression {
 	}
 	
 	public Type type = Type.BOOL;
-	
-	public boolean evaluate() {
-		return true;
-	}
 
 }

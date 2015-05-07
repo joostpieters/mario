@@ -29,7 +29,7 @@ public class DoubleDoubleExpression extends DoubleExpression {
 			if (this.getOperation() == DoubleOperation.ADDITION) {
 				return this.getExpression1().evaluate() + this.getExpression2().evaluate();
 			}
-			else if (this.getOperation() == DoubleOperation.SUBTRACTION) {
+			else if (this.getOperation() == DoubleOperation.MIN) {
 				return this.getExpression1().evaluate() - this.getExpression2().evaluate();
 			}
 			else if (this.getOperation() == DoubleOperation.MULTIPLICATION) {

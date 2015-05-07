@@ -20,4 +20,5 @@
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory"/>
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleOperation"/>
+<fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
 </qualifiedTypeNameHistroy>

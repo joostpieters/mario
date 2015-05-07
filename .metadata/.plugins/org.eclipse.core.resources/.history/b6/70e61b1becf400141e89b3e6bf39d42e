@@ -26,23 +26,10 @@ public class DoubleDoubleExpression extends DoubleExpression {
 	@Override
 	public double evaluate() {
 		if ((this.getExpression1().getType() == Type.DOUBLE) || (this.getExpression2().getType() == Type.DOUBLE)) {
-			if (this.getOperation() == DoubleOperation.ADDITION) {
-				return this.getExpression1().evaluate() + this.getExpression2().evaluate();
-			}
-			else if (this.getOperation() == DoubleOperation.SUBTRACTION) {
-				return this.getExpression1().evaluate() - this.getExpression2().evaluate();
-			}
-			else if (this.getOperation() == DoubleOperation.MULTIPLICATION) {
-				return this.getExpression1().evaluate() * this.getExpression2().evaluate();
-			}
-			else if (this.getOperation() == DoubleOperation.DIVISION) {
-				return this.getExpression1().evaluate() / this.getExpression2().evaluate();
+			if(this.getOperation() == DoubleOperation.SUM) {
+				
 			}
 		}
-		else {
-			// TODO throw
-		}
-			
 	}
 
 	

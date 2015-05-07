@@ -2,5 +2,7 @@
 2. Is organisatie klassen oké?
 3. Hoe werken statements?
 4. Is organisatie aparte enums oké?
+5. haakjes bij expressions: in Expression? of ergens anders?
+6. evaluate in expression?
 
 
