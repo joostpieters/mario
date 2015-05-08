@@ -1,15 +1,15 @@
 package jumpingalien.model;
 
-public class Addition extends Operator {
+public class Addition extends BinaryExpression {
 
 	public Addition(Expression expression1, Expression expression2) {
 		super(expression1, expression2);
-		// TODO Auto-generated constructor stub
 	}
 	
-	public double evaluate(Expression expression1, Expression expression2) {
+	public double evaluate() {
+		// mss hebben we gettype niet meer nodig
 		if (expression1.getType() == Type.DOUBLE && expression2.getType() == Type.DOUBLE) {
-			return expression1.evaluate() + expression2.evaluate();
+			return this.getExpression1().evaluate() + this.getExpression2().evaluate();
 		}
 		else {
 			throw new IllegalArgumentException();
