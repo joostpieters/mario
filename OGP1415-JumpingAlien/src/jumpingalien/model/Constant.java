@@ -8,7 +8,7 @@ public class Constant extends UnaryExpression{
 
 	@Override
 	protected double evaluate() {
-		return this.getExpression1();
+		return (double) this.getExpression1().evaluate();
 	}
 	
 	
