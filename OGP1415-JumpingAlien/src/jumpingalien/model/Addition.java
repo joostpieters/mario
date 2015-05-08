@@ -1,6 +1,6 @@
 package jumpingalien.model;
 
-public class Addition extends BinaryExpression {
+public class Addition<T> extends BinaryExpression<T> {
 
 	public Addition(Expression expression1, Expression expression2) {
 		super(expression1, expression2);

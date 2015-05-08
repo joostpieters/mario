@@ -15,6 +15,6 @@ public abstract class Expression<T> {
 		this.type = type;
 	}
 	
-	protected  abstract T evaluate();
+	protected abstract T evaluate();
 	
 }
