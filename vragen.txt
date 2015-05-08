@@ -1,8 +1,25 @@
-1. value opslaan of expressions en operation?
+1. value opslaan of expressions en operation? -> expressions opslaan wt soms tijdsafhankelijk (eval resultaat laten teruggeven)
 2. Is organisatie klassen oké?
 3. Hoe werken statements?
 4. Is organisatie aparte enums oké?
-5. haakjes bij expressions: in Expression? of ergens anders?
+5. haakjes bij expressions: in Expression? of ergens anders? -> Doet parser automatisch => negeren
 6. evaluate in expression?
 
+getType gebruiken: abstracte klasse expression
+			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)
+		Operator
+		 - e1
+		 - e2
+	*    /    +    -   ...
+
+
+
+Generics:   Expression <T> -> T voor type
+		- eval();
+	SingularExpression 	BinaryExpression
+				+    -   *   ...
+
+Statements:   Statement S  <---------- Program 
+		- execute (nb of steps)  -envirment (meegeven)
+	
 
