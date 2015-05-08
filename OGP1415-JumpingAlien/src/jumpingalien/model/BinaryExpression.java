@@ -22,4 +22,5 @@ public abstract class BinaryExpression<T> extends Expression<T> {
 	private void setExpression2(Expression<T> expr) {
 		this.expression2 = expr;
 	}
+	
 }
