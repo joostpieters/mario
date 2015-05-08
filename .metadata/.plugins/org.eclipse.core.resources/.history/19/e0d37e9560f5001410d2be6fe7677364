@@ -1,0 +1,8 @@
+package jumpingalien.model;
+
+public class Operator extends Expression {
+	
+	public Operator(operation, Expression expression1, Expressionexpression2)
+	
+	
+}

@@ -1,7 +1,6 @@
 package jumpingalien.model;
 
 public abstract class Expression<T> {
-	
 	public Expression() {
 	}
 	
@@ -13,11 +12,6 @@ public abstract class Expression<T> {
 	
 	private void setType(Type type) {
 		this.type = type;
-	}
-	
-	protected T evaluate(Expression expression) {
-		return null;
-		
 	}
 	
 	

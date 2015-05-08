@@ -15,10 +15,7 @@ public abstract class Expression<T> {
 		this.type = type;
 	}
 	
-	protected T evaluate(Expression expression) {
-		return null;
-		
-	}
+	protected 
 	
 	
 }
