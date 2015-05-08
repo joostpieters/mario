@@ -5,6 +5,10 @@ public abstract class Expression<T> {
 	public Expression() {
 	}
 	
+	protected abstract T evaluate();
+	
+	
+
 	private Type type;
 	
 	protected Type getType() {
@@ -14,7 +18,5 @@ public abstract class Expression<T> {
 	protected void setType(Type type) {
 		this.type = type;
 	}
-	
-	protected abstract T evaluate();
 	
 }

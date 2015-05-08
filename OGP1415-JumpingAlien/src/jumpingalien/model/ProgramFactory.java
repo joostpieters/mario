@@ -3,11 +3,11 @@ package jumpingalien.model;
 import java.util.List;
 import java.util.Map;
 
-import jumpingalien.model.DoubleExpression.DoubleOperation;
 import jumpingalien.part3.programs.IProgramFactory;
 import jumpingalien.part3.programs.SourceLocation;
 
 
+@SuppressWarnings("rawtypes")
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Type, Program> {
 
 	@Override
@@ -20,8 +20,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Expression createDoubleConstant(double value,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Constant(value);
 	}
 
 	@Override
@@ -58,27 +57,27 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Expression createAddition(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		return new DoubleDoubleExpression(DoubleOperation.ADDITION, left, right);
+		return new Addition(left, right);
 	}
 
 	@Override
 	public Expression createSubtraction(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		return new DoubleDoubleExpression(DoubleOperation.SUBTRACTION, left, right);
+		return new Subtraction(left, right);
 
 	}
 
 	@Override
 	public Expression createMultiplication(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		return new DoubleDoubleExpression(DoubleOperation.MULTIPLICATION, left, right);
+		return new Multiplication(left, right);
 
 	}
 
 	@Override
 	public Expression createDivision(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		return new DoubleDoubleExpression(DoubleOperation.DIVISION, left, right);
+		return new Division(left, right);
 
 	}
 

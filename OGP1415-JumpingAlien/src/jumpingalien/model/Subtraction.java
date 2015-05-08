@@ -1,14 +1,14 @@
 package jumpingalien.model;
 
-public class Subtraction extends BinaryExpression {
+public class Subtraction<T> extends BinaryExpression {
 
-	public Subtraction(Expression expression1, Expression expression2) {
+	public Subtraction(Expression<T> expression1, Expression<T> expression2) {
 		super(expression1, expression2);
 	}
 
 	@Override
-	protected double evaluate() {
-		return this.getExpression1() - this.getExpression2();
+	protected Double evaluate() {
+		return  ((double) (this.getExpression1().evaluate()) - (double)(this.getExpression2().evaluate()));
 	}
 
 }
