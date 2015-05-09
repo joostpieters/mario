@@ -8,7 +8,7 @@ public abstract class Expression<T> {
 	protected abstract T evaluate();
 	
 	
-	// TODO Dit is misschien overbodig -> ik dacht ook al zoiets
+	//Dit is misschien overbodig
 	private Type type;
 	
 	protected Type getType() {
