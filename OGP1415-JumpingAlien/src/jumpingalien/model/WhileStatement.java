@@ -5,6 +5,7 @@ import java.util.Map;
 public class WhileStatement extends Statement {
 
 	public WhileStatement(Expression<Boolean> condition, Statement body) {
+		this.setCondition(condition);
 		this.setBody(body);
 	}
 	
@@ -26,10 +27,33 @@ public class WhileStatement extends Statement {
 		this.body = stat;
 	}
 	
+	private boolean inBody;
+	private boolean getInBody() {
+		return inBody;
+	}
+	private void setInBody(boolean b) {
+		this.inBody = b;
+	}
+	
 	@Override
 	public Map<String, Type> execute(Map<String, Type> var) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!this.getInBody()) {
+			if (this.getCondition().evaluate()) {
+				this.setInBody(true);
+			}
+			else {
+				this.setReady();
+			}
+			return var;
+		}
+		else {
+			Map<String, Type> var2 = this.getBody().execute(var);
+			if(this.getBody().isReady()) {
+				this.getBody().setNotReady();
+				this.setInBody(false);
+			}
+			// TODO dit return statement zal wel anders moeten
+			return var2;	
+		}
 	}
-
 }
