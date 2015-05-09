@@ -383,22 +383,22 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 
 	@Override
 	public Type getDoubleType() {
-		return Type.DOUBLE;
+		return Type.Double;
 	}
 
 	@Override
 	public Type getBoolType() {
-		return Type.BOOL;
+		return Type.Boolean;
 	}
 
 	@Override
 	public Type getGameObjectType() {
-		return Type.OBJECT;
+		return Type.Object;
 	}
 
 	@Override
 	public Type getDirectionType() {
-		return Type.DIRECTION;
+		return Type.Direction;
 	}
 
 	@Override
