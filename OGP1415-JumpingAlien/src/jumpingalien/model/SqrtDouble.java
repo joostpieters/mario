@@ -1,6 +1,4 @@
 package jumpingalien.model;
-import jumpingalien.model.Expression;
-import jumpingalien.model.UnaryExpression;
 
 
 public class SqrtDouble extends UnaryExpression<Double, Double> {

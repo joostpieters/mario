@@ -1,6 +1,4 @@
 package jumpingalien.model;
-import jumpingalien.model.Expression;
-import jumpingalien.model.UnaryExpression;
 
 
 public class GetHpObject extends UnaryExpression<Double, GameObject> {

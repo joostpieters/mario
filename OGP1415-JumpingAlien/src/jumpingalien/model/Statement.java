@@ -3,6 +3,7 @@ package jumpingalien.model;
 import java.util.Map;
 
 public abstract class Statement {
+	
 	public Statement(){
 		
 	}

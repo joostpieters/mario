@@ -1,6 +1,4 @@
 package jumpingalien.model;
-import jumpingalien.model.Expression;
-
 
 public class BoolTrue extends Expression<Boolean> {
 	

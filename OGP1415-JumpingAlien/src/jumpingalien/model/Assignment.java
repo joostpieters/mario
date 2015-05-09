@@ -3,6 +3,8 @@ package jumpingalien.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import jumpingalien.model.Expressions.Expression;
+
 public class Assignment extends Statement {
 	// TODO hier is variableType precies overbodig. Is dat normaal?
 	public Assignment(String str, Type variableType, Expression exp) {

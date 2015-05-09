@@ -1,0 +1,13 @@
+package jumpingalien.model.Expressions;
+import jumpingalien.model.Expressions.Expression;
+
+
+public class BoolTrue extends Expression<Boolean> {
+	
+	public BoolTrue() {
+		
+	}
+	public Boolean evaluate() {
+		return  true;
+	}
+}
