@@ -1,5 +1,6 @@
 1. hoe getX enzo bij tile? world meegeven? 
 2. IsJumping: enkel als ySpeed > 0 of ook als aan het vallen?
+3. aparte klasse voor GreaterThan en LessThan, of beter dezelfde gebruiken?
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)
