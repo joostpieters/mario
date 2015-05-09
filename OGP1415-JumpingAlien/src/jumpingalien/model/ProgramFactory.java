@@ -24,142 +24,137 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	}
 
 	@Override
-	public Expression createTrue(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Expression<Boolean> createTrue(SourceLocation sourceLocation) {
+		return new BoolTrue();
 	}
 
 	@Override
-	public Expression createFalse(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Expression<Boolean> createFalse(SourceLocation sourceLocation) {
+		return new BoolFalse();
 	}
 
 	@Override
-	public Expression createNull(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Expression<Object> createNull(SourceLocation sourceLocation) {
+		return new ObjectNull();
 	}
 
 	@Override
-	public Expression createSelf(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Expression<Object> createSelf(SourceLocation sourceLocation) {
+		return new ObjectSelf();
 	}
 
 	@Override
-	public Expression createDirectionConstant(
+	public Expression<jumpingalien.part3.programs.IProgramFactory.Direction> createDirectionConstant(
 			jumpingalien.part3.programs.IProgramFactory.Direction value,
 			SourceLocation sourceLocation) {
 		return new DirectionExpression(value);
 	}
 
 	@Override
-	public Expression createAddition(Expression left, Expression right,
+	public Expression<Double> createAddition(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new Addition(left, right);
 	}
 
 	@Override
-	public Expression createSubtraction(Expression left, Expression right,
+	public Expression<Double> createSubtraction(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new Subtraction(left, right);
 
 	}
 
 	@Override
-	public Expression createMultiplication(Expression left, Expression right,
+	public Expression<Double> createMultiplication(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new Multiplication(left, right);
 
 	}
 
 	@Override
-	public Expression createDivision(Expression left, Expression right,
+	public Expression<Double> createDivision(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new Division(left, right);
 
 	}
 
 	@Override
-	public Expression createSqrt(Expression expr, SourceLocation sourceLocation) {
+	public Expression<Double> createSqrt(Expression expr, SourceLocation sourceLocation) {
 		return new SqrtDouble(expr);
 	}
 
 	@Override
-	public Expression createRandom(Expression maxValue,
+	public Expression<Double> createRandom(Expression maxValue,
 			SourceLocation sourceLocation) {
 		return new RandomDouble(maxValue);
 	}
 
 	@Override
-	public Expression createAnd(Expression left, Expression right,
+	public Expression<Boolean> createAnd(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new AndBool(left, right);
 	}
 
 	@Override
-	public Expression createOr(Expression left, Expression right,
+	public Expression<Boolean> createOr(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new OrBool(left, right);
 	}
 
 	@Override
-	public Expression createNot(Expression expr, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Expression<Boolean> createNot(Expression expr, SourceLocation sourceLocation) {
+		return new NotBool(expr);
 	}
 
 	@Override
-	public Expression createLessThan(Expression left, Expression right,
+	public Expression<Boolean> createLessThan(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new LessThan(left, right);
 	}
 
 	@Override
-	public Expression createLessThanOrEqualTo(Expression left,
+	public Expression<Boolean> createLessThanOrEqualTo(Expression left,
 			Expression right, SourceLocation sourceLocation) {
 		return new LessEquals(left, right);
 	}
 
 	@Override
-	public Expression createGreaterThan(Expression left, Expression right,
+	public Expression<Boolean> createGreaterThan(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new GreaterThan(left, right);
 	}
 
 	@Override
-	public Expression createGreaterThanOrEqualTo(Expression left,
+	public Expression<Boolean> createGreaterThanOrEqualTo(Expression left,
 			Expression right, SourceLocation sourceLocation) {
 		return new GreaterEquals(left, right);
 	}
 
 	@Override
-	public Expression createEquals(Expression left, Expression right,
+	public Expression<Boolean> createEquals(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new Equals(left, right);
 	}
 
 	@Override
-	public Expression createNotEquals(Expression left, Expression right,
+	public Expression<Boolean> createNotEquals(Expression left, Expression right,
 			SourceLocation sourceLocation) {
 		return new NotEquals(left, right);
 	}
 
 	@Override
-	public Expression createGetX(Expression expr, SourceLocation sourceLocation) {
+	public Expression<Double> createGetX(Expression expr, SourceLocation sourceLocation) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Expression createGetY(Expression expr, SourceLocation sourceLocation) {
+	public Expression<Double> createGetY(Expression expr, SourceLocation sourceLocation) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Expression createGetWidth(Expression expr,
+	public Expression<Double> createGetWidth(Expression expr,
 			SourceLocation sourceLocation) {
 		// TODO Auto-generated method stub
 		return null;
@@ -173,7 +168,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	}
 
 	@Override
-	public Expression createGetHitPoints(Expression expr,
+	public Expression<Double> createGetHitPoints(Expression expr,
 			SourceLocation sourceLocation) {
 		// TODO Auto-generated method stub
 		return null;
