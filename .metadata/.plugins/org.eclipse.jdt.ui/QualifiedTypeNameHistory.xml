@@ -21,4 +21,6 @@
 <fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory"/>
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
+<fullyQualifiedTypeName name="jumpingalien.model.UnaryExpression"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
 </qualifiedTypeNameHistroy>
