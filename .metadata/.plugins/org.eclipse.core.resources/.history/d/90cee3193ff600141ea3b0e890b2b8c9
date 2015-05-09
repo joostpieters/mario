@@ -1,0 +1,14 @@
+package jumpingalien.model;
+import jumpingalien.model.Expression;
+import jumpingalien.model.UnaryExpression;
+
+
+public class GetHpObject extends UnaryExpression<Object> {
+	
+	public GetHpObject(Expression<Object> expression1) {
+		super(expression1);
+	}
+	public Double evaluate() {
+		return ((Object) this.getExpression1().evaluate()).getHitpoints();
+	}
+}
