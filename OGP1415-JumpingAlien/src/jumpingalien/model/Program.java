@@ -9,16 +9,6 @@ public class Program {
 		this.setGlobalVariables(globalVariables);
 	}
 	
-	private Map<String, Type> globalVariables;
-	
-	private Map<String, Type> getGlobalVariables() {
-		return this.globalVariables;
-	}
-	
-	private void setGlobalVariables(Map<String, Type> var) {
-		this.globalVariables = var;
-	}
-	
 	private Statement mainStatement;
 	
 	private Statement getMainStatement() {
@@ -29,6 +19,15 @@ public class Program {
 		this.mainStatement = main;
 	}
 	
+	private Map<String, Type> globalVariables;
+	
+	private Map<String, Type> getGlobalVariables() {
+		return this.globalVariables;
+	}
+	
+	private void setGlobalVariables(Map<String, Type> var) {
+		this.globalVariables = var;
+	}
 	
 	
 //	private ArrayList<Statement> statements = new ArrayList<Statement>();
