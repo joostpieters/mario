@@ -1,8 +1,8 @@
 package jumpingalien.model;
 
-public class Smaller extends BinaryExpression<Boolean, Double> {
+public class SmallerEquals extends BinaryExpression<Boolean, Double> {
 
-	public Smaller(Expression<Double> expression1,
+	public SmallerEquals(Expression<Double> expression1,
 			Expression<Double> expression2) {
 		super(expression1, expression2);
 	}
