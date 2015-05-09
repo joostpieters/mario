@@ -1,5 +1,4 @@
-import jumpingalien.model.Expression;
-import jumpingalien.model.UnaryExpression;
+package jumpingalien.model;
 
 
 public class RandomDouble extends UnaryExpression<Double> {

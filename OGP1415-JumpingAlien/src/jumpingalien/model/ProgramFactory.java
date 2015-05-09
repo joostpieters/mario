@@ -7,7 +7,7 @@ import jumpingalien.part3.programs.IProgramFactory;
 import jumpingalien.part3.programs.SourceLocation;
 
 
-@SuppressWarnings("rawtypes")
+//@SuppressWarnings("rawtypes")
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Type, Program> {
 
 	@Override
@@ -18,7 +18,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	}
 
 	@Override
-	public Expression createDoubleConstant(double value,
+	public Expression<Double> createDoubleConstant(double value,
 			SourceLocation sourceLocation) {
 		return new Constant(value);
 	}
@@ -95,15 +95,13 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Expression createAnd(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new AndBool(left, right);
 	}
 
 	@Override
 	public Expression createOr(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new OrBool(left, right);
 	}
 
 	@Override
@@ -115,43 +113,37 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Expression createLessThan(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return LessThan(left, right);
 	}
 
 	@Override
 	public Expression createLessThanOrEqualTo(Expression left,
 			Expression right, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return LessEquals(left, right);
 	}
 
 	@Override
 	public Expression createGreaterThan(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return GreaterThan(left, right);
 	}
 
 	@Override
 	public Expression createGreaterThanOrEqualTo(Expression left,
 			Expression right, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return GreaterEquals(left, right);
 	}
 
 	@Override
 	public Expression createEquals(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return Equals(left, right);
 	}
 
 	@Override
 	public Expression createNotEquals(Expression left, Expression right,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return NotEquals(left, right);
 	}
 
 	@Override
