@@ -1,15 +1,25 @@
 package jumpingalien.model;
 
-public class DirectionExpression<T> extends UnaryExpression {
+public class DirectionExpression extends Expression<jumpingalien.part3.programs.IProgramFactory.Direction> {
 	
 	
-	public DirectionExpression(Expression<T> expression1) {
-		super(expression1);
+	public DirectionExpression(jumpingalien.part3.programs.IProgramFactory.Direction v) {
+		this.setValue(v);
 	}
 
+	private jumpingalien.part3.programs.IProgramFactory.Direction value;
+	
+	private jumpingalien.part3.programs.IProgramFactory.Direction getValue() {
+		return this.value;
+	}
+	
+	private void setValue(jumpingalien.part3.programs.IProgramFactory.Direction v) {
+		this.value = v;
+	}
+	
 	@Override
 	protected jumpingalien.part3.programs.IProgramFactory.Direction evaluate() {
-		return (jumpingalien.part3.programs.IProgramFactory.Direction) this.getExpression1().evaluate();
+		return this.getValue();
 	}
 	
 }

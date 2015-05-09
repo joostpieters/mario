@@ -1,15 +1,24 @@
 package jumpingalien.model;
 
-public class Constant extends UnaryExpression<Double> {
+public class Constant extends Expression<Double> {
 
-	public Constant(Expression<Double> expression1) {
-		super(expression1);
+	public Constant(double value) {
+		this.setValue(value);
 	}
 
-	@Override
-	protected Double evaluate() {
-		return this.getExpression1().evaluate();
+	private double value;
+	
+	private double getValue() {
+		return this.value;
 	}
 	
+	private void setValue(double v) {
+		this.value = v;
+	}
+	
+	@Override
+	protected Double evaluate() {
+		return this.getValue();
+	}
 	
 }
