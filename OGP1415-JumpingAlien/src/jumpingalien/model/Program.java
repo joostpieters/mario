@@ -29,6 +29,16 @@ public class Program {
 		this.globalVariables = var;
 	}
 	
+	private GameObject gameObject;
+	
+	private GameObject getGameObject() {
+		return this.gameObject;
+	}
+	
+	public void setGameObject(GameObject obj) {
+		this.gameObject = obj;
+	}
+	
 	
 //	private ArrayList<Statement> statements = new ArrayList<Statement>();
 //	

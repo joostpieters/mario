@@ -553,14 +553,14 @@ public class Mazub extends GameObject {
 	 * Ends the mazub's movement to the left
 	 * @effect endMove()
 	 */
-	protected void endMoveLeft() {
+	public void endMoveLeft() {
 		this.endMove();
 	}	
 	/**
 	 * ends the mazub's movement to the right
 	 * @effect endMove()
 	 */
-	protected void endMoveRight() {
+	public void endMoveRight() {
 		this.endMove();
 	}	
 	/**

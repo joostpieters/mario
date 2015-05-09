@@ -217,6 +217,7 @@ public abstract class GameObject extends SuperObject {
 	protected void setProgram(Program program) {
 		// TODO checkers
 		this.program = program;
+		program.setGameObject(this);
 	}
 	/**
 	 * the world where the object appears
@@ -1627,31 +1628,6 @@ public abstract class GameObject extends SuperObject {
 		}
 	}
 	
-	/**
-	 * updates the immunity of a game object
-	 * @param dt
-	 * 			 a small time interval
-	 * @effect if immune, the time since immunity is updated and if this time is great enough
-	 * 			the immunity is set to false
-	 * 			| if (isImmune())
-	 * 			|	then if (getTimeSinceImmune() > GameObject.getImmuneTime())
-	 * 			| 			then setNotImmune()
-	 * 			| 				 setTimeSinceImmune(0)
-	 * 			| else 
-	 * 			| 	then setTimeSinceImmune(getTimeSinceImmune() + dt)
-	 */
-	@Raw
-	protected void updateImmunity(double dt) {
-		if (this.isImmune()) {
-			if (this.getTimeSinceImmune() > GameObject.getImmuneTime()) {
-				this.setNotImmune();
-				this.setTimeSinceImmune(0);				
-			}
-			else {
-				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-			}
-		}
-	}
 	/**
 	 * stops the horizontal movement
 	 * @effect the horizontal acceleration and speed are set to zero
