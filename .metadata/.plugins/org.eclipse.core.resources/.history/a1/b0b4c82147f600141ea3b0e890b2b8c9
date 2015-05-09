@@ -1,0 +1,14 @@
+package jumpingalien.model;
+
+public class IsPlant extends UnaryExpression<Boolean, GameObject> {
+	
+	public IsPlant(Expression<GameObject> expr) {
+		super(expr);
+	}
+
+	@Override
+	protected Boolean evaluate() {
+		return (((GameObject) this.getExpression1().evaluate()) instanceof Mazub);
+	}
+
+}

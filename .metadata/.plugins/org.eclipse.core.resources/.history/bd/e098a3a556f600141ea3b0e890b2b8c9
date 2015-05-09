@@ -1,0 +1,16 @@
+package jumpingalien.model;
+
+public class IsDucking extends UnaryExpression<Boolean, GameObject> {
+	
+	public IsDucking(Expression<GameObject> expr) {
+		super(expr);
+	}
+
+	@Override
+	protected Boolean evaluate() {
+		return ((((GameObject) this.getExpression1().evaluate()).getXSpeed() != 0)
+				|| ((((GameObject) this.getExpression1().evaluate()).getYSpeed()) != 0));
+				
+	}
+
+}

@@ -1,0 +1,15 @@
+package jumpingalien.model;
+
+public abstract class SuperObject {
+	public SuperObject() {
+		
+	}
+	
+	protected abstract double getXPos();
+	protected abstract double getYPos();
+	protected abstract double getXDim();
+	protected abstract double getYDim();
+	public abstract double getHitpoints();
+
+
+}

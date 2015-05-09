@@ -1,0 +1,20 @@
+package jumpingalien.model;
+
+import static jumpingalien.tests.util.TestUtils.doubleArray;
+import static org.junit.Assert.assertArrayEquals;
+import jumpingalien.util.Util;
+
+public class IsMoving extends UnaryExpression<Boolean, GameObject> {
+	
+	public IsMoving(Expression<GameObject> expr) {
+		super(expr);
+	}
+
+	@Override
+	protected Boolean evaluate() {
+		return ( ! assertArrayEquals(doubleArray(0, 0), 
+				((GameObject) this.getExpression1().evaluate()).getVelocity()));
+				
+	}
+
+}

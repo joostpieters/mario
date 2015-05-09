@@ -21,7 +21,7 @@ import jumpingalien.util.Sprite;
  * @invar the vertical speed is always valid
  * 			| isValidYSpeed(getYSpeed) 
  */
-public abstract class GameObject extends SuperObject {
+public abstract class GameObject {
 	/**
 	 * Creates a new gameObject, located at the provided pixel location (x, y).
 	 * The returned gameObject should not belong to a world.
@@ -98,7 +98,7 @@ public abstract class GameObject extends SuperObject {
 	 * Returns the horizontal position
 	 * @return xPos
 	 */
-	@Basic @Raw @Override
+	@Basic @Raw 
 	protected double getXPos() {
 		return xPos;
 	}	
@@ -129,7 +129,7 @@ public abstract class GameObject extends SuperObject {
 	 * Returns the vertical position
 	 * @return yPos
 	 */
-	@Basic @Raw @Override
+	@Basic @Raw 
 	protected double getYPos() {
 		return yPos;
 	}		
@@ -388,7 +388,7 @@ public abstract class GameObject extends SuperObject {
 	 * Returns the amount of hitpoints the gameObject has
 	 * @return hitpoints
 	 */ 
-	@Basic @Raw @Override
+	@Basic @Raw
 	public int getHitpoints() {
 		return this.hitpoints;
 	}
@@ -480,7 +480,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return the horizontal dimension (width)
 	 * 			| this.getCurrentSprite().getWidth()
 	 */
-	@Basic @Raw @Override
+	@Basic @Raw 
 	protected int getXDim() {
 		return this.getCurrentSprite().getWidth();
 	}
@@ -489,7 +489,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return the vertical dimension (height)
 	 * 			| this.getCurrentSprite().getHeight()
 	 */
-	@Basic @Raw @Override
+	@Basic @Raw 
 	protected int getYDim() {
 		return this.getCurrentSprite().getHeight();
 	}	
@@ -1627,31 +1627,6 @@ public abstract class GameObject extends SuperObject {
 		}
 	}
 	
-	/**
-	 * updates the immunity of a game object
-	 * @param dt
-	 * 			 a small time interval
-	 * @effect if immune, the time since immunity is updated and if this time is great enough
-	 * 			the immunity is set to false
-	 * 			| if (isImmune())
-	 * 			|	then if (getTimeSinceImmune() > GameObject.getImmuneTime())
-	 * 			| 			then setNotImmune()
-	 * 			| 				 setTimeSinceImmune(0)
-	 * 			| else 
-	 * 			| 	then setTimeSinceImmune(getTimeSinceImmune() + dt)
-	 */
-	@Raw
-	protected void updateImmunity(double dt) {
-		if (this.isImmune()) {
-			if (this.getTimeSinceImmune() > GameObject.getImmuneTime()) {
-				this.setNotImmune();
-				this.setTimeSinceImmune(0);				
-			}
-			else {
-				this.setTimeSinceImmune(this.getTimeSinceImmune() + dt);
-			}
-		}
-	}
 	/**
 	 * stops the horizontal movement
 	 * @effect the horizontal acceleration and speed are set to zero

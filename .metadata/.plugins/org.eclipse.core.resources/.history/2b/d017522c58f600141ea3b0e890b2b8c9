@@ -199,7 +199,7 @@ public class Mazub extends GameObject {
 	 * 			| initStartSpeed
 	 */
 	@Basic @Immutable @Raw 
-	protected int getInitStartSpeed() {
+	private int getInitStartSpeed() {
 		return initStartSpeed;
 	}
 	/**
@@ -208,7 +208,7 @@ public class Mazub extends GameObject {
 	 * 			| nbRunningSprites
 	 */
 	@Basic @Immutable @Raw
-	protected int getNbRunningSprites() {
+	private int getNbRunningSprites() {
 		return nbRunningSprites;
 	}
 	/**
@@ -217,7 +217,7 @@ public class Mazub extends GameObject {
 	 * 			| counterSprites
 	 */
 	@Basic @Raw
-	protected int getCounterSprites() {
+	private int getCounterSprites() {
 		return counterSprites;
 	}
 	/**
@@ -226,7 +226,7 @@ public class Mazub extends GameObject {
 	 * 			| time_since_endMove
 	 */
 	@Basic @Raw 
-	protected double getTimeSinceEndMove() {
+	private double getTimeSinceEndMove() {
 		return timeSinceEndMove;
 	}
 	/**
@@ -235,7 +235,7 @@ public class Mazub extends GameObject {
 	 * 			| time_since_startMove
 	 */
 	@Basic @Raw 
-	protected double getTimeSinceStartMove() {
+	private double getTimeSinceStartMove() {
 		return timeSinceStartMove;
 	}
 	/**
@@ -243,7 +243,7 @@ public class Mazub extends GameObject {
 	 * @return JUMP_SPEED
 	 */
 	@Basic @Immutable @Raw 
-	protected static final int getStartJumpSpeed() {
+	private static final int getStartJumpSpeed() {
 		return JUMP_SPEED;
 	}
 	/**
@@ -251,7 +251,8 @@ public class Mazub extends GameObject {
 	 * @return MAX_SPEED
 	 */
 	@Basic @Immutable @Raw
-	protected static final int getMaxMovingSpeed() {
+	protected 
+	static final int getMaxMovingSpeed() {
 		return MAX_MOVING_SPEED;
 	}
 	/**
@@ -259,7 +260,7 @@ public class Mazub extends GameObject {
 	 * @return MAX_SPEED_DUCK
 	 */
 	@Basic @Immutable @Raw 
-	protected static final int getMaxSpeedDuck() {
+	private static final int getMaxSpeedDuck() {
 		return MAX_SPEED_DUCK;
 	}
 	/**
@@ -267,7 +268,8 @@ public class Mazub extends GameObject {
 	 * @return START_SPEED
 	 */
 	@Basic @Immutable @Raw
-	protected static final int getStartSpeed() {
+	protected 
+	static final int getStartSpeed() {
 		return START_SPEED;
 	}
 	/**
@@ -275,7 +277,7 @@ public class Mazub extends GameObject {
 	 * @return MOVE_ACC
 	 */
 	@Basic @Immutable @Raw
-	protected static final double getMoveAcc() {
+	private static final double getMoveAcc() {
 		return MOVE_ACC;
 	}
 	/**
@@ -283,7 +285,7 @@ public class Mazub extends GameObject {
 	 * @return NOT_MOVING_TIME
 	 */
 	@Basic @Immutable @Raw 
-	protected static final double getNotMovingTime() {
+	private static final double getNotMovingTime() {
 		return NOT_MOVING_TIME;
 	}
 	/**
@@ -291,7 +293,7 @@ public class Mazub extends GameObject {
 	 * @return TIME_DIFFERENT_SPRITE
 	 */
 	@Basic @Immutable @Raw 
-	protected static final double getTimeDifferentSprite() {
+	private static final double getTimeDifferentSprite() {
 		return TIME_DIFFERENT_SPRITE;
 	}
 	/**
@@ -318,7 +320,7 @@ public class Mazub extends GameObject {
 	 * @return LOSS_HITPOINTS_IN_WATER
 	 */
 	@Basic @Immutable
-	protected static final int getLossHitpointsInWater() {
+	private static final int getLossHitpointsInWater() {
 		return LOSS_HITPOINTS_IN_WATER;
 	}
 	/**
@@ -326,7 +328,7 @@ public class Mazub extends GameObject {
 	 * @return duckShouldEnd
 	 */
 	@Basic @Raw
-	protected boolean getDuckShouldEnd() {
+	private boolean getDuckShouldEnd() {
 		return this.duckShouldEnd;
 	}
 	/**
@@ -343,7 +345,7 @@ public class Mazub extends GameObject {
 	 * @return the hitpoints that mazub gains
 	 * 			| TOUCH_PLANT_HITPOINTS
 	 */
-	protected static int getTouchPlantHitpoints() {
+	private static int getTouchPlantHitpoints() {
 		return TOUCH_PLANT_HITPOINTS;
 	}	
 	@Override
@@ -378,7 +380,7 @@ public class Mazub extends GameObject {
 	 * @post the boolean duck is equal to the given boolean
 	 */
 	@Raw 
-	protected void setDuck(boolean duck) {
+	private void setDuck(boolean duck) {
 		this.duck = duck;
 	}
 	/**
@@ -390,7 +392,7 @@ public class Mazub extends GameObject {
 	 * @post nbRunningSprites is equal to the given int
 	 */
 	@Raw
-	protected void setNbRunningSprites(int nbRunningSprites) {
+	private void setNbRunningSprites(int nbRunningSprites) {
 		assert nbRunningSprites >= 0;
 		this.nbRunningSprites = nbRunningSprites;
 	}
@@ -405,7 +407,7 @@ public class Mazub extends GameObject {
 	 * @post counterSprites is equal to the given int
 	 */
 	@Raw
-	protected void setCounterSprites(int counterSprites) {
+	private void setCounterSprites(int counterSprites) {
 		assert counterSprites >= 0;
 		assert counterSprites <= this.getNbRunningSprites();
 		this.counterSprites = counterSprites;
@@ -419,7 +421,7 @@ public class Mazub extends GameObject {
 	 * @post timeSinceEndMove is equal to the given double
 	 */
 	@Raw 
-	protected void setTimeSinceEndMove(double timeSinceEndMove) {
+	private void setTimeSinceEndMove(double timeSinceEndMove) {
 		assert timeSinceEndMove >= 0;
 		this.timeSinceEndMove = timeSinceEndMove;
 	}
@@ -432,7 +434,7 @@ public class Mazub extends GameObject {
 	 * @post timeSinceStartMove is equal to the given double
 	 */
 	@Raw 
-	protected void setTimeSinceStartMove(double timeSinceStartMove) {
+	private void setTimeSinceStartMove(double timeSinceStartMove) {
 		assert timeSinceStartMove >= 0;
 		this.timeSinceStartMove = timeSinceStartMove;
 	}
@@ -443,7 +445,7 @@ public class Mazub extends GameObject {
 	 * @post the new duckShouldEnd is equal to the given boolean
 	 */
 	@Raw
-	protected void setDuckShouldEnd(boolean bool) {
+	private void setDuckShouldEnd(boolean bool) {
 		this.duckShouldEnd = bool;
 	}
 	
@@ -455,7 +457,7 @@ public class Mazub extends GameObject {
 	 * @return True if the given initStartSpeed and maxSpeed are valid
 	 * 			| ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed))
 	 */
-	protected boolean isValidSpeed(int initStartSpeed, double maxSpeed) {
+	private boolean isValidSpeed(int initStartSpeed, double maxSpeed) {
 		return ((initStartSpeed >= 1) && (maxSpeed >= initStartSpeed));
 	}
 
@@ -490,7 +492,7 @@ public class Mazub extends GameObject {
 	 * 			| time_since_startMove == 0
 	 */
 	@Raw
-	protected void startMove() {
+	private void startMove() {
 		assert this.isValidPosition(getXPos(), getYPos());
 		assert this.isValidSpeed(this.getInitStartSpeed(), this.getMaxSpeed());		
 		if ( ! this.isDucked()) {
@@ -542,7 +544,7 @@ public class Mazub extends GameObject {
 	 * 			| setTimeUntilEndMove(0)
 	 */
 	@Raw
-	protected void endMove() {
+	private void endMove() {
 		assert (this.isValidXSpeed(this.getXSpeed()));
 		assert (this.isValidPosition(this.getXPos(),this.getYPos()));
 		this.setXSpeed(0);
@@ -553,14 +555,14 @@ public class Mazub extends GameObject {
 	 * Ends the mazub's movement to the left
 	 * @effect endMove()
 	 */
-	protected void endMoveLeft() {
+	public void endMoveLeft() {
 		this.endMove();
 	}	
 	/**
 	 * ends the mazub's movement to the right
 	 * @effect endMove()
 	 */
-	protected void endMoveRight() {
+	public void endMoveRight() {
 		this.endMove();
 	}	
 	/**
@@ -617,7 +619,7 @@ public class Mazub extends GameObject {
 	 * 			| 						setHitpoints(newHitpoints)
 	 */
 	@Raw
-	protected void collidingPlants(double newXPos, double newYPos) {
+	private void collidingPlants(double newXPos, double newYPos) {
 		for (Plant other: this.getWorld().getPlants()) {
 			if( ! other.isDying()) {
 				double x1 = newXPos;
@@ -682,7 +684,7 @@ public class Mazub extends GameObject {
 	 * @return {newPos[0], newPos[1]}
 	 */
 	@Raw
-	protected double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
+	private double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharks.addAll(this.getWorld().getSharks());
 		boolean onGameObject = false;
@@ -763,7 +765,7 @@ public class Mazub extends GameObject {
 	 * 			| {newPos[0], newPos[1]}
 	 */
 	@Raw
-	protected double[] checkSurroundings(double newXPos, double newYPos) {
+	private double[] checkSurroundings(double newXPos, double newYPos) {
 		
 		if (this.getOrientation() == Orientation.LEFT && againstLeftWall(newXPos,newYPos)) {
 			newXPos = (this.getTilesLeft(newXPos, newYPos)[0][0] + 1) * getWorld().getTileLength();
@@ -807,7 +809,7 @@ public class Mazub extends GameObject {
 	 * 			|					then setCounterSprites(0)	 * 
 	 */
 	@Raw
-	protected void changeMovingTimes(double dt) {
+	private void changeMovingTimes(double dt) {
 		if (this.getXSpeed() == 0) {
 			this.setTimeSinceEndMove(this.getTimeSinceEndMove() + dt);
 		}
@@ -848,7 +850,7 @@ public class Mazub extends GameObject {
 	 * 			|		 loseHitpoints( (int) toLose)
 	 */
 	@Raw
-	protected void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
+	private void loseHitpointsBecauseOfFeature(double dt, double newXPos, double newYPos) {
 		if (this.isInContactWithFeature(newXPos, newYPos, 2)) {
 			this.setTimeInWater(this.getTimeInWater() + dt);
 			if (this.getTimeInWater() >= GameObject.getDrownTime()) {
@@ -873,7 +875,7 @@ public class Mazub extends GameObject {
 	 * 			| if ( ! isWithinBoundaries(newXPos, newYPos) 
 	 * 			| 	then remove()
 	 */
-	protected void checkIfWithinBoundaries(double newXPos, double newYPos) {
+	private void checkIfWithinBoundaries(double newXPos, double newYPos) {
 		if ( ! isWithinBoundaries(newXPos,newYPos)) {
 			this.remove();
 		}
@@ -904,7 +906,7 @@ public class Mazub extends GameObject {
 	 * 		| this.changeMovingTimes(dt);
 	 */
 	@Raw
-	protected void changeTimeDependents(double dt) {
+	private void changeTimeDependents(double dt) {
 		double[] newPos = this.calculateNewPos(dt);
 	
 		this.checkIfWithinBoundaries(newPos[0],newPos[1]);
@@ -1091,7 +1093,7 @@ public class Mazub extends GameObject {
 	 * 			| setWorld(null)
 	 */
 	@Raw
-	protected void remove() {
+	private void remove() {
 		this.getWorld().removeAlien(this);
 		this.setWorld(null);
 	}	

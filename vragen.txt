@@ -1,9 +1,5 @@
-1. value opslaan of expressions en operation? -> expressions opslaan wt soms tijdsafhankelijk (eval resultaat laten teruggeven)
-2. Is organisatie klassen oké?
-3. Hoe werken statements?
-4. Is organisatie aparte enums oké?
-5. haakjes bij expressions: in Expression? of ergens anders? -> Doet parser automatisch => negeren
-6. evaluate in expression?
+1. hoe getX enzo bij tile? world meegeven? 
+2. IsJumping: enkel als ySpeed > 0 of ook als aan het vallen?
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)

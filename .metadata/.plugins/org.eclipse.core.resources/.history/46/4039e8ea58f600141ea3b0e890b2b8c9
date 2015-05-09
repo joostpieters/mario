@@ -1,8 +1,8 @@
 package jumpingalien.model;
 
-public class GetHeightObject extends UnaryExpression<Double, GameObject>{
+public class GetWidthObject extends UnaryExpression<Double, GameObject>{
 
-	public GetHeightObject(Expression<GameObject> expression1) {
+	public GetWidthObject(Expression<GameObject> expression1) {
 		super(expression1); 
 	}
 
