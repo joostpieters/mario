@@ -1,0 +1,14 @@
+package jumpingalien.model;
+
+public class GetHeightObject extends BinaryExpression<Object>{
+
+	public GetHeightObject(Expression<Object> expression1) {
+		super(expression1); 
+	}
+
+	@Override
+	public Double evaluate() {
+		return this.getExpression1().evaluate() * this.getExpression2().evaluate();
+	}
+
+}

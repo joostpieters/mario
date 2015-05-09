@@ -1,8 +1,8 @@
 package jumpingalien.model;
 
-public class Multiplication extends BinaryExpression<Double, Double>{
+public class GetHeightObject extends BinaryExpression<Double, Double>{
 
-	public Multiplication(Expression<Double> expression1, Expression<Double> expression2) {
+	public GetHeightObject(Expression<Double> expression1, Expression<Double> expression2) {
 		super(expression1, expression2); 
 	}
 
