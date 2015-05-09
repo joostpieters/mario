@@ -9,8 +9,10 @@ public class GetHpObject extends UnaryExpression<Double, GameObject> {
 		super(expression1);
 	}
 	public Double evaluate() {
-
-		return (double) ((GameObject) this.getExpression1().evaluate()).getHitpoints();
-
+<<<<<<< HEAD
+		return ((GameObject) this.getExpression1().evaluate()).getHitpoints();
+=======
+		return Math.sqrt(this.getExpression1().evaluate().getHitpoints());
+>>>>>>> 1a8326d35370dca3331bf14dafb86df6d18a823f
 	}
 }
