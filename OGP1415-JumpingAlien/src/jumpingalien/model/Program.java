@@ -17,6 +17,7 @@ public class Program {
 	
 	private void setMainStatement(Statement main) {
 		this.mainStatement = main;
+		main.setWorld(this.getGameObject().getWorld());
 	}
 	
 	private Map<String, Type> globalVariables;

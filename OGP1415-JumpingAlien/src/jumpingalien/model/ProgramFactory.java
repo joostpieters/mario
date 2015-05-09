@@ -271,8 +271,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Statement createAssignment(String variableName, Type variableType,
 			Expression value, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Assignment(variableName, variableType, value);
 	}
 
 	@Override
