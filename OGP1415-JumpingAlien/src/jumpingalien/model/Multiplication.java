@@ -1,14 +1,14 @@
 package jumpingalien.model;
 
-public class Multiplication<T> extends BinaryExpression{
+public class Multiplication extends BinaryExpression<Double>{
 
-	public Multiplication(Expression<T> expression1, Expression<T> expression2) {
+	public Multiplication(Expression<Double> expression1, Expression<Double> expression2) {
 		super(expression1, expression2);
 	}
 
 	@Override
 	public Double evaluate() {
-		return ((double) (this.getExpression1().evaluate()) * (double)(this.getExpression2().evaluate()));
+		return this.getExpression1().evaluate() * this.getExpression2().evaluate();
 	}
 
 }

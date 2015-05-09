@@ -1,8 +1,8 @@
 package jumpingalien.model;
 
 public abstract class UnaryExpression<T> extends Expression<T> {
-	public UnaryExpression(Expression<T> expression1) {
-		this.setExpression1(expression1);
+	public UnaryExpression(Expression<T> expr) {
+		this.setExpression1(expr);
 	}
 	
 	private Expression<T> expression1;
