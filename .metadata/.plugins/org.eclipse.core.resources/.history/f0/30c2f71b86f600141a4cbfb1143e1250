@@ -1,0 +1,16 @@
+package jumpingalien.model;
+
+import java.util.Map;
+
+public abstract class ActionStatement extends Statement {
+
+	public ActionStatement(Statement action) {
+		
+	}
+
+	@Override
+	public abstract Map<String, Type> execute(Map<String, Type> var);
+		
+	
+	
+}

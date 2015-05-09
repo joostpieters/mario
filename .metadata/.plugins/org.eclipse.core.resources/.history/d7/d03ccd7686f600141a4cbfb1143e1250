@@ -1,0 +1,19 @@
+package jumpingalien.model;
+
+import java.util.Map;
+
+public class StartDucking extends ActionStatement {
+
+	public StartDucking(Statement action) {
+		super(action);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Map<String, Type> execute(Map<String, Type> var) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+}
