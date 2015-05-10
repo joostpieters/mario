@@ -1,10 +1,9 @@
 package jumpingalien.model;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 
-public class Program<T> {
+public class Program {
 	public Program(Statement mainStatement, Map<String, Type> globalVariables) {
 		this.setMainStatement(mainStatement);
 		this.setGlobalVariables(globalVariables);
@@ -40,33 +39,6 @@ public class Program<T> {
 	public void setGameObject(GameObject obj) {
 		this.gameObject = obj;
 	}
-	
-	private Map<String, T> environment;
-	protected Map<String, T> getEnvironment() {
-		return this.environment;
-	}
-	protected void setEnvironment(Map<String, Type> map) {
-		if (map.values().iterator().next() == Type.Boolean) {
-			this.environment = 
-		}
-	}
-	//TODO dit oplossen
-	protected void addToEnvironment(String name, T value ) {
-		
-	}
-	
-	
-	public void execute(double dt) {
-		if(dt <= 0.001) {
-			this.getMainStatement().execute(getGlobalVariables());
-		}
-		else {
-			this.getMainStatement().execute(getGlobalVariables());
-			this.execute(dt - 0.001);
-		}
-	}
-	
-	
 	
 	
 //	private ArrayList<Statement> statements = new ArrayList<Statement>();

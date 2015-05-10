@@ -1,6 +1,8 @@
 1. hoe getX enzo bij tile? world meegeven? 
 2. IsJumping: enkel als ySpeed > 0 of ook als aan het vallen?
 3. aparte klasse voor GreaterThan en LessThan, of beter dezelfde gebruiken?
+4. Hoe environment meegeven aan Statement en een assignment doen?
+5. hoe ward van mijn computer laten afblijven en mij gvd laten typen als ik da wil
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)

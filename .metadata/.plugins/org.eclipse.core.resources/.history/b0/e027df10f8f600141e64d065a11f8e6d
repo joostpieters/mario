@@ -9,9 +9,11 @@ public abstract class Statement {
 	}
 	
 	private World world;
+	
 	protected World getWorld() {
 		return world;
 	}
+	
 	protected void setWorld(World world) {
 		this.world = world;
 	}

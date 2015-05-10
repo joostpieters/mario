@@ -50,7 +50,7 @@ public class WhileStatement extends Statement {
 				this.getBody().setNotReady();
 				this.setInBody(false);
 			}
-			// TODO dit return statement zal wel anders moetecn
+			// TODO dit return statement zal wel anders moeten
 			return var2;	
 		}
 	}

@@ -7,9 +7,9 @@ import jumpingalien.model.Expressions.Expression;
 
 public class Assignment extends Statement {
 	// TODO hier is variableType precies overbodig. Is dat normaal?
-	public Assignment(String str, Type variableType, Expression value) {
+	public Assignment(String str, Type variableType, Expression exp) {
 		this.setString(str);
-		this.setExpression(value);
+		this.setExpression(exp);
 	}
 	
 	private String string;
@@ -29,7 +29,7 @@ public class Assignment extends Statement {
 	}
 
 	@Override
-	public List<Boolean> execute(Map<String, Type> var) {
+	public Map<String, Type> execute(Map<String, Type> var) {
 		Map<String, Type> map = new HashMap<String, Type>();
 		map.put(this.getString(), this.getExpression().evaluate());
 		return map;
