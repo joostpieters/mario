@@ -1,0 +1,18 @@
+package jumpingalien.model;
+
+import java.util.Map;
+
+public class BreakStatement extends Statement {
+
+	public BreakStatement() {
+	}
+
+	@Override
+	public Map<String, Type> execute(Map<String, Type> var) {
+		// TODO checkers
+		((Mazub) this.getGameObject()).endJump();
+		this.setReady();
+		return var;
+	}
+
+}

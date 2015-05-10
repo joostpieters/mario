@@ -1,0 +1,16 @@
+package jumpingalien.model;
+
+import java.util.Map;
+
+public class SequenceOfStatement extends Statement {
+
+	public SequenceOfStatement() {
+	}
+
+	@Override
+	public Map<String, Type> execute(Map<String, Type> var) {
+		this.setReady();
+		return var;
+	}
+
+}
