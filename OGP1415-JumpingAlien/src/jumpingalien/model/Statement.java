@@ -1,8 +1,6 @@
 package jumpingalien.model;
 
 import java.util.Map;
-
-// TODO femke muilen
  
 public abstract class Statement {
 	
@@ -23,6 +21,22 @@ public abstract class Statement {
 		this.gameObject = obj;
 	}
 	
+	private Program program;
+	private Program getProgram() {
+		return program;
+	}
+	protected void setProgram(Program program) {
+		this.program = program;
+	}
+
+	private Statement superStatement;
+	private Statement getSuperStatement() {
+		return superStatement;
+	}
+	protected void setSuperStatement(Statement statement) {
+		this.superStatement = statement;
+	}
+
 	private boolean ready = false;
 	public boolean isReady() {
 		return this.ready;
