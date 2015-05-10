@@ -22,7 +22,7 @@ public abstract class Statement {
 	}
 	
 	private Program program;
-	private Program getProgram() {
+	protected Program getProgram() {
 		return program;
 	}
 	protected void setProgram(Program program) {
@@ -30,7 +30,7 @@ public abstract class Statement {
 	}
 
 	private Statement superStatement;
-	private Statement getSuperStatement() {
+	protected Statement getSuperStatement() {
 		return superStatement;
 	}
 	protected void setSuperStatement(Statement statement) {

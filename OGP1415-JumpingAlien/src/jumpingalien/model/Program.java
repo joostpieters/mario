@@ -18,6 +18,7 @@ public class Program<T> {
 		this.mainStatement = main;
 		// Volgorde zou louche kunnen zijn
 		main.setGameObject(this.getGameObject());
+		main.setProgram(this);
 	}
 	
 	private Map<String, Type> globalVariables;

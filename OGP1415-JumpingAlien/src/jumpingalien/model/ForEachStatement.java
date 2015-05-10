@@ -58,6 +58,7 @@ public class ForEachStatement extends Statement {
 	}
 	private void setBody(Statement stat) {
 		this.body = stat;
+		stat.setSuperStatement(this);
 	}
 	
 //	private boolean inBody;
