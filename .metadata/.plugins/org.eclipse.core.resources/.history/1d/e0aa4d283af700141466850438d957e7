@@ -18,12 +18,12 @@ public class SequenceOfStatements extends Statement {
 	}
 	
 	private WaitStatement waitStatement;
-	
+
 	@Override
 	public Map<String, Type> execute(Map<String, Type> var) {
 		for (Statement statement: this.getList()) {
-			statement.execute(var);
-			waitStatement.execute(var);
+			statement.execute(var 0.001);
+			
 		}
 		return var;
 	}

@@ -30,7 +30,7 @@ public abstract class Statement {
 	}
 
 	private Statement superStatement;
-	protected Statement getSuperStatement() {
+	private Statement getSuperStatement() {
 		return superStatement;
 	}
 	protected void setSuperStatement(Statement statement) {

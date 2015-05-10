@@ -8,7 +8,7 @@ public class BreakStatement extends Statement {
 	}
 	
 	
-	// TODO nog de statement waarin het zit laten breaken ->klopt dit?
+	// TODO nog de statement waarin het zit laten breaken
 	@Override
 	public Map<String, Type> execute(Map<String, Type> var) {
 		this.getSuperStatement().setReady();
