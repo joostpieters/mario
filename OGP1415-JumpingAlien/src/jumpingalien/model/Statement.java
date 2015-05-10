@@ -8,12 +8,17 @@ public abstract class Statement {
 		
 	}
 	
-	private World world;
-	protected World getWorld() {
-		return world;
+	private double EXECUTION_TIME = 0.001;
+	protected double getExecutionTime() {
+		return EXECUTION_TIME;
 	}
-	protected void setWorld(World world) {
-		this.world = world;
+	
+	private GameObject gameObject;
+	protected GameObject getGameObject() {
+		return this.gameObject;
+	}
+	public void setGameObject(GameObject obj) {
+		this.gameObject = obj;
 	}
 	
 	private boolean ready = false;
@@ -28,7 +33,7 @@ public abstract class Statement {
 	}
 	
 	public abstract Map<String, Type> execute(Map<String, Type> var);
-	//Nog een heleboel belangrijke abstracte functies
+	// Nog een heleboel belangrijke abstracte functies
 	
 }
 

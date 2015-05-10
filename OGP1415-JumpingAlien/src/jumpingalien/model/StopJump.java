@@ -2,15 +2,15 @@ package jumpingalien.model;
 
 import java.util.Map;
 
-public class StartDuck extends Statement {
+public class StopJump extends Statement {
 
-	public StartDuck() {
+	public StopJump() {
 	}
 
 	@Override
 	public Map<String, Type> execute(Map<String, Type> var) {
 		// TODO checkers
-		((Mazub) this.getGameObject()).startDuck();
+		((Mazub) this.getGameObject()).endJump();
 		this.setReady();
 		return var;
 	}
