@@ -2,8 +2,6 @@ package jumpingalien.model;
 
 import java.util.Map;
 
-// TODO femke muilen
- 
 public abstract class Statement {
 	
 	public Statement(){
