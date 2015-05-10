@@ -3,9 +3,6 @@ package jumpingalien.model;
 import java.util.List;
 import java.util.Map;
 
-import jumpingalien.model.Expressions.BoolTrue;
-import jumpingalien.model.Expressions.DirectionExpression;
-import jumpingalien.model.Expressions.Expression;
 import jumpingalien.part3.programs.IProgramFactory;
 import jumpingalien.part3.programs.SourceLocation;
 
