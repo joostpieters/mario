@@ -2,7 +2,7 @@ package jumpingalien.model;
 
 import java.util.Map;
 
-public class WhileStatement extends Statement {
+public class WhileStatement extends LoopStatement {
 
 	public WhileStatement(Expression<Boolean> condition, Statement body) {
 		this.setCondition(condition);
@@ -23,15 +23,16 @@ public class WhileStatement extends Statement {
 	}
 	private void setBody(Statement stat) {
 		this.body = stat;
+		stat.setSuperStatement(this);
 	}
 	
-	private boolean inBody;
-	private boolean getInBody() {
-		return inBody;
-	}
-	private void setInBody(boolean b) {
-		this.inBody = b;
-	}
+//	private boolean inBody;
+//	private boolean getInBody() {
+//		return inBody;
+//	}
+//	private void setInBody(boolean b) {
+//		this.inBody = b;
+//	}
 	
 	@Override
 	public Map<String, Type> execute(Map<String, Type> var) {
@@ -53,5 +54,10 @@ public class WhileStatement extends Statement {
 			// TODO dit return statement zal wel anders moetecn
 			return var2;	
 		}
+	}
+	@Override
+	public void reset() {
+		this.setNotReady();
+		this.setInBody(false);
 	}
 }

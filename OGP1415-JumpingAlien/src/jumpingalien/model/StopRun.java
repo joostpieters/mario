@@ -33,4 +33,8 @@ public class StopRun extends Statement {
 		return var;
 	}
 
+	@Override
+	public void reset() {
+		this.setNotReady();
+	}
 }

@@ -5,8 +5,7 @@ public class ObjectSelf extends Expression<Object> {
 	public ObjectSelf() {
 	}
 
-	//TODO ik geloof dat dit de boedoeling is, want die krijgt niets mee in ProgramFactory
-	@Override
+	//TODO dit is fout, het dit moet het gameObject zijn dat het programma oproept
 	protected Object evaluate() {
 		return this;
 	}

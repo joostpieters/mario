@@ -47,8 +47,11 @@ public abstract class Statement {
 	public void setNotReady() {
 		this.ready = false;
 	}
+
 	
 	public abstract Map<String, Type> execute(Map<String, Type> var);
+	
+	public abstract void reset();
 	// Nog een heleboel belangrijke abstracte functies
 	
 }

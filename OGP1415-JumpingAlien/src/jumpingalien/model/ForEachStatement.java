@@ -3,8 +3,9 @@ package jumpingalien.model;
 import java.util.Map;
 
 import jumpingalien.part3.programs.IProgramFactory.Kind;
+import jumpingalien.part3.programs.IProgramFactory.SortDirection;
 
-public class ForEachStatement extends Statement {
+public class ForEachStatement extends LoopStatement {
 
 	public ForEachStatement(String variableName,
 			jumpingalien.part3.programs.IProgramFactory.Kind variableKind,
@@ -12,7 +13,10 @@ public class ForEachStatement extends Statement {
 			Expression<Boolean> sort,
 			jumpingalien.part3.programs.IProgramFactory.SortDirection sortDirection,
 			Statement body) {
-		
+		this.setWhere(where);
+		this.setSort(sort);
+		this.setKind(variableKind);
+		this.setSortDirection(sortDirection);
 		this.setBody(body);
 	}
 	
@@ -38,6 +42,7 @@ public class ForEachStatement extends Statement {
 	}
 	private void setWhere(Expression<Boolean> where) {
 		this.where = where;
+	//	where.setGameObject(this.getGameObject());
 	}
 	
 	private Expression<Boolean> sort;
@@ -46,12 +51,17 @@ public class ForEachStatement extends Statement {
 	}
 	private void setSort(Expression<Boolean> sort) {
 		this.sort = sort;
+	//	sort.setGameObject(this.getGameObject());
 	}
 	
-	
-	
-	
-	
+	private SortDirection sortDirection;
+	private SortDirection getSortDirection() {
+		return sortDirection;
+	}
+	private void setSortDirection(SortDirection sortDirection) {
+		this.sortDirection = sortDirection;
+	}
+
 	private Statement body;
 	private Statement getBody() {
 		return this.body;

@@ -14,6 +14,7 @@ public class WaitStatement extends Statement {
 	}
 	private void setDuration(Expression<Double> expr) {
 		this.duration = expr;
+		duration.setGameObject(this.getGameObject());
 	}
 	
 	private double timePassed;
@@ -34,6 +35,12 @@ public class WaitStatement extends Statement {
 			this.setTimePassed(getTimePassed() + this.getExecutionTime());
 		}
 		return var;
+	}
+	
+	@Override
+	public void reset() {
+		this.setNotReady();
+		this.setTimePassed(0);
 	}
 	
 }

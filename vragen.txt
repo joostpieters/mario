@@ -7,7 +7,7 @@
 7. Is er een goede manier om de klassen in mappen te ordenen?
 8. is stopRun equivalent met pijltjes loslaten?
 9. Printstatement is generisch. Kan dat?
-10. klopt sequenceOfStatements?
+10. klopt sequenceOfStatements? -> nope (sorry), maar mss nu wel
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)

@@ -34,4 +34,9 @@ public class Assignment extends Statement {
 		map.put(this.getString(), this.getExpression().evaluate());
 		return map;
 	}
+	
+	@Override
+	public void reset() {
+		this.setNotReady();
+	}
 }

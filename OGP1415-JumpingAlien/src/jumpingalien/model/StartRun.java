@@ -35,5 +35,10 @@ public class StartRun extends Statement {
 		this.setReady();
 		return var;
 	}
+	
+	@Override
+	public void reset() {
+		this.setNotReady();
+	}
 
 }

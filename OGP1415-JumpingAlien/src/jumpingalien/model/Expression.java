@@ -9,6 +9,14 @@ public abstract class Expression<T> {
 	
 	protected abstract T evaluate();
 	
+	private GameObject gameObject;
+	protected GameObject getGameObject() {
+		return this.gameObject;
+	}
+	public void setGameObject(GameObject obj) {
+		this.gameObject = obj;
+	}
+	
 	
 	// TODO Dit is misschien overbodig -> ik dacht ook al zoiets
 	private Type type;

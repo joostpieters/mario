@@ -15,4 +15,9 @@ public class StartDuck extends Statement {
 		return var;
 	}
 
+	@Override
+	public void reset() {
+		this.setNotReady();
+	}
+
 }

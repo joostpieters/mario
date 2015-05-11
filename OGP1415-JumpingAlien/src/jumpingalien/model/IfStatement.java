@@ -11,13 +11,12 @@ public class IfStatement extends Statement {
 	}
 	
 	private Expression<Boolean> condition;
-	
 	protected Expression<Boolean> getCondition() {
 		return condition;
 	}
-	
 	private void setCondition(Expression<Boolean> expr) {
 		this.condition = expr;
+	//	condition.setGameObject(this.getGameObject());
 	}
 	
 	private Statement ifBody;
@@ -26,6 +25,7 @@ public class IfStatement extends Statement {
 	}
 	private void setIfBody(Statement stat) {
 		this.ifBody = stat;
+		ifBody.setSuperStatement(this);
 	}
 	
 	private Statement elseBody;
@@ -34,6 +34,7 @@ public class IfStatement extends Statement {
 	}
 	private void setElseBody(Statement stat) {
 		this.elseBody = stat;
+		elseBody.setSuperStatement(this);
 	}
 	
 	private int index;
@@ -75,6 +76,13 @@ public class IfStatement extends Statement {
 			// TODO dit return statement zal wel anders moeten
 			return var2;
 		}
+	}
+	@Override
+	public void reset() {
+		this.setNotReady();
+		this.setIndex(0);
+		this.getIfBody().reset();
+		this.getElseBody().reset();
 	}
 
 }
