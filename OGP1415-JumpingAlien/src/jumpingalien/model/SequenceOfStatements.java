@@ -15,17 +15,47 @@ public class SequenceOfStatements extends Statement {
 	}
 	private void setList(List<Statement> list) {
 		this.list = list;
+		for(Statement statement: list) {
+			statement.setSuperStatement(this);
+		}
 	}
 	
-	private WaitStatement waitStatement;
+	private int index = 0;
+	private int getIndex() {
+		return this.index;
+	}
+	private void setIndex(int i) {
+		this.index = i;
+	}
+	
 	
 	@Override
 	public Map<String, Type> execute(Map<String, Type> var) {
-		for (Statement statement: this.getList()) {
-			statement.execute(var);
-			waitStatement.execute(var);
+		Map<String, Type> var1 =  var;
+		if(this.getIndex() == this.getList().size() - 1) {
+			var1 = this.getList().get(this.getIndex()).execute(var);
+			if(this.getList().get(this.getIndex()).isReady()) {
+				this.getList().get(this.getIndex()).setNotReady();
+				this.setReady();
+				this.setIndex(0);
+			}
 		}
-		return var;
+		else {
+			var1 = this.getList().get(this.getIndex()).execute(var);
+			if(this.getList().get(this.getIndex()).isReady()) {
+				this.getList().get(this.getIndex()).setNotReady();
+				this.setIndex(this.getIndex() + 1);
+			}
+		}
+		return var1;
+	}
+	@Override
+	public void reset() {
+		this.setNotReady();
+		this.setIndex(0);
+		for(Statement statement: list) {
+			statement.reset();
+		}
 	}
 
 }
