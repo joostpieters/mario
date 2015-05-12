@@ -8,9 +8,8 @@ public class SkipStatement extends Statement {
 	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		this.setReady();
-		return var;
 	}
 
 	@Override

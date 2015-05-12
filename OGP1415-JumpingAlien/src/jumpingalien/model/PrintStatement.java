@@ -19,10 +19,9 @@ public class PrintStatement<S> extends Statement {
 	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
-		System.out.println(this.getExpression1().evaluate());
+	public void execute(Program program) {
+		System.out.println(this.getExpression1().evaluate(program));
 		this.setReady();
-		return var;
 	}
 
 	@Override

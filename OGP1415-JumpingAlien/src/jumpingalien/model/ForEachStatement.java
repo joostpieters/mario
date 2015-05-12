@@ -81,9 +81,9 @@ public class ForEachStatement extends LoopStatement {
 	
 	// TODO hier overal iets zetten
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		switch(this.getKind()) {
-		case MAZUB: this.getGameObject().getWorld().getAlien() -> {}
+		case MAZUB:
 			break;
 		case BUZAM:
 			break;
@@ -100,7 +100,11 @@ public class ForEachStatement extends LoopStatement {
 		default: //TODO hier iets zetten
 			break;
 		}
-		return var;
+	}
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

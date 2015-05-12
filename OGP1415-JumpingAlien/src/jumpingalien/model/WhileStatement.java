@@ -35,24 +35,21 @@ public class WhileStatement extends LoopStatement {
 //	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		if (!this.getInBody()) {
-			if (this.getCondition().evaluate()) {
+			if (this.getCondition().evaluate(program)) {
 				this.setInBody(true);
 			}
 			else {
 				this.setReady();
 			}
-			return var;
 		}
 		else {
-			Map<String, Type> var2 = this.getBody().execute(var);
+			this.getBody().execute(program);
 			if(this.getBody().isReady()) {
 				this.getBody().setNotReady();
 				this.setInBody(false);
 			}
-			// TODO dit return statement zal wel anders moetecn
-			return var2;	
 		}
 	}
 	@Override

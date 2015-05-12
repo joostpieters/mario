@@ -29,12 +29,11 @@ public class BreakStatement extends Statement {
 	// Pas doen als for each af is mss
 	// TODO nog de statement waarin het zit laten breaken
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		this.resetAllSuperStatTillLoop(this);
 		LoopStatement loopStat = this.getLoopStatement(this);
 		loopStat.setInBody(false);
 		loopStat.setReady();
-		return var;
 	}
 
 	@Override

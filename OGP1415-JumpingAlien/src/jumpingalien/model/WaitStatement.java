@@ -14,7 +14,6 @@ public class WaitStatement extends Statement {
 	}
 	private void setDuration(Expression<Double> expr) {
 		this.duration = expr;
-		duration.setGameObject(this.getGameObject());
 	}
 	
 	private double timePassed;
@@ -26,15 +25,14 @@ public class WaitStatement extends Statement {
 	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
-		if(this.getTimePassed() >= this.getDuration().evaluate()) {
+	public void execute(Program program) {
+		if(this.getTimePassed() >= this.getDuration().evaluate(program)) {
 			this.setTimePassed(0);
 			this.setReady();
 		}
 		else {
 			this.setTimePassed(getTimePassed() + this.getExecutionTime());
 		}
-		return var;
 	}
 	
 	@Override
