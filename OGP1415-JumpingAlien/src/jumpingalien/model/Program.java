@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class Program<T> {
+public class Program {
+	
 	public Program(Statement mainStatement, Map<String, Type> globalVariables) {
 		this.setMainStatement(mainStatement);
 		this.setGlobalVariables(globalVariables);
@@ -16,9 +17,6 @@ public class Program<T> {
 	}
 	private void setMainStatement(Statement main) {
 		this.mainStatement = main;
-		// Volgorde zou louche kunnen zijn
-		main.setGameObject(this.getGameObject());
-		main.setProgram(this);
 	}
 	
 	private Map<String, Type> globalVariables;
@@ -37,27 +35,38 @@ public class Program<T> {
 		this.gameObject = obj;
 	}
 	
-	private Map<String, T> environment;
-	protected Map<String, T> getEnvironment() {
+	private Map<String, Object> environment;
+	protected Map<String, Object> getEnvironment() {
 		return this.environment;
 	}
 	protected void setEnvironment(Map<String, Type> map) {
-		if (map.values().iterator().next() == Type.Boolean) {
-			this.environment = 
+		for (String key : map.keySet()) {
+			if (map.get(key) == Type.Double) {
+				this.environment.put(key, 0);
+			}
+			else if (map.get(key) == Type.Boolean) {
+				this.environment.put(key, false);
+			}
+			else if (map.get(key) == Type.Object) {
+				this.environment.put(key, null);
+			}
+			else if (map.get(key) == Type.Direction) {
+				this.environment.put(key, false);
+			}
 		}
 	}
 	//TODO dit oplossen
-	protected void addToEnvironment(String name, T value ) {
-		
+	protected void addToEnvironment(String name, Object value ) {
+		this.environment.put(name, value);
 	}
 	
 	
 	public void execute(double dt) {
 		if(dt <= 0.001) {
-			this.getMainStatement().execute(getGlobalVariables());
+			this.getMainStatement().execute(this);
 		}
 		else {
-			this.getMainStatement().execute(getGlobalVariables());
+			this.getMainStatement().execute(this);
 			this.execute(dt - 0.001);
 		}
 	}

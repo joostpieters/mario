@@ -12,22 +12,6 @@ public abstract class Statement {
 	protected double getExecutionTime() {
 		return EXECUTION_TIME;
 	}
-	
-	private GameObject gameObject;
-	protected GameObject getGameObject() {
-		return this.gameObject;
-	}
-	public void setGameObject(GameObject obj) {
-		this.gameObject = obj;
-	}
-	
-	private Program program;
-	protected Program getProgram() {
-		return program;
-	}
-	protected void setProgram(Program program) {
-		this.program = program;
-	}
 
 	private Statement superStatement;
 	protected Statement getSuperStatement() {
@@ -49,7 +33,7 @@ public abstract class Statement {
 	}
 
 	
-	public abstract Map<String, Type> execute(Map<String, Type> var);
+	public abstract void execute(Program program);
 	
 	public abstract void reset();
 	// Nog een heleboel belangrijke abstracte functies

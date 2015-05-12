@@ -3,8 +3,6 @@ package jumpingalien.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import jumpingalien.model.Expressions.Expression;
-
 public class Assignment extends Statement {
 	// TODO hier is variableType precies overbodig. Is dat normaal?
 	public Assignment(String str, Type variableType, Expression value) {
@@ -29,10 +27,8 @@ public class Assignment extends Statement {
 	}
 
 	@Override
-	public List<Boolean> execute(Map<String, Type> var) {
-		Map<String, Type> map = new HashMap<String, Type>();
-		map.put(this.getString(), this.getExpression().evaluate());
-		return map;
+	public void execute(Program program) {
+		program.getEnvironment().put(this.getString(), this.getExpression().evaluate(program));
 	}
 	
 	@Override
