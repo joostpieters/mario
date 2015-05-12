@@ -1,14 +1,14 @@
 package jumpingalien.model;
 
-public class IsMazub extends UnaryExpression<Boolean, GameObject> {
+public class IsMazub extends UnaryExpression<Boolean, SuperObject> {
 	
-	public IsMazub(Expression<GameObject> expr) {
+	public IsMazub(Expression<SuperObject> expr) {
 		super(expr);
 	}
 
 	@Override
 	protected Boolean evaluate(Program program) {
-		return (((GameObject) this.getExpression1().evaluate(program)) instanceof Mazub);
+		return (this.getExpression1().evaluate(program) instanceof Mazub);
 	}
 
 }

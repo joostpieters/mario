@@ -8,7 +8,7 @@ public class IsDucking extends UnaryExpression<Boolean, Mazub> {
 
 	@Override
 	protected Boolean evaluate(Program program) {
-		return ((Mazub) this.getExpression1().evaluate(program)).isDucked();
+		return this.getExpression1().evaluate(program).isDucked();
 	}
 
 }

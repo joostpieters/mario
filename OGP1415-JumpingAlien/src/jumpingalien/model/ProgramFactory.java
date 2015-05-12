@@ -8,10 +8,10 @@ import jumpingalien.part3.programs.SourceLocation;
 
 
 //@SuppressWarnings("rawtypes")
-public class ProgramFactory implements IProgramFactory<Expression, Statement, Type, Program> {
+public class ProgramFactory implements IProgramFactory<Expression<?>, Statement, Type, Program> {
 
 	@Override
-	public Expression createReadVariable(String variableName,
+	public Expression<?> createReadVariable(String variableName,
 			Type variableType, SourceLocation sourceLocation) {
 		// TODO Auto-generated method stub
 		return null;
@@ -143,14 +143,12 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 
 	@Override
 	public Expression<Double> createGetX(Expression expr, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetX(expr);
 	}
 
 	@Override
 	public Expression<Double> createGetY(Expression expr, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetY(expr);
 	}
 
 	@Override
@@ -172,10 +170,9 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	}
 
 	@Override
-	public Expression createGetTile(Expression x, Expression y,
+	public Expression<Tile> createGetTile(Expression x, Expression y,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new GetTileExpression(x, y);
 	}
 
 	@Override
@@ -186,99 +183,93 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	}
 
 	@Override
-	public Expression createIsMazub(Expression expr,
+	public Expression<Boolean> createIsMazub(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsMazub(expr);
 	}
 
 	@Override
-	public Expression createIsShark(Expression expr,
+	public Expression<Boolean> createIsShark(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsShark(expr);
 	}
 
 	@Override
-	public Expression createIsSlime(Expression expr,
+	public Expression<Boolean> createIsSlime(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsSlime(expr);
 	}
 
 	@Override
-	public Expression createIsPlant(Expression expr,
+	public Expression<Boolean> createIsPlant(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsPlant(expr);
 	}
 
 	@Override
-	public Expression createIsDead(Expression expr,
+	public Expression<Boolean> createIsDead(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsDead(expr);
 	}
 
 	@Override
-	public Expression createIsTerrain(Expression expr,
+	public Expression<Boolean> createIsTerrain(Expression expr,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new IsTerrain(expr);
 	}
 
 	@Override
-	public Expression createIsPassable(Expression expr,
+	public Expression<Boolean> createIsPassable(Expression expr,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new IsPassable(expr);
 	}
 
 	@Override
-	public Expression createIsWater(Expression expr,
+	public Expression<Boolean> createIsWater(Expression expr,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new IsWater(expr);
 	}
 
 	@Override
-	public Expression createIsMagma(Expression expr,
+	public Expression<Boolean> createIsMagma(Expression expr,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new IsMagma(expr);
 	}
 
 	@Override
-	public Expression createIsAir(Expression expr, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Expression<Boolean> createIsAir(Expression expr, SourceLocation sourceLocation) {
+		return new IsAir(expr);
 	}
 
 	@Override
-	public Expression createIsMoving(Expression expr, Expression direction,
+	public Expression<Boolean> createIsMoving(Expression expr, Expression direction,
 			SourceLocation sourceLocation) {
 		// TODO Dit nog fixen
 		return new IsMoving(expr, direction);
 	}
 
 	@Override
-	public Expression createIsDucking(Expression expr,
+	public Expression<Boolean> createIsDucking(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsDucking(expr);
 	}
 
 	@Override
-	public Expression createIsJumping(Expression expr,
+	public Expression<Boolean> createIsJumping(Expression expr,
 			SourceLocation sourceLocation) {
 		return new IsJumping(expr);
 	}
 
 	@Override
 	public Statement createAssignment(String variableName, Type variableType,
-			Expression value, SourceLocation sourceLocation) {
+			Expression<?> value, SourceLocation sourceLocation) {
 		return new Assignment(variableName, variableType, value);
 	}
 
 	@Override
 	public Statement createWhile(Expression condition, Statement body,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new WhileStatement(condition, body);
 	}
 
 	@Override
@@ -289,72 +280,61 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 			Expression sort,
 			jumpingalien.part3.programs.IProgramFactory.SortDirection sortDirection,
 			Statement body, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ForEachStatement(variableName, variableKind, where, sort, sortDirection, body);
 	}
 
 	@Override
 	public Statement createBreak(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BreakStatement();
 	}
 
 	@Override
 	public Statement createIf(Expression condition, Statement ifBody,
 			Statement elseBody, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new IfStatement(condition, ifBody, elseBody);
 	}
 
 	@Override
 	public Statement createPrint(Expression value, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new PrintStatement<>(value);
 	}
 
 	@Override
 	public Statement createStartRun(Expression direction,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StartRun(direction);
 	}
 
 	@Override
 	public Statement createStopRun(Expression direction,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StopRun(direction);
 	}
 
 	@Override
 	public Statement createStartJump(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StartJump();
 	}
 
 	@Override
 	public Statement createStopJump(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StopJump();
 	}
 
 	@Override
 	public Statement createStartDuck(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StartDuck();
 	}
 
 	@Override
 	public Statement createStopDuck(SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StopDuck();
 	}
 
 	@Override
 	public Statement createWait(Expression duration,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new WaitStatement(duration);
 	}
 
 	@Override
@@ -365,8 +345,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Statement createSequence(List<Statement> statements,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SequenceOfStatements(statements);
 	}
 
 	@Override
@@ -392,8 +371,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Ty
 	@Override
 	public Program createProgram(Statement mainStatement,
 			Map<String, Type> globalVariables) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Program(mainStatement, globalVariables);
 	}
 
 

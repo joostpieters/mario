@@ -1,14 +1,14 @@
 package jumpingalien.model;
 
-public class IsPlant extends UnaryExpression<Boolean, GameObject> {
+public class IsPlant extends UnaryExpression<Boolean, SuperObject> {
 	
-	public IsPlant(Expression<GameObject> expr) {
+	public IsPlant(Expression<SuperObject> expr) {
 		super(expr);
 	}
 
 	@Override
 	protected Boolean evaluate(Program program) {
-		return (((GameObject) this.getExpression1().evaluate(program)) instanceof Plant);
+		return (this.getExpression1().evaluate(program) instanceof Plant);
 	}
 
 }

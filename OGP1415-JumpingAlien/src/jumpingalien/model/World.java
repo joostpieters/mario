@@ -305,7 +305,7 @@ public class World {
 	 *          given tile, in that order.
 	 */
 	@Basic @Raw
-	private int[] getTileOfPixels(int pixelX, int pixelY) {
+	public int[] getTileOfPixels(int pixelX, int pixelY) {
 		return new int[] {(pixelX - pixelX % this.getTileLength()) / this.getTileLength(),
 				(pixelY - pixelY % this.getTileLength()) / this.getTileLength()};
 	}

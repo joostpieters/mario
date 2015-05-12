@@ -1,14 +1,14 @@
 package jumpingalien.model;
 
-public class IsShark extends UnaryExpression<Boolean, GameObject> {
+public class IsShark extends UnaryExpression<Boolean, SuperObject> {
 	
-	public IsShark(Expression<GameObject> expr) {
+	public IsShark(Expression<SuperObject> expr) {
 		super(expr);
 	}
 
 	@Override
 	protected Boolean evaluate(Program program) {
-		return (((GameObject) this.getExpression1().evaluate(program)) instanceof Shark);
+		return (this.getExpression1().evaluate(program) instanceof Shark);
 	}
 
 }

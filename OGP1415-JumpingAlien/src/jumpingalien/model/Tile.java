@@ -1,31 +1,29 @@
 package jumpingalien.model;
 
+import jumpingalien.model.exceptions.IllegalPixelException;
+
 public class Tile extends SuperObject {
 
-	public Tile(int xPos, int yPos, World world) {
-		this.setXPos(xPos);
-		this.setYPos(yPos);
+	public Tile(int xCor, int yCor, World world) {
+		this.setXCor(xCor);
+		this.setYCor(yCor);
 	}
 	
-	private int xPos;
-	private int yPos;
+	private int xCor;
+	private int yCor;
 	
-	private void setXPos(int xPos) {
-		this.xPos = xPos;		
+	private void setXCor(int xPos) {
+		this.xCor = xPos;		
 	}
-	
-	private void setYPos(int yPos) {
-		this.yPos = yPos;		
+	private void setYCor(int yPos) {
+		this.yCor = yPos;		
 	}
 
-	@Override
-	protected double getXPos() {
-		return this.xPos;
+	protected int getXCor() {
+		return this.xCor;
 	}
-
-	@Override
-	protected double getYPos() {
-		return this.yPos;
+	protected int getYCor() {
+		return this.yCor;
 	}
 	
 	private World world;
@@ -33,17 +31,36 @@ public class Tile extends SuperObject {
 
 	@Override
 	protected int getXDim() {
-		return 0;
+		return world.getTileLength();
 	}
 
 	@Override
 	protected int getYDim() {
-		return 0;
+		return world.getTileLength();
 	}
 
 	@Override
 	public int getHitpoints() {
+		// Mss hier een exeption throwen
 		return 0;
+	}
+
+	@Override
+	protected double getXPos() {
+		return world.getTileLength() * this.getXCor();
+	}
+
+	@Override
+	protected double getYPos() {
+		return world.getTileLength() * this.getYCor();
+	}
+
+	public int getGeologicalFeature() {
+		try {
+			return world.getGeologicalFeature((int) getXPos(), (int) getYPos());
+		} catch (IllegalPixelException e) {
+			return 0;
+		}
 	}
 
 }
