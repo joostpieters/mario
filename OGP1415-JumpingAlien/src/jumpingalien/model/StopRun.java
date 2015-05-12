@@ -19,18 +19,19 @@ public class StopRun extends Statement {
 	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		// TODO checkers
-		if (this.getDirection().evaluate() == Direction.RIGHT &&
-				((Mazub) this.getGameObject()).getOrientation() == Orientation.RIGHT) {
-			((Mazub) this.getGameObject()).endMoveRight();
+		
+		//TODO nog functies toevoegen in GameOjbect
+		if (this.getDirection().evaluate(program) == Direction.RIGHT &&
+				((GameObject) program.getGameObject()).getOrientation() == Orientation.RIGHT) {
+			((GameObject) program.getGameObject()).endMoveRight();
 		}
-		else if (this.getDirection().evaluate() == Direction.LEFT &&
-				((Mazub) this.getGameObject()).getOrientation() == Orientation.LEFT) {
-			((Mazub) this.getGameObject()).endMoveLeft();
+		else if (this.getDirection().evaluate(program) == Direction.LEFT &&
+				((GameObject) program.getGameObject()).getOrientation() == Orientation.LEFT) {
+			((GameObject) program.getGameObject()).endMoveLeft();
 		}
 		this.setReady();
-		return var;
 	}
 
 	@Override

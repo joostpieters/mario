@@ -1,6 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Map;
 
 public class IfStatement extends Statement {
 

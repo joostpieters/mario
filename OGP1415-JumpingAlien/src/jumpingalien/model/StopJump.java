@@ -8,11 +8,11 @@ public class StopJump extends Statement {
 	}
 
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		// TODO checkers
-		((Mazub) this.getGameObject()).endJump();
+		//TODO functie aanmaken in gameObject
+		((GameObject) program.getGameObject()).endJump();
 		this.setReady();
-		return var;
 	}
 	
 	@Override

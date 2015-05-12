@@ -8,10 +8,11 @@ public class StartJump extends Statement {
 	}
 
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		// TODO checkers
-		((Mazub) this.getGameObject()).startJump();
+		((GameObject) program.getGameObject()).startJump();
 		this.setReady();
+		// TODO alle gameObjecten nen StartJump geven
 	}
 	
 	@Override

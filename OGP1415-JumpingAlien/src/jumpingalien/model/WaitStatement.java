@@ -1,7 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Map;
-
 public class WaitStatement extends Statement {
 
 	public WaitStatement(Expression<Double> duration) {

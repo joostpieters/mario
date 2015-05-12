@@ -1,7 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Map;
-
 public class WhileStatement extends LoopStatement {
 
 	public WhileStatement(Expression<Boolean> condition, Statement body) {

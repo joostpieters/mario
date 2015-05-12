@@ -1,11 +1,10 @@
 package jumpingalien.model;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Assignment extends Statement {
 	// TODO hier is variableType precies overbodig. Is dat normaal?
-	public Assignment(String str, Type variableType, Expression value) {
+	// Daarmee kunnen we wel checken of de expression/value van de juiste vorm is
+	public Assignment(String str, Type variableType, Expression<?> value) {
 		this.setString(str);
 		this.setExpression(value);
 	}
@@ -18,11 +17,11 @@ public class Assignment extends Statement {
 		this.string = str;
 	}
 	
-	private Expression expression;
-	private Expression getExpression() {
+	private Expression<?> expression;
+	private Expression<?> getExpression() {
 		return expression;
 	}
-	private void setExpression(Expression expression1) {
+	private void setExpression(Expression<?> expression1) {
 		this.expression = expression1;
 	}
 

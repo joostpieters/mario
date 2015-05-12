@@ -1,6 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Map;
 
 public class BreakStatement extends Statement {
 
@@ -26,8 +25,6 @@ public class BreakStatement extends Statement {
 	}
 	
 	
-	// Pas doen als for each af is mss
-	// TODO nog de statement waarin het zit laten breaken
 	@Override
 	public void execute(Program program) {
 		this.resetAllSuperStatTillLoop(this);

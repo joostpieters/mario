@@ -19,21 +19,20 @@ public class StartRun extends Statement {
 	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		// TODO checkers
-		if (this.getDirection().evaluate() == Direction.RIGHT) {
-			((Mazub) this.getGameObject()).setOrientationRight();
+		if (this.getDirection().evaluate(program) == Direction.RIGHT) {
+			((GameObject) program.getGameObject()).setOrientationRight();
 		}
-		else if (this.getDirection().evaluate() == Direction.LEFT) {
-			((Mazub) this.getGameObject()).setOrientationLeft();
+		else if (this.getDirection().evaluate(program) == Direction.LEFT) {
+			((GameObject) program.getGameObject()).setOrientationLeft();
 		}
 		else {
 			this.setReady();
-			return var;
 		}
-		((Mazub) this.getGameObject()).startMove();
+		((GameObject) program.getGameObject()).startMove();
+		// TODO Voor alle gameObject ne startmove maken
 		this.setReady();
-		return var;
 	}
 	
 	@Override

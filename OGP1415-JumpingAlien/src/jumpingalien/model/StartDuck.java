@@ -1,6 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Map;
 
 public class StartDuck extends Statement {
 
@@ -10,7 +9,7 @@ public class StartDuck extends Statement {
 	@Override
 	public void execute(Program program) {
 		// TODO checkers
-		((Mazub) this.getGameObject()).startDuck();
+		((Mazub) program.getGameObject()).startDuck();
 		this.setReady();
 	}
 

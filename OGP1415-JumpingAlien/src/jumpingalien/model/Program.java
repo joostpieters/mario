@@ -1,6 +1,6 @@
 package jumpingalien.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -9,6 +9,7 @@ public class Program {
 	public Program(Statement mainStatement, Map<String, Type> globalVariables) {
 		this.setMainStatement(mainStatement);
 		this.setGlobalVariables(globalVariables);
+		this.setEnvironment(globalVariables);
 	}
 	
 	private Statement mainStatement;
@@ -40,6 +41,7 @@ public class Program {
 		return this.environment;
 	}
 	protected void setEnvironment(Map<String, Type> map) {
+		this.environment = new HashMap<String, Object>();
 		for (String key : map.keySet()) {
 			if (map.get(key) == Type.Double) {
 				this.environment.put(key, 0);
