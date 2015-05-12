@@ -18,7 +18,7 @@ public class DirectionExpression extends Expression<jumpingalien.part3.programs.
 	}
 	
 	@Override
-	protected jumpingalien.part3.programs.IProgramFactory.Direction evaluate() {
+	protected jumpingalien.part3.programs.IProgramFactory.Direction evaluate(Program program) {
 		return this.getValue();
 	}
 	

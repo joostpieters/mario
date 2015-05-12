@@ -7,8 +7,8 @@ public class IsDead extends UnaryExpression<Boolean, GameObject> {
 	}
 
 	@Override
-	protected Boolean evaluate() {
-		return (((GameObject) this.getExpression1().evaluate()).getHitpoints() <= 0);
+	protected Boolean evaluate(Program program) {
+		return (((GameObject) this.getExpression1().evaluate(program)).getHitpoints() <= 0);
 	}
 
 }

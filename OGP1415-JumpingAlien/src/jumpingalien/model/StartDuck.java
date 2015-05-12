@@ -8,11 +8,10 @@ public class StartDuck extends Statement {
 	}
 
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		// TODO checkers
 		((Mazub) this.getGameObject()).startDuck();
 		this.setReady();
-		return var;
 	}
 
 	@Override

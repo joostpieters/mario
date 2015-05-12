@@ -6,8 +6,8 @@ public class ObjectSelf extends Expression<Object> {
 	}
 
 	//TODO dit is fout, het dit moet het gameObject zijn dat het programma oproept
-	protected Object evaluate() {
-		return this;
+	protected Object evaluate(Program program) {
+		return program.getGameObject();
 	}
 	
 }

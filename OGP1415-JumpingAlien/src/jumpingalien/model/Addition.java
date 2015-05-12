@@ -6,8 +6,8 @@ public class Addition extends BinaryExpression<Double, Double> {
 		super(expression1, expression2);
 	}
 	
-	public Double evaluate() {
-		return  (this.getExpression1().evaluate()) + (this.getExpression2().evaluate());
+	public Double evaluate(Program program) {
+		return  (this.getExpression1().evaluate(program)) + (this.getExpression2().evaluate(program));
 		
 		// mss hebben we gettype niet meer nodig
 //		if (expression1.getType() == Type.DOUBLE && expression2.getType() == Type.DOUBLE) {

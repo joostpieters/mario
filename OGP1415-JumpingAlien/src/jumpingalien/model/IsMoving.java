@@ -20,20 +20,20 @@ public class IsMoving extends UnaryExpression<Boolean, GameObject> {
 	}
 	
 	@Override
-	protected Boolean evaluate() {
-		if (this.getDirection().evaluate() == Direction.RIGHT) {
-			return ((this.getExpression1().evaluate().getXSpeed() > 0) && 
-					(this.getExpression1().evaluate().getOrientation() == Orientation.RIGHT));
+	protected Boolean evaluate(Program program) {
+		if (this.getDirection().evaluate(program) == Direction.RIGHT) {
+			return ((this.getExpression1().evaluate(program).getXSpeed() > 0) && 
+					(this.getExpression1().evaluate(program).getOrientation() == Orientation.RIGHT));
 		}
-		else if (this.getDirection().evaluate() == Direction.LEFT) {
-			return ((this.getExpression1().evaluate().getXSpeed() > 0) && 
-					(this.getExpression1().evaluate().getOrientation() == Orientation.LEFT));
+		else if (this.getDirection().evaluate(program) == Direction.LEFT) {
+			return ((this.getExpression1().evaluate(program).getXSpeed() > 0) && 
+					(this.getExpression1().evaluate(program).getOrientation() == Orientation.LEFT));
 		}
-		else if (this.getDirection().evaluate() == Direction.UP) {
-			return (this.getExpression1().evaluate().getYSpeed() > 0);
+		else if (this.getDirection().evaluate(program) == Direction.UP) {
+			return (this.getExpression1().evaluate(program).getYSpeed() > 0);
 		}
-		else if (this.getDirection().evaluate() == Direction.DOWN) {
-			return (this.getExpression1().evaluate().getYSpeed() < 0);
+		else if (this.getDirection().evaluate(program) == Direction.DOWN) {
+			return (this.getExpression1().evaluate(program).getYSpeed() < 0);
 		}
 		return false;		
 	}

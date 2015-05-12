@@ -12,7 +12,6 @@ public class StartJump extends Statement {
 		// TODO checkers
 		((Mazub) this.getGameObject()).startJump();
 		this.setReady();
-		return var;
 	}
 	
 	@Override

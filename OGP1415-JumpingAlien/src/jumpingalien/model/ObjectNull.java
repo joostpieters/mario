@@ -6,7 +6,7 @@ public class ObjectNull extends Expression<Object> {
 	}
 
 	@Override
-	protected Object evaluate() {
+	protected Object evaluate(Program program) {
 		return null;
 	}
 	

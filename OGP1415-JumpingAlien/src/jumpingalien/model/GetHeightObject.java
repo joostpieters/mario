@@ -7,8 +7,8 @@ public class GetHeightObject extends UnaryExpression<Double, GameObject>{
 	}
 
 	@Override
-	public Double evaluate() {
-		return (double) ((GameObject) this.getExpression1().evaluate()).getYDim();
+	public Double evaluate(Program program) {
+		return (double) ((GameObject) this.getExpression1().evaluate(program)).getYDim();
 	}
 
 }

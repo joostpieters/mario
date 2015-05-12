@@ -28,7 +28,7 @@ public class Program {
 	}
 	
 	private GameObject gameObject;
-	private GameObject getGameObject() {
+	protected GameObject getGameObject() {
 		return this.gameObject;
 	}
 	public void setGameObject(GameObject obj) {

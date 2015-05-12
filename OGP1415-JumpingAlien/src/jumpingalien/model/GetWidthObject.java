@@ -7,8 +7,8 @@ public class GetWidthObject extends UnaryExpression<Double, GameObject>{
 	}
 
 	@Override
-	public Double evaluate() {
-		return (double) ((GameObject) this.getExpression1().evaluate()).getXDim();
+	public Double evaluate(Program program) {
+		return (double) ((GameObject) this.getExpression1().evaluate(program)).getXDim();
 	}
 
 }

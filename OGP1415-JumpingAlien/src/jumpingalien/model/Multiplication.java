@@ -7,8 +7,8 @@ public class Multiplication extends BinaryExpression<Double, Double>{
 	}
 
 	@Override
-	public Double evaluate() {
-		return this.getExpression1().evaluate() * this.getExpression2().evaluate();
+	public Double evaluate(Program program) {
+		return this.getExpression1().evaluate(program) * this.getExpression2().evaluate(program);
 	}
 
 }

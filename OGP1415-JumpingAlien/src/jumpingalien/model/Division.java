@@ -7,8 +7,8 @@ public class Division extends BinaryExpression<Double, Double> {
 	}
 
 	@Override
-	protected Double evaluate() {
-		return  (this.getExpression1().evaluate()) / (this.getExpression2().evaluate());
+	protected Double evaluate(Program program) {
+		return  (this.getExpression1().evaluate(program)) / (this.getExpression2().evaluate(program));
 	}
 
 }

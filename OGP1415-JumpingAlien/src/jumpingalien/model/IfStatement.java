@@ -46,35 +46,30 @@ public class IfStatement extends Statement {
 	}
 	
 	@Override
-	public Map<String, Type> execute(Map<String, Type> var) {
+	public void execute(Program program) {
 		if (this.getIndex() == 0) {
-			if(this.getCondition().evaluate()) {
+			if(this.getCondition().evaluate(program)) {
 				this.setIndex(1);
 			}
 			else {
 				this.setIndex(2);
 			}
-			return var;
 		}
 		else if (this.getIndex() == 1) {
-			Map<String, Type> var2 = this.getIfBody().execute(var);
+			this.getIfBody().execute(program);
 			if(this.getIfBody().isReady()) {
 				this.getIfBody().setNotReady();
 				this.setIndex(0);
 				this.setReady();
 			}
-			// TODO dit return statement zal wel anders moeten
-			return var2;
 		}
 		else {
-			Map<String, Type> var2 = this.getElseBody().execute(var);
+			this.getElseBody().execute(program);
 			if(this.getElseBody().isReady()) {
 				this.getElseBody().setNotReady();
 				this.setIndex(0);
 				this.setReady();
 			}
-			// TODO dit return statement zal wel anders moeten
-			return var2;
 		}
 	}
 	@Override
@@ -84,5 +79,6 @@ public class IfStatement extends Statement {
 		this.getIfBody().reset();
 		this.getElseBody().reset();
 	}
+	
 
 }

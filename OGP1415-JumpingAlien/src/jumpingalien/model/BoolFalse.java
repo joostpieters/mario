@@ -6,7 +6,9 @@ public class BoolFalse extends Expression<Boolean> {
 	public BoolFalse() {
 		
 	}
-	public Boolean evaluate() {
-		return  false;
+	
+	@Override
+	protected Boolean evaluate(Program program) {
+		return false;
 	}
 }

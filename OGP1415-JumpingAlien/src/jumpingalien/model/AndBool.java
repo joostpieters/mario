@@ -8,8 +8,8 @@ public class AndBool extends BinaryExpression<Boolean, Boolean> {
 	}
 
 	@Override
-	protected Boolean evaluate() {
-		return this.getExpression1().evaluate() && this.getExpression2().evaluate();
+	protected Boolean evaluate(Program program) {
+		return this.getExpression1().evaluate(program) && this.getExpression2().evaluate(program);
 	}
 	
 }

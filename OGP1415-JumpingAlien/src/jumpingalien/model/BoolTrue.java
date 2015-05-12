@@ -5,7 +5,8 @@ public class BoolTrue extends Expression<Boolean> {
 	public BoolTrue() {
 		
 	}
-	public Boolean evaluate() {
+	
+	public Boolean evaluate(Program program) {
 		return  true;
 	}
 }

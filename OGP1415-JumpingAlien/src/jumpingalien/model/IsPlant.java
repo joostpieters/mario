@@ -7,8 +7,8 @@ public class IsPlant extends UnaryExpression<Boolean, GameObject> {
 	}
 
 	@Override
-	protected Boolean evaluate() {
-		return (((GameObject) this.getExpression1().evaluate()) instanceof Plant);
+	protected Boolean evaluate(Program program) {
+		return (((GameObject) this.getExpression1().evaluate(program)) instanceof Plant);
 	}
 
 }

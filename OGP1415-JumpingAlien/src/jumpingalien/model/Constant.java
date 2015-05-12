@@ -17,7 +17,7 @@ public class Constant extends Expression<Double> {
 	}
 	
 	@Override
-	protected Double evaluate() {
+	protected Double evaluate(Program program) {
 		return this.getValue();
 	}
 	
