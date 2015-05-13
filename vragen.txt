@@ -6,11 +6,14 @@
 7. Is er een goede manier om de klassen in mappen te ordenen?
 8. Printstatement is generisch. Kan dat?
 9. Tests
-10. Break: moeten direct alle loops beeindigd worden?
-11. Hoe al die warnings oplossen in programFactory?
-12. todo searchobject maken
-13. commentaar?
+10. Hoe al die warnings oplossen in programFactory?
+11. todo searchobject maken
+12. commentaar?
+13. Opgave verduidelijken
 14. in tile: getGeologicalFeature: iets throwen / returnen?
+15. SearchObject: overlappende object?
+16. BreakStatement: is dit oké?
+17. nullpointerexception bij uitvoeren?
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)

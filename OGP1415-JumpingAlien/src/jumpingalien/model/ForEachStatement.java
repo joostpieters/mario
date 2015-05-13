@@ -1,6 +1,5 @@
 package jumpingalien.model;
 
-import java.util.Map;
 
 import jumpingalien.part3.programs.IProgramFactory.Kind;
 import jumpingalien.part3.programs.IProgramFactory.SortDirection;

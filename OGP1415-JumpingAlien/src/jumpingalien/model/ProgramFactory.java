@@ -176,10 +176,9 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 	}
 
 	@Override
-	public Expression createSearchObject(Expression direction,
+	public Expression<SuperObject> createSearchObject(Expression direction,
 			SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SearchObject(direction);
 	}
 
 	@Override

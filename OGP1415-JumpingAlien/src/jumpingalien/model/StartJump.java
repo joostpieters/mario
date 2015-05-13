@@ -19,7 +19,7 @@ public class StartJump extends Statement {
 		else {
 			
 		}
-		((GameObject) program.getGameObject()).startJump();
+		//((GameObject) program.getGameObject()).startJump();
 		this.setReady();
 		// TODO alle gameObjecten nen StartJump geven -> waarom, niet alle objecten kunnen jumpen?
 	}

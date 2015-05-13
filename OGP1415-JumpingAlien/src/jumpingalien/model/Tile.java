@@ -4,9 +4,9 @@ import jumpingalien.model.exceptions.IllegalPixelException;
 
 public class Tile extends SuperObject {
 
-	public Tile(int xPos, int yPos, World world) {
-		this.setXCor(xPos);
-		this.setYCor(yPos);
+	public Tile(int xCor, int yCor, World world) {
+		this.setXCor(xCor);
+		this.setYCor(yCor);
 	}
 	
 	private int xCor;
@@ -61,6 +61,7 @@ public class Tile extends SuperObject {
 			return world.getGeologicalFeature((int) getXPos(), (int) getYPos());
 		} catch (IllegalPixelException e) {
 			// TODO moet hier air worden teruggegeven? want normaal geeft die hierboven dat toch al terug als het air is?
+			// mss iets throwen
 			return 0;
 		}
 	}

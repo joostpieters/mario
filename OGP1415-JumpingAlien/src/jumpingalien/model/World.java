@@ -1,5 +1,6 @@
 package jumpingalien.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -493,6 +494,30 @@ public class World {
 	@Basic
 	private boolean isGameStarted() {
 		return this.gameStarted;
+	}
+	
+	public Collection<GameObject> listAllGameObjects() {
+		Collection<GameObject> list = new ArrayList<GameObject>();
+		list.addAll(this.getSharks());
+		list.addAll(this.getSlimes());
+		list.addAll(this.getPlants());
+		list.add(this.getAlien());
+		list.add(this.getBuzam());
+		return list;
+	}
+	
+	public Collection<Tile> listAllImpassableTiles() {
+		Collection<Tile> list = new ArrayList<Tile>();
+		for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY())) {
+			try {
+				if(this.getGeologicalFeature(tile[0] * this.getTileLength(), tile[1] * this.getTileLength()) == 3) {
+					list.add(new Tile(tile[0], tile[1], this));
+				}
+			} catch (IllegalPixelException e) {
+				System.out.println("Pixelexception in listAllImpassableTiles");
+			}
+		}
+		return list;
 	}
 	
 //	SETTERS	
