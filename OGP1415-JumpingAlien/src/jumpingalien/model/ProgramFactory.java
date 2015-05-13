@@ -3,11 +3,22 @@ package jumpingalien.model;
 import java.util.List;
 import java.util.Map;
 
+import program.expression.Addition;
+import program.expression.AndBool;
+import program.statement.StartDuck;
+import program.statement.StartJump;
+import program.statement.StartRun;
+import program.statement.Statement;
+import program.statement.StopDuck;
+import program.statement.StopJump;
+import program.statement.StopRun;
+import program.statement.WaitStatement;
+import program.statement.WhileStatement;
 import jumpingalien.part3.programs.IProgramFactory;
 import jumpingalien.part3.programs.SourceLocation;
 
 
-//@SuppressWarnings("rawtypes")
+@SuppressWarnings("rawtypes")
 public class ProgramFactory implements IProgramFactory<Expression<?>, Statement, Type, Program> {
 
 	@Override
@@ -51,9 +62,10 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 	}
 
 	@Override
-	public Expression<Double> createAddition(Expression left, Expression right,
+	public Expression<Double> createAddition(Expression<?> left, Expression<?> right,
 			SourceLocation sourceLocation) {
-		return new Addition(left, right);
+		
+		return new Addition((Expression<Double>) left, (Expression<Double>) right);
 	}
 
 	@Override
@@ -295,7 +307,7 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 
 	@Override
 	public Statement createPrint(Expression value, SourceLocation sourceLocation) {
-		return new PrintStatement<>(value);
+		return new PrintStatement(value);
 	}
 
 	@Override

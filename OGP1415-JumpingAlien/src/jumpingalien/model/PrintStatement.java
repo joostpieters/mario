@@ -1,19 +1,21 @@
 package jumpingalien.model;
 
+import program.statement.Statement;
 
-public class PrintStatement<S> extends Statement {
 
-	public PrintStatement(Expression<S> expr) {
+public class PrintStatement extends Statement {
+
+	public PrintStatement(Expression<?> expr) {
 		this.setExpression1(expr);
 		}
 		
-	private Expression<S> expression1;
+	private Expression<?> expression1;
 	
-	protected Expression<S> getExpression1() {
+	protected Expression<?> getExpression1() {
 		return expression1;
 	}
 	
-	private void setExpression1(Expression<S> expr) {
+	private void setExpression1(Expression<?> expr) {
 		this.expression1 = expr;
 	}
 	

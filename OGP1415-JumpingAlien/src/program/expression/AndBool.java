@@ -1,4 +1,8 @@
-package jumpingalien.model;
+package program.expression;
+
+import jumpingalien.model.BinaryExpression;
+import jumpingalien.model.Expression;
+import jumpingalien.model.Program;
 
 public class AndBool extends BinaryExpression<Boolean, Boolean> {
 

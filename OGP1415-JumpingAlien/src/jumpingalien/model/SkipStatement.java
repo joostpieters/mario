@@ -1,5 +1,7 @@
 package jumpingalien.model;
 
+import program.statement.Statement;
+
 
 public class SkipStatement extends Statement {
 
