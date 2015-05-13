@@ -24,4 +24,5 @@
 <fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
+<fullyQualifiedTypeName name="jumpingalien.model.GameObject"/>
 </qualifiedTypeNameHistroy>
