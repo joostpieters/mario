@@ -1234,6 +1234,7 @@ public class World {
 				this.getBuzam().advanceTime(dt);
 			this.getAlien().advanceTime(dt);
 			
+	
 			positioningVisibleWindow();
 		}
 	}
@@ -1246,7 +1247,7 @@ public class World {
 		if( ! isValidDt(dt)) {
 			throw new IllegalDtException(dt);
 		}
-		if( ! isGameStarted()) {
+		if(!isGameStarted()) {
 			this.startGame();
 		}
 		double minDt = computeMinimalDt(dt);

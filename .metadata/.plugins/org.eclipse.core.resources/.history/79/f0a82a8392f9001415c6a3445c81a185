@@ -85,15 +85,14 @@ public class Buzam extends Mazub {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
-	 * @effect the list allSlimesSharksMazub contains all the slimes, sharks and the Mazub alien in the world
-	 * 			| allSlimesSharksMazub = world.getSlimes()
-	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
-	 * 			| allSlimesSharksMazub.add(world.getAlien())
+	 * @effect the list allSlimesSharks contains all the slimes and sharks in the world
+	 * 			| allSlimesSharks = world.getSlimes()
+	 * 			| allSlimesSharks.addAll(world.getSharks())
 	 * @effect calculates the new position of mazub taking all the slimes and sharks
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
-	 * 			| for each other: allSlimesSharksMazub:
+	 * 			| for each other: allSlimesSharks:
 	 * 			| 	let 
 	 * 			| 		double xDim1 = getXDim()
 	 * 			|		double yDim1 = getYDim()

@@ -1,0 +1,68 @@
+package jumpingalien.model;
+
+import program.Program;
+import be.kuleuven.cs.som.annotate.Raw;
+import jumpingalien.model.exceptions.IllegalDtException;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSpriteException;
+import jumpingalien.util.Sprite;
+
+/**
+ * A class that describes the movement of Mazub's evil twin Buzam
+ * @author Ward Romanus, Pieter Van den Berghe
+ *
+ */
+public class Buzam extends Mazub {
+
+	public Buzam(int xPos, int yPos, Sprite[] sprites)
+			throws IllegalPositionException, IllegalSpriteException {
+		super(xPos, yPos, sprites);
+		this.setInitStartSpeed(Mazub.getStartSpeed());
+		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
+		this.setHitpoints(Mazub.getInitHitpoints());
+	}
+	
+	public Buzam(int xPos, int yPos, Sprite[] sprites, Program program)
+			throws IllegalPositionException, IllegalSpriteException {
+		super(xPos, yPos, sprites);
+		this.setProgram(program);
+		this.setInitStartSpeed(Mazub.getStartSpeed());
+		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
+		this.setHitpoints(Mazub.getInitHitpoints());
+	}
+	
+	/**
+	 * the default amount of hitpoints buzam possesses in the beginning of a game
+	 */
+	private static final int INIT_HITPOINTS = 500;
+	
+	@Override
+	@Raw
+	public void advanceTime(double dt) throws IllegalDtException {
+		if ( ! isValidDt(dt))
+			throw new IllegalDtException(dt);		
+		if ( ! this.isDying()) {		
+			this.changeTimeDependents(dt);
+			
+			if (this.getDuckShouldEnd()) {
+				this.setDuckShouldEnd(false);
+				this.endDuck();
+			}
+			
+			this.loseHitpointsBecauseOfFeature(dt, this.getXPos(), this.getYPos());
+			this.updateImmunity(dt);		
+			
+			if (this.getHitpoints() <= 0) {
+				this.die();
+			}
+		}
+		else {
+				this.setTimeSinceDeath(this.getTimeSinceDeath() + dt);
+				if (this.getTimeSinceDeath() > GameObject.getTimeUntilRemove()) {
+					 this.remove();
+			}
+		}
+	}	
+	
+	
+}

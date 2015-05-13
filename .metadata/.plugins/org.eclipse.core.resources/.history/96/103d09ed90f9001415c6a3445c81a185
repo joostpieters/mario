@@ -78,22 +78,21 @@ public class Buzam extends Mazub {
 	}
 	
 	/**
-	 * adapts the position taking all Slimes, Sharks and Mazub into account, it also updates the hitpoints
+	 * adapts the position taking all Slimes and Sharks into account, it also updates the hitpoints
 	 * @param newXPos
 	 * 			the newly calculated horizontal position
 	 * @param newYPos
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
-	 * @effect the list allSlimesSharksMazub contains all the slimes, sharks and the Mazub alien in the world
-	 * 			| allSlimesSharksMazub = world.getSlimes()
-	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
-	 * 			| allSlimesSharksMazub.add(world.getAlien())
+	 * @effect the list allSlimesSharks contains all the slimes and sharks in the world
+	 * 			| allSlimesSharks = world.getSlimes()
+	 * 			| allSlimesSharks.addAll(world.getSharks())
 	 * @effect calculates the new position of mazub taking all the slimes and sharks
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
-	 * 			| for each other: allSlimesSharksMazub:
+	 * 			| for each other: allSlimesSharks:
 	 * 			| 	let 
 	 * 			| 		double xDim1 = getXDim()
 	 * 			|		double yDim1 = getYDim()
@@ -119,12 +118,12 @@ public class Buzam extends Mazub {
 	 */
 	@Raw
 	protected double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
-		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
-		allSlimesSharksMazub.add(this.getWorld().getAlien());
+		List<GameObject> allSlimesSharksBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharksBuzam.addAll(this.getWorld().getSharks());
+		allSlimesSharksBuzam.add(this.getWorld().getAlien());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
-		for(GameObject other: allSlimesSharksMazub) {
+		for(GameObject other: allSlimesSharksBuzam) {
 			double xDim1 = this.getXDim();
 			double yDim1 = this.getYDim();
 			double x2 = other.getXPos();

@@ -1246,7 +1246,7 @@ public class World {
 		if( ! isValidDt(dt)) {
 			throw new IllegalDtException(dt);
 		}
-		if( ! isGameStarted()) {
+		if(!isGameStarted()) {
 			this.startGame();
 		}
 		double minDt = computeMinimalDt(dt);
