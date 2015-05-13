@@ -589,7 +589,7 @@ public class Shark extends GameObject {
 	 * 			| if (isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
-	private void moveRight(){
+	protected void startMoveRight(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationRight();
 		if (isInWater()) {
@@ -607,7 +607,7 @@ public class Shark extends GameObject {
 	 * 			| if (isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
-	private void moveLeft(){
+	protected void startMoveLeft(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
 		if (isInWater()) {
@@ -616,28 +616,35 @@ public class Shark extends GameObject {
 	}
 	
 	/**
-	 * Shark starts moving and jumping to the right
-	 * @effect the horizontal acceleration, vertical speed and orientation are set
-	 * 			| setXAcc(Shark.getMoveAcc())
+	 * sets the vertical acceleration and velocity
+	 * @effect the shark starts it's vertical jump
+	 * 			| setXacc(Shark.getMoveAcc())
 	 * 			| setYSpeed(Shark.getJumpSpeed())
-	 * 			| setOrientationRight()
 	 */
-	private void jumpRight(){
+	protected void startJump() {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setYSpeed(Shark.getJumpSpeed());
+	}
+	
+	/**
+	 * Shark starts moving and jumping to the right
+	 * @effect the horizontal acceleration, vertical speed and orientation are set
+	 * 			| startJump()
+	 * 			| setOrientationRight()
+	 */
+	private void jumpRight() {
+		this.startJump();
 		this.setOrientationRight();
 	}
 	
 	/**
 	 * Shark starts moving and jumping to the left
 	 * @effect the horizontal acceleration, vertical speed and orientation are set
-	 * 			| setXAcc(Shark.getMoveAcc())
-	 * 			| setYSpeed(Shark.getJumpSpeed())
+	 * 			| startJump()
 	 * 			| setOrientationLeft()
 	 */
-	private void jumpLeft(){
-		this.setXAcc(Shark.getMoveAcc());
-		this.setYSpeed(Shark.getJumpSpeed());
+	private void jumpLeft() {
+		this.startJump();
 		this.setOrientationLeft();
 	}
 	
@@ -705,12 +712,12 @@ public class Shark extends GameObject {
 				randomNb = Math.random() * 2;
 			}
 			if (randomNb < 1) {
-				this.moveRight();
+				this.startMoveRight();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}
 			else if (randomNb < 2) {
-				this.moveLeft();
+				this.startMoveLeft();
 				this.setJumpCounter(this.getJumpCounter() + 1);
 				this.setMoving(true);
 			}

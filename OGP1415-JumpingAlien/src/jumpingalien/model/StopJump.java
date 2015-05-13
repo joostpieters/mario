@@ -10,7 +10,6 @@ public class StopJump extends Statement {
 	@Override
 	public void execute(Program program) {
 		// TODO checkers
-		//TODO functie aanmaken in gameObject
 		((GameObject) program.getGameObject()).endJump();
 		this.setReady();
 	}

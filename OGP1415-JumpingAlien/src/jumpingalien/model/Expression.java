@@ -20,4 +20,5 @@ public abstract class Expression<T> {
 		this.type = type;
 	}
 	
+	
 }

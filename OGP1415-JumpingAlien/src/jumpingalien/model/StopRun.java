@@ -22,14 +22,14 @@ public class StopRun extends Statement {
 	public void execute(Program program) {
 		// TODO checkers
 		
-		//TODO nog functies toevoegen in GameOjbect
+		//TODO nog functies toevoegen in GameOjbect -> stopMovingX bestond al
 		if (this.getDirection().evaluate(program) == Direction.RIGHT &&
 				((GameObject) program.getGameObject()).getOrientation() == Orientation.RIGHT) {
-			((GameObject) program.getGameObject()).endMoveRight();
+			((GameObject) program.getGameObject()).stopMovingX();
 		}
 		else if (this.getDirection().evaluate(program) == Direction.LEFT &&
 				((GameObject) program.getGameObject()).getOrientation() == Orientation.LEFT) {
-			((GameObject) program.getGameObject()).endMoveLeft();
+			((GameObject) program.getGameObject()).stopMovingX();
 		}
 		this.setReady();
 	}

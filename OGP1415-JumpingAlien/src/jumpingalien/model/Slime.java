@@ -674,7 +674,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setXSpeed(0)
 	 * 			| 		 setOrientationRight()
 	 */
-	private void startMoveRight() {
+	protected void startMoveRight() {
 		if (this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setOrientationRight();
@@ -689,7 +689,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setXSpeed(0)
 	 * 			| 		 setOrientationLEFT()
 	 */
-	private void startMoveLeft() {
+	protected void startMoveLeft() {
 		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setXSpeed(0);
 			this.setOrientationLeft();

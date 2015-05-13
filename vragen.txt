@@ -5,6 +5,10 @@
 6. is stopRun equivalent met pijltjes loslaten?
 7. Is er een goede manier om de klassen in mappen te ordenen?
 8. Printstatement is generisch. Kan dat?
+9. Tests
+10. Break: moeten direct alle loops beeindigd worden?
+11. Hoe al die warnings oplossen in programFactory?
+12. todo searchobject maken
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)
@@ -21,6 +25,6 @@ Generics:   Expression <T> -> T voor type
 				+    -   *   ...
 
 Statements:   Statement S  <---------- Program 
-		- execute (nb of steps)  -envirment (meegeven)
+		- execute (nb of steps)  -envirmonment(meegeven)
 	
 

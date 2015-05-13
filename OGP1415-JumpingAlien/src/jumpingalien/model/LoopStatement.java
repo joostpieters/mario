@@ -2,7 +2,6 @@ package jumpingalien.model;
 
 
 public abstract class LoopStatement extends Statement {
-
 	
 
 	public LoopStatement() {

@@ -1,0 +1,29 @@
+package jumpingalien.model;
+
+import java.util.Map;
+
+public class StartJump extends Statement {
+
+	public StartJump() {
+	}
+
+	@Override
+	public void execute(Program program) {
+		// TODO checkersµ
+		if (program.getGameObject() instanceof Mazub) {
+			((Mazub) program.getGameObject()).startJump();
+		}
+		else if (program.getGameObject() instanceof Shark) {
+			((Shark) program.getGameObject()).startJump();
+		}
+		((GameObject) program.getGameObject()).startJump();
+		this.setReady();
+		// TODO alle gameObjecten nen StartJump geven
+	}
+	
+	@Override
+	public void reset() {
+		this.setNotReady();
+	}
+
+}

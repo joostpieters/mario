@@ -71,14 +71,6 @@ public class ForEachStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
-//	private boolean inBody;
-//	private boolean getInBody() {
-//		return inBody;
-//	}
-//	private void setInBody(boolean b) {
-//		this.inBody = b;
-//	}
-	
 	// TODO hier overal iets zetten
 	@Override
 	public void execute(Program program) {

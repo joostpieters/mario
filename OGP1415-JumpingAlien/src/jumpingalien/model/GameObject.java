@@ -1662,6 +1662,10 @@ public abstract class GameObject extends SuperObject {
 		this.stopMovingY();
 	}
 	
+	protected void endJump() {
+		this.setYSpeed(0);
+	}
+	
 	/**
 	 * returns the new horizontal and vertical position, if the gameobjects touched and if on top of the 
 	 * second game object
