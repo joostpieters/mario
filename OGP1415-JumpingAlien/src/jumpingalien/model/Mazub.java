@@ -309,7 +309,7 @@ public class Mazub extends GameObject {
      '~~ ~~`-  ^-~~`~ ^
 	 */
 	@Basic @Raw
-	protected boolean isDucked(){
+	public boolean isDucked(){
 		return this.duck;
 	}	
 	/**

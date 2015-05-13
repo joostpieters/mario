@@ -1,8 +1,6 @@
 package program.expression;
 
-import jumpingalien.model.BinaryExpression;
-import jumpingalien.model.Expression;
-import jumpingalien.model.Program;
+import program.Program;
 
 public class AndBool extends BinaryExpression<Boolean, Boolean> {
 
@@ -12,7 +10,7 @@ public class AndBool extends BinaryExpression<Boolean, Boolean> {
 	}
 
 	@Override
-	protected Boolean evaluate(Program program) {
+	public Boolean evaluate(Program program) {
 		return this.getExpression1().evaluate(program) && this.getExpression2().evaluate(program);
 	}
 	

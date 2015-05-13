@@ -1,6 +1,6 @@
 package program.statement;
 
-import jumpingalien.model.Program;
+import program.Program;
 
  
 public abstract class Statement {
@@ -15,10 +15,10 @@ public abstract class Statement {
 	}
 
 	private Statement superStatement;
-	protected Statement getSuperStatement() {
+	public Statement getSuperStatement() {
 		return superStatement;
 	}
-	protected void setSuperStatement(Statement statement) {
+	public void setSuperStatement(Statement statement) {
 		this.superStatement = statement;
 	}
 

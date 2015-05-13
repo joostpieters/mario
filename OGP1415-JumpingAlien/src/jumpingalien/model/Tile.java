@@ -30,12 +30,12 @@ public class Tile extends SuperObject {
 	
 
 	@Override
-	protected int getXDim() {
+	public int getXDim() {
 		return world.getTileLength();
 	}
 
 	@Override
-	protected int getYDim() {
+	public int getYDim() {
 		return world.getTileLength();
 	}
 
@@ -47,12 +47,12 @@ public class Tile extends SuperObject {
 	}
 
 	@Override
-	protected double getXPos() {
+	public double getXPos() {
 		return world.getTileLength() * this.getXCor();
 	}
 
 	@Override
-	protected double getYPos() {
+	public double getYPos() {
 		return world.getTileLength() * this.getYCor();
 	}
 

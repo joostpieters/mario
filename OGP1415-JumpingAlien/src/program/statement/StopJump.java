@@ -1,9 +1,8 @@
 package program.statement;
 
-import java.util.Map;
 
+import program.Program;
 import jumpingalien.model.GameObject;
-import jumpingalien.model.Program;
 
 public class StopJump extends Statement {
 

@@ -1,9 +1,9 @@
 package program.statement;
 
 
-import jumpingalien.model.Expression;
+import program.Program;
+import program.expression.Expression;
 import jumpingalien.model.Mazub;
-import jumpingalien.model.Program;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
 import jumpingalien.part3.programs.IProgramFactory.Direction;

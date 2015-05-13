@@ -1,8 +1,6 @@
 package program.expression;
 
-import jumpingalien.model.BinaryExpression;
-import jumpingalien.model.Expression;
-import jumpingalien.model.Program;
+import program.Program;
 
 public class Addition extends BinaryExpression<Double, Double> {
 

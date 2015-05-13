@@ -1,5 +1,6 @@
 package jumpingalien.model;
 
+import program.Program;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -99,7 +100,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return xPos
 	 */
 	@Basic @Raw @Override
-	protected double getXPos() {
+	public double getXPos() {
 		return xPos;
 	}	
 	/**
@@ -130,7 +131,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return yPos
 	 */
 	@Basic @Raw @Override
-	protected double getYPos() {
+	public double getYPos() {
 		return yPos;
 	}		
 	/**
@@ -228,7 +229,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return world
 	 */
 	@Basic @Raw
-	protected World getWorld() {
+	public World getWorld() {
 		return this.world;
 	}
 	/**
@@ -254,7 +255,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return xSpeed
 	 */
 	@Basic @Raw
-	protected double getXSpeed() {
+	public double getXSpeed() {
 		return this.xSpeed;
 	}
 	/**
@@ -280,7 +281,7 @@ public abstract class GameObject extends SuperObject {
 	 * @return ySpeed
 	 */
 	@Basic @Raw
-	protected double getYSpeed() {
+	public double getYSpeed() {
 		return this.ySpeed;
 	}
 	/**
@@ -482,7 +483,7 @@ public abstract class GameObject extends SuperObject {
 	 * 			| this.getCurrentSprite().getWidth()
 	 */
 	@Basic @Raw @Override
-	protected int getXDim() {
+	public int getXDim() {
 		return this.getCurrentSprite().getWidth();
 	}
 	/**
@@ -491,7 +492,7 @@ public abstract class GameObject extends SuperObject {
 	 * 			| this.getCurrentSprite().getHeight()
 	 */
 	@Basic @Raw @Override
-	protected int getYDim() {
+	public int getYDim() {
 		return this.getCurrentSprite().getHeight();
 	}	
 	/**
@@ -1634,7 +1635,7 @@ public abstract class GameObject extends SuperObject {
 	 * 			| setXSpeed(0)
 	 * 			| setXAcc(0)
 	 */
-	protected void stopMovingX() {
+	public void stopMovingX() {
 		this.setXSpeed(0);
 		this.setXAcc(0);
 	}
@@ -1662,7 +1663,7 @@ public abstract class GameObject extends SuperObject {
 		this.stopMovingY();
 	}
 	
-	protected void endJump() {
+	public void endJump() {
 		this.setYSpeed(0);
 	}
 	

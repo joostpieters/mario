@@ -7,10 +7,10 @@ public abstract class SuperObject {
 	}
 	
 	
-	protected abstract double getXPos();
-	protected abstract double getYPos();
-	protected abstract int getXDim();
-	protected abstract int getYDim();
+	public abstract double getXPos();
+	public abstract double getYPos();
+	public abstract int getXDim();
+	public abstract int getYDim();
 	public abstract int getHitpoints();
 
 

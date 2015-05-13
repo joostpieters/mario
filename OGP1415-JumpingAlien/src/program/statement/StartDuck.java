@@ -1,7 +1,7 @@
 package program.statement;
 
+import program.Program;
 import jumpingalien.model.Mazub;
-import jumpingalien.model.Program;
 
 
 public class StartDuck extends Statement {

@@ -3,6 +3,7 @@ package jumpingalien.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import program.Program;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -589,7 +590,7 @@ public class Shark extends GameObject {
 	 * 			| if (isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
-	protected void startMoveRight(){
+	public void startMoveRight(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationRight();
 		if (isInWater()) {
@@ -607,7 +608,7 @@ public class Shark extends GameObject {
 	 * 			| if (isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
-	protected void startMoveLeft(){
+	public void startMoveLeft(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
 		if (isInWater()) {
@@ -621,7 +622,7 @@ public class Shark extends GameObject {
 	 * 			| setXacc(Shark.getMoveAcc())
 	 * 			| setYSpeed(Shark.getJumpSpeed())
 	 */
-	protected void startJump() {
+	public void startJump() {
 		this.setXAcc(Shark.getMoveAcc());
 		this.setYSpeed(Shark.getJumpSpeed());
 	}

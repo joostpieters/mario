@@ -3,6 +3,7 @@ package jumpingalien.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import program.Program;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -674,7 +675,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setXSpeed(0)
 	 * 			| 		 setOrientationRight()
 	 */
-	protected void startMoveRight() {
+	public void startMoveRight() {
 		if (this.getOrientation() == Orientation.LEFT) {
 			this.setXSpeed(0);
 			this.setOrientationRight();
@@ -689,7 +690,7 @@ public class Slime extends GameObject {
 	 * 			| 	then setXSpeed(0)
 	 * 			| 		 setOrientationLEFT()
 	 */
-	protected void startMoveLeft() {
+	public void startMoveLeft() {
 		if (this.getOrientation() == Orientation.RIGHT) {
 			this.setXSpeed(0);
 			this.setOrientationLeft();

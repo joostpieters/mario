@@ -1,8 +1,7 @@
 package program.statement;
 
-import jumpingalien.model.Expression;
-import jumpingalien.model.LoopStatement;
-import jumpingalien.model.Program;
+import program.Program;
+import program.expression.Expression;
 
 public class WhileStatement extends LoopStatement {
 

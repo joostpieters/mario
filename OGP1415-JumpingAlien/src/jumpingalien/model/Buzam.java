@@ -1,5 +1,6 @@
 package jumpingalien.model;
 
+import program.Program;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.model.exceptions.IllegalDtException;
 import jumpingalien.model.exceptions.IllegalPositionException;
