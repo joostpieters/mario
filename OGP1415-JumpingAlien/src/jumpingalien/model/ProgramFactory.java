@@ -43,6 +43,7 @@ import program.expression.ObjectNull;
 import program.expression.ObjectSelf;
 import program.expression.OrBool;
 import program.expression.RandomDouble;
+import program.expression.ReadVariable;
 import program.expression.SearchObject;
 import program.expression.SqrtDouble;
 import program.expression.Subtraction;
@@ -71,8 +72,7 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 	@Override
 	public Expression<?> createReadVariable(String variableName,
 			Type variableType, SourceLocation sourceLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ReadVariable(variableName, variableType);
 	}
 
 	@Override
