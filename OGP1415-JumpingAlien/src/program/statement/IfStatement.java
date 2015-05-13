@@ -9,7 +9,10 @@ public class IfStatement extends Statement {
 	public IfStatement(Expression<Boolean> condition, Statement ifBody, Statement elsebody) {
 		this.setCondition(condition);
 		this.setIfBody(ifBody);
-		this.setElseBody(elsebody);
+		if (elsebody != null) {
+			this.setElseBody(elsebody);
+
+		}
 	}
 	
 	private Expression<Boolean> condition;
@@ -18,7 +21,6 @@ public class IfStatement extends Statement {
 	}
 	private void setCondition(Expression<Boolean> expr) {
 		this.condition = expr;
-	//	condition.setGameObject(this.getGameObject());
 	}
 	
 	private Statement ifBody;
@@ -53,8 +55,12 @@ public class IfStatement extends Statement {
 			if(this.getCondition().evaluate(program)) {
 				this.setIndex(1);
 			}
-			else {
+			else if (this.getElseBody() != null){
 				this.setIndex(2);
+			}
+			else {
+				this.setIndex(0);
+				this.setReady();
 			}
 		}
 		else if (this.getIndex() == 1) {
@@ -65,7 +71,7 @@ public class IfStatement extends Statement {
 				this.setReady();
 			}
 		}
-		else {
+		else  {
 			this.getElseBody().execute(program);
 			if(this.getElseBody().isReady()) {
 				this.getElseBody().setNotReady();
