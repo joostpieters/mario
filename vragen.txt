@@ -9,6 +9,7 @@
 10. Break: moeten direct alle loops beeindigd worden?
 11. Hoe al die warnings oplossen in programFactory?
 12. todo searchobject maken
+13. commentaar?
 
 getType gebruiken: abstracte klasse expression
 			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)
