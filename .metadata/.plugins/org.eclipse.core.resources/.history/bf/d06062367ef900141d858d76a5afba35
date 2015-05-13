@@ -190,7 +190,7 @@ public class Mazub extends GameObject {
 	 * the maximum amount of hitpoints a mazub can reach
 	 */
 	private static final int MAX_HITPOINTS = 500;
-			
+		
 //GETTERS	
 	
 	/**
@@ -572,8 +572,7 @@ public class Mazub extends GameObject {
 	 */
 	public void startJump() {
 		if ( ! this.isFalling()) {
-			this.setYSpeed(Mazub.getStartJumpSpeed());
-			this.setJumping();
+			this.setYSpeed(Mazub.getStartJumpSpeed());	
 		}
 	}
 	/**
@@ -585,7 +584,6 @@ public class Mazub extends GameObject {
 	public void endJump() {
 		if (this.getYSpeed() > 0) {
 			this.setYSpeed(0);
-			this.setNotJumping();
 		}
 	}
 	

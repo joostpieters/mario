@@ -522,7 +522,7 @@ public class Shark extends GameObject {
 		if (this.getHitpoints() <= 0) {
 			this.die();
 		}
-		if ((this.isJumping()) && (this.getYSpeed() < 0)) {
+		if ((this.isJumping) && (this.getYSpeed() < 0)) {
 			this.setNotJumping();
 		}
 		

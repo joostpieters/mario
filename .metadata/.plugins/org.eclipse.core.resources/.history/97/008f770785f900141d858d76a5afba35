@@ -74,9 +74,6 @@ public class ForEachStatement extends LoopStatement {
 	public void execute(Program program) {
 		switch(this.getKind()) {
 		case MAZUB:
-			if (where.evaluate(program) == true) {
-				this.getBody().execute(program);
-			}
 			break;
 		case BUZAM:
 			break;

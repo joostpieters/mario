@@ -545,25 +545,6 @@ public abstract class GameObject extends SuperObject {
 		return FALL_ACC;
 	}
 	/**
-	 * a boolean indicating if the gameobject is jumping
-	 */	
-	private boolean jumping = false;
-	public boolean isJumping() {
-		return this.jumping;
-	}
-	/**
-	 * sets isJumping true
-	 */
-	protected void setJumping() {
-		this.jumping = true;
-	}
-	/**
-	 * sets isJumping false
-	 */
-	protected void setNotJumping() {
-		this.jumping = false;
-	}
-	/**
 	 * The boolean to reflect or a gameObject is falling or not
 	 */
 	private boolean falling = false;

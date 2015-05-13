@@ -65,7 +65,8 @@ import program.statement.WhileStatement;
 import jumpingalien.part3.programs.IProgramFactory;
 import jumpingalien.part3.programs.SourceLocation;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
+
+@SuppressWarnings("rawtypes")
 public class ProgramFactory implements IProgramFactory<Expression<?>, Statement, Type, Program> {
 
 	@Override
@@ -302,7 +303,7 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 	@Override
 	public Expression<Boolean> createIsMoving(Expression expr, Expression direction,
 			SourceLocation sourceLocation) {
-		// TODO Dit nog fixen -> is dit niet klaar?
+		// TODO Dit nog fixen
 		return new IsMoving(expr, direction);
 	}
 

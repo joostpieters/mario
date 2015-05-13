@@ -1,7 +1,6 @@
 package program.expression;
 
 import program.Program;
-import jumpingalien.model.GameObject;
 import jumpingalien.model.Mazub;
 
 public class IsJumping extends UnaryExpression<Boolean, Mazub> {
@@ -12,7 +11,7 @@ public class IsJumping extends UnaryExpression<Boolean, Mazub> {
 
 	@Override
 	public Boolean evaluate(Program program) {
-		return (((GameObject) this.getExpression1().evaluate(program)).isJumping());
+		return (((Mazub) this.getExpression1().evaluate(program)).getYSpeed() > 0);
 	}
 
 }

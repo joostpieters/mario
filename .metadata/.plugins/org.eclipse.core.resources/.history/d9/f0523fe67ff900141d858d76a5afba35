@@ -548,7 +548,7 @@ public abstract class GameObject extends SuperObject {
 	 * a boolean indicating if the gameobject is jumping
 	 */	
 	private boolean jumping = false;
-	public boolean isJumping() {
+	protected boolean isJumping() {
 		return this.jumping;
 	}
 	/**
