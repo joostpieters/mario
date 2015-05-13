@@ -22,6 +22,6 @@
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.UnaryExpression"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
-<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
 </qualifiedTypeNameHistroy>
