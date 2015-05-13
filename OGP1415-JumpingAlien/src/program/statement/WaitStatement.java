@@ -1,4 +1,7 @@
-package jumpingalien.model;
+package program.statement;
+
+import jumpingalien.model.Expression;
+import jumpingalien.model.Program;
 
 public class WaitStatement extends Statement {
 

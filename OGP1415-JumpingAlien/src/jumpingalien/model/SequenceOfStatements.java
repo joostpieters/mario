@@ -2,6 +2,8 @@ package jumpingalien.model;
 
 import java.util.List;
 
+import program.statement.Statement;
+
 public class SequenceOfStatements extends Statement {
 
 	public SequenceOfStatements(List<Statement> statements) {

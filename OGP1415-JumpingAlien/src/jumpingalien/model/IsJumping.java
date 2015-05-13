@@ -7,7 +7,7 @@ public class IsJumping extends UnaryExpression<Boolean, Mazub> {
 	}
 
 	@Override
-	protected Boolean evaluate(Program program) {
+	public Boolean evaluate(Program program) {
 		return (((Mazub) this.getExpression1().evaluate(program)).getYSpeed() > 0);
 	}
 

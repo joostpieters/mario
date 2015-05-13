@@ -1,7 +1,11 @@
-package jumpingalien.model;
+package program.statement;
 
 import java.util.Map;
 
+import jumpingalien.model.Expression;
+import jumpingalien.model.GameObject;
+import jumpingalien.model.Orientation;
+import jumpingalien.model.Program;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
 
 public class StopRun extends Statement {

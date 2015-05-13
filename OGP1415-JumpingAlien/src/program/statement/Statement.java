@@ -1,4 +1,6 @@
-package jumpingalien.model;
+package program.statement;
+
+import jumpingalien.model.Program;
 
  
 public abstract class Statement {

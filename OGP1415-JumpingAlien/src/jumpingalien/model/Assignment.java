@@ -1,5 +1,7 @@
 package jumpingalien.model;
 
+import program.statement.Statement;
+
 
 public class Assignment extends Statement {
 	// TODO hier is variableType precies overbodig. Is dat normaal?

@@ -1,6 +1,10 @@
-package jumpingalien.model;
+package program.statement;
 
 import java.util.Map;
+
+import jumpingalien.model.Mazub;
+import jumpingalien.model.Program;
+import jumpingalien.model.Shark;
 
 public class StartJump extends Statement {
 

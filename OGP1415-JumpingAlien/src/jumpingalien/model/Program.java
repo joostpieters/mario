@@ -3,6 +3,8 @@ package jumpingalien.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import program.statement.Statement;
+
 
 public class Program {
 	
@@ -57,7 +59,7 @@ public class Program {
 			}
 		}
 	}
-	//TODO dit oplossen
+	
 	protected void addToEnvironment(String name, Object value ) {
 		this.environment.put(name, value);
 	}
