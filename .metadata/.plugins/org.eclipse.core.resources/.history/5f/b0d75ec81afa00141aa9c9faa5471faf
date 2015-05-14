@@ -1230,9 +1230,8 @@ public class World {
 			for (Slime slime: this.getSlimes()) {
 				slime.advanceTime(dt);
 			}
-			if (( ! (this.getBuzam().isDying())) || (this.getBuzam() != null)) {
+			if (this.getBuzam() != null)
 				this.getBuzam().advanceTime(dt);
-			}
 			this.getAlien().advanceTime(dt);
 			
 			positioningVisibleWindow();

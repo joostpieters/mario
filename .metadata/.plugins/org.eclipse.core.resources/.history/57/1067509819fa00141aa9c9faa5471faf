@@ -684,13 +684,12 @@ public class Mazub extends GameObject {
 	 * @return {newPos[0], newPos[1]}
 	 */
 	@Raw
-	protected double[] collidingSlimesSharksBuzam(double newXPos, double newYPos, double dt) {
-		List<GameObject> allSlimesSharksBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-		allSlimesSharksBuzam.addAll(this.getWorld().getSharks());
-		allSlimesSharksBuzam.add(this.getWorld().getBuzam());
+	protected double[] collidingSlimesSharks(double newXPos, double newYPos, double dt) {
+		List<GameObject> allSlimesSharks =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharks.addAll(this.getWorld().getSharks());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
-		for(GameObject other: allSlimesSharksBuzam) {
+		for(GameObject other: allSlimesSharks) {
 			double xDim1 = this.getXDim();
 			double yDim1 = this.getYDim();
 			double x2 = other.getXPos();
@@ -736,7 +735,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	public double[] colliding(double newXPos, double newYPos, double dt) {	
-		double[] newPos = this.collidingSlimesSharksBuzam(newXPos, newYPos, dt);
+		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
 		this.collidingPlants(newXPos, newYPos);
 		return new double[] {newPos[0], newPos[1]};
 	}

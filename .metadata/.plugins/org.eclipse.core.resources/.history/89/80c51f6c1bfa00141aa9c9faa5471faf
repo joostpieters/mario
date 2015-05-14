@@ -117,40 +117,39 @@ public class Buzam extends Mazub {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
-	// TODO commentaar
-//	@Raw
-//	protected double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
-//		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-//		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
-//		allSlimesSharksMazub.add(this.getWorld().getAlien());
-//		boolean onGameObject = false;
-//		double[] newPos = {newXPos, newYPos};
-//		for(GameObject other: allSlimesSharksMazub) {
-//			double xDim1 = this.getXDim();
-//			double yDim1 = this.getYDim();
-//			double x2 = other.getXPos();
-//			double xDim2 = other.getXDim();
-//			double y2 = other.getYPos();
-//			double yDim2 = other.getYDim();
-//			newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2);
-//			if (newPos[3] == 1) {
-//				onGameObject = true;
-//			}
-//			if ( newPos[2] == 1 && ( ! other.isDying())) {
-//				other.contactDamage(dt);
-//				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
-//					this.contactDamage(dt);
-//				}	
-//			}
-//		}
-//		if (this.isFalling() && onGameObject)  {
-//			this.endFall();
-//		}
-//		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newPos[0],newPos[1]))) {
-//			fall();
-//		}
-//		return new double[] {newPos[0], newPos[1]};
-//	}
+	@Raw
+	protected double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
+		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
+		allSlimesSharksMazub.add(this.getWorld().getAlien());
+		boolean onGameObject = false;
+		double[] newPos = {newXPos, newYPos};
+		for(GameObject other: allSlimesSharksMazub) {
+			double xDim1 = this.getXDim();
+			double yDim1 = this.getYDim();
+			double x2 = other.getXPos();
+			double xDim2 = other.getXDim();
+			double y2 = other.getYPos();
+			double yDim2 = other.getYDim();
+			newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2);
+			if (newPos[3] == 1) {
+				onGameObject = true;
+			}
+			if ( newPos[2] == 1 && ( ! other.isDying())) {
+				other.contactDamage(dt);
+				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
+					this.contactDamage(dt);
+				}	
+			}
+		}
+		if (this.isFalling() && onGameObject)  {
+			this.endFall();
+		}
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newPos[0],newPos[1]))) {
+			fall();
+		}
+		return new double[] {newPos[0], newPos[1]};
+	}
 	
 	
 }

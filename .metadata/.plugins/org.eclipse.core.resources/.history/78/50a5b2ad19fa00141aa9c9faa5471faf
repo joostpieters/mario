@@ -736,7 +736,7 @@ public class Mazub extends GameObject {
 	 */
 	@Raw
 	public double[] colliding(double newXPos, double newYPos, double dt) {	
-		double[] newPos = this.collidingSlimesSharksBuzam(newXPos, newYPos, dt);
+		double[] newPos = this.collidingSlimesSharks(newXPos, newYPos, dt);
 		this.collidingPlants(newXPos, newYPos);
 		return new double[] {newPos[0], newPos[1]};
 	}
