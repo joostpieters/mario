@@ -71,7 +71,7 @@ public class ForEachStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
-	// TODO hier overal iets zetten en nog eens goed nadenken over deze kutklasse :)
+	// TODO hier overal iets zetten
 	@Override
 	public void execute(Program program) {
 		System.out.println("ohnee dat is heeel vervelend (zie for each)");
@@ -82,34 +82,16 @@ public class ForEachStatement extends LoopStatement {
 			}
 			break;
 		case BUZAM:
-			if (where.evaluate(program)) {
-				
-			}
 			break;
 		case PLANT:
-			if (where.evaluate(program)) {
-				
-			}
 			break;
 		case SHARK:
-			if (where.evaluate(program)) {
-				
-			}
 			break;
 		case SLIME:
-			if (where.evaluate(program)) {
-				
-			}
 			break;
 		case TERRAIN:
-			if (where.evaluate(program)) {
-				
-			}
 			break;
 		case ANY:
-			if (where.evaluate(program)) {
-				
-			}
 			break;
 		default: //TODO hier iets zetten
 			break;
@@ -117,6 +99,7 @@ public class ForEachStatement extends LoopStatement {
 	}
 	@Override
 	public void reset() {
+		// TODO Auto-generated method stub
 		this.setNotReady();
 		this.setInBody(false);
 		

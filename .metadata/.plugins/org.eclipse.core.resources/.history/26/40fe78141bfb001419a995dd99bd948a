@@ -1031,6 +1031,7 @@ public class World {
 	private boolean hasAlien(Mazub alien) {
 		return this.getAlien() == alien;
 	}
+	// TODO commentaar
 	/**
 	 * Returns true if this world has the given Buzam as buzam
 	 * @param buzam

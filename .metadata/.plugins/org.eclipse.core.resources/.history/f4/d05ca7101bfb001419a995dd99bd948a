@@ -1021,7 +1021,7 @@ public class World {
 		return this.slimes.contains(slime);
 	}	
 	/**
-	 * Returns true if this world has the given Mazub as alien
+	 * Returns true if this world has the given alien as alien
 	 * @param alien
 	 * 			the alien to check
 	 * @return true if the alien of the world equals the given alien
@@ -1031,12 +1031,13 @@ public class World {
 	private boolean hasAlien(Mazub alien) {
 		return this.getAlien() == alien;
 	}
+	// TODO commentaar
 	/**
-	 * Returns true if this world has the given Buzam as buzam
-	 * @param buzam
-	 * 			the buzam to check
-	 * @return true if the buzam of the world equals the given buzam
-	 * 			|  this.getBuzam() == buzam
+	 * Returns true if this world has the given alien as alien
+	 * @param alien
+	 * 			the alien to check
+	 * @return true if the alien of the world equals the given alien
+	 * 			|  this.getAlien() == alien
 	 */
 	@Raw
 	private boolean hasBuzam(Buzam buzam) {

@@ -684,13 +684,11 @@ public class Mazub extends GameObject {
 	 * @return {newPos[0], newPos[1]}
 	 */
 	@Raw
-	private double[] collidingSlimesSharksBuzam(double newXPos, double newYPos, double dt) {
+	protected double[] collidingSlimesSharksBuzam(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharksBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksBuzam.addAll(this.getWorld().getSharks());
 		//TODO mss checkers voor nullwaarden
-		if (this.getWorld().getBuzam() != null) {
-			allSlimesSharksBuzam.add(this.getWorld().getBuzam());
-		}
+		allSlimesSharksBuzam.add(this.getWorld().getBuzam());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
 		for(GameObject other: allSlimesSharksBuzam) {

@@ -175,7 +175,7 @@ public class Buzam extends Mazub {
 	 * 			| allSlimesSharksMazub = world.getSlimes()
 	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
 	 * 			| allSlimesSharksMazub.add(world.getAlien())
-	 * @effect calculates the new position of buzam taking all the slimes and sharks
+	 * @effect calculates the new position of mazub taking all the slimes and sharks
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
@@ -190,23 +190,20 @@ public class Buzam extends Mazub {
 	 * 			| 		boolean touched = false
 	 * 			| 	in
 	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
-	 * @effect the hitpoints of buzam and the sharks/slimes are updated taking the collisions into account
+	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
 	 * 			| 	if newPos[3] == 1
 	 * 			| 		then onGameObject = true
 	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 
-	 * 			| 		then if ( ! other.collidesAbove(newPos[0], xDim1, newPos[1], yDim1,
-	 * 			|						 x2, xDim2, y2, yDim2)) {
-	 * 			|				other.contactDamage(dt)
-	 * 			|			 if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1,
-	 * 			|						 x2, xDim2, y2, yDim2)) {
-	 * 			|				this.contactDamage(dt)
-	 * @effect if Buzam is on top of another game object, his fall is ended, else Buzam falls
+	 * 			| 		then contactDamage(dt)
+	 * 			| 		 	other.contactDamage(dt)
+	 * @effect if Mazub is on top of another game object, his fall is ended, else Mazub falls
 	 * 			| if (isFalling() && onGameObject())
 	 * 			| 	then endFall()
 	 * 			| else if ( ! isFalling() && ( ! onGameObject) && ( ! onFloor(newPos[0], newPos[1])
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
+	// TODO commentaar
 	@Raw
 	private double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
@@ -226,9 +223,7 @@ public class Buzam extends Mazub {
 				onGameObject = true;
 			}
 			if ( newPos[2] == 1 && ( ! other.isDying())) {
-				if ( ! other.collidesAbove(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
-					other.contactDamage(dt);
-				}
+				other.contactDamage(dt);
 				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
 					this.contactDamage(dt);
 				}	

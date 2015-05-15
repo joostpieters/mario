@@ -65,10 +65,7 @@ public class Tile extends SuperObject {
 			return this.getWorld().getGeologicalFeature((int) getXPos(), (int) getYPos());
 		} catch (IllegalPixelException e) {
 			// TODO moet hier air worden teruggegeven? want normaal geeft die hierboven dat toch al terug als het air is?
-			// mss iets throwen -> dees is nu een beetje cheaten
-			if (true) {
-				throw new IllegalArgumentException();
-			}
+			// mss iets throwen
 			return 0;
 		}
 	}

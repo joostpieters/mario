@@ -1,16 +1,13 @@
 1. createReadVariable: wat moet dit doen?
-2. IsJumping: enkel als ySpeed > 0 of ook als aan het vallen? -> isJumping in gameobject toevoegen (true tussen start en endjump)
-3. aparte klasse voor GreaterThan en LessThan, of beter dezelfde gebruiken?
-5. StartJump, StopJump, StartRun, StopRun: voor welke objecten moet dit allemaal mogelijk zijn? -> typetest anders exception ofzo
-6. is stopRun equivalent met pijltjes loslaten?
-7. Is er een goede manier om de klassen in mappen te ordenen?
-8. Printstatement is generisch. Kan dat?
-9. Tests
-10. Break: moeten direct alle loops beeindigd worden?
-11. Hoe al die warnings oplossen in programFactory?
-12. todo searchobject maken
-13. commentaar?
-14. in tile: getGeologicalFeature: iets throwen / returnen?
+2. aparte klasse voor GreaterThan en LessThan, of beter dezelfde gebruiken?
+3. StartJump, StopJump, StartRun, StopRun: voor welke objecten moet dit allemaal mogelijk zijn? -> typetest anders exception ofzo
+4. is stopRun equivalent met pijltjes loslaten?
+5. Is er een goede manier om de klassen in mappen te ordenen?
+6. Printstatement is generisch. Kan dat?
+7. Break: moeten direct alle loops beeindigd worden?
+8. Hoe al die warnings oplossen in programFactory?
+9. todo searchobject maken
+10. in tile: getGeologicalFeature: iets throwen / returnen?
 
 BinaryNumericalExpression maken tussen binaryException en + - ...
 

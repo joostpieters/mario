@@ -207,20 +207,15 @@ public abstract class GameObject extends SuperObject {
 		this.sprites = sprites;
 	}
 	/**
-	 * a Program to determine the action of the given GameObject
+	 * The program of the object
 	 */
 	protected Program program;
-	/**
-	 * returns the program which determines the behavior of this GameObject
-	 * @return the program
-	 * 			| program
-	 */
+	// TODO fucking commentaren
 	protected Program getProgram() {
 		return this.program;
 	}
 	protected void setProgram(Program program) {
-		// TODO checkers -> nog andere?
-		assert program.isWellFormed();
+		// TODO checkers
 		this.program = program;
 		program.setGameObject(this);
 	}

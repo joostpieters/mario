@@ -490,24 +490,12 @@ public class World {
 	/**
 	 * Returns or the game has already started
 	 * @return gameStarted
-	 * 			| gameStarted
 	 */
 	@Basic
 	private boolean isGameStarted() {
 		return this.gameStarted;
 	}
-	/**
-	 * returns a collection of all gameObjects in this world
-	 * @effect the collection list contains all game objects
-	 * 			| Collection<GameObject> list = new ArrayList<GameObject>()
-	 * 			| list.addAll(this.getSharks())
-	 * 			| list.addAll(this.getSlimes())
-	 * 			| list.addAll(this.getPlants())
-	 * 			| list.add(this.getAlien())
-	 * 			| list.add(this.getBuzam())
-	 * @return the collection list
-	 * 			| return list
-	 */
+	// TODO commentaar
 	public Collection<GameObject> listAllGameObjects() {
 		Collection<GameObject> list = new ArrayList<GameObject>();
 		list.addAll(this.getSharks());
@@ -518,24 +506,11 @@ public class World {
 		return list;
 	}
 	
-	/**
-	 * returns an arraylist of all impassable tiles in this world
-	 * @effect the collection list contains all impassable tiles
-	 * 			| Collection<Tile> list = new ArrayList<Tile>()
-	 * 			| for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY()))
-	 * 			| 	try 
-	 * 			| 		if (this.getGeologicalFeature(tile[0] * this.getTileLength(), tile[1] * this.getTileLength()) == 3)
-	 * 			| 			list.add(new Tile(tile[0], tile[1], this))
-	 * 			|		catch (IllegalPixelException e) 
-	 * 			|			System.out.println("Pixelexception in listAllImpassableTiles")
-	 * @return the Arraylist list
-	 * 			| return list
-	 */
 	public Collection<Tile> listAllImpassableTiles() {
 		Collection<Tile> list = new ArrayList<Tile>();
 		for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY())) {
 			try {
-				if (this.getGeologicalFeature(tile[0] * this.getTileLength(), tile[1] * this.getTileLength()) == 3) {
+				if(this.getGeologicalFeature(tile[0] * this.getTileLength(), tile[1] * this.getTileLength()) == 3) {
 					list.add(new Tile(tile[0], tile[1], this));
 				}
 			} catch (IllegalPixelException e) {
@@ -743,28 +718,29 @@ public class World {
 		assert alien != null;
 	    assert ! this.hasAlien(alien);
 	    alien.setWorld(this);
-	    if (! alien.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1])) {
+	    if(! alien.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1])) {
 			throw new IllegalPositionException(alien.getLocation()[0], alien.getLocation()[1]);
 		}
 		this.alien = alien;
 	}
+	// TODO commentaar
 	/**
-	 * @param the player character's evil twin
-	 * 			| buzam
+	 * @param the player character
+	 * 			| alien
 	 * @throws IllegalSettingException 
 	 * 			An alien can not be set, after the game has started
 	 * 			| this.isGameStarted
 	 * @throws IllegalPositionException 
-	 * 			The buzam has to be within the boundaries of the world
-	 *          | ! buzam.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1]))
-	 * @pre	the buzam should not be zero
-	 * 			| buzam != null
+	 * 			The alien has to be within the boundaries of the world
+	 *          | ! alien.isWithinBoundaries(alien.getLocation()[0], alien.getLocation()[1]))
+	 * @pre	the alien should not be zero
+	 * 			| alien != null
 	 * @pre the world should not have this alien already as alien
-	 * 			| ! this.hasBuzam()
+	 * 			| ! this.hasAlien()
 	 * @effect the alien's world is equal to this world
-	 * 			| buzam.setWorld(this)
+	 * 			| alien.setWorld(this)
 	 * @post the player character alien is equal to the given Mazub
-	 * 			| this.buzam = buzam
+	 * 			| this.alien = alien
 	 */
 	@Raw
 	public void setBuzam(Buzam buzam) throws IllegalSettingException, IllegalPositionException {
@@ -774,7 +750,7 @@ public class World {
 		assert buzam != null;
 	    assert ! this.hasBuzam(buzam);
 	    buzam.setWorld(this);
-	    if (! buzam.isWithinBoundaries(buzam.getLocation()[0], buzam.getLocation()[1])) {
+	    if(! buzam.isWithinBoundaries(buzam.getLocation()[0], buzam.getLocation()[1])) {
 			throw new IllegalPositionException(buzam.getLocation()[0], buzam.getLocation()[1]);
 		}
 		this.buzam = buzam;
@@ -794,14 +770,15 @@ public class World {
 		assert alien != null;
 		this.alien = null;
 	}
+	//TODO commentaar
 	/**
-	 * removes the Buzam buzam from the game world
-	 * @param the player character's evil twin
-	 * 			| buzam
-	 * @pre the buzam has to exist
-	 * 			| buzam != null
-	 * @post the buzam is set to null
-	 * 			| this.buzam = null
+	 * removes the Mazub alien from the game world
+	 * @param the player character
+	 * 			| alien
+	 * @pre the alien has to exist
+	 * 			| alien != null
+	 * @post the alien is set to null
+	 * 			| this.alien = null
 	 */
 	@Raw
 	public void removeBuzam(@Raw Buzam buzam) {
@@ -1021,7 +998,7 @@ public class World {
 		return this.slimes.contains(slime);
 	}	
 	/**
-	 * Returns true if this world has the given Mazub as alien
+	 * Returns true if this world has the given alien as alien
 	 * @param alien
 	 * 			the alien to check
 	 * @return true if the alien of the world equals the given alien
@@ -1031,12 +1008,13 @@ public class World {
 	private boolean hasAlien(Mazub alien) {
 		return this.getAlien() == alien;
 	}
+	// TODO commentaar
 	/**
-	 * Returns true if this world has the given Buzam as buzam
-	 * @param buzam
-	 * 			the buzam to check
-	 * @return true if the buzam of the world equals the given buzam
-	 * 			|  this.getBuzam() == buzam
+	 * Returns true if this world has the given alien as alien
+	 * @param alien
+	 * 			the alien to check
+	 * @return true if the alien of the world equals the given alien
+	 * 			|  this.getAlien() == alien
 	 */
 	@Raw
 	private boolean hasBuzam(Buzam buzam) {

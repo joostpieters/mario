@@ -8,7 +8,6 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 import jumpingalien.model.exceptions.IllegalDtException;
 import jumpingalien.model.exceptions.IllegalPositionException;
-import jumpingalien.model.exceptions.IllegalSpeedException;
 import jumpingalien.model.exceptions.IllegalSpriteException;
 import jumpingalien.util.Sprite;
 
@@ -17,32 +16,8 @@ import jumpingalien.util.Sprite;
  * @author Ward Romanus, Pieter Van den Berghe
  *
  */
-public class Buzam extends Mazub {	
-	
-	/**
-	 * Initialize this new Buzam with given x and y positions and given sprites.
-	 * 
-	 * @param xPos
-	 * 			The x position in the field for the new Buzam
-	 * @param yPos
-	 * 			The y position in the field for the new Buzam
-	 * @param sprites
-	 * 			The sprites for the new Buzam
-	 * @effect the Buzam is created at (xPos,yPos) with a given set of sprites
-	 * 			| super(xPos, yPos, sprites)
-	 * @effect the initial startspeed, maximum speed and hitpoints are
-	 * 			set to the default values
-	 * 			| new.setInitStartSpeed(START_SPEED)
-	 * 			| new.setMaxSpeed(MAX_MOVING_SPEED)
-	 * 			| new.setHitpoints(Buzam.getInitHitpoints())
-	 * @throws	IllegalPositionException
-	 * 			The given position is not valid for Buzam
-	 * 			| ! isValidPosition(xPos,yPos)
-	 * @throws IllegalSpriteException
-	 * 			The given sprite is not valid
-	 * 			| ! isValidSprite(sprites) 
-	 * 
-	 */
+public class Buzam extends Mazub {
+
 	public Buzam(int xPos, int yPos, Sprite[] sprites)
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
@@ -51,42 +26,6 @@ public class Buzam extends Mazub {
 		this.setHitpoints(Buzam.getInitHitpoints());
 	}
 	
-	/**
-	 * Initialize this new Buzam with given x and y positions, sprites,
-	 * horizontal start speed and maximum horizontal speed.
-	 * 
-	 * @param xPos
-	 * 			The x position in the field for the new Buzam
-	 * @param yPos
-	 * 			The y position in the field for the new Buzam
-	 * @param sprites
-	 * 			The sprites for the new Buzam
-	 * @param initStartSpeed
-	 *			The initial horizontal start speed
-	 * @param maxSpeed
-	 * 			The maximum horizontal speed 
-	 * @effect the Buzam is created at (x_pos,y_pos) with a given set of sprites
-	 * 			| super(xPos, yPos, sprites)
-	 * @effect the initial startspeed and maximum speed are
-	 * 			set to the given values and the hitpoints are 
-	 * 			set to the default value
-	 * 			| new.setInitStartSpeed(initStartSpeed)
-	 * 			| new.setMaxSpeed(maxSpeed)
-	 * 			| new.setHitpoints(Buzam.getInitHitpoints())
-	 * @throws	IllegalPositionException
-	 * 			The given position is not valid for Buzam
-	 * 			| ! isValidPosition(xPos,yPos)
-	 * @throws IllegalSpriteException
-	 * 			The given sprite is not valid
-	 * 			| ! isValidSprite(sprites) 
-	 * @throws IllegalSpeedException
-	 * 			The given maxSpeed and initalStartSpeed are not valid
-	 * 			| ! isValidSpeed(initStartSpeed, maxSpeed)
-	 * The initial velocity will never be changed below 1 m/s so
-	 * we don't need an IllegalInitStartSpeedException or a
-	 * IllegalMaxSpeedException. 
-	 * 
-	 */	
 	public Buzam(int xPos, int yPos, Sprite[] sprites, Program program)
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
@@ -95,7 +34,6 @@ public class Buzam extends Mazub {
 		this.setMaxSpeed(Mazub.getMaxMovingSpeed());
 		this.setHitpoints(Buzam.getInitHitpoints());
 	}
-	
 	
 	/**
 	 * the default amount of hitpoints buzam possesses in the beginning of a game
@@ -175,7 +113,7 @@ public class Buzam extends Mazub {
 	 * 			| allSlimesSharksMazub = world.getSlimes()
 	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
 	 * 			| allSlimesSharksMazub.add(world.getAlien())
-	 * @effect calculates the new position of buzam taking all the slimes and sharks
+	 * @effect calculates the new position of mazub taking all the slimes and sharks
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
@@ -190,25 +128,22 @@ public class Buzam extends Mazub {
 	 * 			| 		boolean touched = false
 	 * 			| 	in
 	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
-	 * @effect the hitpoints of buzam and the sharks/slimes are updated taking the collisions into account
+	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
 	 * 			| 	if newPos[3] == 1
 	 * 			| 		then onGameObject = true
 	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 
-	 * 			| 		then if ( ! other.collidesAbove(newPos[0], xDim1, newPos[1], yDim1,
-	 * 			|						 x2, xDim2, y2, yDim2)) {
-	 * 			|				other.contactDamage(dt)
-	 * 			|			 if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1,
-	 * 			|						 x2, xDim2, y2, yDim2)) {
-	 * 			|				this.contactDamage(dt)
-	 * @effect if Buzam is on top of another game object, his fall is ended, else Buzam falls
+	 * 			| 		then contactDamage(dt)
+	 * 			| 		 	other.contactDamage(dt)
+	 * @effect if Mazub is on top of another game object, his fall is ended, else Mazub falls
 	 * 			| if (isFalling() && onGameObject())
 	 * 			| 	then endFall()
 	 * 			| else if ( ! isFalling() && ( ! onGameObject) && ( ! onFloor(newPos[0], newPos[1])
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
+	// TODO commentaar
 	@Raw
-	private double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
+	protected double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
 		allSlimesSharksMazub.add(this.getWorld().getAlien());
@@ -226,9 +161,7 @@ public class Buzam extends Mazub {
 				onGameObject = true;
 			}
 			if ( newPos[2] == 1 && ( ! other.isDying())) {
-				if ( ! other.collidesAbove(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
-					other.contactDamage(dt);
-				}
+				other.contactDamage(dt);
 				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
 					this.contactDamage(dt);
 				}	

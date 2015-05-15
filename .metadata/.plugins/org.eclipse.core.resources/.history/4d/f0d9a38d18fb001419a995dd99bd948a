@@ -55,13 +55,14 @@ public abstract class GameObject extends SuperObject {
 		this.setYPos(yPos);
 		this.setSprite(sprites);
 	}
+	// TODO commentaar
 	/**
 	 * Creates a new gameObject, located at the provided pixel location (xPos, yPos).
 	 * The returned gameObject should not belong to a world.
 	 * 
-	 * @param xPos
+	 * @param x
 	 *            The x-coordinate of the gameObject's initial position
-	 * @param yPos
+	 * @param y
 	 *            The y-coordinate of the gameObject's initial position
 	 * @param sprites
 	 *            An array of sprites for the new gameObject
@@ -71,10 +72,10 @@ public abstract class GameObject extends SuperObject {
 	 *			| this.setSprite(sprites)
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the gameObject
-	 * 			| ! isValidPosition(xPos,yPos)
+	 * 			| !isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
-	 * 			| ! isValidSprite(sprites)  	
+	 * 			| !isValidSprite(sprites)  	
 	 */
 	@Raw
 	protected GameObject(int xPos,int yPos, Sprite[] sprites, Program program) 
@@ -207,20 +208,15 @@ public abstract class GameObject extends SuperObject {
 		this.sprites = sprites;
 	}
 	/**
-	 * a Program to determine the action of the given GameObject
+	 * The program of the object
 	 */
 	protected Program program;
-	/**
-	 * returns the program which determines the behavior of this GameObject
-	 * @return the program
-	 * 			| program
-	 */
+	// TODO fucking commentaren
 	protected Program getProgram() {
 		return this.program;
 	}
 	protected void setProgram(Program program) {
-		// TODO checkers -> nog andere?
-		assert program.isWellFormed();
+		// TODO checkers
 		this.program = program;
 		program.setGameObject(this);
 	}

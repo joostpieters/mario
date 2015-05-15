@@ -207,6 +207,7 @@ public class Buzam extends Mazub {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
+	// TODO commentaar
 	@Raw
 	private double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());

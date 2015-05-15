@@ -390,16 +390,15 @@ public class Slime extends GameObject {
 	 * @param dt
 	 * 			a small time interval
 	 * @effect a local list allSharksSlimeMazub contains all the Sharks, Slimes and Mazub(s)
-	 * 			| allSharksSlimesMazubBuzam =  new ArrayList<GameObject>world.getSharks())
-	 *			| allSharksSlimesMazubBuzam.addAll(world.getSlimes());
-	 *			| allSharksSlimesMazubBuzam.add(world.getAlien())
-	 *			| allSharksSlimesMazubBuzam.add(world.getBuzam())
+	 * 			| allSharksSlimesMazub =  new ArrayList<GameObject>world.getSharks())
+	 *			| allSharksSlimesMazub.addAll(world.getSlimes());
+	 *			| allSharksSlimesMazub.add(world.getAlien())
 	 * @effect a local boolean onGameObject indicating if this is on another game object is set to false
 	 * 			and a local double newPos is initialized
 	 * 			| onGameObject = false
 	 * 			| newPos = {newXPos, newYPos}
 	 * @effect the positions and hitpoints of all colliding gameObjects are adjusted
-	 * 			| for each GameObject other: allSharksSlimesMazubBuzam:
+	 * 			| for each GameObject other: allSharksSlimesMazub:
 	 * 			| 	if (other != this) 
 	 * 			| 		then double xDim1 = this.getXDim()
 	 * 			|			 double yDim1 = this.getYDim()
