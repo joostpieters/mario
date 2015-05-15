@@ -19,7 +19,7 @@ public class ReadVariable extends Expression<Object> {
 	}
 
 	private Type type;
-	private Type getType() {
+	private Type getType() { 
 		return type;
 	}
 	private void setType(Type type) {
@@ -27,7 +27,18 @@ public class ReadVariable extends Expression<Object> {
 	}
 	@Override
 	public Object evaluate(Program program) {
-		program.addToEnvironment(this.getName(), this.getType());
+//		if (this.getType() == Type.DOUBLE) {
+//			program.addToEnvironment(this.getName(), 0);
+//		}
+//		else if (this.getType() == Type.Boolean) {
+//			program.addToEnvironment(this.getName(), false);
+//		}
+//		else if (this.getType() == Type.Object) {
+//			program.addToEnvironment(this.getName(), null);
+//		}
+//		else if (this.getType() == Type.Direction) {
+//			program.addToEnvironment(this.getName(), false);
+//		}
 		return program.getEnvironment().get(this.getName());
 	}
 

@@ -18,7 +18,7 @@ public class GetTileExpression extends BinaryExpression<Tile, Double> {
 		int yPos = this.getExpression2().evaluate(program).intValue();
 		int xCor = world.getTileOfPixels(xPos, yPos)[0];
 		int yCor = world.getTileOfPixels(xPos, yPos)[1];
+		System.out.println(world);
 		return new Tile(xCor, yCor, world);
 	}
-
 }

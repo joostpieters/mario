@@ -52,6 +52,7 @@ public class Buzam extends Mazub {
 	@Override
 	@Raw
 	public void advanceTime(double dt) throws IllegalDtException {
+		this.getProgram().execute(dt);
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
 		if ( ! this.isDying()) {		
@@ -75,6 +76,30 @@ public class Buzam extends Mazub {
 					 this.remove();
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param newXPos
+	 * 			the newly calculated horizontal position
+	 * @param newYPos
+	 * 			the newly calculated vertical position
+	 * @param dt
+	 * 			the time interval
+	 * @effect the new position of Bazum is calculated and a possible collision with
+	 * 			a plant gets checked
+	 * 			| let
+	 * 			| 	newPos = collidingSlimesSharksMazub(newXPos, newYPos, dt)
+	 * 			| in
+	 * 			| collidingPlants(newXPos, newYPos)
+	 * @return the adapted horizontal and vertical position of Buzam
+	 * 			| {newPos[0], newPos[1]}
+	 */
+	@Raw @Override
+	public double[] colliding(double newXPos, double newYPos, double dt) {	
+		double[] newPos = this.collidingSlimesSharksMazub(newXPos, newYPos, dt);
+		this.collidingPlants(newXPos, newYPos);
+		return new double[] {newPos[0], newPos[1]};
 	}
 	
 	/**
@@ -118,39 +143,40 @@ public class Buzam extends Mazub {
 	 * @return {newPos[0], newPos[1]}
 	 */
 	// TODO commentaar
-//	@Raw
-//	protected double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
-//		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-//		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
-//		allSlimesSharksMazub.add(this.getWorld().getAlien());
-//		boolean onGameObject = false;
-//		double[] newPos = {newXPos, newYPos};
-//		for(GameObject other: allSlimesSharksMazub) {
-//			double xDim1 = this.getXDim();
-//			double yDim1 = this.getYDim();
-//			double x2 = other.getXPos();
-//			double xDim2 = other.getXDim();
-//			double y2 = other.getYPos();
-//			double yDim2 = other.getYDim();
-//			newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2);
-//			if (newPos[3] == 1) {
-//				onGameObject = true;
-//			}
-//			if ( newPos[2] == 1 && ( ! other.isDying())) {
-//				other.contactDamage(dt);
-//				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
-//					this.contactDamage(dt);
-//				}	
-//			}
-//		}
-//		if (this.isFalling() && onGameObject)  {
-//			this.endFall();
-//		}
-//		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newPos[0],newPos[1]))) {
-//			fall();
-//		}
-//		return new double[] {newPos[0], newPos[1]};
-//	}
+	@Raw
+	protected double[] collidingSlimesSharksMazub(double newXPos, double newYPos, double dt) {
+		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
+		allSlimesSharksMazub.add(this.getWorld().getAlien());
+		boolean onGameObject = false;
+		double[] newPos = {newXPos, newYPos};
+		for(GameObject other: allSlimesSharksMazub) {
+			double xDim1 = this.getXDim();
+			double yDim1 = this.getYDim();
+			double x2 = other.getXPos();
+			double xDim2 = other.getXDim();
+			double y2 = other.getYPos();
+			double yDim2 = other.getYDim();
+			newPos = collidesSomewhere(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2);
+			if (newPos[3] == 1) {
+				onGameObject = true;
+			}
+			if ( newPos[2] == 1 && ( ! other.isDying())) {
+				other.contactDamage(dt);
+				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
+					this.contactDamage(dt);
+				}	
+			}
+		}
+		if (this.isFalling() && onGameObject)  {
+			this.endFall();
+		}
+		else if ( ! this.isFalling() && ( ! onGameObject) && ( ! this.onFloor(newPos[0],newPos[1]))) {
+			fall();
+		}
+		return new double[] {newPos[0], newPos[1]};
+	}
+	
 	
 	
 }

@@ -495,7 +495,7 @@ public class World {
 	private boolean isGameStarted() {
 		return this.gameStarted;
 	}
-	
+	// TODO commentaar
 	public Collection<GameObject> listAllGameObjects() {
 		Collection<GameObject> list = new ArrayList<GameObject>();
 		list.addAll(this.getSharks());
@@ -1230,7 +1230,7 @@ public class World {
 			for (Slime slime: this.getSlimes()) {
 				slime.advanceTime(dt);
 			}
-			if (( ! (this.getBuzam().isDying())) || (this.getBuzam() != null)) {
+			if ( (this.getBuzam() != null) || ( ! this.getBuzam().isDying())) {
 				this.getBuzam().advanceTime(dt);
 			}
 			this.getAlien().advanceTime(dt);

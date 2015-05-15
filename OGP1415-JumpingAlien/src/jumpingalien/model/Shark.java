@@ -781,14 +781,16 @@ public class Shark extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
+	//TODO commentaar en mss checker
 	@Raw
 	public double[] colliding(double newXPos, double newYPos, double dt) {	
-		List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes());
-		allSlimesSharksMazub.addAll(this.getWorld().getSharks());
-		allSlimesSharksMazub.add(this.getWorld().getAlien());
+		List<GameObject> allSlimesSharksMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
+		allSlimesSharksMazubBuzam.addAll(this.getWorld().getSharks());
+		allSlimesSharksMazubBuzam.add(this.getWorld().getAlien());
+		allSlimesSharksMazubBuzam.add(this.getWorld().getBuzam());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
-		for (GameObject other: allSlimesSharksMazub) {
+		for (GameObject other: allSlimesSharksMazubBuzam) {
 			if (this != other) {
 				double xDim1 = this.getXDim();
 				double yDim1 = this.getYDim();

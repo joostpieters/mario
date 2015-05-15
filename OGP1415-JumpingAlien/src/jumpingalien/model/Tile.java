@@ -7,6 +7,7 @@ public class Tile extends SuperObject {
 	public Tile(int xCor, int yCor, World world) {
 		this.setXCor(xCor);
 		this.setYCor(yCor);
+		this.setWorld(world);
 	}
 	
 	private int xCor;
@@ -27,18 +28,21 @@ public class Tile extends SuperObject {
 	}
 	
 	private World world;
+	private World getWorld() {
+		return this.world;
+	}
+	private void setWorld(World world) {
+		this.world = world;
+	}
 	
-
 	@Override
 	public int getXDim() {
-		return world.getTileLength();
+		return this.getWorld().getTileLength();
 	}
-
 	@Override
 	public int getYDim() {
-		return world.getTileLength();
+		return this.getWorld().getTileLength();
 	}
-
 	@Override
 	public int getHitpoints() {
 		// TODO Mss hier een exeption throwen -> of gewoon uit superObject halen en enkel voor een gameObject maken?
@@ -48,17 +52,17 @@ public class Tile extends SuperObject {
 
 	@Override
 	public double getXPos() {
-		return world.getTileLength() * this.getXCor();
+		return this.getWorld().getTileLength() * this.getXCor();
 	}
 
 	@Override
 	public double getYPos() {
-		return world.getTileLength() * this.getYCor();
+		return this.getWorld().getTileLength() * this.getYCor();
 	}
 
 	public int getGeologicalFeature() {
 		try {
-			return world.getGeologicalFeature((int) getXPos(), (int) getYPos());
+			return this.getWorld().getGeologicalFeature((int) getXPos(), (int) getYPos());
 		} catch (IllegalPixelException e) {
 			// TODO moet hier air worden teruggegeven? want normaal geeft die hierboven dat toch al terug als het air is?
 			// mss iets throwen

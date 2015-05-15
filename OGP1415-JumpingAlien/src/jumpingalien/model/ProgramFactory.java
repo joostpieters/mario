@@ -302,7 +302,6 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 	@Override
 	public Expression<Boolean> createIsMoving(Expression expr, Expression direction,
 			SourceLocation sourceLocation) {
-		// TODO Dit nog fixen -> is dit niet klaar?
 		return new IsMoving(expr, direction);
 	}
 
@@ -408,7 +407,7 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 
 	@Override
 	public Type getDoubleType() {
-		return Type.Double;
+		return Type.DOUBLE;
 	}
 
 	@Override

@@ -74,6 +74,7 @@ public class ForEachStatement extends LoopStatement {
 	// TODO hier overal iets zetten
 	@Override
 	public void execute(Program program) {
+		System.out.println("ohnee dat is heeel vervelend (zie for each)");
 		switch(this.getKind()) {
 		case MAZUB:
 			if (where.evaluate(program) == true) {

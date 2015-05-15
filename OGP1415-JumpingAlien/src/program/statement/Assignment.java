@@ -32,6 +32,7 @@ public class Assignment extends Statement {
 	@Override
 	public void execute(Program program) {
 		program.getEnvironment().put(this.getString(), this.getExpression().evaluate(program));
+		this.setReady();
 	}
 	
 	@Override

@@ -687,6 +687,7 @@ public class Mazub extends GameObject {
 	protected double[] collidingSlimesSharksBuzam(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharksBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksBuzam.addAll(this.getWorld().getSharks());
+		//TODO mss checkers voor nullwaarden
 		allSlimesSharksBuzam.add(this.getWorld().getBuzam());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};

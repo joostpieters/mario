@@ -47,7 +47,7 @@ public class Program {
 	protected void setEnvironment(Map<String, Type> map) {
 		this.environment = new HashMap<String, Object>();
 		for (String key : map.keySet()) {
-			if (map.get(key) == Type.Double) {
+			if (map.get(key) == Type.DOUBLE) {
 				this.environment.put(key, 0);
 			}
 			else if (map.get(key) == Type.Boolean) {
@@ -68,6 +68,7 @@ public class Program {
 	
 	
 	public void execute(double dt) {
+		System.out.println("hey");
 		if(dt <= 0.001) {
 			this.getMainStatement().execute(this);
 		}

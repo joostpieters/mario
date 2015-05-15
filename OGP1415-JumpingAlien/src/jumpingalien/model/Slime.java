@@ -418,14 +418,16 @@ public class Slime extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
+	//TODO commentaar en mss checker
 	@Raw
 	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
-		List<GameObject> allSharksSlimesMazub =  new ArrayList<GameObject>(this.getWorld().getSharks());
-		allSharksSlimesMazub.addAll(this.getWorld().getSlimes());
-		allSharksSlimesMazub.add(this.getWorld().getAlien());	
+		List<GameObject> allSharksSlimesMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSharks());
+		allSharksSlimesMazubBuzam.addAll(this.getWorld().getSlimes());
+		allSharksSlimesMazubBuzam.add(this.getWorld().getAlien());	
+		allSharksSlimesMazubBuzam.add(this.getWorld().getBuzam());
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
-		for(GameObject other: allSharksSlimesMazub) {
+		for(GameObject other: allSharksSlimesMazubBuzam) {
 			if(other != this) {
 				double xDim1 = this.getXDim();
 				double yDim1 = this.getYDim();
