@@ -518,6 +518,7 @@ public class World {
 		return list;
 	}
 	
+	//TODO moet deze (en de volgende niet zo met zo dat speciaal met locale variabelen in de comments?
 	/**
 	 * returns an arraylist of all impassable tiles in this world
 	 * @effect the collection list contains all impassable tiles
@@ -541,6 +542,23 @@ public class World {
 			} catch (IllegalPixelException e) {
 				System.out.println("Pixelexception in listAllImpassableTiles");
 			}
+		}
+		return list;
+	}
+	
+	/**
+	 * returns an arraylist of all impassable tiles in this world
+	 * @effect the collection list contains all impassable tiles
+	 * 			| Collection<Tile> list = new ArrayList<Tile>()
+	 * 			| for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY()))
+	 * 			| 			list.add(new Tile(tile[0], tile[1], this))
+	 * @return the Arraylist list
+	 * 			| return list
+	 */
+	public Collection<Tile> listAllTiles() {
+		Collection<Tile> list = new ArrayList<Tile>();
+		for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY())) {
+			list.add(new Tile(tile[0], tile[1], this));
 		}
 		return list;
 	}

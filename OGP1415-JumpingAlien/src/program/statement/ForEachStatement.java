@@ -1,7 +1,11 @@
 package program.statement;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import program.Program;
 import program.expression.Expression;
+import jumpingalien.model.SuperObject;
 import jumpingalien.part3.programs.IProgramFactory.Kind;
 import jumpingalien.part3.programs.IProgramFactory.SortDirection;
 
@@ -42,7 +46,6 @@ public class ForEachStatement extends LoopStatement {
 	}
 	private void setWhere(Expression<Boolean> where) {
 		this.where = where;
-	//	where.setGameObject(this.getGameObject());
 	}
 	
 	private Expression<Boolean> sort;
@@ -51,7 +54,6 @@ public class ForEachStatement extends LoopStatement {
 	}
 	private void setSort(Expression<Boolean> sort) {
 		this.sort = sort;
-	//	sort.setGameObject(this.getGameObject());
 	}
 	
 	private SortDirection sortDirection;
@@ -71,49 +73,50 @@ public class ForEachStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
+	private Collection<SuperObject> listObjectByKind(Program program) {
+		Collection<SuperObject> list = new ArrayList<SuperObject>();
+		switch(this.getKind()) {
+		case MAZUB:
+			list.add(program.getGameObject().getWorld().getAlien());
+			break;
+		case BUZAM:
+			if(program.getGameObject().getWorld().getBuzam() != null) {
+				list.add(program.getGameObject().getWorld().getBuzam());
+			}
+			break;
+		case PLANT:
+			list.addAll(program.getGameObject().getWorld().getPlants());
+			break;
+		case SHARK:
+			list.addAll(program.getGameObject().getWorld().getSharks());
+			break;
+		case SLIME:
+			list.addAll(program.getGameObject().getWorld().getSlimes());
+			break;
+		case TERRAIN:
+			list.addAll(program.getGameObject().getWorld().listAllTiles());
+			break;
+		case ANY:
+			list.add(program.getGameObject().getWorld().getAlien());
+			if(program.getGameObject().getWorld().getBuzam() != null) {
+				list.add(program.getGameObject().getWorld().getBuzam());
+			}
+			list.addAll(program.getGameObject().getWorld().getPlants());
+			list.addAll(program.getGameObject().getWorld().getSlimes());
+			list.addAll(program.getGameObject().getWorld().getSharks());
+			list.addAll(program.getGameObject().getWorld().listAllTiles());
+			break;
+		default: 
+			throw new IllegalArgumentException();
+		}
+		return list;
+	}
+	
 	// TODO hier overal iets zetten en nog eens goed nadenken over deze kutklasse :)
 	@Override
 	public void execute(Program program) {
 		System.out.println("ohnee dat is heeel vervelend (zie for each)");
-		switch(this.getKind()) {
-		case MAZUB:
-			if (where.evaluate(program) == true) {
-				this.getBody().execute(program);
-			}
-			break;
-		case BUZAM:
-			if (where.evaluate(program)) {
-				
-			}
-			break;
-		case PLANT:
-			if (where.evaluate(program)) {
-				
-			}
-			break;
-		case SHARK:
-			if (where.evaluate(program)) {
-				
-			}
-			break;
-		case SLIME:
-			if (where.evaluate(program)) {
-				
-			}
-			break;
-		case TERRAIN:
-			if (where.evaluate(program)) {
-				
-			}
-			break;
-		case ANY:
-			if (where.evaluate(program)) {
-				
-			}
-			break;
-		default: //TODO hier iets zetten
-			break;
-		}
+		
 	}
 	@Override
 	public void reset() {
