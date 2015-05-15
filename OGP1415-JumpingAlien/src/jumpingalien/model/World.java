@@ -1250,6 +1250,12 @@ public class World {
 		if( ! isGameStarted()) {
 			this.startGame();
 		}
+		for (GameObject object: this.listAllGameObjects()) {
+			if (object.getProgram() != null) {
+				object.getProgram().execute(dt);
+			}
+		}
+
 		double minDt = computeMinimalDt(dt);
 		double timePassed = 0;
 		if (minDt < dt) {

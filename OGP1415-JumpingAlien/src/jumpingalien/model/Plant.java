@@ -202,7 +202,7 @@ public class Plant extends GameObject {
 		this.checkIfWithinBoundaries(newXPos, this.getYPos());		
 		this.setXPos(newXPos);
 		
-		if (this.getTimeSameOrientation() > Plant.getTimeChangeOrientation()) {
+		if (this.getProgram() == null && this.getTimeSameOrientation() > Plant.getTimeChangeOrientation()) {
 			this.changeOrientation();
 			this.setTimeSameOrientation(this.getTimeSameOrientation()
 					- Plant.getTimeChangeOrientation());

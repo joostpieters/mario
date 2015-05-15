@@ -52,7 +52,6 @@ public class Buzam extends Mazub {
 	@Override
 	@Raw
 	public void advanceTime(double dt) throws IllegalDtException {
-		this.getProgram().execute(dt);
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
 		if ( ! this.isDying()) {		

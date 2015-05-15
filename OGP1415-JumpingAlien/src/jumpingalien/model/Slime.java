@@ -551,7 +551,9 @@ public class Slime extends GameObject {
 	 */
 	@Raw
 	private void advanceTimeWhileLiving(double dt) {
-		this.randomMovement(dt);			
+		if (this.getProgram() == null) {
+			this.randomMovement(dt);
+		}
 		double[] newPos = this.calculateNewPos(dt);
 
 		this.checkIfWithinBoundaries(newPos[0],newPos[1]);
