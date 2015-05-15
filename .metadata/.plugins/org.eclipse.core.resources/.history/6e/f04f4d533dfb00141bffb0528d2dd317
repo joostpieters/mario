@@ -1291,7 +1291,7 @@ public class World {
 			this.startGame();
 		}
 		for (GameObject object: this.listAllGameObjects()) {
-			if (object != null && object.getProgram() != null) {
+			if (object.getProgram() != null) {
 				object.getProgram().execute(dt);
 			}
 		}

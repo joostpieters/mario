@@ -1,8 +1,8 @@
 package program.statement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import program.Program;
 import program.expression.Expression;
@@ -18,7 +18,6 @@ public class ForEachStatement extends LoopStatement {
 			Expression<Double> sort,
 			jumpingalien.part3.programs.IProgramFactory.SortDirection sortDirection,
 			Statement body) {
-		this.setVariableName(variableName);
 		this.setWhere(where);
 		this.setSort(sort);
 		this.setKind(variableKind);
@@ -76,7 +75,7 @@ public class ForEachStatement extends LoopStatement {
 	}
 	
 	private List<SuperObject> listObjectByKind(Program program) {
-		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
+		List<SuperObject> list = new ArrayList<SuperObject>();
 		switch(this.getKind()) {
 		case MAZUB:
 			list.add(program.getGameObject().getWorld().getAlien());
@@ -116,54 +115,50 @@ public class ForEachStatement extends LoopStatement {
 	
 	private List<SuperObject> listObjectWhereTrue(Program program) {
 		List<SuperObject> list = this.listObjectByKind(program);
-		if (this.getWhere() != null) {
-			for (SuperObject object: list) {
-				program.addToEnvironment(getVariableName(), object);
-				if (!this.getWhere().evaluate(program)) {
-					list.remove(object);
-				}
+		List<SuperObject> listWhereTrue = new ArrayList<SuperObject>();
+		for (SuperObject object: list) {
+			program.addToEnvironment(getVariableName(), object);
+			if (this.getWhere().evaluate(program)) {
+				listWhereTrue.add(object);
 			}
 		}
-		return list;
+		return listWhereTrue;
 	}
 	
 	private List<SuperObject> listObjectWhereTrueSorted(Program program) {
 		List<SuperObject> listWhereTrue = this.listObjectWhereTrue(program);
-		if (this.getSort() != null) {
-			List<SuperObject> listToReturn = new ArrayList<SuperObject>();
-			for (int i = 0; i < listWhereTrue.size(); i++) {
-				if (this.getSortDirection() == SortDirection.ASCENDING) {
-					double min = Double.POSITIVE_INFINITY;
-					SuperObject nextInLine = null;
-					for (SuperObject object: listWhereTrue) {
-						program.addToEnvironment(getVariableName(), object);
-						double value = this.getSort().evaluate(program);
-						if (value < min) {
-							min = value;
-							nextInLine = object;
-						}
+		List<SuperObject> listToReturn = new ArrayList<SuperObject>();
+		for (int i = 0; i <= listWhereTrue.size(); i++) {
+			if (this.getSortDirection() == SortDirection.ASCENDING) {
+				double min = Double.POSITIVE_INFINITY;
+				SuperObject nextInLine = null;
+				for (SuperObject object: listWhereTrue) {
+					program.addToEnvironment(getVariableName(), object);
+					double value = sort.evaluate(program);
+					if (value < min) {
+						min = value;
+						nextInLine = object;
 					}
-					listToReturn.add(nextInLine);
-					listWhereTrue.remove(nextInLine);
 				}
-				else {
-					double max = Double.NEGATIVE_INFINITY;
-					SuperObject nextInLine = null;
-					for (SuperObject object: listWhereTrue) {
-						program.addToEnvironment(getVariableName(), object);
-						double value = this.getSort().evaluate(program);
-						if (value > max) {
-							max = value;
-							nextInLine = object;
-						}
+				listToReturn.add(nextInLine);
+				listWhereTrue.remove(nextInLine);
+			}
+			else {
+				double max = Double.NEGATIVE_INFINITY;
+				SuperObject nextInLine = null;
+				for (SuperObject object: listWhereTrue) {
+					program.addToEnvironment(getVariableName(), object);
+					double value = sort.evaluate(program);
+					if (value > max) {
+						max = value;
+						nextInLine = object;
 					}
-					listToReturn.add(nextInLine);
-					listWhereTrue.remove(nextInLine);
-				}			
-			}		
-			return listToReturn;
-		}
-		return listWhereTrue;
+				}
+				listToReturn.add(nextInLine);
+				listWhereTrue.remove(nextInLine);
+			}			
+		}		
+		return listToReturn;
 	}
 	
 	private List<SuperObject> executeList = null;
@@ -174,10 +169,13 @@ public class ForEachStatement extends LoopStatement {
 		this.executeList = list;
 	}
 	
+	// TODO hier overal iets zetten en nog eens goed nadenken over deze kutklasse :)
 	@Override
 	public void execute(Program program) {
-		if ( ! this.getInBody()) {
+		System.out.println("ohnee dat is heeel vervelend (zie for each)");
+		if (!this.getInBody()) {
 			this.setExecuteList(listObjectWhereTrueSorted(program));
+			this.setReady();
 			this.setInBody(true);
 		}
 		else {
@@ -186,11 +184,10 @@ public class ForEachStatement extends LoopStatement {
 				this.getBody().execute(program);
 			}
 			this.getBody().setNotReady();
-			this.getExecuteList().remove(this.getExecuteList().get(0));	
-		}
-		if (this.getExecuteList().isEmpty()) {
-			this.setReady();
-			this.setInBody(false);
+			this.getExecuteList().remove(this.getExecuteList().get(0));
+			if(this.getExecuteList().isEmpty()) {
+				this.setReady();
+			}
 		}
 		
 		

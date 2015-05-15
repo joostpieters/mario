@@ -2,7 +2,6 @@ package program.statement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import program.Program;
 import program.expression.Expression;
@@ -76,7 +75,7 @@ public class ForEachStatement extends LoopStatement {
 	}
 	
 	private List<SuperObject> listObjectByKind(Program program) {
-		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
+		List<SuperObject> list = new ArrayList<SuperObject>();
 		switch(this.getKind()) {
 		case MAZUB:
 			list.add(program.getGameObject().getWorld().getAlien());
@@ -178,6 +177,7 @@ public class ForEachStatement extends LoopStatement {
 	public void execute(Program program) {
 		if ( ! this.getInBody()) {
 			this.setExecuteList(listObjectWhereTrueSorted(program));
+			this.setReady();
 			this.setInBody(true);
 		}
 		else {
@@ -186,11 +186,10 @@ public class ForEachStatement extends LoopStatement {
 				this.getBody().execute(program);
 			}
 			this.getBody().setNotReady();
-			this.getExecuteList().remove(this.getExecuteList().get(0));	
-		}
-		if (this.getExecuteList().isEmpty()) {
-			this.setReady();
-			this.setInBody(false);
+			this.getExecuteList().remove(this.getExecuteList().get(0));
+			if(this.getExecuteList().isEmpty()) {
+				this.setReady();
+			}
 		}
 		
 		

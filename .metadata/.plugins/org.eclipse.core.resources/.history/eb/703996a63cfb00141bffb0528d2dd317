@@ -190,7 +190,6 @@ public class ForEachStatement extends LoopStatement {
 		}
 		if (this.getExecuteList().isEmpty()) {
 			this.setReady();
-			this.setInBody(false);
 		}
 		
 		

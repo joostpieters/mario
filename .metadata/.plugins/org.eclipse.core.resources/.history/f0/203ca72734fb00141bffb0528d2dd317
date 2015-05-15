@@ -1,8 +1,7 @@
 package program.statement;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Collection;
 
 import program.Program;
 import program.expression.Expression;
@@ -18,7 +17,6 @@ public class ForEachStatement extends LoopStatement {
 			Expression<Double> sort,
 			jumpingalien.part3.programs.IProgramFactory.SortDirection sortDirection,
 			Statement body) {
-		this.setVariableName(variableName);
 		this.setWhere(where);
 		this.setSort(sort);
 		this.setKind(variableKind);
@@ -75,8 +73,8 @@ public class ForEachStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
-	private List<SuperObject> listObjectByKind(Program program) {
-		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
+	private Collection<SuperObject> listObjectByKind(Program program) {
+		Collection<SuperObject> list = new ArrayList<SuperObject>();
 		switch(this.getKind()) {
 		case MAZUB:
 			list.add(program.getGameObject().getWorld().getAlien());
@@ -114,91 +112,44 @@ public class ForEachStatement extends LoopStatement {
 		return list;
 	}
 	
-	private List<SuperObject> listObjectWhereTrue(Program program) {
-		List<SuperObject> list = this.listObjectByKind(program);
-		if (this.getWhere() != null) {
-			for (SuperObject object: list) {
-				program.addToEnvironment(getVariableName(), object);
-				if (!this.getWhere().evaluate(program)) {
-					list.remove(object);
-				}
+	private Collection<SuperObject> listObjectWhereTrue(Program program) {
+		Collection<SuperObject> list = this.listObjectByKind(program);
+		Collection<SuperObject> listWhereTrue = new ArrayList<SuperObject>();
+		for (SuperObject object: list) {
+			if (this.getWhere().evaluate(program)) {
+				listWhereTrue.add(object);
 			}
-		}
-		return list;
-	}
-	
-	private List<SuperObject> listObjectWhereTrueSorted(Program program) {
-		List<SuperObject> listWhereTrue = this.listObjectWhereTrue(program);
-		if (this.getSort() != null) {
-			List<SuperObject> listToReturn = new ArrayList<SuperObject>();
-			for (int i = 0; i < listWhereTrue.size(); i++) {
-				if (this.getSortDirection() == SortDirection.ASCENDING) {
-					double min = Double.POSITIVE_INFINITY;
-					SuperObject nextInLine = null;
-					for (SuperObject object: listWhereTrue) {
-						program.addToEnvironment(getVariableName(), object);
-						double value = this.getSort().evaluate(program);
-						if (value < min) {
-							min = value;
-							nextInLine = object;
-						}
-					}
-					listToReturn.add(nextInLine);
-					listWhereTrue.remove(nextInLine);
-				}
-				else {
-					double max = Double.NEGATIVE_INFINITY;
-					SuperObject nextInLine = null;
-					for (SuperObject object: listWhereTrue) {
-						program.addToEnvironment(getVariableName(), object);
-						double value = this.getSort().evaluate(program);
-						if (value > max) {
-							max = value;
-							nextInLine = object;
-						}
-					}
-					listToReturn.add(nextInLine);
-					listWhereTrue.remove(nextInLine);
-				}			
-			}		
-			return listToReturn;
 		}
 		return listWhereTrue;
 	}
 	
-	private List<SuperObject> executeList = null;
-	private List<SuperObject> getExecuteList() {
-		return this.executeList;
-	}
-	private void setExecuteList(List<SuperObject> list) {
-		this.executeList = list;
-	}
-	
-	@Override
-	public void execute(Program program) {
-		if ( ! this.getInBody()) {
-			this.setExecuteList(listObjectWhereTrueSorted(program));
-			this.setInBody(true);
-		}
-		else {
-			program.addToEnvironment(getVariableName(), this.getExecuteList().get(0));
-			while(!this.getBody().isReady()) {
-				this.getBody().execute(program);
+	private Collection<SuperObject> listObjectWhereTrueSorted(Program program) {
+		Collection<SuperObject> listWhereTrue = this.listObjectWhereTrue(program);
+		Collection<SuperObject> listWhereTrueSorted = new ArrayList<SuperObject>();
+		for (SuperObject counter: listWhereTrue) {
+			for (SuperObject object: listWhereTrue) {
+				double value = sort.evaluate(program);
 			}
-			this.getBody().setNotReady();
-			this.getExecuteList().remove(this.getExecuteList().get(0));	
-		}
-		if (this.getExecuteList().isEmpty()) {
-			this.setReady();
-			this.setInBody(false);
 		}
 		
+		
+	}
+	
+	// TODO hier overal iets zetten en nog eens goed nadenken over deze kutklasse :)
+	@Override
+	public void execute(Program program) {
+		System.out.println("ohnee dat is heeel vervelend (zie for each)");
+		
+		for (SuperObject object: this.listObjectByKind(program)) {
+			
+		}
 		
 	}
 	@Override
 	public void reset() {
 		this.setNotReady();
 		this.setInBody(false);
+		
 	}
 	
 }

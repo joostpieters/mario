@@ -178,6 +178,7 @@ public class ForEachStatement extends LoopStatement {
 	public void execute(Program program) {
 		if ( ! this.getInBody()) {
 			this.setExecuteList(listObjectWhereTrueSorted(program));
+			this.setReady();
 			this.setInBody(true);
 		}
 		else {
@@ -186,11 +187,10 @@ public class ForEachStatement extends LoopStatement {
 				this.getBody().execute(program);
 			}
 			this.getBody().setNotReady();
-			this.getExecuteList().remove(this.getExecuteList().get(0));	
-		}
-		if (this.getExecuteList().isEmpty()) {
-			this.setReady();
-			this.setInBody(false);
+			this.getExecuteList().remove(this.getExecuteList().get(0));
+			if(this.getExecuteList().isEmpty()) {
+				this.setReady();
+			}
 		}
 		
 		

@@ -243,17 +243,6 @@ public class Buzam extends Mazub {
 		return new double[] {newPos[0], newPos[1]};
 	}
 	
-	/**
-	 * removes Buzam from the game world
-	 * @effect buzam gets removed
-	 * 			| world.removeBuzam(this)
-	 * 			| setWorld(null)
-	 */
-	@Raw
-	protected void remove() {
-		this.getWorld().removeBuzam(this);
-		this.setWorld(null);
-	}
 	
 	
 }

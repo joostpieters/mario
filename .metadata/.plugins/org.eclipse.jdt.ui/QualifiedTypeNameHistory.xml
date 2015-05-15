@@ -22,7 +22,11 @@
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.UnaryExpression"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
 <fullyQualifiedTypeName name="jumpingalien.model.GameObject"/>
+<fullyQualifiedTypeName name="jumpingalien.model.SuperObject"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.junit.Test"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArrayList"/>
 </qualifiedTypeNameHistroy>
