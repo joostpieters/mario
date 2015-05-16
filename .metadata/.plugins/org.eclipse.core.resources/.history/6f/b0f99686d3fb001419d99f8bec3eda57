@@ -1763,13 +1763,8 @@ public abstract class GameObject extends SuperObject {
 	}
 	
 	// TODO commentaren
-	/**
-	 * the game object starts moving to the right
-	 */
 	public abstract void startMoveRight();
-	/**
-	 * the game object starts moving to the left
-	 */
+	
 	public abstract void startMoveLeft();
 	
 }

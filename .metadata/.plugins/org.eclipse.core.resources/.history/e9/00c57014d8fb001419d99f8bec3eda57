@@ -709,6 +709,9 @@ public class Mazub extends GameObject {
 				if ( ! this.collidesUnder(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2, yDim2)) {
 					this.contactDamage(dt);
 				}
+				else if (this.isFalling()) {
+					this.endFall();
+				}
 			}
 		}
 		if (this.isFalling() && onGameObject)  {

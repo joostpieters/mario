@@ -29,4 +29,8 @@
 <fullyQualifiedTypeName name="org.junit.Test"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArrayList"/>
+<fullyQualifiedTypeName name="jumpingalien.part3.facade.IFacadePart3"/>
+<fullyQualifiedTypeName name="java.beans.Expression"/>
+<fullyQualifiedTypeName name="program.Program"/>
+<fullyQualifiedTypeName name="program.expression.BinaryExpression"/>
 </qualifiedTypeNameHistroy>

@@ -128,6 +128,7 @@ public class Buzam extends Mazub {
 			this.updateImmunity(dt);		
 			
 			if (this.getHitpoints() <= 0) {
+				System.out.println("buzam is dood");
 				this.die();
 			}
 		}

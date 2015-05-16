@@ -753,7 +753,7 @@ public class Shark extends GameObject {
 	 * 			a small time interval over which the time must be advanced
 	 * @effect 
 	 * 			| let 
-	 * 			| 	List<GameObject> allSlimesSharksMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes())
+	 * 			| 	List<GameObject> allSlimesSharksMazub =  new ArrayList<GameObject>(this.getWorld().getSlimes())
 	 * 			| 	boolean onGameObject = false
 	 * 			|	double[] newPos = {newXPos, newYPos}
 	 * 			| 	double xDim1 = this.getXDim()
@@ -763,9 +763,9 @@ public class Shark extends GameObject {
 	 * 			| 	double y2 = other.getYPos()
 	 * 			|	double yDim2 = other.getYDim()
 	 * 			| in
-	 * 			| allSlimesSharksMazubBuzam.addAll(world.getSharks())
-	 * 			| allSlimesSharksMazubBuzam.add(world.getAlien())
-	 * 			| for each GameObject other: allSlimesSharksMazubBuzam :
+	 * 			| allSlimesSharksMazub.addAll(world.getSharks())
+	 * 			| allSlimesSharksMazub.add(world.getAlien())
+	 * 			| for each GameObject other: allSlimesSharksMazub :
 	 * 			| 	if (this != other)
 	 * 			| 		then newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,yDim2)
 	 * 			| 	if (newPos[3] == 1) 
@@ -782,7 +782,7 @@ public class Shark extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
-	//TODO mss checker
+	//TODO commentaar en mss checker
 	@Raw
 	public double[] colliding(double newXPos, double newYPos, double dt) {	
 		List<GameObject> allSlimesSharksMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());

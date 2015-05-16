@@ -254,13 +254,7 @@ public class Plant extends GameObject {
 		this.setOrientationRight();
 		this.setXSpeed(Plant.getStartSpeed());
 	}
-	
-	/**
-	 * the plant starts moving to the left
-	 * @effect the orientation is set to left and the horizontal speed is set
-	 * 			| setOrientationLeft()
-	 * 			| setXSpeed(Plant.getStartSpeed())
-	 */
+
 	@Override
 	public void startMoveLeft() {
 		this.setOrientationLeft();

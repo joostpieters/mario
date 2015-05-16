@@ -9,6 +9,7 @@
 9. todo searchobject maken
 10. in tile: getGeologicalFeature: iets throwen / returnen?
 11. Planten die stoppen met bewegen: klopt dat of niet?
+12. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg
 
 BinaryNumericalExpression maken tussen binaryException en + - ...
 

@@ -128,6 +128,7 @@ public class Buzam extends Mazub {
 			this.updateImmunity(dt);		
 			
 			if (this.getHitpoints() <= 0) {
+				System.out.println("buzam is dood");
 				this.die();
 			}
 		}
@@ -251,10 +252,7 @@ public class Buzam extends Mazub {
 	 */
 	@Raw
 	protected void remove() {
-		// TODO de sprite gaat niet weg, dit is heel cheap maar werkt wel :p 
-		// ==> betere oplossing zoeken, volgens mij ligt het aan het feit dat
-		// buzam een instanceof Mazub is en de sprite van mazub gaat ook niet 
-		// weg als die dood is
+		// TODO de sprite gaat niet weg, dit is heel cheap maar werkt wel :p
 		this.setXPos(-500);
 		this.setYPos(-500);
 		this.getWorld().removeBuzam(this);
