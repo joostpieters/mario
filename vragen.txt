@@ -1,34 +1,6 @@
-1. createReadVariable: wat moet dit doen?
-2. aparte klasse voor GreaterThan en LessThan, of beter dezelfde gebruiken?
-3. StartJump, StopJump, StartRun, StopRun: voor welke objecten moet dit allemaal mogelijk zijn? -> typetest anders exception ofzo
-4. is stopRun equivalent met pijltjes loslaten?
-5. Is er een goede manier om de klassen in mappen te ordenen?
-6. Printstatement is generisch. Kan dat?
-7. Break: moeten direct alle loops beeindigd worden?
-8. Hoe al die warnings oplossen in programFactory?
-9. todo searchobject maken
-10. in tile: getGeologicalFeature: iets throwen / returnen?
-11. Planten die stoppen met bewegen: klopt dat of niet?
-12. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg
+1. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg
 
-BinaryNumericalExpression maken tussen binaryException en + - ...
-
-
-getType gebruiken: abstracte klasse expression
-			-eval(); ->generics: van lijst voor integer,... naar lijst voor alle klassen (<T>)
-		Operator
-		 - e1
-		 - e2
-	*    /    +    -   ...
-
-
-
-Generics:   Expression <T> -> T voor type
-		- eval();
-	SingularExpression 	BinaryExpression
-				+    -   *   ...
-
-Statements:   Statement S  <---------- Program 
-		- execute (nb of steps)  -envirmonment(meegeven)
-	
+TODO:
+- Well Formed
+- Overal typeChecking in statements en expression en exceptions catchen als het misgaat en dus het programma stoppen
 
