@@ -3,4 +3,5 @@
 TODO:
 - Well Formed
 - Overal typeChecking in statements en expression en exceptions catchen als het misgaat en dus het programma stoppen
+- Testen maken
 
