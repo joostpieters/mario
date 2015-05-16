@@ -114,6 +114,7 @@ public class Buzam extends Mazub {
 	@Override
 	@Raw
 	public void advanceTime(double dt) throws IllegalDtException {
+		System.out.println(this.getHitpoints());
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
 		if ( ! this.isDying()) {		
@@ -255,8 +256,8 @@ public class Buzam extends Mazub {
 		// ==> betere oplossing zoeken, volgens mij ligt het aan het feit dat
 		// buzam een instanceof Mazub is en de sprite van mazub gaat ook niet 
 		// weg als die dood is
-		this.setXPos(-500);
-		this.setYPos(-500);
+//		this.setXPos(-500);
+//		this.setYPos(-500);
 		this.getWorld().removeBuzam(this);
 		this.setWorld(null);
 		

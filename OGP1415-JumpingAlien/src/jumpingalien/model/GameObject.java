@@ -220,7 +220,7 @@ public abstract class GameObject extends SuperObject {
 	}
 	protected void setProgram(Program program) {
 		// TODO checkers -> nog andere?
-		assert program.isWellFormed();
+		assert program.isWellFormed(program);
 		this.program = program;
 		program.setGameObject(this);
 	}
