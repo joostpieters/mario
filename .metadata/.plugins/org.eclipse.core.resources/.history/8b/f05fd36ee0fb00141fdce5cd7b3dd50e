@@ -75,22 +75,6 @@ public class ForEachStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
-	private boolean isActionStatement(Statement statement) {
-		return (statement instanceof StartRun) || (statement instanceof StopRun) ||
-				(statement instanceof StartDuck) ||(statement instanceof StopDuck) ||
-				(statement instanceof StartJump) || (statement instanceof StopJump) ||
-				(statement instanceof WaitStatement) || (statement instanceof SkipStatement);
-	}
-	
-	public boolean containsActionStatement() {
-		for (Statement stat: ...) { // alle statements in de body
-			if (stat.isActionStatement()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	private List<SuperObject> listObjectByKind(Program program) {
 		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
 		switch(this.getKind()) {

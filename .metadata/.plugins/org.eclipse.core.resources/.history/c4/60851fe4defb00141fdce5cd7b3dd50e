@@ -6,11 +6,9 @@ import program.Program;
 public class BreakStatement extends Statement {
 
 	public BreakStatement() {
-		
 	}
 	
-	
-	public boolean breakWellFormed() {
+	private boolean breakWellFormed() {
 		if (this.getLoopStatement(this) != null) {
 			return true;
 		}

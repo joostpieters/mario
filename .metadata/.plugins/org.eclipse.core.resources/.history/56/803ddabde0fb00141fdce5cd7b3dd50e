@@ -83,7 +83,7 @@ public class ForEachStatement extends LoopStatement {
 	}
 	
 	public boolean containsActionStatement() {
-		for (Statement stat: ...) { // alle statements in de body
+		for (Statement stat: ...) {
 			if (stat.isActionStatement()) {
 				return true;
 			}

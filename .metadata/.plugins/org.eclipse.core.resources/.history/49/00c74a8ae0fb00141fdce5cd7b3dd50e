@@ -83,12 +83,7 @@ public class ForEachStatement extends LoopStatement {
 	}
 	
 	public boolean containsActionStatement() {
-		for (Statement stat: ...) { // alle statements in de body
-			if (stat.isActionStatement()) {
-				return true;
-			}
-		}
-		return false;
+		
 	}
 	
 	private List<SuperObject> listObjectByKind(Program program) {

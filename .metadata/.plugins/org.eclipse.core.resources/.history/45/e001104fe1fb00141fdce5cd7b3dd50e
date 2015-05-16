@@ -90,7 +90,7 @@ public class Program {
 		
 		for (ForEachStatement foreach: ...) { // alle foreachstatements
 			if (foreach.getBody().containsActionStatement()) {
-				return false;
+				
 			}
 		}
 		

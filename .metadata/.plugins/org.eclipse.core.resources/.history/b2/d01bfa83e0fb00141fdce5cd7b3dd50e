@@ -81,14 +81,8 @@ public class ForEachStatement extends LoopStatement {
 				(statement instanceof StartJump) || (statement instanceof StopJump) ||
 				(statement instanceof WaitStatement) || (statement instanceof SkipStatement);
 	}
-	
 	public boolean containsActionStatement() {
-		for (Statement stat: ...) { // alle statements in de body
-			if (stat.isActionStatement()) {
-				return true;
-			}
-		}
-		return false;
+		
 	}
 	
 	private List<SuperObject> listObjectByKind(Program program) {

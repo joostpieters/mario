@@ -6,7 +6,6 @@ import java.util.Map;
 import jumpingalien.model.GameObject;
 import jumpingalien.model.Type;
 import program.statement.BreakStatement;
-import program.statement.ForEachStatement;
 import program.statement.LoopStatement;
 import program.statement.Statement;
 
@@ -79,18 +78,19 @@ public class Program {
 			this.execute(dt - 0.001);
 		}
 	}
+	
+	private boolean checkIfSuperLoopStatement(BreakStatement breakstatement) {
+		if (breakstatement.getSuperStatement() instanceof LoopStatement) {
+			return true;
+		}
+		return false;
+	}
 
 	public boolean isWellFormed(Program program) {
 		
-		for (BreakStatement breakstatement: ...) { // alle breakstatements
-			if (breakstatement.breakWellFormed() == false) {
-				return false;
-			}
-		}
-		
-		for (ForEachStatement foreach: ...) { // alle foreachstatements
-			if (foreach.getBody().containsActionStatement()) {
-				return false;
+		for (BreakStatement breakstatement: ...) {
+			if (breakstatement.getSuperStatement() instanceof LoopStatement) {
+				
 			}
 		}
 		
