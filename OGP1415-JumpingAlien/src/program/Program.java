@@ -68,7 +68,6 @@ public class Program {
 	
 	
 	public void execute(double dt) {
-		System.out.println("hey");
 		if(dt <= 0.001) {
 			this.getMainStatement().execute(this);
 		}

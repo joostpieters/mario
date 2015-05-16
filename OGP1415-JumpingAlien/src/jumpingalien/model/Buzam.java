@@ -255,5 +255,4 @@ public class Buzam extends Mazub {
 		this.setWorld(null);
 	}
 	
-	
 }

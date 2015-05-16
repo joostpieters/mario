@@ -157,15 +157,16 @@ public class Slime extends GameObject {
 		return INIT_HITPOINTS;
 	}
 	/**
-	 * the horizontal acceleration of a slime
+	 * the acceleration when a slime starts moving horizontally
 	 */
-	private static final double xAcc = 0.7;
+	private static final double MOVE_ACC = 0.7;
 	/**
-	 * returns the horizontal acceleration of a Slime
+	 * returns the acceleration when a slime starts moving
+	 * @return MOVE_ACC
 	 */
-	@Override @Basic @Immutable @Raw
-	protected final double getXAcc() {
-		return xAcc;
+	@Basic @Immutable @Raw
+	protected static final double getMoveAcc() {
+		return MOVE_ACC;
 	}
 	/**
 	 * the maximum horizontal speed a slime can reach
@@ -425,7 +426,9 @@ public class Slime extends GameObject {
 		List<GameObject> allSharksSlimesMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazubBuzam.addAll(this.getWorld().getSlimes());
 		allSharksSlimesMazubBuzam.add(this.getWorld().getAlien());	
-		allSharksSlimesMazubBuzam.add(this.getWorld().getBuzam());
+		if (this.getWorld().getBuzam() != null) {
+			allSharksSlimesMazubBuzam.add(this.getWorld().getBuzam());
+		}
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
 		for(GameObject other: allSharksSlimesMazubBuzam) {
@@ -657,7 +660,7 @@ public class Slime extends GameObject {
 	@Raw
 	private void randomMovement(double dt) {
 		if (this.getTimeSinceMove() >= this.getMovementDuration()) {
-			this.stopMove();
+			this.stopMovingX();
 			this.setMovementDuration(Math.random() * 4 + 2);
 			this.setTimeSinceMove(dt);
 			if (Math.random() >= 0.5) {
@@ -685,6 +688,7 @@ public class Slime extends GameObject {
 			this.setXSpeed(0);
 			this.setOrientationRight();
 		}
+		this.setXAcc(Slime.getMoveAcc());
 	}
 	
 	/**
@@ -700,17 +704,8 @@ public class Slime extends GameObject {
 			this.setXSpeed(0);
 			this.setOrientationLeft();
 		}
-		this.setOrientationLeft();
+		this.setXAcc(Slime.getMoveAcc());
 	}	
-	
-	/**
-	 * the horizontal speed of the Slime is stopped
-	 * @effect the horizontal speed is set to zero
-	 * 			| setXSpeed(0)
-	 */
-	private void stopMove() {
-		this.setXSpeed(0);
-	}
 	
 	/**
 	 * this Slime loses the given amount of hitpoints, all the other

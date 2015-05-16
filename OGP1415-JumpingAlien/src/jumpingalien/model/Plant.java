@@ -48,7 +48,20 @@ public class Plant extends GameObject {
 		this.setXSpeed(0.5);
 		this.setHitpoints(Plant.getInitHitpoints());
 	}
-
+	/**
+	 * the static giving the horizontal speed
+	 * when startMove() is initiated
+	 */
+	private static final double START_SPEED = 0.5;
+	/**
+	 * Returns the starting speed for moving
+	 * @return START_SPEED
+	 */
+	@Basic @Immutable @Raw
+	protected static final double getStartSpeed() {
+		return START_SPEED;
+	}
+	
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
@@ -170,8 +183,8 @@ public class Plant extends GameObject {
 	 * @effect updates the position of the plant
 	 * 			| setXPos(newXPos)
 	 * @effect changes the orientation if the time is right and updates
-	 * 			timeSameOrientation
-	 * 			| if (getTimeSameOrientation() > getTimeChangeOrientation())
+	 * 			timeSameOrientation if there is no program
+	 * 			| if (this.getProgram() == null && getTimeSameOrientation() > getTimeChangeOrientation())
 	 * 			| 	then changeOrientation()
 	 * 			|		 setTimeSameOrientation(getTimeSameOrientation() - Plant.getTimeChangeOrientation())
 	 * @effect removes the plant if the plant is already dying long enough or sets the plant dying
@@ -227,6 +240,18 @@ public class Plant extends GameObject {
 	private void remove() {
 		this.getWorld().removePlant(this);
 		this.setWorld(null);
+	}
+	// TODO commentaar
+	@Override
+	public void startMoveRight() {
+		this.setOrientationRight();
+		this.setXSpeed(Plant.getStartSpeed());
+	}
+
+	@Override
+	public void startMoveLeft() {
+		this.setOrientationLeft();
+		this.setXSpeed(Plant.getStartSpeed());
 	}
 	
 }
