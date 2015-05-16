@@ -1274,7 +1274,7 @@ public class World {
 			for (Slime slime: this.getSlimes()) {
 				slime.advanceTime(dt);
 			}
-			if ( (this.getBuzam() != null) || ( ! this.getBuzam().isDying())) {
+			if (this.getBuzam() != null) {
 				this.getBuzam().advanceTime(dt);
 			}
 			this.getAlien().advanceTime(dt);

@@ -589,15 +589,15 @@ public class Shark extends GameObject {
 	 * @effect the horizontal acceleration and orientation are set
 	 * 			| setXAcc(Shark.getMoveAcc())
 	 * 			| setOrientationRight()
-	 * @effect if this Shark is in the water, he's vertical acceleration
+	 * @effect if this Shark is in the water and no program, his vertical acceleration
 	 * 			is set to a random value
-	 * 			| if (isInWater())
+	 * 			| if (this.getProgram() != null && isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
 	public void startMoveRight(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationRight();
-		if (isInWater()) {
+		if (this.getProgram() != null && isInWater()) {
 			this.setYAcc(Math.random() * 4 - 2);
 		}
 	}
@@ -607,15 +607,15 @@ public class Shark extends GameObject {
 	 * @effect the horizontal acceleration and orientation are set
 	 * 			| setXAcc(Shark.getMoveAcc())
 	 * 			| setOrientationLeft()
-	 * @effect if this Shark is in the water, he's vertical acceleration
+	 * @effect if this Shark is in the water and he has no program, his vertical acceleration
 	 * 			is set to a random value
-	 * 			| if (isInWater())
+	 * 			| if (this.getProgram() != null && isInWater())
 	 * 			| 	then setYAcc(Math.random() * 4 - 2)
 	 */
 	public void startMoveLeft(){
 		this.setXAcc(Shark.getMoveAcc());
 		this.setOrientationLeft();
-		if (isInWater()) {
+		if (this.getProgram() != null && isInWater()) {
 			this.setYAcc(Math.random() * 4 -  2);
 		}
 	}
@@ -788,7 +788,9 @@ public class Shark extends GameObject {
 		List<GameObject> allSlimesSharksMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksMazubBuzam.addAll(this.getWorld().getSharks());
 		allSlimesSharksMazubBuzam.add(this.getWorld().getAlien());
-		allSlimesSharksMazubBuzam.add(this.getWorld().getBuzam());
+		if (this.getWorld().getBuzam() != null) {
+			allSlimesSharksMazubBuzam.add(this.getWorld().getBuzam());
+		}
 		boolean onGameObject = false;
 		double[] newPos = {newXPos, newYPos};
 		for (GameObject other: allSlimesSharksMazubBuzam) {

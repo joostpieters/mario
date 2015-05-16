@@ -20,11 +20,9 @@ public class StartJump extends Statement {
 			((Shark) program.getGameObject()).startJump();
 		}
 		else {
-			
+			throw new IllegalArgumentException();
 		}
-		//((GameObject) program.getGameObject()).startJump();
 		this.setReady();
-		// TODO alle gameObjecten nen StartJump geven -> waarom, niet alle objecten kunnen jumpen?
 	}
 	
 	@Override

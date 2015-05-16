@@ -3,7 +3,6 @@ package program.statement;
 
 import program.Program;
 import program.expression.Expression;
-import jumpingalien.model.GameObject;
 import jumpingalien.model.Orientation;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
 
@@ -27,12 +26,12 @@ public class StopRun extends Statement {
 		
 		//TODO nog functies toevoegen in GameOjbect -> stopMovingX bestond al
 		if (this.getDirection().evaluate(program) == Direction.RIGHT &&
-				((GameObject) program.getGameObject()).getOrientation() == Orientation.RIGHT) {
-			((GameObject) program.getGameObject()).stopMovingX();
+				program.getGameObject().getOrientation() == Orientation.RIGHT) {
+			program.getGameObject().stopMovingX();
 		}
 		else if (this.getDirection().evaluate(program) == Direction.LEFT &&
-				((GameObject) program.getGameObject()).getOrientation() == Orientation.LEFT) {
-			((GameObject) program.getGameObject()).stopMovingX();
+				program.getGameObject().getOrientation() == Orientation.LEFT) {
+			program.getGameObject().stopMovingX();
 		}
 		this.setReady();
 	}

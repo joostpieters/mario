@@ -1762,4 +1762,9 @@ public abstract class GameObject extends SuperObject {
 		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
 	
+	// TODO commentaren
+	public abstract void startMoveRight();
+	
+	public abstract void startMoveLeft();
+	
 }
