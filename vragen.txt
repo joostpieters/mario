@@ -1,4 +1,7 @@
+0. Hoe for each met Lambda functies?
 1. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg
+2. In assignment is Type precies overbodig.
+
 
 TODO:
 - Well Formed

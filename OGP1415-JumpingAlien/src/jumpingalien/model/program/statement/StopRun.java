@@ -22,9 +22,6 @@ public class StopRun extends Statement {
 	
 	@Override
 	public void execute(Program program) {
-		// TODO checkers
-		
-		//TODO nog functies toevoegen in GameOjbect -> stopMovingX bestond al
 		if (this.getDirection().evaluate(program) == Direction.RIGHT &&
 				program.getGameObject().getOrientation() == Orientation.RIGHT) {
 			program.getGameObject().stopMovingX();

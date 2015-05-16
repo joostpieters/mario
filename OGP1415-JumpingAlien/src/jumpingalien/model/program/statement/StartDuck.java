@@ -11,9 +11,13 @@ public class StartDuck extends Statement {
 
 	@Override
 	public void execute(Program program) {
-		// TODO checkers
-		((Mazub) program.getGameObject()).startDuck();
-		this.setReady();
+		if (program.getGameObject() instanceof Mazub) {
+			((Mazub) program.getGameObject()).startDuck();
+			this.setReady();
+		}
+		else{
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override

@@ -27,14 +27,6 @@ public class WhileStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
-//	private boolean inBody;
-//	private boolean getInBody() {
-//		return inBody;
-//	}
-//	private void setInBody(boolean b) {
-//		this.inBody = b;
-//	}
-	
 	@Override
 	public void execute(Program program) {
 		if (!this.getInBody()) {

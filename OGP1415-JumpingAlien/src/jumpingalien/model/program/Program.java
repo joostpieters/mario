@@ -69,14 +69,28 @@ public class Program {
 		this.environment.put(name, value);
 	}
 	
+	private boolean running = true;
+	private boolean isRunning() {
+		return running;
+	}
+	private void stopRunning() {
+		running = false;
+	}
 	
 	public void execute(double dt) {
-		if(dt <= 0.001) {
-			this.getMainStatement().execute(this);
-		}
-		else {
-			this.getMainStatement().execute(this);
-			this.execute(dt - 0.001);
+		if(isRunning()) {
+			try{
+				if(dt <= 0.001) {
+					this.getMainStatement().execute(this);
+				}
+				else {
+					this.getMainStatement().execute(this);
+					this.execute(dt - 0.001);
+				}
+			} catch(ClassCastException | IllegalArgumentException e) {
+				stopRunning();
+				System.out.println("Program stopped");
+			}
 		}
 	}
 

@@ -1,7 +1,8 @@
 package jumpingalien.model.program.statement;
 
 
-import jumpingalien.model.GameObject;
+import jumpingalien.model.Mazub;
+import jumpingalien.model.Shark;
 import jumpingalien.model.program.Program;
 
 public class StopJump extends Statement {
@@ -11,8 +12,15 @@ public class StopJump extends Statement {
 
 	@Override
 	public void execute(Program program) {
-		// TODO checkers
-		((GameObject) program.getGameObject()).endJump();
+		if (program.getGameObject() instanceof Mazub) {
+			((Mazub) program.getGameObject()).endJump();
+		}
+		else if (program.getGameObject() instanceof Shark) {
+			((Shark) program.getGameObject()).endJump();
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 		this.setReady();
 	}
 	

@@ -69,7 +69,7 @@ public class SearchObject extends UnaryExpression<SuperObject, Direction> {
 					}
 					break;
 				default:
-					break;
+					throw new IllegalArgumentException();
 			}
 		}
 		return object;

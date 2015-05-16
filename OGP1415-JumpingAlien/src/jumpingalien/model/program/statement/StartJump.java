@@ -12,7 +12,6 @@ public class StartJump extends Statement {
 
 	@Override
 	public void execute(Program program) {
-		// TODO checkers
 		if (program.getGameObject() instanceof Mazub) {
 			((Mazub) program.getGameObject()).startJump();
 		}
