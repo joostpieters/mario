@@ -1,10 +1,12 @@
 0. Hoe for each met Lambda functies?
-1. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg
+1. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg. Ondertussen gaat hij wel weg, maar krijgen we daardoor een fout als hij immuun is.
 2. In assignment is Type precies overbodig.
+3. 
 
 
 TODO:
-- Well Formed
+- Well Formed --> check
 - Overal typeChecking in statements en expression en exceptions catchen als het misgaat en dus het programma stoppen
+		--> ongeveer gedaan
 - Testen maken
 
