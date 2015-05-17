@@ -75,12 +75,7 @@ public class ForEachStatement extends LoopStatement {
 		stat.setSuperStatement(this);
 	}
 	
-	private boolean isActionStatement(Statement statement) {
-		return (statement instanceof StartRun) || (statement instanceof StopRun) ||
-				(statement instanceof StartDuck) ||(statement instanceof StopDuck) ||
-				(statement instanceof StartJump) || (statement instanceof StopJump) ||
-				(statement instanceof WaitStatement) || (statement instanceof SkipStatement);
-	}
+	
 	
 //	public boolean containsActionStatement() {
 //		for (Statement stat: ...) { // alle statements in de body
@@ -215,6 +210,10 @@ public class ForEachStatement extends LoopStatement {
 	public void reset() {
 		this.setNotReady();
 		this.setInBody(false);
+	}
+	@Override
+	public boolean isWellFormed() {
+		return this.getBody().isWellFormed();
 	}
 	
 }

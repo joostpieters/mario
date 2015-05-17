@@ -39,4 +39,11 @@ public class StartRun extends Statement {
 		this.setNotReady();
 	}
 
+	@Override
+	public boolean isWellFormed() {
+		if(this.getLoopStatement(this) != null) {
+			return false;
+		}
+		return true;
+	}
 }

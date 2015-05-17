@@ -24,7 +24,7 @@ public class IfStatement extends Statement {
 	}
 	
 	private Statement ifBody;
-	private Statement getIfBody() {
+	public Statement getIfBody() {
 		return this.ifBody;
 	}
 	private void setIfBody(Statement stat) {
@@ -33,7 +33,7 @@ public class IfStatement extends Statement {
 	}
 	
 	private Statement elseBody;
-	private Statement getElseBody() {
+	public Statement getElseBody() {
 		return this.elseBody;
 	}
 	private void setElseBody(Statement stat) {
@@ -86,6 +86,10 @@ public class IfStatement extends Statement {
 		this.setIndex(0);
 		this.getIfBody().reset();
 		this.getElseBody().reset();
+	}
+	@Override
+	public boolean isWellFormed() {
+		return (this.getIfBody().isWellFormed() && this.getElseBody().isWellFormed());
 	}
 	
 

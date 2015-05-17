@@ -30,5 +30,10 @@ public class PrintStatement extends Statement {
 	public void reset() {
 		this.setNotReady();
 	}
+
+	@Override
+	public boolean isWellFormed() {
+		return true;
+	}
 	
 }

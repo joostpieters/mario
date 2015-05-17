@@ -19,7 +19,7 @@ public class WhileStatement extends LoopStatement {
 	}
 	
 	private Statement body;
-	private Statement getBody() {
+	public Statement getBody() {
 		return this.body;
 	}
 	private void setBody(Statement stat) {
@@ -49,5 +49,10 @@ public class WhileStatement extends LoopStatement {
 	public void reset() {
 		this.setNotReady();
 		this.setInBody(false);
+	}
+	
+	@Override
+	public boolean isWellFormed() {
+		return this.getBody().isWellFormed();
 	}
 }

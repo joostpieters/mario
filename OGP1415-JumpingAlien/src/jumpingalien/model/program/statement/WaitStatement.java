@@ -42,4 +42,11 @@ public class WaitStatement extends Statement {
 		this.setTimePassed(0);
 	}
 	
+	@Override
+	public boolean isWellFormed() {
+		if(this.getLoopStatement(this) != null) {
+			return false;
+		}
+		return true;
+	}
 }

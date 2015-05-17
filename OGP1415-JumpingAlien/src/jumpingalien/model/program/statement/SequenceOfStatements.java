@@ -56,5 +56,14 @@ public class SequenceOfStatements extends Statement {
 			statement.reset();
 		}
 	}
+	@Override
+	public boolean isWellFormed() {
+		for (Statement stat: this.getList()) {
+			if(!stat.isWellFormed()) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 }

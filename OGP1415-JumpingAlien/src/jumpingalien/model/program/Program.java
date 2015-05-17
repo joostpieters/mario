@@ -5,9 +5,6 @@ import java.util.Map;
 
 import jumpingalien.model.GameObject;
 import jumpingalien.model.Type;
-import jumpingalien.model.program.statement.BreakStatement;
-import jumpingalien.model.program.statement.ForEachStatement;
-import jumpingalien.model.program.statement.LoopStatement;
 import jumpingalien.model.program.statement.Statement;
 
 
@@ -94,7 +91,11 @@ public class Program {
 		}
 	}
 
-	public boolean isWellFormed(Program program) {
+
+	
+	public boolean isWellFormed() {
+		return this.getMainStatement().isWellFormed();
+		
 		
 //		for (BreakStatement breakstatement: ...) { // alle breakstatements
 //			if (breakstatement.breakWellFormed() == false) {
@@ -108,7 +109,6 @@ public class Program {
 //			}
 //		}
 		
-		return true;
 	}
 
 
