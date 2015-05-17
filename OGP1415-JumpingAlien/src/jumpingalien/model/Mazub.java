@@ -581,6 +581,7 @@ public class Mazub extends GameObject {
 	 * @effect Sets the ySpeed to zero if it is positive
 	 * 			| if (getYSpeed > 0)
 	 * 			|	then setYSpeed(0)
+	 * 			|		 this.setNotJumping()
 	 */
 	public void endJump() {
 		if (this.getYSpeed() > 0) {
@@ -652,14 +653,16 @@ public class Mazub extends GameObject {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
-	 * @effect the list allSlimesSharks contains all the slimes and sharks in the world
-	 * 			| allSlimesSharks = world.getSlimes()
-	 * 			| allSlimesSharks.addAll(world.getSharks())
+	 * @effect the list allSlimesSharksBuzam contains all the slimes, sharks and eventually buzam in the world
+	 * 			| allSlimesSharksBuzam = world.getSlimes()
+	 * 			| allSlimesSharksBuzam.addAll(world.getSharks())
+	 * 			| if (this.getWorld().getBuzam() != null) 
+	 *			|	the allSlimesSharksBuzam.add(this.getWorld().getBuzam());
 	 * @effect calculates the new position of mazub taking all the slimes and sharks
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
-	 * 			| for each other: allSlimesSharks:
+	 * 			| for each other: allSlimesSharksBuzam:
 	 * 			| 	let 
 	 * 			| 		double xDim1 = getXDim()
 	 * 			|		double yDim1 = getYDim()
@@ -670,7 +673,7 @@ public class Mazub extends GameObject {
 	 * 			| 		boolean touched = false
 	 * 			| 	in
 	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
-	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
+	 * @effect the hitpoints of mazub and the sharks/slimes/Buzam are updated taking the collisions into account
 	 * 			| 	if newPos[3] == 1
 	 * 			| 		then onGameObject = true
 	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 
@@ -687,7 +690,6 @@ public class Mazub extends GameObject {
 	private double[] collidingSlimesSharksBuzam(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSlimesSharksBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());
 		allSlimesSharksBuzam.addAll(this.getWorld().getSharks());
-		//TODO mss checkers voor nullwaarden
 		if (this.getWorld().getBuzam() != null) {
 			allSlimesSharksBuzam.add(this.getWorld().getBuzam());
 		}
@@ -731,7 +733,7 @@ public class Mazub extends GameObject {
 	 * @effect the new position of Mazub is calculated and a possible collision with
 	 * 			a plant gets checked
 	 * 			| let
-	 * 			| 	newPos = collidingSlimesSharks(newXPos, newYPos, dt)
+	 * 			| 	newPos = collidingSlimesSharksBuzam(newXPos, newYPos, dt)
 	 * 			| in
 	 * 			| collidingPlants(newXPos, newYPos)
 	 * @return the adapted horizontal and vertical position of Mazub

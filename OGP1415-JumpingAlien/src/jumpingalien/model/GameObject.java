@@ -65,10 +65,13 @@ public abstract class GameObject extends SuperObject {
 	 *            The y-coordinate of the gameObject's initial position
 	 * @param sprites
 	 *            An array of sprites for the new gameObject
-	 * @effect the x and y position and the sprites are set
+	 * @param program
+	 * 			  A program for the gameObject
+	 * @effect the x and y position, the sprites and program are set
 	 * 			| this.setXPos(xPos)
 	 * 			| this.setYPos(yPos)
 	 *			| this.setSprite(sprites)
+	 *			| this.setProgram(program)
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the gameObject
 	 * 			| ! isValidPosition(xPos,yPos)
@@ -218,8 +221,20 @@ public abstract class GameObject extends SuperObject {
 	protected Program getProgram() {
 		return this.program;
 	}
+	
+	/**
+	 * Sets the program for the gameObject
+	 * @param program
+	 * 			the program to set
+	 * @pre the program should not be null and well formed
+	 * 		 	| program != null
+	 * 			| program.isWellFormed()
+	 * @post the program is set to this gameObject
+	 * 			| this.program = program
+	 * 			| program.setGameObject(this)
+	 */
 	protected void setProgram(Program program) {
-		// TODO checkers -> nog andere?
+		assert program != null;
 		assert program.isWellFormed();
 		this.program = program;
 		program.setGameObject(this);
@@ -1686,10 +1701,6 @@ public abstract class GameObject extends SuperObject {
 		this.stopMovingY();
 	}
 	
-	public void endJump() {
-		this.setYSpeed(0);
-	}
-	
 	/**
 	 * returns the new horizontal and vertical position, if the gameobjects touched and if on top of the 
 	 * second game object
@@ -1762,7 +1773,6 @@ public abstract class GameObject extends SuperObject {
 		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
 	
-	// TODO commentaren
 	/**
 	 * the game object starts moving to the right
 	 */

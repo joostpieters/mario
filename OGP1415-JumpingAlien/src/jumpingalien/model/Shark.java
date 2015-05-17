@@ -331,31 +331,31 @@ public class Shark extends GameObject {
 	 * 			the newly calculated horizontal position
 	 * @param newYPos
 	 * 			the newly calculated vertical position
-	 * @effect if the slime touches a wall, it's movement is stopped and his position is adapted
+	 * @effect if the shark touches a wall, it's movement is stopped and his position is adapted
 	 * 			| if (againstLeftWall(newXPos,newYPos) && getOrientation() == Orientation.LEFT)
 	 * 			| 	then newXPos = (getTilesLeft(newXPos,newYPos)[0][0] + 1) * world.getTileLength()
 	 * 			| 		 stopMoving()
 	 * 			| if (againstRightWall(newXPos,newYPos) && this.getOrientation() == Orientation.RIGHT) 
 	 * 			| 	then newXPos = (getTilesRight(newXPos,newYPos)[0][0]) * world.getTileLength() - getSize()[0]
 	 * 			| 		 stopMoving()
-	 * @effect if the slime touches a roof, its vertical speed is set to zero and its vertical position is adapted
+	 * @effect if the shark touches a roof, its vertical speed is set to zero and its vertical position is adapted
 	 * 			| if (isAgainstRoof(newXPos,newYPos)) 
 	 * 			| 	then newYPos = (getTilesAbove(newXPos,newYPos)[0][1]) * world.getTileLength() - getSize()[1] - 1
 	 * 			| 		 setYSpeed(0)
-	 * @effect if the slime is moving and not fully submerged in water, the horizontal movement is stopped
+	 * @effect if the shark is moving and not fully submerged in water, the horizontal movement is stopped
 	 * 			and the vertical position is adapted
 	 * 			| if (isMoving() && isInWater() && ( ! isFullyInFeature(newXPos, newYPos, 2)))
 	 * 			| 	then this.setYSpeed(0)
 	 * 			| 		 setYAcc(0)
 	 * 			| 		 newYPos = (getTilesAbove(newXPos,newYPos)[0][1]) * world.getTileLength() - getSize()[1] - 1
-	 * @effect if a falling slime touches a floor, its fall is ended and the vertical position is adapted
+	 * @effect if a falling shark touches a floor, its fall is ended and the vertical position is adapted
 	 * 			| if (isFalling() && onFloor(newXPos,newYPos))
 	 * 			| 	then newYPos = ((getTilesUnder(newXPos,newYPos)[0][1] +1) * world.getTileLength() - 1)
 	 * 			| 		 endFall()
-	 * @effect if a falling slime is fully submerged in water, it's fall is ended
+	 * @effect if a falling shark is fully submerged in water, it's fall is ended
 	 * 			| if (this.isFalling() && this.isFullyInFeature(newXPos, newYPos, 2)) 
 	 * 			| 	then endFall()
-	 * @effect if a slime touches a floor, its vertical position is adapted and vertical acceleration and speed
+	 * @effect if a shark touches a floor, its vertical position is adapted and vertical acceleration and speed
 	 * 			are set to zero if the vertical acceleration is still negative
 	 * 			| if (onFloor(newXPos,newYPos))
 	 * 			| 	then newYPos = ((getTilesUnder(newXPos,newYPos)[0][1] + 1) * world.getTileLength() - 1)
@@ -468,8 +468,9 @@ public class Shark extends GameObject {
 	 * advances the time with dt seconds whilt the Shark is still alive
 	 * @param dt
 	 * 			a small time interval
-	 * @effect the Shark starts a random movement
-	 * 			| randomMovement(dt)
+	 * @effect the Shark starts a random movement if he has no program
+	 * 			| if (this.getProgram() == null) 
+	 * 			|	the this.randomMovement(dt)	
 	 * @effect the local variables newCalculatedPos, newXPos and nexYPos are initialized, then 
 	 * 			checked if the newly calculated positions are within the boundaries of the game 
 	 * 			world, if this is not the case, the Shark is removed from the world, then 
@@ -625,6 +626,7 @@ public class Shark extends GameObject {
 	 * @effect the shark starts it's vertical jump
 	 * 			| setXacc(Shark.getMoveAcc())
 	 * 			| setYSpeed(Shark.getJumpSpeed())
+	 * 			| setJumping()
 	 */
 	public void startJump() {
 		this.setXAcc(Shark.getMoveAcc());
@@ -654,6 +656,19 @@ public class Shark extends GameObject {
 		this.setOrientationLeft();
 	}
 	
+	/**
+	 * Ends the Shark's jump if he is still jumping
+	 * @effect Sets the ySpeed to zero if it is positive
+	 * 			| if (getYSpeed > 0)
+	 * 			|	then setYSpeed(0)
+	 * 			|		 this.setNotJumping()
+	 */
+	public void endJump() {
+		if (this.getYSpeed() > 0) {
+			this.setYSpeed(0);
+			this.setNotJumping();
+		}
+	}
 	/**
 	 * the Shark stops moving
 	 * @effect the horizontal speed is set to zero and the vertical acceleration is 
@@ -765,6 +780,8 @@ public class Shark extends GameObject {
 	 * 			| in
 	 * 			| allSlimesSharksMazubBuzam.addAll(world.getSharks())
 	 * 			| allSlimesSharksMazubBuzam.add(world.getAlien())
+	 * 			| if (this.getWorld().getBuzam() != null) {
+	 * 			| 	then allSlimesSharksMazubBuzam.add(this.getWorld().getBuzam());
 	 * 			| for each GameObject other: allSlimesSharksMazubBuzam :
 	 * 			| 	if (this != other)
 	 * 			| 		then newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,yDim2)
@@ -782,7 +799,6 @@ public class Shark extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
-	//TODO mss checker
 	@Raw
 	public double[] colliding(double newXPos, double newYPos, double dt) {	
 		List<GameObject> allSlimesSharksMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSlimes());

@@ -499,12 +499,13 @@ public class World {
 	/**
 	 * returns a collection of all gameObjects in this world
 	 * @effect the collection list contains all game objects
-	 * 			| Collection<GameObject> list = new ArrayList<GameObject>()
-	 * 			| list.addAll(this.getSharks())
-	 * 			| list.addAll(this.getSlimes())
-	 * 			| list.addAll(this.getPlants())
-	 * 			| list.add(this.getAlien())
-	 * 			| list.add(this.getBuzam())
+	 * 			| let
+	 * 			|	Collection<GameObject> list = new ArrayList<GameObject>()
+	 * 			| 	list.addAll(this.getSharks())
+	 * 			| 	list.addAll(this.getSlimes())
+	 * 			|	list.addAll(this.getPlants())
+	 * 			| 	list.add(this.getAlien())
+	 * 			| 	list.add(this.getBuzam())
 	 * @return the collection list
 	 * 			| return list
 	 */
@@ -518,7 +519,6 @@ public class World {
 		return list;
 	}
 	
-	//TODO moet deze (en de volgende niet zo met zo dat speciaal met locale variabelen in de comments? -> ja...:(
 	/**
 	 * returns an arraylist of all impassable tiles in this world
 	 * @effect the collection list contains all impassable tiles
@@ -1121,7 +1121,7 @@ public class World {
 	}
 	/**
 	 * returns true if there are no more than 100 game objects that are not a Mazub
-	 * @return (getNbPlants() + getNbSharks() + getNbSlimes() <= 100) 
+	 * @return amount <= 100
 	 */
 	private boolean isValidAmountOfCharacters(int amount) {
 		return amount <= 100;
