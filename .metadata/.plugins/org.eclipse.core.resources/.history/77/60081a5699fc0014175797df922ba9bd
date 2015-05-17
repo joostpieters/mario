@@ -499,9 +499,7 @@ public class World {
 	/**
 	 * returns a collection of all gameObjects in this world
 	 * @effect the collection list contains all game objects
-	 * 			| let
-	 * 			|	 Collection<GameObject> list = new ArrayList<GameObject>()
-	 * 			| in
+	 * 			| Collection<GameObject> list = new ArrayList<GameObject>()
 	 * 			| list.addAll(this.getSharks())
 	 * 			| list.addAll(this.getSlimes())
 	 * 			| list.addAll(this.getPlants())

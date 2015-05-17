@@ -241,6 +241,7 @@ public class Plant extends GameObject {
 		this.getWorld().removePlant(this);
 		this.setWorld(null);
 	}
+	// TODO commentaar
 	
 	/**
 	 * the plant starts moving to the right

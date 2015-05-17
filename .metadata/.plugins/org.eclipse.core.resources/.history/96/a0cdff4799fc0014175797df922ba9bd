@@ -499,9 +499,7 @@ public class World {
 	/**
 	 * returns a collection of all gameObjects in this world
 	 * @effect the collection list contains all game objects
-	 * 			| let
-	 * 			|	 Collection<GameObject> list = new ArrayList<GameObject>()
-	 * 			| in
+	 * 			| Collection<GameObject> list = new ArrayList<GameObject>()
 	 * 			| list.addAll(this.getSharks())
 	 * 			| list.addAll(this.getSlimes())
 	 * 			| list.addAll(this.getPlants())
@@ -520,6 +518,7 @@ public class World {
 		return list;
 	}
 	
+	//TODO moet deze (en de volgende niet zo met zo dat speciaal met locale variabelen in de comments? -> ja...:(
 	/**
 	 * returns an arraylist of all impassable tiles in this world
 	 * @effect the collection list contains all impassable tiles
@@ -595,7 +594,7 @@ public class World {
 	 */
 	@Raw
 	private void setNbTilesX(int nbTilesX) throws IllegalNbTilesException {
-		if ( ! this.isValidNbTiles(nbTilesX)) {
+		if( ! this.isValidNbTiles(nbTilesX)) {
 			throw new IllegalNbTilesException(nbTilesX);
 		}
 		this.nbTilesX = nbTilesX;
@@ -610,7 +609,7 @@ public class World {
 	 */
 	@Raw
 	private void setNbTilesY(int nbTilesY) throws IllegalNbTilesException {
-		if ( ! this.isValidNbTiles(nbTilesY)) {
+		if( ! this.isValidNbTiles(nbTilesY)) {
 			throw new IllegalNbTilesException(nbTilesY);
 		}
 		this.nbTilesY = nbTilesY;

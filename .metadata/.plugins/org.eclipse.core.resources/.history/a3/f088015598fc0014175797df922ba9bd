@@ -1762,6 +1762,7 @@ public abstract class GameObject extends SuperObject {
 		return new double[] {newXPos, newYPos, touched, onGameObject};
 	}
 	
+	// TODO commentaren
 	/**
 	 * the game object starts moving to the right
 	 */

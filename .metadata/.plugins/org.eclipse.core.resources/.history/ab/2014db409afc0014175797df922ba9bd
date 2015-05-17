@@ -652,18 +652,18 @@ public class Mazub extends GameObject {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
-	 * @effect the list allSlimesSharksBuzam contains all the slimes, sharks and buzam in the world
+	 * @effect the list allSlimesSharksBuzam contains all the slimes and sharks in the world
 	 * 			| let 
 	 * 			| 	allSlimesSharksBuzam = world.getSlimes()
 	 * 			| in
 	 * 			| allSlimesSharksBuzam.addAll(world.getSharks())
 	 * 			| if (this.getWorld().getBuzam() != null) 
 	 * 			| 	then allSlimesSharksBuzam.add(this.getWorld().getBuzam())
-	 * @effect calculates the new position of mazub taking all the slimes, sharks and buzam
+	 * @effect calculates the new position of mazub taking all the slimes and sharks
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
-	 * 			| for each other: allSlimesSharksBuzam:
+	 * 			| for each other: allSlimesSharks:
 	 * 			| 	let 
 	 * 			| 		double xDim1 = getXDim()
 	 * 			|		double yDim1 = getYDim()
@@ -674,7 +674,7 @@ public class Mazub extends GameObject {
 	 * 			| 		boolean touched = false
 	 * 			| 	in
 	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
-	 * @effect the hitpoints of mazub and the sharks/slimes/buzam are updated taking the collisions into account
+	 * @effect the hitpoints of mazub and the sharks/slimes are updated taking the collisions into account
 	 * 			| 	if newPos[3] == 1
 	 * 			| 		then onGameObject = true
 	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 

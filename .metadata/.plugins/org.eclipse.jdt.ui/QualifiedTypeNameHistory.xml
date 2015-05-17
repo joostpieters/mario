@@ -33,4 +33,7 @@
 <fullyQualifiedTypeName name="java.beans.Expression"/>
 <fullyQualifiedTypeName name="program.Program"/>
 <fullyQualifiedTypeName name="program.expression.BinaryExpression"/>
+<fullyQualifiedTypeName name="program.statement.BreakStatement"/>
+<fullyQualifiedTypeName name="program.statement.LoopStatement"/>
+<fullyQualifiedTypeName name="program.statement.ForEachStatement"/>
 </qualifiedTypeNameHistroy>

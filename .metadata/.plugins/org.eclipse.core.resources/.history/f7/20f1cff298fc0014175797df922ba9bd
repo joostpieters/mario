@@ -394,8 +394,7 @@ public class Slime extends GameObject {
 	 * 			| allSharksSlimesMazubBuzam =  new ArrayList<GameObject>world.getSharks())
 	 *			| allSharksSlimesMazubBuzam.addAll(world.getSlimes());
 	 *			| allSharksSlimesMazubBuzam.add(world.getAlien())
-	 *			| if (this.getWorld().getBuzam() != null)
-	 *			| 	then allSharksSlimesMazubBuzam.add(world.getBuzam())
+	 *			| allSharksSlimesMazubBuzam.add(world.getBuzam())
 	 * @effect a local boolean onGameObject indicating if this is on another game object is set to false
 	 * 			and a local double newPos is initialized
 	 * 			| onGameObject = false
@@ -421,6 +420,7 @@ public class Slime extends GameObject {
 	 * 			| 	then fall()
 	 * @return {newPos[0], newPos[1]}
 	 */
+	//TODO mss checker
 	@Raw
 	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSharks());

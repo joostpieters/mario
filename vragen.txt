@@ -1,10 +1,13 @@
 0. Hoe for each met Lambda functies?
 1. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg
 2. In assignment is Type precies overbodig.
+3. in tile: exception throwen: betere manier? en getHitpoints()? 0 returnen of exception?
+
 
 
 TODO:
 - Well Formed
 - Overal typeChecking in statements en expression en exceptions catchen als het misgaat en dus het programma stoppen
 - Testen maken
+- Mazub laten springen als die op buzam staat? -> moet dit? 
 

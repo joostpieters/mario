@@ -257,7 +257,7 @@ public class Buzam extends Mazub {
 		// buzam een instanceof Mazub is en de sprite van mazub gaat ook niet 
 		// weg als die dood is
 //		this.setXPos(-500);
-//		this.setYPos(-500); -> dit was duidelijk de oplossing die ze zochten 
+//		this.setYPos(-500); -> dit was duidelijk de oplossing die ze zochten
 		this.getWorld().removeBuzam(this);
 		this.setWorld(null);
 		
