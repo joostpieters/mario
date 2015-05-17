@@ -33,19 +33,12 @@ public abstract class Statement {
 		this.ready = false;
 	}
 	
-	public boolean isActionStatement(Statement statement) {
-		return (statement instanceof StartRun) || (statement instanceof StopRun) ||
-				(statement instanceof StartDuck) ||(statement instanceof StopDuck) ||
-				(statement instanceof StartJump) || (statement instanceof StopJump) ||
-				(statement instanceof WaitStatement) || (statement instanceof SkipStatement);
-	}
-
+	
 	// Classy recursie
 	public LoopStatement getLoopStatement(Statement stat) {
 		if(stat.getSuperStatement() instanceof LoopStatement) {
 			return (LoopStatement) stat.getSuperStatement();
 		}
-		// de breakstatement is niet wellFormed
 		else if (stat.getSuperStatement() == null) {
 			return null;
 		}

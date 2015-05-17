@@ -74,18 +74,7 @@ public class ForEachStatement extends LoopStatement {
 		this.body = stat;
 		stat.setSuperStatement(this);
 	}
-	
-	
-	
-//	public boolean containsActionStatement() {
-//		for (Statement stat: ...) { // alle statements in de body
-//			if (stat.isActionStatement()) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-	
+		
 	private List<SuperObject> listObjectByKind(Program program) {
 		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
 		switch(this.getKind()) {
