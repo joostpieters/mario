@@ -427,7 +427,7 @@ public class Mazub extends GameObject {
 	 * Sets the time since startMove to a new value
 	 * @param timeSinceStartMove 
 	 * 			the new time_since_startMove
-	 * @pre timeSinceStartmove should always be bigger than or equel to zero
+	 * @pre timeSinceStartmove should always be bigger than or equal to zero
 	 * 		| timeSinceStartMove >= 0
 	 * @post timeSinceStartMove is equal to the given double
 	 */
@@ -653,23 +653,12 @@ public class Mazub extends GameObject {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
-<<<<<<< HEAD
-	 * @effect the list allSlimesSharksBuzam contains all the slimes, sharks and buzam in the world
-	 * 			| let 
-	 * 			| 	allSlimesSharksBuzam = world.getSlimes()
-	 * 			| in
-	 * 			| allSlimesSharksBuzam.addAll(world.getSharks())
-	 * 			| if (this.getWorld().getBuzam() != null) 
-	 * 			| 	then allSlimesSharksBuzam.add(this.getWorld().getBuzam())
-	 * @effect calculates the new position of mazub taking all the slimes, sharks and buzam
-=======
 	 * @effect the list allSlimesSharksBuzam contains all the slimes, sharks and eventually buzam in the world
 	 * 			| allSlimesSharksBuzam = world.getSlimes()
 	 * 			| allSlimesSharksBuzam.addAll(world.getSharks())
 	 * 			| if (this.getWorld().getBuzam() != null) 
 	 *			|	the allSlimesSharksBuzam.add(this.getWorld().getBuzam());
 	 * @effect calculates the new position of mazub taking all the slimes and sharks
->>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
@@ -684,11 +673,7 @@ public class Mazub extends GameObject {
 	 * 			| 		boolean touched = false
 	 * 			| 	in
 	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
-<<<<<<< HEAD
-	 * @effect the hitpoints of mazub and the sharks/slimes/buzam are updated taking the collisions into account
-=======
 	 * @effect the hitpoints of mazub and the sharks/slimes/Buzam are updated taking the collisions into account
->>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 	 * 			| 	if newPos[3] == 1
 	 * 			| 		then onGameObject = true
 	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 
