@@ -40,7 +40,6 @@ import jumpingalien.model.program.expression.ObjectNull;
 import jumpingalien.model.program.expression.ObjectSelf;
 import jumpingalien.model.program.expression.RandomDouble;
 import jumpingalien.model.program.expression.SearchObject;
-import jumpingalien.model.program.expression.SqrtDouble;
 import jumpingalien.model.program.statement.PrintStatement;
 import jumpingalien.model.program.statement.Statement;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
@@ -336,32 +335,12 @@ public class UnaryExpressionTest {
 	
 	@Test
 	public void testNotBool2() {
-		Expression falsebool = new BoolFalse();
+		Expression falsebool = new BoolFalse);
 		Expression notbool = new NotBool(falsebool);
 		Map<String, Type> map = new HashMap<String, Type>();
 		Statement stat = new PrintStatement(notbool);
 		Program program = new Program(stat, map);
 		assertEquals(notbool.evaluate(program), true);	
-	}
-	
-	@Test
-	public void testSqrtDouble() {
-		Expression constant = new Constant(16);
-		Expression sqrt = new SqrtDouble(constant);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(sqrt);
-		Program program = new Program(stat, map);
-		assertEquals(sqrt.evaluate(program), 4.0);	
-	}
-	
-	@Test
-	public void testSqrtDouble2() {
-		Expression constant = new Constant(43);
-		Expression sqrt = new SqrtDouble(constant);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(sqrt);
-		Program program = new Program(stat, map);
-		assertEquals(sqrt.evaluate(program), Math.sqrt(43));	
 	}
 	
 	

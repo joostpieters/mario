@@ -354,16 +354,6 @@ public class UnaryExpressionTest {
 		assertEquals(sqrt.evaluate(program), 4.0);	
 	}
 	
-	@Test
-	public void testSqrtDouble2() {
-		Expression constant = new Constant(43);
-		Expression sqrt = new SqrtDouble(constant);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(sqrt);
-		Program program = new Program(stat, map);
-		assertEquals(sqrt.evaluate(program), Math.sqrt(43));	
-	}
-	
 	
 	
 	

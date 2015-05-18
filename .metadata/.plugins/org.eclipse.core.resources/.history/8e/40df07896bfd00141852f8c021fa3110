@@ -7,15 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jumpingalien.model.Mazub;
-import jumpingalien.model.Plant;
-import jumpingalien.model.School;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
 import jumpingalien.model.Tile;
 import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.exceptions.IllegalPositionException;
-import jumpingalien.model.exceptions.IllegalSchoolException;
 import jumpingalien.model.exceptions.IllegalSpriteException;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.BoolFalse;
@@ -32,15 +29,11 @@ import jumpingalien.model.program.expression.IsDucking;
 import jumpingalien.model.program.expression.IsJumping;
 import jumpingalien.model.program.expression.IsMazub;
 import jumpingalien.model.program.expression.IsMoving;
-import jumpingalien.model.program.expression.IsPlant;
 import jumpingalien.model.program.expression.IsShark;
-import jumpingalien.model.program.expression.IsSlime;
-import jumpingalien.model.program.expression.NotBool;
 import jumpingalien.model.program.expression.ObjectNull;
 import jumpingalien.model.program.expression.ObjectSelf;
 import jumpingalien.model.program.expression.RandomDouble;
 import jumpingalien.model.program.expression.SearchObject;
-import jumpingalien.model.program.expression.SqrtDouble;
 import jumpingalien.model.program.statement.PrintStatement;
 import jumpingalien.model.program.statement.Statement;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
@@ -274,40 +267,15 @@ public class UnaryExpressionTest {
 	}
 	
 	@Test
-	public void testIsSlime() throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {		
+	public void testIsSlime() throws IllegalPositionException, IllegalSpriteException {		
 		Expression obj = new ObjectSelf();
-		Expression isslime = new IsSlime(obj);
+		Expression isslime = new IsShark(obj);
 		Map<String, Type> map = new HashMap<String, Type>();
 		Statement stat = new PrintStatement(isslime);
 		Program program = new Program(stat, map);
-		School school = new School();
-		Slime slime = new Slime(20, 30, spriteArrayForSize(1, 1, 2), school);
+		Slime slime = new Slime(20, 30, spriteArrayForSize(1, 1, 2));
 		program.setGameObject(slime);
 		assertEquals(isslime.evaluate(program), true);	
-	}
-	
-	@Test
-	public void testIsSlimeFalse() throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {		
-		Expression obj = new ObjectSelf();
-		Expression isslime = new IsSlime(obj);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(isslime);
-		Program program = new Program(stat, map);
-		Shark gevaarlijke_haai = new Shark(20, 30, spriteArrayForSize(1, 1, 2));
-		program.setGameObject(gevaarlijke_haai);
-		assertEquals(isslime.evaluate(program), false);	
-	}
-	
-	@Test
-	public void testIsPlant() throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {		
-		Expression obj = new ObjectSelf();
-		Expression isplant = new IsPlant(obj);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(isplant);
-		Program program = new Program(stat, map);
-		Plant plant = new Plant(20, 30, spriteArrayForSize(1, 1, 2));
-		program.setGameObject(plant);
-		assertEquals(isplant.evaluate(program), true);	
 	}
 	
 	// TODO nog fixen
@@ -323,46 +291,6 @@ public class UnaryExpressionTest {
 //		program.setGameObject(alien);
 //		assertEquals(isair.evaluate(program), world.getGeologicalFeature(...);	
 //	}
-	
-	@Test
-	public void testNotBool() {
-		Expression truebool = new BoolTrue();
-		Expression notbool = new NotBool(truebool);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(notbool);
-		Program program = new Program(stat, map);
-		assertEquals(notbool.evaluate(program), false);	
-	}
-	
-	@Test
-	public void testNotBool2() {
-		Expression falsebool = new BoolFalse();
-		Expression notbool = new NotBool(falsebool);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(notbool);
-		Program program = new Program(stat, map);
-		assertEquals(notbool.evaluate(program), true);	
-	}
-	
-	@Test
-	public void testSqrtDouble() {
-		Expression constant = new Constant(16);
-		Expression sqrt = new SqrtDouble(constant);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(sqrt);
-		Program program = new Program(stat, map);
-		assertEquals(sqrt.evaluate(program), 4.0);	
-	}
-	
-	@Test
-	public void testSqrtDouble2() {
-		Expression constant = new Constant(43);
-		Expression sqrt = new SqrtDouble(constant);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(sqrt);
-		Program program = new Program(stat, map);
-		assertEquals(sqrt.evaluate(program), Math.sqrt(43));	
-	}
 	
 	
 	

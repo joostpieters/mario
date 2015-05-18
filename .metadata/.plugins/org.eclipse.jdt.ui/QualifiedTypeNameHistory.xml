@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="jumpingalien.model.IllegalDtException"/>
-<fullyQualifiedTypeName name="jumpingalien.util.Sprite"/>
-<fullyQualifiedTypeName name="jumpingalien.model.IllegalSpriteException"/>
-<fullyQualifiedTypeName name="jumpingalien.model.IllegalSpeedException"/>
-<fullyQualifiedTypeName name="jumpingalien.util.ModelException"/>
-<fullyQualifiedTypeName name="jumpingalien.model.IllegalPositionException"/>
-<fullyQualifiedTypeName name="jumpingalien.model.IllegalInitStartSpeedException"/>
-<fullyQualifiedTypeName name="jumpingalien.model.IllegalMaxSpeedException"/>
-<fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Basic"/>
-<fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Immutable"/>
-<fullyQualifiedTypeName name="be.kuleuven.cs.som.annotate.Raw"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
-<fullyQualifiedTypeName name="jumpingalien.model.Plant"/>
-<fullyQualifiedTypeName name="jumpingalien.model.Orientation"/>
-<fullyQualifiedTypeName name="jumpingalien.model.School"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory"/>
@@ -59,4 +44,20 @@
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.GetHpObject"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.GetX"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsJumping"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsMoving"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsMazub"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsDucking"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsDead"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsAir"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Tile"/>
+<fullyQualifiedTypeName name="jumpingalien.model.World"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsShark"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Shark"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Slime"/>
+<fullyQualifiedTypeName name="jumpingalien.model.School"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsSlime"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsPlant"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Plant"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.NotBool"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.SqrtDouble"/>
 </qualifiedTypeNameHistroy>
