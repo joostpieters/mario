@@ -1,0 +1,45 @@
+package jumpingalien.part3.tests;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import jumpingalien.model.Type;
+import jumpingalien.model.program.Program;
+import jumpingalien.model.program.expression.Addition;
+import jumpingalien.model.program.expression.BoolTrue;
+import jumpingalien.model.program.expression.Constant;
+import jumpingalien.model.program.expression.Expression;
+import jumpingalien.model.program.expression.ObjectSelf;
+import jumpingalien.model.program.expression.RandomDouble;
+import jumpingalien.model.program.statement.PrintStatement;
+import jumpingalien.model.program.statement.Statement;
+
+import org.junit.Test;
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class UnaryExpressionTest {
+	
+	@Test
+	public void testRandomDouble() {
+		Expression expr1 = new Constant(10);
+		Expression random = new RandomDouble(expr1);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(random);
+		Program program = new Program(stat, map);
+		assertEquals((((Double)random.evaluate(program)) < 10 && ((Double) random.evaluate(program) > 0.0)) , true);			
+	}
+	
+	@Test
+	public void testObjectSelf() {
+		Expression expr1 = new Constant(10);
+		Expression obj = new ObjectSelf();
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		assertEquals(obj.evaluate(program), true);			
+	}
+	
+	
+}

@@ -1,0 +1,30 @@
+package jumpingalien.part3.tests;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import jumpingalien.model.Type;
+import jumpingalien.model.program.Program;
+import jumpingalien.model.program.expression.Addition;
+import jumpingalien.model.program.expression.BoolTrue;
+import jumpingalien.model.program.expression.Constant;
+import jumpingalien.model.program.expression.Expression;
+import jumpingalien.model.program.statement.PrintStatement;
+import jumpingalien.model.program.statement.Statement;
+
+import org.junit.Test;
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class UnaryExpressionTest {
+	
+	@Test(expected = ClassCastException.class)
+	public void testException() {
+		Expression expr1 = new Constant(12);
+		Expression expr2 = new BoolTrue();
+		Expression<Double> add = new Addition(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(add);
+		Program program = new Program(stat, map);
+		add.evaluate(program);
+	}
+}

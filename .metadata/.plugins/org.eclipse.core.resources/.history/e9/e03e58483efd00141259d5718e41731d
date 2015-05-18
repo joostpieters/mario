@@ -1,0 +1,102 @@
+package jumpingalien.part3.tests;
+import java.util.HashMap;
+import java.util.Map;
+
+import jumpingalien.model.Type;
+import jumpingalien.model.program.Program;
+import jumpingalien.model.program.expression.Addition;
+import jumpingalien.model.program.expression.Constant;
+import jumpingalien.model.program.expression.Division;
+import jumpingalien.model.program.expression.Equals;
+import jumpingalien.model.program.expression.Expression;
+import jumpingalien.model.program.expression.GreaterThan;
+import jumpingalien.model.program.expression.LessThan;
+import jumpingalien.model.program.expression.Multiplication;
+import jumpingalien.model.program.expression.Subtraction;
+import jumpingalien.model.program.statement.PrintStatement;
+import jumpingalien.model.program.statement.Statement;
+
+import org.junit.Test;
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class BinaryExpressionTest {
+	
+	@Test
+	public void testAddition() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Double> addition = new Addition(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(addition);
+		Program program = new Program(stat, map);
+		addition.evaluate(program);			
+	}
+	
+	@Test
+	public void testMultiplication() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Double> multiplication = new Multiplication(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(multiplication);
+		Program program = new Program(stat, map);
+		multiplication.evaluate(program);			
+	}
+	
+	@Test
+	public void testDivision() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Double> division = new Division(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(division);
+		Program program = new Program(stat, map);
+		division.evaluate(program);			
+	}
+	
+	@Test
+	public void testSubtraction() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Double> subtraction = new Subtraction(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(subtraction);
+		Program program = new Program(stat, map);
+		subtraction.evaluate(program);			
+	}
+	
+	@Test
+	public void testEquals() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Boolean> equals = new Equals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(equals);
+		Program program = new Program(stat, map);
+		equals.evaluate(program);			
+	}
+	
+	@Test
+	public void testGreaterThan() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Boolean> greaterThan = new GreaterThan(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(greaterThan);
+		Program program = new Program(stat, map);
+		assert (greaterThan.evaluate(program) == true);			
+	}
+	
+	@Test
+	public void testLessThan() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(3);
+		Expression<Boolean> lessThan = new LessThan(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(lessThan);
+		Program program = new Program(stat, map);
+		lessThan.evaluate(program);			
+	}
+	
+	
+}

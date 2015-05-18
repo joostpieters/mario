@@ -38,7 +38,7 @@ import jumpingalien.util.Sprite;
 public class Facade implements IFacadePart3 {
 	
 	@Override
-	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites){
+	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
 		try {return new Mazub(pixelLeftX, pixelBottomY,sprites);}
 		catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
@@ -47,7 +47,7 @@ public class Facade implements IFacadePart3 {
 			throw new ModelException(f.getMessage());
 		}
 	}
-//	@Override
+	//@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
 			int initStartSpeed, int maxSpeed) {
 		try {return new Mazub(pixelLeftX, pixelBottomY, sprites, initStartSpeed, maxSpeed);}

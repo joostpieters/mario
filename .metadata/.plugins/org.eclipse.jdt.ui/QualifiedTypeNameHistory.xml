@@ -22,7 +22,6 @@
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.UnaryExpression"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
-<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
 <fullyQualifiedTypeName name="jumpingalien.model.GameObject"/>
 <fullyQualifiedTypeName name="jumpingalien.model.SuperObject"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -36,4 +35,28 @@
 <fullyQualifiedTypeName name="program.statement.BreakStatement"/>
 <fullyQualifiedTypeName name="program.statement.LoopStatement"/>
 <fullyQualifiedTypeName name="program.statement.ForEachStatement"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.Multiplication"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.Division"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.Subtraction"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.Equals"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.GreaterThan"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.LessThan"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.GreaterEquals"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.LessEquals"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.NotEquals"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.BoolTrue"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.AndBool"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.OrBool"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.RandomDouble"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.ObjectSelf"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Mazub"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.BoolFalse"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.DirectionExpression"/>
+<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.ObjectNull"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.GetHeightObject"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.SearchObject"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.GetHpObject"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.GetX"/>
+<fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsJumping"/>
 </qualifiedTypeNameHistroy>

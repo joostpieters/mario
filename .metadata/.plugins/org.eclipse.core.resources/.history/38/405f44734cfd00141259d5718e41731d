@@ -1,0 +1,198 @@
+package jumpingalien.part3.tests;
+
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import jumpingalien.model.Mazub;
+import jumpingalien.model.Type;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSpriteException;
+import jumpingalien.model.program.Program;
+import jumpingalien.model.program.expression.BoolFalse;
+import jumpingalien.model.program.expression.BoolTrue;
+import jumpingalien.model.program.expression.Constant;
+import jumpingalien.model.program.expression.DirectionExpression;
+import jumpingalien.model.program.expression.Expression;
+import jumpingalien.model.program.expression.GetHeightObject;
+import jumpingalien.model.program.expression.GetHpObject;
+import jumpingalien.model.program.expression.GetX;
+import jumpingalien.model.program.expression.IsJumping;
+import jumpingalien.model.program.expression.ObjectNull;
+import jumpingalien.model.program.expression.ObjectSelf;
+import jumpingalien.model.program.expression.RandomDouble;
+import jumpingalien.model.program.expression.SearchObject;
+import jumpingalien.model.program.statement.PrintStatement;
+import jumpingalien.model.program.statement.Statement;
+import jumpingalien.part3.programs.IProgramFactory.Direction;
+
+import org.junit.Test;
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class UnaryExpressionTest {
+	
+	@Test
+	public void testRandomDouble() {
+		Expression expr1 = new Constant(10);
+		Expression random = new RandomDouble(expr1);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(random);
+		Program program = new Program(stat, map);
+		assertEquals((((Double)random.evaluate(program)) < 10 && ((Double) random.evaluate(program) > 0.0)) , true);			
+	}
+	
+	@Test
+	public void testObjectSelf() throws IllegalPositionException, IllegalSpriteException {
+		Expression obj = new ObjectSelf();
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(obj.evaluate(program), alien);			
+	}
+	
+	@Test
+	public void testBoolFalse() {
+		Expression bool = new BoolFalse();
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(bool);
+		Program program = new Program(stat, map);
+		assertEquals(bool.evaluate(program), false);	
+	}
+	
+	@Test
+	public void testBoolTrue() {
+		Expression bool = new BoolTrue();
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(bool);
+		Program program = new Program(stat, map);
+		assertEquals(bool.evaluate(program), true);	
+	}
+	
+	@Test
+	public void testConstant() {
+		Expression constant = new Constant(5);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(constant);
+		Program program = new Program(stat, map);
+		assertEquals(constant.evaluate(program), 5.0);	
+	}
+	
+	@Test
+	public void testDirectionExpression() {
+		Expression direc = new DirectionExpression(Direction.DOWN);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(direc);
+		Program program = new Program(stat, map);
+		assertEquals(direc.evaluate(program), Direction.DOWN);	
+	}
+	
+	@Test
+	public void testObjectNull() {
+		Expression obj = new ObjectNull();
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		assertEquals(obj.evaluate(program), null);	
+	}
+	
+	@Test
+	public void testHeightObject() throws IllegalPositionException, IllegalSpriteException {
+		Expression obj = new ObjectSelf();
+		Expression getHeight = new GetHeightObject(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(getHeight);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(getHeight.evaluate(program), (double) alien.getYDim());	
+	}
+	
+	@Test
+	public void testWidthtObject() throws IllegalPositionException, IllegalSpriteException {
+		Expression obj = new ObjectSelf();
+		Expression getHeight = new GetHeightObject(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(getHeight);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(getHeight.evaluate(program), (double) alien.getXDim());	
+	}
+	
+	// TODO nadenken en fixen
+	//@Test
+	public void testSearchObject() {
+		Expression direc = new DirectionExpression(Direction.RIGHT);
+		Expression obj = new SearchObject(direc);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		assertEquals(obj.evaluate(program), null);	
+	}
+	
+	@Test
+	public void testGetHpObject() throws IllegalPositionException, IllegalSpriteException {		
+		Expression obj = new ObjectSelf();
+		Expression hitpoints = new GetHpObject(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(hitpoints);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(hitpoints.evaluate(program), (double) alien.getHitpoints());	
+	}
+	
+	@Test
+	public void testGetX() throws IllegalPositionException, IllegalSpriteException {		
+		Expression obj = new ObjectSelf();
+		Expression x = new GetX(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(x);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(x.evaluate(program), (double) alien.getXPos());	
+	}
+	
+	@Test
+	public void testGetY() throws IllegalPositionException, IllegalSpriteException {		
+		Expression obj = new ObjectSelf();
+		Expression y = new GetX(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(y);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(y.evaluate(program), (double) alien.getXPos());	
+	}
+	
+	@Test
+	public void testIsJumping() throws IllegalPositionException, IllegalSpriteException {		
+		Expression obj = new ObjectSelf();
+		Expression isjuming = new IsJumping(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(isjuming);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(isjuming.evaluate(program), alien.isJumping());	
+	}
+	
+	@Test
+	public void testIsMoving() throws IllegalPositionException, IllegalSpriteException {		
+		Expression obj = new ObjectSelf();
+		Expression isjuming = new IsJumping(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(isjuming);
+		Program program = new Program(stat, map);
+		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(alien);
+		assertEquals(isjuming.evaluate(program), (alien.getVelocity()[0] != 0 && alien.getVelocity()[1] != 0));	
+	}
+	
+	
+}
