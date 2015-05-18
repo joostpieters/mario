@@ -234,7 +234,11 @@ public abstract class GameObject extends SuperObject {
 	 * 			| program.setGameObject(this)
 	 */
 	protected void setProgram(Program program) {
+<<<<<<< HEAD
+		// TODO checkers -> nog andere?
+=======
 		assert program != null;
+>>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 		assert program.isWellFormed();
 		this.program = program;
 		program.setGameObject(this);

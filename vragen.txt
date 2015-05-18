@@ -1,12 +1,7 @@
 0. Hoe for each met Lambda functies?
 1. Buzam (instanceof Mazub) die doodgaat: sprite gaat niet weg. Ondertussen gaat hij wel weg, maar krijgen we daardoor een fout als hij immuun is.
 2. In assignment is Type precies overbodig.
-<<<<<<< HEAD
 3. in tile: exception throwen: betere manier? en getHitpoints()? 0 returnen of exception?
-
-=======
-3. 
->>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 
 
 TODO:
