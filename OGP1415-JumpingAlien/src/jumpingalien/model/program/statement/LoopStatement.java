@@ -7,6 +7,14 @@ public abstract class LoopStatement extends Statement {
 
 	public LoopStatement() {
 	}
+	private Statement body;
+	protected Statement getBody() {
+		return this.body;
+	}
+	protected void setBody(Statement stat) {
+		this.body = stat;
+		stat.setSuperStatement(this);
+	}
 	
 	private boolean inBody;
 	protected boolean getInBody() {

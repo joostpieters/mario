@@ -18,15 +18,6 @@ public class WhileStatement extends LoopStatement {
 		this.condition = expr;
 	}
 	
-	private Statement body;
-	public Statement getBody() {
-		return this.body;
-	}
-	private void setBody(Statement stat) {
-		this.body = stat;
-		stat.setSuperStatement(this);
-	}
-	
 	@Override
 	public void execute(Program program) {
 		if (!this.getInBody()) {

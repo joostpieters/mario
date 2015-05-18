@@ -66,14 +66,7 @@ public class ForEachStatement extends LoopStatement {
 		this.sortDirection = sortDirection;
 	}
 
-	private Statement body;
-	private Statement getBody() {
-		return this.body;
-	}
-	private void setBody(Statement stat) {
-		this.body = stat;
-		stat.setSuperStatement(this);
-	}
+
 		
 	private List<SuperObject> listObjectByKind(Program program) {
 		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
