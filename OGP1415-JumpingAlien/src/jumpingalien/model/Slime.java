@@ -390,7 +390,7 @@ public class Slime extends GameObject {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			a small time interval
-	 * @effect a local list allSharksSlimeMazub contains all the Sharks, Slimes and Mazub(s)
+	 * @effect a local list allSharksSlimeMazubBuzam contains all the Sharks, Slimes and Mazub(s)
 	 * 			| allSharksSlimesMazubBuzam =  new ArrayList<GameObject>world.getSharks())
 	 *			| allSharksSlimesMazubBuzam.addAll(world.getSlimes());
 	 *			| allSharksSlimesMazubBuzam.add(world.getAlien())
@@ -422,7 +422,7 @@ public class Slime extends GameObject {
 	 * @return {newPos[0], newPos[1]}
 	 */
 	@Raw
-	private double[] collidingSharksSlimesMazub(double newXPos, double newYPos, double dt) {
+	private double[] collidingSharksSlimesMazubBuzam(double newXPos, double newYPos, double dt) {
 		List<GameObject> allSharksSlimesMazubBuzam =  new ArrayList<GameObject>(this.getWorld().getSharks());
 		allSharksSlimesMazubBuzam.addAll(this.getWorld().getSlimes());
 		allSharksSlimesMazubBuzam.add(this.getWorld().getAlien());	
@@ -563,7 +563,7 @@ public class Slime extends GameObject {
 		this.checkIfWithinBoundaries(newPos[0],newPos[1]);
 				
 		newPos = checkSurroundings(newPos[0],newPos[1]);
-		newPos = collidingSharksSlimesMazub(newPos[0],newPos[1], dt);
+		newPos = collidingSharksSlimesMazubBuzam(newPos[0],newPos[1], dt);
 		
 		this.setXPos(newPos[0]);
 		this.setYPos(newPos[1]);

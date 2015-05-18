@@ -500,6 +500,7 @@ public class World {
 	 * returns a collection of all gameObjects in this world
 	 * @effect the collection list contains all game objects
 	 * 			| let
+<<<<<<< HEAD
 	 * 			|	 Collection<GameObject> list = new ArrayList<GameObject>()
 	 * 			| in
 	 * 			| list.addAll(this.getSharks())
@@ -507,6 +508,14 @@ public class World {
 	 * 			| list.addAll(this.getPlants())
 	 * 			| list.add(this.getAlien())
 	 * 			| list.add(this.getBuzam())
+=======
+	 * 			|	Collection<GameObject> list = new ArrayList<GameObject>()
+	 * 			| 	list.addAll(this.getSharks())
+	 * 			| 	list.addAll(this.getSlimes())
+	 * 			|	list.addAll(this.getPlants())
+	 * 			| 	list.add(this.getAlien())
+	 * 			| 	list.add(this.getBuzam())
+>>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 	 * @return the collection list
 	 * 			| return list
 	 */
@@ -1122,7 +1131,7 @@ public class World {
 	}
 	/**
 	 * returns true if there are no more than 100 game objects that are not a Mazub
-	 * @return (getNbPlants() + getNbSharks() + getNbSlimes() <= 100) 
+	 * @return amount <= 100
 	 */
 	private boolean isValidAmountOfCharacters(int amount) {
 		return amount <= 100;

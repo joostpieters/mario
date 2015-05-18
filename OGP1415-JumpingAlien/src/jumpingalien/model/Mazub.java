@@ -581,6 +581,7 @@ public class Mazub extends GameObject {
 	 * @effect Sets the ySpeed to zero if it is positive
 	 * 			| if (getYSpeed > 0)
 	 * 			|	then setYSpeed(0)
+	 * 			|		 this.setNotJumping()
 	 */
 	public void endJump() {
 		if (this.getYSpeed() > 0) {
@@ -652,6 +653,7 @@ public class Mazub extends GameObject {
 	 * 			the newly calculated vertical position
 	 * @param dt
 	 * 			the time interval
+<<<<<<< HEAD
 	 * @effect the list allSlimesSharksBuzam contains all the slimes, sharks and buzam in the world
 	 * 			| let 
 	 * 			| 	allSlimesSharksBuzam = world.getSlimes()
@@ -660,6 +662,14 @@ public class Mazub extends GameObject {
 	 * 			| if (this.getWorld().getBuzam() != null) 
 	 * 			| 	then allSlimesSharksBuzam.add(this.getWorld().getBuzam())
 	 * @effect calculates the new position of mazub taking all the slimes, sharks and buzam
+=======
+	 * @effect the list allSlimesSharksBuzam contains all the slimes, sharks and eventually buzam in the world
+	 * 			| allSlimesSharksBuzam = world.getSlimes()
+	 * 			| allSlimesSharksBuzam.addAll(world.getSharks())
+	 * 			| if (this.getWorld().getBuzam() != null) 
+	 *			|	the allSlimesSharksBuzam.add(this.getWorld().getBuzam());
+	 * @effect calculates the new position of mazub taking all the slimes and sharks
+>>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 	 * 			in the world into account
 	 * 			| boolean onGameObject = false;
 	 * 			| double[] newPos = {newXPos, newYPos}; 
@@ -674,7 +684,11 @@ public class Mazub extends GameObject {
 	 * 			| 		boolean touched = false
 	 * 			| 	in
 	 * 			| 	newPos = collidesSomeWhere(newXpos, xDim1, newYPos, yDim1, x2, xDim2, y2)
+<<<<<<< HEAD
 	 * @effect the hitpoints of mazub and the sharks/slimes/buzam are updated taking the collisions into account
+=======
+	 * @effect the hitpoints of mazub and the sharks/slimes/Buzam are updated taking the collisions into account
+>>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 	 * 			| 	if newPos[3] == 1
 	 * 			| 		then onGameObject = true
 	 * 			| 	if newPos[2] == 1 && ( ! other.isDying()) 
@@ -734,7 +748,7 @@ public class Mazub extends GameObject {
 	 * @effect the new position of Mazub is calculated and a possible collision with
 	 * 			a plant gets checked
 	 * 			| let
-	 * 			| 	newPos = collidingSlimesSharks(newXPos, newYPos, dt)
+	 * 			| 	newPos = collidingSlimesSharksBuzam(newXPos, newYPos, dt)
 	 * 			| in
 	 * 			| collidingPlants(newXPos, newYPos)
 	 * @return the adapted horizontal and vertical position of Mazub

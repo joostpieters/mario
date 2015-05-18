@@ -252,12 +252,15 @@ public class Buzam extends Mazub {
 	 */
 	@Raw
 	protected void remove() {
+<<<<<<< HEAD
 		// TODO de sprite gaat niet weg, dit is heel cheap maar werkt wel :p 
 		// ==> betere oplossing zoeken, volgens mij ligt het aan het feit dat
 		// buzam een instanceof Mazub is en de sprite van mazub gaat ook niet 
 		// weg als die dood is
 //		this.setXPos(-500);
 //		this.setYPos(-500); -> dit was duidelijk de oplossing die ze zochten 
+=======
+>>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 		this.getWorld().removeBuzam(this);
 		this.setWorld(null);
 		
