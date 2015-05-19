@@ -24,7 +24,7 @@ import jumpingalien.model.program.statement.Statement;
 
 import org.junit.Test;
 
-public class Expressions {
+public class ExpressionTest {
 	
 	
 	@Test

@@ -412,17 +412,17 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 
 	@Override
 	public Type getBoolType() {
-		return Type.Boolean;
+		return Type.BOOLEAN;
 	}
 
 	@Override
 	public Type getGameObjectType() {
-		return Type.Object;
+		return Type.OBJECT;
 	}
 
 	@Override
 	public Type getDirectionType() {
-		return Type.Direction;
+		return Type.DIRECTION;
 	}
 
 	@Override

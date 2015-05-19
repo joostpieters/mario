@@ -83,7 +83,7 @@ public class SharkTest {
 	@Test 
 	public void testDie() {
 		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(50, 5, 5, 1, 1, 2, 2);
+		World world = facade.createWorld(50, 10, 10, 1, 1, 2, 2);
 		// s w s
 		// a s a
 		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
@@ -91,14 +91,13 @@ public class SharkTest {
 		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);
 		facade.setGeologicalFeature(world, 1, 1, FEATURE_WATER);	
 
-		Mazub alien = facade.createMazub(50, 52, spriteArrayForSize(50, 3));
+		Mazub alien = facade.createMazub(50, 51, spriteArrayForSize(50, 3));
 		Shark shark = facade.createShark(50, 49, spriteArrayForSize(50, 3, 2));
 		facade.setMazub(world, alien);
 		facade.addShark(world, shark);
 		alien.startMoveRight();
 		for (int i = 0; i < 7; i++) {
 			facade.advanceTime(world, 0.1);
-			alien.startJump();
 		}
 		// Mazub has hit the shark twice, so the shark should have zero hitpoints after 0.7 second
 		assertEquals(shark.getHitpoints(), 0);

@@ -2,13 +2,12 @@ package jumpingalien.model.program.statement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import jumpingalien.model.SuperObject;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
 import jumpingalien.part3.programs.IProgramFactory.Kind;
 import jumpingalien.part3.programs.IProgramFactory.SortDirection;
-
+// TODO comments wegdoen
 public class ForEachStatement extends LoopStatement {
 
 	public ForEachStatement(String variableName,

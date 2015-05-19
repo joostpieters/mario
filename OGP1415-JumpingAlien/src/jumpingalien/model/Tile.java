@@ -35,12 +35,6 @@ public class Tile extends SuperObject {
 	public int getYDim() {
 		return this.getWorld().getTileLength();
 	}
-	@Override
-	public int getHitpoints() {
-		// TODO Mss hier een exeption throwen -> of gewoon uit superObject halen en enkel voor een gameObject maken?
-		// throw new IllegalArgumentException();
-		return 0;
-	}
 
 	@Override
 	public double getXPos() {
@@ -56,12 +50,7 @@ public class Tile extends SuperObject {
 		try {
 			return this.getWorld().getGeologicalFeature((int) getXPos(), (int) getYPos());
 		} catch (IllegalPixelException e) {
-			// TODO moet hier air worden teruggegeven? want normaal geeft die hierboven dat toch al terug als het air is?
-			// mss iets throwen -> dees is nu een beetje cheaten
-			if (true) {
-				throw new IllegalArgumentException();
-			}
-			return 0;
+			throw new IllegalArgumentException();
 		}
 	}
 

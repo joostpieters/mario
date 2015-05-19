@@ -106,14 +106,13 @@ public class SlimeTest {
 		facade.setGeologicalFeature(world, 2, 1, FEATURE_SOLID);
 		facade.setGeologicalFeature(world, 0, 1, FEATURE_SOLID);	
 		School school = facade.createSchool();
-		Mazub alien = facade.createMazub(50, 52, spriteArrayForSize(50, 3));
+		Mazub alien = facade.createMazub(50, 51, spriteArrayForSize(50, 3));
 		Slime slime = facade.createSlime(50, 49, spriteArrayForSize(50, 3, 2), school);
 		facade.setMazub(world, alien);
 		facade.addSlime(world, slime);
 		alien.startMoveRight();
 		for (int i = 0; i < 7; i++) {
 			facade.advanceTime(world, 0.1);
-			alien.startJump();
 		}
 		// Mazub has hit the slime twice, so the slime should have zero hitpoints after 0.7 second
 		assertEquals(slime.getHitpoints(), 0);

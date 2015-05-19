@@ -19,6 +19,7 @@ public class ReadVariable extends Expression<Object> {
 	}
 
 	private Type type;
+	@SuppressWarnings("unused")
 	private Type getType() { 
 		return type;
 	}

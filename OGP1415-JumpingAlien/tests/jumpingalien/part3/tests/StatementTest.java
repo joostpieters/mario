@@ -24,7 +24,7 @@ import jumpingalien.part3.programs.ParseOutcome;
 
 import org.junit.Test;
 
-public class Statement {
+public class StatementTest {
 	@Test
 	public void ForEach() {
 		IFacadePart3 facade = new Facade();

@@ -9,7 +9,7 @@ import jumpingalien.part3.programs.ParseOutcome;
 
 import org.junit.Test;
 
-public class Program {
+public class ProgramTest {
 
 	@Test
 	public void testWellformedBreak() {

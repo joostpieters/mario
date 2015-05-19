@@ -11,14 +11,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
-import jumpingalien.model.School;
 import jumpingalien.model.World;
-import jumpingalien.model.Shark;
-import jumpingalien.model.Slime;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;
-import jumpingalien.util.Sprite;
 import jumpingalien.util.Util;
 
 import org.junit.Test;
@@ -63,6 +59,7 @@ public class PlantTest {
 	@Test(expected = ModelException.class)
 	public void testNotWithinBoundaries() {
 		IFacadePart2 facade = new Facade();
+		@SuppressWarnings("unused")
 		Plant plant = facade.createPlant(-5, -20, spriteArrayForSize(1, 1, 2));
 	}
 	
@@ -77,12 +74,14 @@ public class PlantTest {
 	@Test(expected = ModelException.class)
 	public void testSpriteTooShort() {
 		IFacadePart2 facade = new Facade();
+		@SuppressWarnings("unused")
 		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 1));
 	}
 	
 	@Test(expected = ModelException.class)
 	public void testSpriteTooLong() {
 		IFacadePart2 facade = new Facade();
+		@SuppressWarnings("unused")
 		Plant plant = facade.createPlant(0, 0, spriteArrayForSize(1, 1, 3));
 	}
 	

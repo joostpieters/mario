@@ -25,6 +25,7 @@ public class Program {
 	}
 	
 	private Map<String, Type> globalVariables;
+	@SuppressWarnings("unused")
 	private Map<String, Type> getGlobalVariables() {
 		return this.globalVariables;
 	}
@@ -50,13 +51,13 @@ public class Program {
 			if (map.get(key) == Type.DOUBLE) {
 				this.environment.put(key, 0);
 			}
-			else if (map.get(key) == Type.Boolean) {
+			else if (map.get(key) == Type.BOOLEAN) {
 				this.environment.put(key, false);
 			}
-			else if (map.get(key) == Type.Object) {
+			else if (map.get(key) == Type.OBJECT) {
 				this.environment.put(key, null);
 			}
-			else if (map.get(key) == Type.Direction) {
+			else if (map.get(key) == Type.DIRECTION) {
 				this.environment.put(key, false);
 			}
 		}
@@ -90,24 +91,9 @@ public class Program {
 			}
 		}
 	}
-
-
 	
 	public boolean isWellFormed() {
 		return this.getMainStatement().isWellFormed();
-		
-		
-//		for (BreakStatement breakstatement: ...) { // alle breakstatements
-//			if (breakstatement.breakWellFormed() == false) {
-//				return false;
-//			}
-//		}
-//		
-//		for (ForEachStatement foreach: ...) { // alle foreachstatements
-//			if (foreach.getBody().containsActionStatement()) {
-//				return false;
-//			}
-//		}
 		
 	}
 

@@ -11,6 +11,6 @@ import org.junit.runners.Suite;
    SlimeTest.class,
    WorldTest.class
 }) 
-public class JUnitTestSuite {
+public class JUnitTestSuitePart2 {
 	
 }

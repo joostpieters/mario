@@ -12,7 +12,6 @@ import jumpingalien.model.School;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
-import jumpingalien.part1.facade.IFacade;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;

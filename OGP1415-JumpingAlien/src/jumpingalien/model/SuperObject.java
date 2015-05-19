@@ -14,7 +14,6 @@ public abstract class SuperObject {
 	public abstract double getYPos();
 	public abstract int getXDim();
 	public abstract int getYDim();
-	public abstract int getHitpoints();
 	
 	/**
 	 * the world where the superobject appears

@@ -383,7 +383,7 @@ public abstract class GameObject extends SuperObject {
 	 * Returns the amount of hitpoints the gameObject has
 	 * @return hitpoints
 	 */ 
-	@Basic @Raw @Override
+	@Basic @Raw 
 	public int getHitpoints() {
 		return this.hitpoints;
 	}
