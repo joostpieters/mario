@@ -43,8 +43,6 @@ import jumpingalien.model.program.expression.SearchObject;
 import jumpingalien.model.program.expression.SqrtDouble;
 import jumpingalien.model.program.statement.PrintStatement;
 import jumpingalien.model.program.statement.Statement;
-import jumpingalien.part3.facade.Facade;
-import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
 
 import org.junit.Test;
@@ -142,22 +140,16 @@ public class UnaryExpressionTest {
 		assertEquals(getHeight.evaluate(program), (double) alien.getXDim());	
 	}
 	
-	// TODO nadenken en fixen want werkt niet
+	// TODO nadenken en fixen
 	//@Test
 	public void testSearchObject() {
-		IFacadePart3 facade = new Facade();
-		Expression direc = new DirectionExpression(Direction.LEFT);
+		Expression direc = new DirectionExpression(Direction.RIGHT);
 		Expression obj = new SearchObject(direc);
 		Map<String, Type> map = new HashMap<String, Type>();
 		Statement stat = new PrintStatement(obj);
 		Program program = new Program(stat, map);
 		// there are no game objects in the world
-		Mazub alien = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
-		Plant plant = facade.createPlantWithProgram(200, 110, spriteArrayForSize(3, 3), program);
-		program.setGameObject(plant);
-		World world = facade.createWorld(500,2,2,2,2,1,1);
-		facade.addPlant(world, plant);
-		assertEquals(obj.evaluate(program), alien);	
+		assertEquals(obj.evaluate(program), null);	
 	}	
 	
 	@Test

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Collections"/>
-<fullyQualifiedTypeName name="java.util.Collection"/>
-<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory"/>
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.UnaryExpression"/>
@@ -13,7 +10,6 @@
 <fullyQualifiedTypeName name="org.junit.Test"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArrayList"/>
-<fullyQualifiedTypeName name="jumpingalien.part3.facade.IFacadePart3"/>
 <fullyQualifiedTypeName name="java.beans.Expression"/>
 <fullyQualifiedTypeName name="program.Program"/>
 <fullyQualifiedTypeName name="program.expression.BinaryExpression"/>
@@ -60,4 +56,8 @@
 <fullyQualifiedTypeName name="jumpingalien.model.Plant"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.NotBool"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.SqrtDouble"/>
+<fullyQualifiedTypeName name="java.util.function.Predicate"/>
+<fullyQualifiedTypeName name="jumpingalien.part3.facade.IFacadePart3"/>
+<fullyQualifiedTypeName name="jumpingalien.part1.facade.Facade"/>
+<fullyQualifiedTypeName name="jumpingalien.part3.facade.Facade"/>
 </qualifiedTypeNameHistroy>

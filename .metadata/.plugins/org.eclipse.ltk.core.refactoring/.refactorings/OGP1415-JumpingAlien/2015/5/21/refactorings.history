@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;&apos; to &apos;jumpingalien.model.Mazub.MAX_SPEED_DUCK&apos;&#x0D;&#x0A;- Original project: &apos;OGP1415-JumpingAlien&apos;&#x0D;&#x0A;- Destination element: &apos;jumpingalien.model.Mazub.MAX_SPEED_DUCK&apos;&#x0D;&#x0A;- Original element: &apos;jumpingalien.model.Mazub.MAX_SPEED_DUCK&apos;" description="Copy field" destination="/src&lt;jumpingalien.model{Mazub.java[Mazub^MAX_SPEED_DUCK" element1="/src&lt;jumpingalien.model{Mazub.java[Mazub^MAX_SPEED_DUCK" flags="589830" id="org.eclipse.jdt.ui.copy" members="1" policy="org.eclipse.jdt.ui.copyMembers" stamp="1432048921170" version="1.0"/>
+</session>

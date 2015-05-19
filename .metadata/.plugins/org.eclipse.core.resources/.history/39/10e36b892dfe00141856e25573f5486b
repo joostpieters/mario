@@ -143,7 +143,7 @@ public class UnaryExpressionTest {
 	}
 	
 	// TODO nadenken en fixen want werkt niet
-	//@Test
+	@Test
 	public void testSearchObject() {
 		IFacadePart3 facade = new Facade();
 		Expression direc = new DirectionExpression(Direction.LEFT);
