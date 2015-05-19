@@ -89,7 +89,13 @@ public class IfStatement extends Statement {
 	}
 	@Override
 	public boolean isWellFormed() {
-		return (this.getIfBody().isWellFormed() && this.getElseBody().isWellFormed());
+		if (this.getElseBody() != null) {
+			return this.getIfBody().isWellFormed() && this.getElseBody().isWellFormed();
+		}
+		else {
+			return this.getIfBody().isWellFormed();
+		}
+				
 	}
 	
 
