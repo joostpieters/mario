@@ -3,8 +3,6 @@ package jumpingalien.model.program.statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Predicate;
-
 import jumpingalien.model.SuperObject;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
@@ -68,7 +66,7 @@ public class ForEachStatement extends LoopStatement {
 	}
 		
 	private List<SuperObject> listObjectByKind(Program program) {
-		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
+		List<SuperObject> list = new ArrayList<SuperObject>();
 		switch(this.getKind()) {
 		case MAZUB:
 			list.add(program.getGameObject().getWorld().getAlien());
@@ -110,63 +108,85 @@ public class ForEachStatement extends LoopStatement {
 	
 	private List<SuperObject> listObjectWhereTrue(Program program) {
 		List<SuperObject> list = this.listObjectByKind(program);
+		List<SuperObject> newList = new ArrayList<SuperObject>();
 		if (this.getWhere() != null) {
-			list.stream().filter(new Predicate<SuperObject>() { 
-				public boolean test(SuperObject o) {
-					program.addToEnvironment(getVariableName(), o);
-					return (! getWhere().evaluate(program));
-				}
-			});
+			list.stream()
+					.filter(
+					o -> {program.addToEnvironment(getVariableName(), o);
+					return (getWhere().evaluate(program));})
+					.forEach(o -> newList.add(o));
+				
+				
+			
 //			for (SuperObject object: list) {
-//			program.addToEnvironment(getVariableName(), object);
-//			if ( ! this.getWhere().evaluate(program)) {
-//				list.remove(object);
+//				program.addToEnvironment(getVariableName(), object);
+//				if ( ! this.getWhere().evaluate(program)) {
+//					list.remove(object);
+//				}
 //			}
 		}
 
 			
-	return list;
+	return newList;
+//	return list;
 	}
 	
 	private List<SuperObject> listObjectWhereTrueSorted(Program program) {
 		List<SuperObject> listWhereTrue = this.listObjectWhereTrue(program);
 		if (this.getSort() != null) {
-			List<SuperObject> listToReturn = new ArrayList<SuperObject>();
-			for (int i = 0; i < listWhereTrue.size(); i++) {
-				if (this.getSortDirection() == SortDirection.ASCENDING) {
-					double min = Double.POSITIVE_INFINITY;
-					SuperObject nextInLine = null;
-					for (SuperObject object: listWhereTrue) {
-						program.addToEnvironment(getVariableName(), object);
-						double value = this.getSort().evaluate(program);
-						if (value < min) {
-							min = value;
-							nextInLine = object;
-						}
-					}
-					listToReturn.add(nextInLine);
-					listWhereTrue.remove(nextInLine);
-				}
-				else {
-					double max = Double.NEGATIVE_INFINITY;
-					SuperObject nextInLine = null;
-					for (SuperObject object: listWhereTrue) {
-						program.addToEnvironment(getVariableName(), object);
-						double value = this.getSort().evaluate(program);
-						if (value > max) {
-							max = value;
-							nextInLine = object;
-						}
-					}
-					listToReturn.add(nextInLine);
-					listWhereTrue.remove(nextInLine);
-				}			
-			}		
-			return listToReturn;
+			List<SuperObject> newList = new ArrayList<SuperObject>();
+			listWhereTrue.stream().sorted( (o1,o2) -> compare(o1,o2, program)).forEach((o -> newList.add(o)));
+//			List<SuperObject> listToReturn = new ArrayList<SuperObject>();
+//			for (int i = 0; i <= listWhereTrue.size() + 1; i++) {
+//				if (this.getSortDirection() == SortDirection.ASCENDING) {
+//					double min = Double.POSITIVE_INFINITY;
+//					SuperObject nextInLine = null;
+//					for (SuperObject object: listWhereTrue) {
+//						program.addToEnvironment(getVariableName(), object);
+//						double value = this.getSort().evaluate(program);
+//						if (value < min) {
+//							min = value;
+//							nextInLine = object;
+//						}
+//					}
+//					listToReturn.add(nextInLine);
+//					listWhereTrue.remove(nextInLine);
+//				}
+//				else {
+//					double max = Double.NEGATIVE_INFINITY;
+//					SuperObject nextInLine = null;
+//					for (SuperObject object: listWhereTrue) {
+//						program.addToEnvironment(getVariableName(), object);
+//						double value = this.getSort().evaluate(program);
+//						if (value > max) {
+//							max = value;
+//							nextInLine = object;
+//						}
+//					}
+//					listToReturn.add(nextInLine);
+//					listWhereTrue.remove(nextInLine);
+//				}			
+//			}		
+			return newList;
 		}
 		return listWhereTrue;
 	}
 	
+	private int compare(SuperObject o1, SuperObject o2, Program program) {
+		program.addToEnvironment(getVariableName(), o1);
+		int value1 = this.getSort().evaluate(program).intValue();
+		program.addToEnvironment(getVariableName(), o2);
+		int value2 = this.getSort().evaluate(program).intValue();
+		if (this.getSortDirection() == SortDirection.ASCENDING) {
+			return value1 - value2;
+		}
+		else if (this.getSortDirection() == SortDirection.DESCENDING)
+			return value2 - value1;
+		else{
+			throw new IllegalArgumentException();
+		}
+	}
+
 	private List<SuperObject> executeList = null;
 	private List<SuperObject> getExecuteList() {
 		return this.executeList;
