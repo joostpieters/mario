@@ -1087,9 +1087,6 @@ public class Mazub extends GameObject {
 				return sprites[8 + this.getNbRunningSprites() + this.getCounterSprites()]; 
 			}
 		}
-		else if (this.getWorld() == null) {
-			return null;
-		}
 		else {
 			return sprites[0];
 		}

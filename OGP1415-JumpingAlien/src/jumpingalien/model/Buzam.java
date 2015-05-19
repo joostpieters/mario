@@ -257,4 +257,55 @@ public class Buzam extends Mazub {
 		
 	}
 	
+	/**
+	 * GEEN formele documentatie nodig
+	 */
+	@Raw @Override
+	public Sprite getCurrentSprite() {
+		assert isValidSprite(this.getSprite());
+		if ( ! this.isDying()) { 
+			this.setNbRunningSprites(((this.getSprite()).length-8)/2);
+			if ((this.getXSpeed() == 0) && (! this.isDucked()) &&
+					(this.getTimeSinceEndMove() > Mazub.getNotMovingTime())){
+				return sprites[0];
+			}
+			else if ((this.getXSpeed() == 0) &&
+					(this.getTimeSinceEndMove() > Mazub.getNotMovingTime())){
+				return sprites[1];
+			}
+			else if ((this.getXSpeed() == 0) &&
+					(!this.isDucked()) && (this.getOrientation() == Orientation.RIGHT )){
+				return sprites[2];
+			}		
+			else if ((this.getXSpeed() == 0) && (!this.isDucked())){
+				return sprites[3];
+			}
+			else if ((this.getXSpeed() > 0) && (this.getOrientation() == Orientation.RIGHT ) 
+					&& (this.isFalling()) && (!this.isDucked())){
+				return sprites[4];
+			}
+			else if ((this.getXSpeed() > 0) && (this.isFalling()) && (!this.isDucked())){
+				return sprites[5];
+			}
+			else if ((this.getOrientation() == Orientation.RIGHT) && (this.isDucked())){
+				return sprites[6];
+			}
+			else if (this.isDucked()){
+				return sprites[7];
+			}
+			else if (this.getOrientation() == Orientation.RIGHT){
+				return sprites[8 + this.getCounterSprites()];
+			}
+			else {
+				return sprites[8 + this.getNbRunningSprites() + this.getCounterSprites()]; 
+			}
+		}
+		else if (this.getWorld() == null) {
+			return null;
+		}
+		else {
+			return sprites[0];
+		}
+	}
+	
 }

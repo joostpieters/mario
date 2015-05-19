@@ -1735,12 +1735,10 @@ public abstract class GameObject extends SuperObject {
 			touched = 1;
 		}
 		if (this.collidesAbove(newXPos,xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-			newYPos = y2 - yDim1 + 1;
 			this.setYSpeed(0);
 			touched = 1;
 		}
 		if  (this.collidesUnder(newXPos, xDim1, newYPos, yDim1, x2, xDim2, y2, yDim2)) {
-			newYPos = y2 + yDim2 - 1 ;
 			onGameObject = 1;
 			touched = 1;
 		}	
