@@ -3,7 +3,6 @@ package jumpingalien.model.program.statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Predicate;
 
 import jumpingalien.model.SuperObject;
 import jumpingalien.model.program.Program;
@@ -66,6 +65,8 @@ public class ForEachStatement extends LoopStatement {
 	private void setSortDirection(SortDirection sortDirection) {
 		this.sortDirection = sortDirection;
 	}
+
+
 		
 	private List<SuperObject> listObjectByKind(Program program) {
 		List<SuperObject> list = new CopyOnWriteArrayList<SuperObject>();
@@ -106,26 +107,17 @@ public class ForEachStatement extends LoopStatement {
 		return list;
 	}
 	
-	
-	
 	private List<SuperObject> listObjectWhereTrue(Program program) {
 		List<SuperObject> list = this.listObjectByKind(program);
 		if (this.getWhere() != null) {
-			list.stream().filter(new Predicate<SuperObject>() { 
-				public boolean test(SuperObject o) {
-					program.addToEnvironment(getVariableName(), o);
-					return (! getWhere().evaluate(program));
+			for (SuperObject object: list) {
+				program.addToEnvironment(getVariableName(), object);
+				if (!this.getWhere().evaluate(program)) {
+					list.remove(object);
 				}
-			});
-//			for (SuperObject object: list) {
-//			program.addToEnvironment(getVariableName(), object);
-//			if ( ! this.getWhere().evaluate(program)) {
-//				list.remove(object);
-//			}
+			}
 		}
-
-			
-	return list;
+		return list;
 	}
 	
 	private List<SuperObject> listObjectWhereTrueSorted(Program program) {

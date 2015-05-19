@@ -27,6 +27,14 @@ public class Tile extends SuperObject {
 		return this.yCor;
 	}
 	
+	private World world;
+	private World getWorld() {
+		return this.world;
+	}
+	private void setWorld(World world) {
+		this.world = world;
+	}
+	
 	@Override
 	public int getXDim() {
 		return this.getWorld().getTileLength();

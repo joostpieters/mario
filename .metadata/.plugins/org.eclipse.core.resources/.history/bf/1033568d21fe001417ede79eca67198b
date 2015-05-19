@@ -240,6 +240,32 @@ public abstract class GameObject extends SuperObject {
 		program.setGameObject(this);
 	}
 	/**
+	 * the world where the object appears
+	 */
+	private World world;
+	/**
+	 * returns the world where the object appears
+	 * @return world
+	 */
+	@Basic @Raw
+	public World getWorld() {
+		return this.world;
+	}
+	/**
+	 * Sets the world to the givan value world
+	 * @param world
+	 * 		the world to set
+	 * @pre the given World world may not be null
+	 * 			| world != null
+	 * @post world is set
+	 * 			| this.world = world
+	 */
+	@Raw
+	public void setWorld(World world) {
+		assert world != null;
+		this.world = world;
+	}	
+	/**
 	 * the horizontal speed of the object
 	 */
 	protected double xSpeed;
