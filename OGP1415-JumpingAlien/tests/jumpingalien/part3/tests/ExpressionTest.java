@@ -39,7 +39,7 @@ public class ExpressionTest {
 
 	}
 	
-	@Test(expected = ClassCastException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testException() {
 		Expression expr1 = new Constant(12);
 		Expression expr2 = new BoolTrue();

@@ -21,14 +21,43 @@ import jumpingalien.model.program.statement.PrintStatement;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.ParseOutcome;
+import jumpingalien.util.ModelException;
+import jumpingalien.util.Sprite;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class StatementTest {
+	
+	public static final int FEATURE_AIR = 0;
+	public static final int FEATURE_SOLID = 1;
+	public static final int FEATURE_WATER = 2;
+	public static final int FEATURE_MAGMA = 3;
+	
+	private IFacadePart3 facade;
+	private World world;
+	private Mazub alien;
+	Sprite[] sprites;
+	Sprite[] sprites2;
+	
+	
+	@Before
+	public void createFacadeAndWorld() {
+		facade = new Facade();
+		world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		sprites2 = spriteArrayForSize(2, 2, 2);
+		alien = facade.createMazub(0, 499, sprites);
+		facade.setMazub(world, alien);
+	}
+	
 	@Test
 	public void ForEach() {
-		IFacadePart3 facade = new Facade();
-		ParseOutcome<?> outcome = facade.parse("double d := 1.0; foreach (any, o) where (isshark o) sort getx o descending do print getx o; done");
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
+				+ "sort getx o descending do print getx o; done");
 		Program program = (Program) outcome.getResult();
 		Plant plant1 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
 		Plant plant2 = facade.createPlant(10, 0, spriteArrayForSize(3, 3, 2));
@@ -46,7 +75,15 @@ public class StatementTest {
 		facade.addShark(world, shark2);
 		facade.addShark(world, shark);
 		program.execute(0.1);
-		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void ForEachIllegalSort() {
+		try {
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where "
+				+ "5 sort getx o descending do print getx o; done");
+		System.out.println(outcome.getResult());
+
 	}
 	
 	

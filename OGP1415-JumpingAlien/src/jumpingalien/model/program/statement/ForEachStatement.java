@@ -18,7 +18,8 @@ public class ForEachStatement extends LoopStatement {
 			Expression<Double> sort,
 			jumpingalien.part3.programs.IProgramFactory.SortDirection sortDirection,
 			Statement body) {
-		if (where.getType() != Type.BOOLEAN && sort.getType() != Type.DOUBLE) {
+		if ((where != null && where.getType() != Type.BOOLEAN) ||
+				(sort != null && sort.getType() != Type.DOUBLE)) {
 			throw new IllegalArgumentException();
 		}
 		this.setVariableName(variableName);

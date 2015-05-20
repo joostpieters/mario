@@ -52,7 +52,7 @@ public class BinaryExpressionTest {
 		assertEquals(addition.evaluate(program), (Double) (-3.0));			
 	}
 	
-	@Test(expected = ClassCastException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testAddition3() {
 		Expression expr1 = new Constant(5);
 		// no double
