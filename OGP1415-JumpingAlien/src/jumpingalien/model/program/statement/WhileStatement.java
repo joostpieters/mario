@@ -1,11 +1,15 @@
 package jumpingalien.model.program.statement;
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
 
 public class WhileStatement extends LoopStatement {
 
 	public WhileStatement(Expression<Boolean> condition, Statement body) {
+		if (condition.getType() != Type.BOOLEAN) {
+			throw new IllegalArgumentException();
+		}
 		this.setCondition(condition);
 		this.setBody(body);
 	}

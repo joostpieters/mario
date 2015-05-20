@@ -1,11 +1,15 @@
 package jumpingalien.model.program.statement;
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
 
 public class WaitStatement extends Statement {
 
 	public WaitStatement(Expression<Double> duration) {
+		if (duration.getType() != Type.DOUBLE) {
+			throw new IllegalArgumentException();
+		}
 		this.setDuration(duration);
 	}
 	

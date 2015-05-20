@@ -1,6 +1,7 @@
 package jumpingalien.model.program.statement;
 
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
@@ -8,6 +9,9 @@ import jumpingalien.part3.programs.IProgramFactory.Direction;
 public class StartRun extends Statement {
 
 	public StartRun(Expression<Direction> expr) {
+		if (expr.getType() != Type.DIRECTION) {
+			throw new IllegalArgumentException();
+		}
 		this.setDirection(expr);
 	}
 
