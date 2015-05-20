@@ -24,10 +24,10 @@ public class Plant extends GameObject {
 	 *            An array of sprites for the new plant
 	 * @effect the plant is created at the given position with the given sprites
 	 * 			| super(xPos, yPos, sprites)
-	 * @effect the horizontal speed is set and the hitpoints are set to the default value
-	 * 			| new.setXSpeed(0.5)
+	 * @effect  the hitpoints are set to the default value and the maxSpeed to the startSpeed
 	 * 			| new.setHitpoitns(Plant.getInitHitpoints())
-	 * @throws	IllegalPositionException
+	 * 			| this.setMaxSpeed(Plant.getStartSpeed());
+	* @throws	IllegalPositionException
 	 * 			The given position is not valid for the plant
 	 * 			| ! isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
@@ -38,15 +38,41 @@ public class Plant extends GameObject {
 	public Plant(int xPos,int yPos, Sprite[] sprites ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites);
-		this.setXSpeed(0.5);
 		this.setHitpoints(Plant.getInitHitpoints());
+		this.setMaxSpeed(Plant.getStartSpeed());
 	}
 	
+	/**
+	 * Creates a new plant, located at the provided pixel location (x, y).
+	 * The returned plant should not belong to a world.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the plant's initial position
+	 * @param y
+	 *            The y-coordinate of the plant's initial position
+	 * @param sprites
+	 *            An array of sprites for the new plant
+	 * @param program
+	 * 			the program to control the plant
+	 * @effect the plant is created at the given position with the given sprites
+	 * 			| super(xPos, yPos, sprites)
+	 * @effect the program is set
+	 * 			| this.setProgram(program)
+	 * @effect  the hitpoints are set to the default value and the maxSpeed to the startSpeed
+	 * 			| new.setHitpoitns(Plant.getInitHitpoints())
+	 * 			| this.setMaxSpeed(Plant.getStartSpeed());
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the plant
+	 * 			| ! isValidPosition(xPos,yPos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| ! isValidSprite(sprites) 
+	 */
 	public Plant(int xPos,int yPos, Sprite[] sprites, Program program ) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites, program);
-		this.setXSpeed(0.5);
 		this.setHitpoints(Plant.getInitHitpoints());
+		this.setMaxSpeed(Plant.getStartSpeed());
 	}
 	/**
 	 * the static giving the horizontal speed
@@ -60,8 +86,7 @@ public class Plant extends GameObject {
 	@Basic @Immutable @Raw
 	protected static final double getStartSpeed() {
 		return START_SPEED;
-	}
-	
+	}	
 	/**
 	 * the initial amount of hitpoints a plant possesses
 	 */	
@@ -199,7 +224,9 @@ public class Plant extends GameObject {
 	public void advanceTime(double dt)throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);	
-		
+		if (this.getProgram() != null) {
+			this.setXSpeed(Plant.getStartSpeed());
+		}
 		double newXPos = this.getXPos();		
 		this.setTimeSameOrientation(this.getTimeSameOrientation() + dt);
 		

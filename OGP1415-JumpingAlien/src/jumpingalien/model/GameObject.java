@@ -109,11 +109,9 @@ public abstract class GameObject extends SuperObject {
 	 * Sets the horizontal position of the game object to the rounded down value of x
 	 * @param x
 	 * 			The new value for the horizontal position
-	 * @pre the position x should  be bigger than or equal to zero and 
-	 * 		smaller than the boundary of the world and not null
+	 * @pre the position x should  be bigger than or equal to zero and not null
 	 * 			| ! Double.isNaN(x)
 	 * 			| x >= 0
-	 * 			| x <= this.getWorld().getX()
 	 * @post the position is set
 	 * 			| this.xPos = x
 	 */
@@ -121,7 +119,6 @@ public abstract class GameObject extends SuperObject {
 	protected void setXPos(double x) {
 		assert  ! Double.isNaN(x);
 		assert x >= 0;
-		assert x <= this.getWorld().getX();
 		this.xPos = x;
 	}	
 	/**
@@ -140,11 +137,9 @@ public abstract class GameObject extends SuperObject {
 	 * Sets the vertical position of the game object to the rounded down value of y
 	 * @param y
 	 * 			The new value for the vertical position
-	 * @pre the position y should  be bigger than or equal to zero and 
-	 * 		smaller than the boundary of the world and not null
+	 * @pre the position y should  be bigger than or equal to zero and not null
 	 * 			| ! Double.isNaN(y	)
 	 * 			| y >= 0
-	 * 			| y <= this.getWorld().getY()
 	 * @post the position is set
 	 * 			| this.yPos = y
 	 */	
@@ -152,7 +147,6 @@ public abstract class GameObject extends SuperObject {
 	protected void setYPos(double y) {
 		assert  ! Double.isNaN(y);
 		assert y >= 0;
-		assert y <= this.getWorld().getY();
 		this.yPos = y;
 	}	
 	/**
@@ -261,6 +255,9 @@ public abstract class GameObject extends SuperObject {
 	 */
 	@Raw
 	protected void setXSpeed(double speed) {
+		assert (speed >= 0);
+		assert (speed <= this.getMaxSpeed());
+		assert ( ! Double.isNaN(speed));
 		assert this.isValidXSpeed(speed);
 		this.xSpeed = speed;
 	}	
@@ -391,22 +388,25 @@ public abstract class GameObject extends SuperObject {
 	 * Sets the hitpoints of an object to a new value
 	 * @param number
 	 * 			the value for hitpoints to set
-	 * @pre number should be bigger than or equal to zero
-	 * 			| number >= 0
-	 * @post hitpoints is set to number if number is smaller than the maximum amount of
+	 * @post hitpoints is set to zero if number is smaller than zero otherwise
+	 * 			hitpoints is set to number if number is smaller than the maximum amount of
 	 * 			hitpoints, otherwise hitpoints is set to the maximum amount of hitpoints
 	 * 			the object can posses
-	 * 			| if ( number < this.getMaxHitpoints()) 
+	 * 			| if (number <= 0)
+	 * 			| 	then this.hitpoints = 0
+	 * 			| else if ( number < this.getMaxHitpoints()) 
 	 * 			|	then this.hitpoints = number	
 	 * 			|else 
 	 * 			|	then this.hitpoints = this.getMaxHitpoints()
 	 */
 	@Raw
 	protected void setHitpoints(int number) {
-		assert number >= 0;
-		if ( number < this.getMaxHitpoints()) {
+		if (number < 0) {
+			this.hitpoints = 0;
+		}
+		else if ( number < this.getMaxHitpoints()) {
 			this.hitpoints = number;
-		}		
+		}	
 		else {
 			this.hitpoints = this.getMaxHitpoints();
 		}
@@ -522,7 +522,7 @@ public abstract class GameObject extends SuperObject {
 	 */
 	@Raw
 	protected void setMaxSpeed(double speed) {
-		assert this.isValidXSpeed(speed);
+		assert ((speed >= 0) && ( ! Double.isNaN(speed)));;
 		this.maxSpeed = speed;
 	}
 	/**
@@ -1387,15 +1387,18 @@ public abstract class GameObject extends SuperObject {
 	 * 		| 	then this.setXSpeed(this.getMaxSpeed());
 	 * 		| 	then this.setXAcc(0)
 	 */
+	// TODO commentaar
 	@Raw
 	protected void setNewSpeed(double dt) {
-		this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
-		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
-		
-		if (this.getXSpeed() >= this.getMaxSpeed()){
+
+		if (this.getXSpeed() + dt * this.getXAcc() >= this.getMaxSpeed()){
 			this.setXSpeed(this.getMaxSpeed());
 			this.setXAcc(0);
 		}
+		else {
+			this.setXSpeed(this.getXSpeed() + dt * this.getXAcc());
+		}
+		this.setYSpeed(this.getYSpeed() + dt * this.getYAcc());
 	}
 	/**
 	 * Checks or two objects with given positions and dimensions are thouching eachother

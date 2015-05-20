@@ -29,6 +29,8 @@ public class Shark extends GameObject {
 	 *            The y-coordinate of the shark's initial position
 	 * @param sprites
 	 *            An array of sprites for the new shark
+	 * @effect the shark is created at the given position with the given sprites
+	 * 			| super(xPos, yPos, sprites)
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for the shark
 	 * 			| !isValidPosition(xPos,yPos)
@@ -44,6 +46,29 @@ public class Shark extends GameObject {
 		this.setMaxSpeed(Shark.getMaxXSpeed());
 	}
 	
+	/**
+	 * Creates a new shark, located at the provided pixel location (x, y).
+	 * The returned shark should not belong to a world.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the shark's initial position
+	 * @param y
+	 *            The y-coordinate of the shark's initial position
+	 * @param program
+	 * 			the program to control the slime
+	 * @param sprites
+	 *            An array of sprites for the new shark
+	 * @effect the shark is created at the given position with the given sprites
+	 * 			| super(xPos, yPos, sprites)
+	 * @effect the program is set
+	 * 			| this.setProgram(program)
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the shark
+	 * 			| !isValidPosition(xPos,yPos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| !isValidSprite(sprites) 
+	 */
 	public Shark(int xPos,int yPos, Sprite[] sprites, Program program) 
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos,yPos,sprites, program);

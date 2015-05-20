@@ -19,7 +19,6 @@ public class ReadVariable extends Expression<Object> {
 	}
 
 	private Type type;
-	@SuppressWarnings("unused")
 	private Type getType() { 
 		return type;
 	}
@@ -28,7 +27,12 @@ public class ReadVariable extends Expression<Object> {
 	}
 	@Override
 	public Object evaluate(Program program) {
-		return program.getEnvironment().get(this.getName());
+		if (this.getType() != program.getGlobalVariables().get(this.getName())) {
+			throw new IllegalArgumentException();
+		}
+		else {
+			return program.getEnvironment().get(this.getName());
+		}
 	}
 
 }

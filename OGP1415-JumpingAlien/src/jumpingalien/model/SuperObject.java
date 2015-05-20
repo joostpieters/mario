@@ -31,14 +31,11 @@ public abstract class SuperObject {
 	 * Sets the world to the givan value world
 	 * @param world
 	 * 		the world to set
-	 * @pre the given World world may not be null
-	 * 			| world != null
 	 * @post world is set
 	 * 			| this.world = world
 	 */
 	@Raw
 	public void setWorld(World world) {
-		assert world != null;
 		this.world = world;
 	}	
 

@@ -689,7 +689,6 @@ public class World {
 	@Raw
 	private void setXVisibleWindow(int xVisibleWindow) {
 		assert xVisibleWindow >= 0;
-		assert xVisibleWindow < (this.getWorldSizeInPixels()[0] - this.getVisibleWindowWidth());
 		this.xVisibleWindow = xVisibleWindow;
 	}
 	/**
@@ -703,7 +702,6 @@ public class World {
 	@Raw
 	private void setYVisibleWindow(int yVisibleWindow) {
 		assert yVisibleWindow >= 0;
-		assert yVisibleWindow < (this.getWorldSizeInPixels()[1] - this.getVisibleWindowHeight());
 		this.yVisibleWindow = yVisibleWindow;
 	}
 	/**

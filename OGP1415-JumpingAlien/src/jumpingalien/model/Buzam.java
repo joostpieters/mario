@@ -52,8 +52,7 @@ public class Buzam extends Mazub {
 	}
 	
 	/**
-	 * Initialize this new Buzam with given x and y positions, sprites,
-	 * horizontal start speed and maximum horizontal speed.
+	 * Initialize this new Buzam with given x and y positions and given sprites.
 	 * 
 	 * @param xPos
 	 * 			The x position in the field for the new Buzam
@@ -61,17 +60,16 @@ public class Buzam extends Mazub {
 	 * 			The y position in the field for the new Buzam
 	 * @param sprites
 	 * 			The sprites for the new Buzam
-	 * @param initStartSpeed
-	 *			The initial horizontal start speed
-	 * @param maxSpeed
-	 * 			The maximum horizontal speed 
-	 * @effect the Buzam is created at (x_pos,y_pos) with a given set of sprites
+	 * @param program
+	 * 			the program to control the Buzam
+	 * @effect the Buzam is created at (xPos,yPos) with a given set of sprites
 	 * 			| super(xPos, yPos, sprites)
-	 * @effect the initial startspeed and maximum speed are
-	 * 			set to the given values and the hitpoints are 
-	 * 			set to the default value
-	 * 			| new.setInitStartSpeed(initStartSpeed)
-	 * 			| new.setMaxSpeed(maxSpeed)
+	 * @effect the program is set
+	 * 			| this.setProgram(program)
+	 * @effect the initial startspeed, maximum speed and hitpoints are
+	 * 			set to the default values
+	 * 			| new.setInitStartSpeed(START_SPEED)
+	 * 			| new.setMaxSpeed(MAX_MOVING_SPEED)
 	 * 			| new.setHitpoints(Buzam.getInitHitpoints())
 	 * @throws	IllegalPositionException
 	 * 			The given position is not valid for Buzam
@@ -79,14 +77,8 @@ public class Buzam extends Mazub {
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
 	 * 			| ! isValidSprite(sprites) 
-	 * @throws IllegalSpeedException
-	 * 			The given maxSpeed and initalStartSpeed are not valid
-	 * 			| ! isValidSpeed(initStartSpeed, maxSpeed)
-	 * The initial velocity will never be changed below 1 m/s so
-	 * we don't need an IllegalInitStartSpeedException or a
-	 * IllegalMaxSpeedException. 
 	 * 
-	 */	
+	 */
 	public Buzam(int xPos, int yPos, Sprite[] sprites, Program program)
 			throws IllegalPositionException, IllegalSpriteException {
 		super(xPos, yPos, sprites);
@@ -114,7 +106,6 @@ public class Buzam extends Mazub {
 	@Override
 	@Raw
 	public void advanceTime(double dt) throws IllegalDtException {
-		System.out.println(this.getHitpoints());
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);		
 		if ( ! this.isDying()) {		

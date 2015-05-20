@@ -65,6 +65,41 @@ public class Slime extends GameObject {
 		this.setMaxSpeed(Slime.getMaxXSpeed());
 	}
 	
+	/**
+	 * Creates a new slime, located at the provided pixel location (x, y).
+	 * The returned slime should not belong to a world.
+	 * 
+	 * @param x
+	 * 			The x-coordinate of the slime's initial position
+	 * @param y
+	 * 			The y-coordinate of the slime's initial position
+	 * @param sprites
+	 * 			An array of sprites for the new slime
+	 * @param school
+	 *			The initial school to which the new slime belongs
+	 * @param program
+	 * 			the program to control the slime
+	 * @effect the Slime is created at the given position with the given sprites
+	 * 			| super(xPos, yPos, sprites)
+	 * @effect the slime is added to a School school
+	 * 			| setSchool(school)
+	 * 			| school.newSlime(this)
+	 * @effect the program is set
+	 * 			| this.setProgram(program)
+	 * @effect the Slime gets it's default amount of hitpoints
+	 * 			| setHitpoints(getInitHitpoints())
+	 * @effect the maximum speed gets initialized
+	 * 			| setMaxSpeed(Slime.getMaxXSpeed())
+	 * @throws	IllegalPositionException
+	 * 			The given position is not valid for the slime
+	 * 			| ! isValidPosition(xPos,yPos)
+	 * @throws IllegalSpriteException
+	 * 			The given sprite is not valid
+	 * 			| ! isValidSprite(sprites) 
+	 * @throws IllegalSchoolException
+	 * 			The given school is not valid
+	 * 			| ! isValidSchool(school)
+	 */
 	@Raw
 	public Slime(int xPos,int yPos, Sprite[] sprites,School school, Program program) 
 			throws IllegalPositionException, IllegalSpriteException, IllegalSchoolException {
@@ -243,14 +278,11 @@ public class Slime extends GameObject {
 	 * sets the School of this Slime to school
 	 * @param school
 	 * 			the new value for the School school
-	 * @pre The new school has to be valid
-	 * 			| isValidSchool(school)
 	 * @post the School is equal to the given School school
 	 * 			| this.school = school
 	 */
 	@Raw
 	public void setSchool(School school) {
-		assert this.isValidSchool(school);
 		this.school = school;
 	}
 	/**
@@ -279,7 +311,7 @@ public class Slime extends GameObject {
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}
-	
+	// TODO commentarR
 	private boolean isValidSchool(School school) {
 		return school != null;
 	}
@@ -469,7 +501,7 @@ public class Slime extends GameObject {
 	 * 			| 				then this.loseHitpoints(Slime.getLossHitpointsInMagma());		
 	 * 			| 			else if (this.getTimeInMagma() >= Slime.getBurnTime()) 
 	 * 			| 				then this.loseHitpoints(Slime.getLossHitpointsInMagma());
-	 * 			| 				then this.setTimeInWater(this.getTimeInWater() - GameObject.getDrownTime());
+	 * 			| 				then this.setTimeInWater(this.getTimeInMagma() - GameObject.getBurnTime());
 	 * 			| 	then 	this.setTimeInMagma(this.getTimeInMagma() + dt);
 	 * @effect if this Slime is in contact with water longer than the drownTime, it loses hitpoints,
 	 * 			else timeInWater is set to zero
@@ -489,7 +521,7 @@ public class Slime extends GameObject {
 			}		
 			else if (this.getTimeInMagma() >= Slime.getBurnTime()) {
 				this.loseHitpoints(Slime.getLossHitpointsInMagma());
-				this.setTimeInWater(this.getTimeInWater() - GameObject.getDrownTime());
+				this.setTimeInWater(this.getTimeInMagma() - GameObject.getBurnTime());
 			}
 			this.setTimeInMagma(this.getTimeInMagma() + dt);
 		}

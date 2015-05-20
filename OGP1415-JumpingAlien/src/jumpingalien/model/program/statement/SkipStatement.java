@@ -20,7 +20,7 @@ public class SkipStatement extends Statement {
 
 	@Override
 	public boolean isWellFormed() {
-		if(this.getLoopStatement(this) != null) {
+		if(this.getLoopStatement(this) instanceof ForEachStatement) {
 			return false;
 		}
 		return true;

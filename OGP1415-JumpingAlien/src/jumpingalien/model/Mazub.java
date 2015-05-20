@@ -637,6 +637,7 @@ public class Mazub extends GameObject {
 						newHitpoints = 500;
 					}
 					if (this.isValidAmountOfHitpoints(newHitpoints)) {
+						other.setHitpoints(-1);
 						other.die();
 						this.setHitpoints(newHitpoints);
 					}				
