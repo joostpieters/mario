@@ -1,5 +1,6 @@
 package jumpingalien.model.program.expression;
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 
 public class DirectionExpression extends Expression<jumpingalien.part3.programs.IProgramFactory.Direction> {
@@ -7,6 +8,7 @@ public class DirectionExpression extends Expression<jumpingalien.part3.programs.
 	
 	public DirectionExpression(jumpingalien.part3.programs.IProgramFactory.Direction v) {
 		this.setValue(v);
+		this.setType(Type.DIRECTION);
 	}
 
 	private jumpingalien.part3.programs.IProgramFactory.Direction value;

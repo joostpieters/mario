@@ -1,6 +1,7 @@
 package jumpingalien.model.program.expression;
 
 import jumpingalien.model.Tile;
+import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.program.Program;
 
@@ -9,6 +10,10 @@ public class GetTileExpression extends BinaryExpression<Tile, Double> {
 	public GetTileExpression(Expression<Double> expression1,
 			Expression<Double> expression2) {
 		super(expression1, expression2);
+		if (expression1.getType() != Type.DOUBLE && expression2.getType() != Type.DOUBLE) {
+			throw new IllegalArgumentException();
+		}
+		this.setType(Type.OBJECT);
 	}
 
 	@Override

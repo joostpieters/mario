@@ -2,6 +2,7 @@ package jumpingalien.model.program.expression;
 
 import jumpingalien.model.GameObject;
 import jumpingalien.model.Orientation;
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
 
@@ -9,7 +10,12 @@ public class IsMoving extends UnaryExpression<Boolean, GameObject> {
 	
 	public IsMoving(Expression<GameObject> expr, Expression<Direction> direc) {
 		super(expr);
+		if (expr.getType() != Type.OBJECT && direc.getType() != Type.DIRECTION) {
+			throw new IllegalArgumentException();
+		}
+		this.setType(Type.BOOLEAN);
 		this.setDirection(direc);
+		
 	}
 	
 	private Expression<Direction> direction;

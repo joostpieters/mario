@@ -1,5 +1,6 @@
 package jumpingalien.model.program.expression;
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 
 public class OrBool extends BinaryExpression<Boolean, Boolean> {
@@ -7,6 +8,10 @@ public class OrBool extends BinaryExpression<Boolean, Boolean> {
 	public OrBool(Expression<Boolean> expression1,
 			Expression<Boolean> expression2) {
 		super(expression1, expression2);
+		if (expression1.getType() != Type.BOOLEAN || expression2.getType() != Type.BOOLEAN) {
+			throw new IllegalArgumentException();
+		}
+		this.setType(Type.BOOLEAN);
 	}
 
 	@Override

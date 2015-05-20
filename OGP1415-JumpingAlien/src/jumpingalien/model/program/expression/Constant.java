@@ -1,11 +1,13 @@
 package jumpingalien.model.program.expression;
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 
 public class Constant extends Expression<Double> {
 
 	public Constant(double value) {
 		this.setValue(value);
+		this.setType(Type.DOUBLE);
 	}
 
 	private double value;

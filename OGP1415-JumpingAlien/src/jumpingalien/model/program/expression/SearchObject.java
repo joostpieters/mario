@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import jumpingalien.model.SuperObject;
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
 
@@ -11,6 +12,10 @@ public class SearchObject extends UnaryExpression<SuperObject, Direction> {
 
 	public SearchObject(Expression<Direction> expression1) {
 		super(expression1);
+		if (expression1.getType() != Type.DIRECTION) {
+			throw new IllegalArgumentException();
+		}
+		this.setType(Type.OBJECT);
 	}
 	
 	
