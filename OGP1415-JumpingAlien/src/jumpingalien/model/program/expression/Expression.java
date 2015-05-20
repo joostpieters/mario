@@ -11,7 +11,7 @@ public abstract class Expression<T> {
 	public abstract T evaluate(Program program);
 	
 	private Type type;
-	protected Type getType() {
+	public Type getType() {
 		return type;
 	}
 	protected void setType(Type t) {

@@ -9,6 +9,7 @@ public class AndBool extends BinaryExpression<Boolean, Boolean> {
 			Expression<Boolean> expression2) {
 		super(expression1, expression2);
 		if (expression1.getType() != Type.BOOLEAN || expression2.getType() != Type.BOOLEAN) {
+			System.out.println(expression2.getType());
 			throw new IllegalArgumentException();
 		}
 		this.setType(Type.BOOLEAN);

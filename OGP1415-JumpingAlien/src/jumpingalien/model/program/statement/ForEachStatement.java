@@ -2,12 +2,14 @@ package jumpingalien.model.program.statement;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jumpingalien.model.SuperObject;
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
 import jumpingalien.part3.programs.IProgramFactory.Kind;
 import jumpingalien.part3.programs.IProgramFactory.SortDirection;
-// TODO comments wegdoen
+
 public class ForEachStatement extends LoopStatement {
 
 	public ForEachStatement(String variableName,
@@ -16,6 +18,9 @@ public class ForEachStatement extends LoopStatement {
 			Expression<Double> sort,
 			jumpingalien.part3.programs.IProgramFactory.SortDirection sortDirection,
 			Statement body) {
+		if (where.getType() != Type.BOOLEAN && sort.getType() != Type.DOUBLE) {
+			throw new IllegalArgumentException();
+		}
 		this.setVariableName(variableName);
 		this.setWhere(where);
 		this.setSort(sort);
@@ -114,58 +119,17 @@ public class ForEachStatement extends LoopStatement {
 					o -> {program.addToEnvironment(getVariableName(), o);
 					return (getWhere().evaluate(program));})
 					.forEach(o -> newList.add(o));
-				
-				
-			
-//			for (SuperObject object: list) {
-//				program.addToEnvironment(getVariableName(), object);
-//				if ( ! this.getWhere().evaluate(program)) {
-//					list.remove(object);
-//				}
-//			}
 		}
 
 			
 	return newList;
-//	return list;
 	}
 	
 	private List<SuperObject> listObjectWhereTrueSorted(Program program) {
 		List<SuperObject> listWhereTrue = this.listObjectWhereTrue(program);
 		if (this.getSort() != null) {
 			List<SuperObject> newList = new ArrayList<SuperObject>();
-			listWhereTrue.stream().sorted( (o1,o2) -> compare(o1,o2, program)).forEach((o -> newList.add(o)));
-//			List<SuperObject> listToReturn = new ArrayList<SuperObject>();
-//			for (int i = 0; i <= listWhereTrue.size() + 1; i++) {
-//				if (this.getSortDirection() == SortDirection.ASCENDING) {
-//					double min = Double.POSITIVE_INFINITY;
-//					SuperObject nextInLine = null;
-//					for (SuperObject object: listWhereTrue) {
-//						program.addToEnvironment(getVariableName(), object);
-//						double value = this.getSort().evaluate(program);
-//						if (value < min) {
-//							min = value;
-//							nextInLine = object;
-//						}
-//					}
-//					listToReturn.add(nextInLine);
-//					listWhereTrue.remove(nextInLine);
-//				}
-//				else {
-//					double max = Double.NEGATIVE_INFINITY;
-//					SuperObject nextInLine = null;
-//					for (SuperObject object: listWhereTrue) {
-//						program.addToEnvironment(getVariableName(), object);
-//						double value = this.getSort().evaluate(program);
-//						if (value > max) {
-//							max = value;
-//							nextInLine = object;
-//						}
-//					}
-//					listToReturn.add(nextInLine);
-//					listWhereTrue.remove(nextInLine);
-//				}			
-//			}		
+			listWhereTrue.stream().sorted( (o1,o2) -> compare(o1,o2, program)).forEach((o -> newList.add(o)));		
 			return newList;
 		}
 		return listWhereTrue;

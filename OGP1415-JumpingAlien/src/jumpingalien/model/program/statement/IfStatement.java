@@ -1,5 +1,6 @@
 package jumpingalien.model.program.statement;
 
+import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Expression;
 
@@ -9,9 +10,11 @@ public class IfStatement extends Statement {
 	public IfStatement(Expression<Boolean> condition, Statement ifBody, Statement elsebody) {
 		this.setCondition(condition);
 		this.setIfBody(ifBody);
+		if (condition.getType() != Type.BOOLEAN) {
+			throw new IllegalArgumentException();
+		}
 		if (elsebody != null) {
 			this.setElseBody(elsebody);
-
 		}
 	}
 	

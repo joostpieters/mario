@@ -11,7 +11,7 @@ public class GreaterThan extends BinaryExpression<Boolean, Double> {
 		if (expression1.getType() != Type.DOUBLE || expression2.getType() != Type.DOUBLE) {
 			throw new IllegalArgumentException();
 		}
-		this.setType(Type.DOUBLE);
+		this.setType(Type.BOOLEAN);
 	}
 
 	@Override
