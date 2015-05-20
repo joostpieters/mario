@@ -25,7 +25,6 @@ public class Program {
 	}
 	
 	private Map<String, Type> globalVariables;
-	@SuppressWarnings("unused")
 	public Map<String, Type> getGlobalVariables() {
 		return this.globalVariables;
 	}

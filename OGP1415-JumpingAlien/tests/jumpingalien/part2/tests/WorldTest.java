@@ -335,6 +335,7 @@ public class WorldTest {
 		facade.setMazub(world, alien);
 		School school = facade.createSchool();
 		Slime slime = facade.createSlime(600, 600, spriteArrayForSize(2, 2, 2), school);
+		facade.addSlime(world, slime);
 		// the slime gets removed
 		world.removeSlime(slime);		
 		assertEquals( new CopyOnWriteArrayList<Slime>(), world.getSlimes());
@@ -352,6 +353,7 @@ public class WorldTest {
 		Mazub alien = facade.createMazub(499, 499, sprites);
 		facade.setMazub(world, alien);
 		Shark shark = facade.createShark(50, 550, spriteArrayForSize(2, 2, 2));
+		facade.addShark(world, shark);
 		// the shark gets removed
 		world.removeShark(shark);		
 		assertEquals( new CopyOnWriteArrayList<Shark>(), world.getSharks());
@@ -369,6 +371,7 @@ public class WorldTest {
 		Mazub alien = facade.createMazub(499, 499, sprites);
 		facade.setMazub(world, alien);
 		Plant plant = facade.createPlant(50, 550, spriteArrayForSize(2, 2, 2));
+		facade.addPlant(world, plant);
 		// the plant gets removed
 		world.removePlant(plant);
 		assertEquals( new CopyOnWriteArrayList<Plant>(), world.getPlants());

@@ -9,14 +9,31 @@ import jumpingalien.part3.programs.ParseOutcome;
 
 import org.junit.Test;
 
+
 public class ProgramTest {
 
 	@Test
-	public void testWellformedBreak() {
+	public void testBadformedBreak() {
 		IFacadePart3 facade = new Facade();
 		ParseOutcome<?> outcome = facade.parse("double d := 1.0; if random 2 <= 1 then break; fi ");
 		assumeTrue(outcome.isSuccess());
 		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	@Test
+	public void testWellformedBreakWhile() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("double d := 1.0; while d > 1 do if random 2 <= 1 then break; fi done ");
+		assumeTrue(outcome.isSuccess());
+		assertTrue(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	@Test
+	public void testWellformedBreakForEach() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then break; fi done ");
+		assumeTrue(outcome.isSuccess());
+		assertTrue(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
 	}
 	
 	@Test
@@ -30,10 +47,55 @@ public class ProgramTest {
 	@Test
 	public void testWellformedActionStatement2() {
 		IFacadePart3 facade = new Facade();
-		ParseOutcome<?> outcome = facade.parse("double d := 1.0; while d < 3 do if random 2 <= 1 then start_duck(); fi done");
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then start_duck; fi done");
 		assumeTrue(outcome.isSuccess());
 		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
 	}
+	
+	@Test
+	public void testWellformedActionStatement3() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then start_jump; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	@Test
+	public void testWellformedActionStatement4() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then start_run right; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	@Test
+	public void testWellformedActionStatement5() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then stop_duck; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	@Test
+	public void testWellformedActionStatement6() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then stop_jump; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	@Test
+	public void testWellformedActionStatement7() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then stop_run left; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	
+	
+	
+	
 	
 	
 }

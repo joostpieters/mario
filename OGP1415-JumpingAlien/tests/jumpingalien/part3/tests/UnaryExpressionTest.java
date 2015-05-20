@@ -372,6 +372,11 @@ public class UnaryExpressionTest {
 		assertEquals(sqrt.evaluate(program), Math.sqrt(43));	
 	}
 	
+	@Test
+	public void searchObjectTile() {
+		
+	}
+	
 	
 	
 	

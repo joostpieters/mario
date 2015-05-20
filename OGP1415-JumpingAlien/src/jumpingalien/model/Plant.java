@@ -224,7 +224,7 @@ public class Plant extends GameObject {
 	public void advanceTime(double dt)throws IllegalDtException {
 		if ( ! isValidDt(dt))
 			throw new IllegalDtException(dt);	
-		if (this.getProgram() != null) {
+		if (this.getProgram() == null) {
 			this.setXSpeed(Plant.getStartSpeed());
 		}
 		double newXPos = this.getXPos();		
