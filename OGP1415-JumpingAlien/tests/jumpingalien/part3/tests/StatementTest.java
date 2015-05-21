@@ -2,21 +2,17 @@ package jumpingalien.part3.tests;
 
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.*;
-import static org.junit.Assume.assumeTrue;
 
 
 import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
-import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
 import jumpingalien.model.Shark;
-import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.program.Program;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.ParseOutcome;
-import jumpingalien.util.ModelException;
 import jumpingalien.util.Sprite;
 
 import org.junit.Before;
@@ -49,6 +45,7 @@ public class StatementTest {
 		facade.setMazub(world, alien);
 	}
 	
+	//TODO hier wordt niets getest
 	@Test
 	public void forEach() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
@@ -73,34 +70,63 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void ForEachIllegalSort() {
-		try {
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where "
-				+ "5 sort getx o descending do print getx o; done");
-		System.out.println(outcome.getResult());
-		} catch (IllegalArgumentException exc) {
-			assert true;
-		}
+	public void StartJumpTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isJumping());
 	}
+	
 	
 	@Test
 	public void IfStatementTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isplant o) "
-				+ "sort getx o descending do if (isplant o) then print getx o; done");
+		ParseOutcome<?> outcome = facade.parse("object o; o := self; if (ismazub o) then start_jump; fi");
 		Program program = (Program) outcome.getResult();
-		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
-		facade.addPlant(world, plant);
-		program.execute(0.1);
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// One execution, so self is assigned to o
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// Another execution, the condition is checked
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// The body is executed
+		assertTrue(buzam.isJumping());
 	}
 	
 	@Test
-	public void StartDuckTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isbuzam o) "
-				+ "sort getx o descending do startduck o; done");
+	public void IfElseStatementTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; o := self; if (isplant o) then start_duck; else start_jump; fi stop_jump;");
 		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
 		facade.addBuzam(world, buzam);
-		program.execute(0.1);
+		program.execute(0.001);
+		// One execution, so self is assigned to o
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// Another execution, the condition is checked
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// The elsebody is executed
+		assertTrue(buzam.isJumping());
+		program.execute(0.001);
+		// The next statement is executed
+		assertFalse(buzam.isJumping());
+		
+	}
+	
+	
+	@Test
+	public void StartDuckTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isDucked());
 	}
 	
 	

@@ -74,7 +74,7 @@ public class TypeCheckingTest {
 	
 	@Test
 	public void getY() {
-		ParseOutcome<?> outcome = facade.parse("double a; double c; a := 2; c:= getx a;");
+		ParseOutcome<?> outcome = facade.parse("double a; double c; a := 2; c:= gety a;");
 		assertFalse(outcome.isSuccess());
 	}
 	
