@@ -105,5 +105,13 @@ public class BuzamTest {
 		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
 	}
 	
+	@Test
+	public void BuzamMaxSpeedDuckProgram() {
+		ParseOutcome<?> outcome = facade.parse("start_duck; start_move right;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		assertEquals(facade.getVelocity(buzam)[0], 1);
+	}	
+	
 
 }

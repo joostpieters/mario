@@ -56,7 +56,7 @@ public class BuzamTest {
 		assertEquals(world.getBuzam(), buzam);
 	}
 	
-	@Test(expected=ModelException.class)
+	@Test
 	public void TestIllegalDt() {
 		Buzam buzam = facade.createBuzam(499, 50, sprites);
 		facade.addBuzam(world, buzam);
@@ -104,6 +104,13 @@ public class BuzamTest {
 		// the buzam walks into the mazub and doesnt walk through mazub
 		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

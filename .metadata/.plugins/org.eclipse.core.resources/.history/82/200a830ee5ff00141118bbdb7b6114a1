@@ -2,9 +2,10 @@ package jumpingalien.part3.tests;
 
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.*;
+
+
 import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
-import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
 import jumpingalien.model.Shark;
 import jumpingalien.model.World;
@@ -46,7 +47,7 @@ public class StatementTest {
 	
 	//TODO hier wordt niets getest
 	@Test
-	public void forEachTest() {
+	public void forEach() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
 				+ "sort getx o descending do print getx o; done");
 		Program program = (Program) outcome.getResult();
@@ -69,15 +70,6 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void whileTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump self; done");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
-		program.execute(0.001);
-		assertEquals(buzam.getYSpeed(), 8, 0.01);
-	}
-	
-	@Test
 	public void StartJumpTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
 		Program program = (Program) outcome.getResult();
@@ -85,16 +77,6 @@ public class StatementTest {
 		facade.addBuzam(world, buzam);
 		program.execute(0.001);
 		assertTrue(buzam.isJumping());
-	}
-	
-	@Test
-	public void StopJumpTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; stop_jump;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		assertFalse(buzam.isJumping());
 	}
 	
 	
@@ -132,8 +114,10 @@ public class StatementTest {
 		assertTrue(buzam.isJumping());
 		program.execute(0.001);
 		// The next statement is executed
-		assertFalse(buzam.isJumping());		
-	}	
+		assertFalse(buzam.isJumping());
+		
+	}
+	
 	
 	@Test
 	public void StartDuckTest() {
@@ -147,61 +131,12 @@ public class StatementTest {
 	
 	@Test
 	public void StopDuckTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_duck; stop_duck;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		program.execute(0.001);
-		assertFalse(buzam.isDucked());
-	}
-	
-	@Test
-	public void StartRunTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_run right;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		// the start speed of buzam is 1m/s
-		assertEquals(buzam.getXSpeed(), 1, 0.01);
-		assertEquals(buzam.getOrientation(), Orientation.RIGHT);
-	}
-	
-	@Test
-	public void StopRunTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; stop_run right;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		assertEquals(buzam.getXSpeed(), 0, 0.001);
-	}
-	
-	@Test
-	public void PrintStatementTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; print getx o;");
+		ParseOutcome<?> outcome = facade.parse("object o; stop_duck;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
 		facade.addBuzam(world, buzam);
 		program.execute(0.001);
-		assertTrue(true);
-	}
-	
-	@Test
-	public void BreakStatementNotWellFormedTest() {
-		ParseOutcome<?> outcome = facade.parse("break;");
-		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
-	}
-	
-	@Test
-	public void ProgramNotWellFormedTest() {
-		// action statement in loop
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
-				+ "sort getx o descending do start_run right o; done");
-		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
+		assertTrue(buzam.isDucked());
 	}
 	
 	

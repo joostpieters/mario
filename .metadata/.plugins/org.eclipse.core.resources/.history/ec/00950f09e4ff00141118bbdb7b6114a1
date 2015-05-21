@@ -346,7 +346,6 @@ public class UnaryExpressionTest {
 	@Test
 	public void testIsMazub() throws IllegalPositionException, IllegalSpriteException {		
 		Expression obj = new ObjectSelf();
-		// buzam instance of mazub
 		Expression ismazub = new IsMazub(obj);
 		Map<String, Type> map = new HashMap<String, Type>();
 		Statement stat = new PrintStatement(ismazub);

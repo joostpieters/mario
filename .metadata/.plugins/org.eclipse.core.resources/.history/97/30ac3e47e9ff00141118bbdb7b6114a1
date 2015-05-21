@@ -46,7 +46,7 @@ public class StatementTest {
 	
 	//TODO hier wordt niets getest
 	@Test
-	public void forEachTest() {
+	public void forEach() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
 				+ "sort getx o descending do print getx o; done");
 		Program program = (Program) outcome.getResult();
@@ -66,15 +66,6 @@ public class StatementTest {
 		facade.addShark(world, shark2);
 		facade.addShark(world, shark);
 		program.execute(0.1);
-	}
-	
-	@Test
-	public void whileTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump self; done");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
-		program.execute(0.001);
-		assertEquals(buzam.getYSpeed(), 8, 0.01);
 	}
 	
 	@Test
@@ -189,20 +180,11 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void BreakStatementNotWellFormedTest() {
-		ParseOutcome<?> outcome = facade.parse("break;");
-		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
-	}
-	
-	@Test
-	public void ProgramNotWellFormedTest() {
-		// action statement in loop
+	public void SkipStatementTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
-				+ "sort getx o descending do start_run right o; done");
+				+ "sort getx o descending do skip; print getx o;  done");
 		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
+		program.execute(0.001);
 	}
-	
 	
 }

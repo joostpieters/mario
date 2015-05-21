@@ -46,7 +46,7 @@ public class StatementTest {
 	
 	//TODO hier wordt niets getest
 	@Test
-	public void forEachTest() {
+	public void forEach() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
 				+ "sort getx o descending do print getx o; done");
 		Program program = (Program) outcome.getResult();
@@ -66,15 +66,6 @@ public class StatementTest {
 		facade.addShark(world, shark2);
 		facade.addShark(world, shark);
 		program.execute(0.1);
-	}
-	
-	@Test
-	public void whileTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump self; done");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
-		program.execute(0.001);
-		assertEquals(buzam.getYSpeed(), 8, 0.01);
 	}
 	
 	@Test
@@ -189,20 +180,26 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void BreakStatementNotWellFormedTest() {
-		ParseOutcome<?> outcome = facade.parse("break;");
-		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
-	}
-	
-	@Test
-	public void ProgramNotWellFormedTest() {
-		// action statement in loop
+	public void SkipStatementTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
-				+ "sort getx o descending do start_run right o; done");
+				+ "sort getx o descending do skip; done");
 		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
+		Plant plant1 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
+		Plant plant2 = facade.createPlant(10, 0, spriteArrayForSize(3, 3, 2));
+		Plant plant3 = facade.createPlant(20, 0, spriteArrayForSize(3, 3, 2));
+		Mazub mazub = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
+		Shark shark = facade.createShark(200, 0, spriteArrayForSize(3, 3, 2));
+		Shark shark2 = facade.createShark(250, 0, spriteArrayForSize(3, 3, 2));
+		Shark shark3 = facade.createShark(300, 0, spriteArrayForSize(3, 3, 2));
+		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.addPlant(world, plant1);
+		facade.addPlant(world, plant2);
+		facade.addPlant(world, plant3);
+		facade.setMazub(world, mazub);
+		facade.addShark(world, shark3);
+		facade.addShark(world, shark2);
+		facade.addShark(world, shark);
+		program.execute(0.1);
 	}
-	
 	
 }

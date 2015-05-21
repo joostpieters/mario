@@ -203,6 +203,4 @@ public class StatementTest {
 		Program program = (Program) outcome.getResult();
 		assertFalse(program.isWellFormed());
 	}
-	
-	
 }

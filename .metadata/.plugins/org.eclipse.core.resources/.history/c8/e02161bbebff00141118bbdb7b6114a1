@@ -105,5 +105,12 @@ public class BuzamTest {
 		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 
 }

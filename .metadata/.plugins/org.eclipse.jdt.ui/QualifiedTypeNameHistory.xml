@@ -57,7 +57,7 @@
 <fullyQualifiedTypeName name="jumpingalien.part3.facade.IFacadePart3"/>
 <fullyQualifiedTypeName name="jumpingalien.part1.facade.Facade"/>
 <fullyQualifiedTypeName name="jumpingalien.part3.facade.Facade"/>
-<fullyQualifiedTypeName name="jumpingalien.model.Orientation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Slime"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Buzam"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Orientation"/>
 </qualifiedTypeNameHistroy>

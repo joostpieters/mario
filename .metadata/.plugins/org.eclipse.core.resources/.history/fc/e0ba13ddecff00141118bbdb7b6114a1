@@ -70,7 +70,7 @@ public class StatementTest {
 	
 	@Test
 	public void whileTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump self; done");
+		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump; done");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
 		program.execute(0.001);
@@ -203,6 +203,4 @@ public class StatementTest {
 		Program program = (Program) outcome.getResult();
 		assertFalse(program.isWellFormed());
 	}
-	
-	
 }
