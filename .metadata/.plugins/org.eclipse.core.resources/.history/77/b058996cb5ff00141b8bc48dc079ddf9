@@ -86,14 +86,13 @@ public class BuzamTest {
 	public void TestColliding() throws IllegalSettingException, IllegalPositionException {
 		Buzam buzam = facade.createBuzam(40, 499, sprites);	
 		world.setBuzam(buzam);
-		Mazub alien = facade.createMazub(120, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
+		School school = facade.createSchool();
+		Slime slime = facade.createSlime(120, 500, spriteArrayForSize(1, 1, 2), school);
 		facade.startMoveRight(buzam);
-		for (int i = 0; i < 9; i++) {
-			facade.advanceTime(world, 0.12);
+		for (int i = 0; i < 6; i++) {
+			facade.advanceTime(world, 0.05);
 		}
-		// the buzam walks into the mazub and doesnt walk through mazub
-		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
+		assertArrayEquals(intArray(60, 499), facade.getLocation(buzam));
 	}
 	
 	

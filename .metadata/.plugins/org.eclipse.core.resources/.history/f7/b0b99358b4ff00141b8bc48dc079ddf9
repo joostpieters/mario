@@ -1,13 +1,8 @@
 package jumpingalien.part3.tests;
 import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
-import jumpingalien.model.School;
-import jumpingalien.model.Slime;
 import jumpingalien.model.World;
-import jumpingalien.model.exceptions.IllegalPositionException;
-import jumpingalien.model.exceptions.IllegalSettingException;
 import jumpingalien.model.program.Program;
-import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.ParseOutcome;
@@ -70,31 +65,10 @@ public class BuzamTest {
 	public void ProgramMoveRight() {
 		ParseOutcome<?> outcome = facade.parse("start_jump;");
 		Program program = (Program) outcome.getResult();
-		facade.createBuzamWithProgram(0, 0, sprites, program);		
+		facade.createBuzamWithProgram(0, 0, sprites, program);
+		
 	}
 	
-	@Test
-	public void TestStartMoveLeftCorrect() throws IllegalSettingException, IllegalPositionException {
-		Buzam buzam = facade.createBuzam(50, 499, sprites);	
-		world.setBuzam(buzam);
-		facade.startMoveLeft(buzam);
-		facade.advanceTime(world, 0.1);
-		assertArrayEquals(intArray(39, 499), facade.getLocation(buzam));
-	}
-	
-	@Test
-	public void TestColliding() throws IllegalSettingException, IllegalPositionException {
-		Buzam buzam = facade.createBuzam(40, 499, sprites);	
-		world.setBuzam(buzam);
-		Mazub alien = facade.createMazub(120, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.startMoveRight(buzam);
-		for (int i = 0; i < 9; i++) {
-			facade.advanceTime(world, 0.12);
-		}
-		// the buzam walks into the mazub and doesnt walk through mazub
-		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
-	}
 	
 	
 	

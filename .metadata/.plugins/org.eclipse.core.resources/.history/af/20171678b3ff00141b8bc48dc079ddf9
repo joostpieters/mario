@@ -90,7 +90,12 @@ public class ProgramTest {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then stop_run left; fi done");
 		assumeTrue(outcome.isSuccess());
 		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
-	}	
+	}
+	
+	
+	
+	
+	
 	
 	
 }

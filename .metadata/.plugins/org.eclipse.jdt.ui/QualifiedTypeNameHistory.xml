@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="jumpingalien.model.DoubleOperation"/>
-<fullyQualifiedTypeName name="jumpingalien.model.DoubleExpression.DoubleOperation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.UnaryExpression"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
 <fullyQualifiedTypeName name="jumpingalien.model.GameObject"/>
@@ -49,7 +47,6 @@
 <fullyQualifiedTypeName name="jumpingalien.model.World"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsShark"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Shark"/>
-<fullyQualifiedTypeName name="jumpingalien.model.Slime"/>
 <fullyQualifiedTypeName name="jumpingalien.model.School"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsSlime"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsPlant"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="jumpingalien.part3.facade.IFacadePart3"/>
 <fullyQualifiedTypeName name="jumpingalien.part1.facade.Facade"/>
 <fullyQualifiedTypeName name="jumpingalien.part3.facade.Facade"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Orientation"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Slime"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Buzam"/>
 </qualifiedTypeNameHistroy>

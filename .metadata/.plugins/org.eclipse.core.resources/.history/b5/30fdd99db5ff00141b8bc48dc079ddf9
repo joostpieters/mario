@@ -90,10 +90,9 @@ public class BuzamTest {
 		facade.setMazub(world, alien);
 		facade.startMoveRight(buzam);
 		for (int i = 0; i < 9; i++) {
-			facade.advanceTime(world, 0.12);
+			facade.advanceTime(world, 0.1);
 		}
-		// the buzam walks into the mazub and doesnt walk through mazub
-		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
+		assertArrayEquals(intArray(120, 499), facade.getLocation(buzam));
 	}
 	
 	
