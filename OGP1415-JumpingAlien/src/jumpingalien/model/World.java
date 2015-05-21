@@ -500,22 +500,14 @@ public class World {
 	 * returns a collection of all gameObjects in this world
 	 * @effect the collection list contains all game objects
 	 * 			| let
-<<<<<<< HEAD
 	 * 			|	 Collection<GameObject> list = new ArrayList<GameObject>()
 	 * 			| in
 	 * 			| list.addAll(this.getSharks())
 	 * 			| list.addAll(this.getSlimes())
 	 * 			| list.addAll(this.getPlants())
 	 * 			| list.add(this.getAlien())
-	 * 			| list.add(this.getBuzam())
-=======
-	 * 			|	Collection<GameObject> list = new ArrayList<GameObject>()
-	 * 			| 	list.addAll(this.getSharks())
-	 * 			| 	list.addAll(this.getSlimes())
-	 * 			|	list.addAll(this.getPlants())
-	 * 			| 	list.add(this.getAlien())
-	 * 			| 	list.add(this.getBuzam())
->>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
+	 * 			| if (this.getBuzam() != null)
+	 * 			| 	then list.add(this.getBuzam())
 	 * @return the collection list
 	 * 			| return list
 	 */
@@ -525,7 +517,9 @@ public class World {
 		list.addAll(this.getSlimes());
 		list.addAll(this.getPlants());
 		list.add(this.getAlien());
-		list.add(this.getBuzam());
+		if (this.getBuzam() != null) {
+			list.add(this.getBuzam());
+		}
 		return list;
 	}
 	
@@ -535,7 +529,7 @@ public class World {
 	 * 			| let 
 	 * 			| 	Collection<Tile> list = new ArrayList<Tile>()
 	 * 			| in
-	 * 			| for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY()))
+	 * 			| for(int[] tile: this.getTilePositionsIn(0,0,this.getX() - 1, this.getY() - 1))
 	 * 			| 	try 
 	 * 			| 		if (this.getGeologicalFeature(tile[0] * this.getTileLength(), tile[1] * this.getTileLength()) == 3)
 	 * 			| 			list.add(new Tile(tile[0], tile[1], this))
@@ -546,7 +540,7 @@ public class World {
 	 */
 	public Collection<Tile> listAllImpassableTiles() {
 		Collection<Tile> list = new ArrayList<Tile>();
-		for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY())) {
+		for(int[] tile: this.getTilePositionsIn(0,0,this.getX() - 1, this.getY() - 1)) {
 			try {
 				if (this.getGeologicalFeature(tile[0] * this.getTileLength(), tile[1] * this.getTileLength()) == 3) {
 					list.add(new Tile(tile[0], tile[1], this));

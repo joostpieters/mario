@@ -127,8 +127,14 @@ public class TypeCheckingTest {
 	}
 	
 	@Test
-	public void isMoving() {
-		ParseOutcome<?> outcome = facade.parse("double a; bool b; a:= 2; b:= ismoving a;");
+	public void isMovingBadObject() {
+		ParseOutcome<?> outcome = facade.parse("double a; bool b; a:= 2; b:= ismoving (a, left);");
+		assertFalse(outcome.isSuccess());
+	}
+	
+	@Test
+	public void isMovingBadDirection() {
+		ParseOutcome<?> outcome = facade.parse("object a; bool b; a:= self; b:= ismoving (a, a);");
 		assertFalse(outcome.isSuccess());
 	}
 	

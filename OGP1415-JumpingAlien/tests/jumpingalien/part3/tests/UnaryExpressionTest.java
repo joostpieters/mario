@@ -1,12 +1,14 @@
 package jumpingalien.part3.tests;
 
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
+import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.Shark;
@@ -26,6 +28,7 @@ import jumpingalien.model.program.expression.Expression;
 import jumpingalien.model.program.expression.GetHeightObject;
 import jumpingalien.model.program.expression.GetHpObject;
 import jumpingalien.model.program.expression.GetX;
+import jumpingalien.model.program.expression.GetY;
 import jumpingalien.model.program.expression.IsAir;
 import jumpingalien.model.program.expression.IsDead;
 import jumpingalien.model.program.expression.IsDucking;
@@ -143,8 +146,8 @@ public class UnaryExpressionTest {
 	}
 	
 	// TODO nadenken en fixen want werkt niet
-	//@Test
-	public void testSearchObject() {
+	@Test
+	public void testSearchObjectLeft() {
 		IFacadePart3 facade = new Facade();
 		Expression direc = new DirectionExpression(Direction.LEFT);
 		Expression obj = new SearchObject(direc);
@@ -153,12 +156,67 @@ public class UnaryExpressionTest {
 		Program program = new Program(stat, map);
 		// there are no game objects in the world
 		Mazub alien = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
-		Plant plant = facade.createPlantWithProgram(200, 110, spriteArrayForSize(3, 3), program);
+		Plant plant = facade.createPlantWithProgram(105, 100, spriteArrayForSize(3, 3, 2), program);
 		program.setGameObject(plant);
 		World world = facade.createWorld(500,2,2,2,2,1,1);
 		facade.addPlant(world, plant);
+		facade.setMazub(world, alien);
 		assertEquals(obj.evaluate(program), alien);	
 	}	
+	
+	@Test
+	public void testSearchObjectRight() {
+		IFacadePart3 facade = new Facade();
+		Expression direc = new DirectionExpression(Direction.RIGHT);
+		Expression obj = new SearchObject(direc);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		// there are no game objects in the world
+		Mazub alien = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlantWithProgram(90, 100, spriteArrayForSize(3, 3, 2), program);
+		program.setGameObject(plant);
+		World world = facade.createWorld(500,2,2,2,2,1,1);
+		facade.addPlant(world, plant);
+		facade.setMazub(world, alien);
+		assertEquals(obj.evaluate(program), alien);	
+	}
+	
+	@Test
+	public void testSearchObjectUp() {
+		IFacadePart3 facade = new Facade();
+		Expression direc = new DirectionExpression(Direction.UP);
+		Expression obj = new SearchObject(direc);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		// there are no game objects in the world
+		Mazub alien = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlantWithProgram(100, 90, spriteArrayForSize(3, 3, 2), program);
+		program.setGameObject(plant);
+		World world = facade.createWorld(500,2,2,2,2,1,1);
+		facade.addPlant(world, plant);
+		facade.setMazub(world, alien);
+		assertEquals(obj.evaluate(program), alien);	
+	}
+	
+	@Test
+	public void testSearchObjectDown() {
+		IFacadePart3 facade = new Facade();
+		Expression direc = new DirectionExpression(Direction.DOWN);
+		Expression obj = new SearchObject(direc);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		// there are no game objects in the world
+		Mazub alien = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
+		Plant plant = facade.createPlantWithProgram(100, 110, spriteArrayForSize(3, 3, 2), program);
+		program.setGameObject(plant);
+		World world = facade.createWorld(500,2,2,2,2,1,1);
+		facade.addPlant(world, plant);
+		facade.setMazub(world, alien);
+		assertEquals(obj.evaluate(program), alien);	
+	}
 	
 	@Test
 	public void testGetHpObject() throws IllegalPositionException, IllegalSpriteException {		
@@ -187,13 +245,13 @@ public class UnaryExpressionTest {
 	@Test
 	public void testGetY() throws IllegalPositionException, IllegalSpriteException {		
 		Expression obj = new ObjectSelf();
-		Expression y = new GetX(obj);
+		Expression y = new GetY(obj);
 		Map<String, Type> map = new HashMap<String, Type>();
 		Statement stat = new PrintStatement(y);
 		Program program = new Program(stat, map);
 		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
 		program.setGameObject(alien);
-		assertEquals(y.evaluate(program), (double) alien.getXPos());	
+		assertEquals(y.evaluate(program), (double) alien.getYPos());	
 	}
 	
 	@Test
@@ -209,16 +267,56 @@ public class UnaryExpressionTest {
 	}
 	
 	@Test
-	public void testIsMoving() throws IllegalPositionException, IllegalSpriteException {		
+	public void testIsMovingLeft() throws IllegalPositionException, IllegalSpriteException {		
+		IFacadePart3 facade = new Facade();
 		Expression obj = new ObjectSelf();
 		Expression direc = new DirectionExpression(Direction.LEFT);
 		Expression ismoving = new IsMoving(obj, direc);
 		Map<String, Type> map = new HashMap<String, Type>();
 		Statement stat = new PrintStatement(ismoving);
 		Program program = new Program(stat, map);
-		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
-		program.setGameObject(alien);
-		assertEquals(ismoving.evaluate(program), (alien.getVelocity()[0] != 0 && alien.getVelocity()[1] != 0));	
+		Buzam buzam = facade.createBuzam(0, 0, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		buzam.startMoveLeft();
+		assertTrue(buzam.getOrientation() == Orientation.LEFT);
+		assertTrue((Boolean) ismoving.evaluate(program));
+		buzam.stopMovingX();
+		assertFalse((Boolean) ismoving.evaluate(program));
+	}
+	
+	@Test
+	public void testIsMovingRight() throws IllegalPositionException, IllegalSpriteException {		
+		IFacadePart3 facade = new Facade();
+		Expression obj = new ObjectSelf();
+		Expression direc = new DirectionExpression(Direction.RIGHT);
+		Expression ismoving = new IsMoving(obj, direc);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(ismoving);
+		Program program = new Program(stat, map);
+		Buzam buzam = facade.createBuzam(0, 0, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		buzam.startMoveRight();
+		assertTrue(buzam.getOrientation() == Orientation.RIGHT);
+		assertTrue((Boolean) ismoving.evaluate(program));
+		buzam.stopMovingX();
+		assertFalse((Boolean) ismoving.evaluate(program));
+	}
+	
+	@Test
+	public void testIsMovingUp() throws IllegalPositionException, IllegalSpriteException {		
+		IFacadePart3 facade = new Facade();
+		Expression obj = new ObjectSelf();
+		Expression direc = new DirectionExpression(Direction.UP);
+		Expression ismoving = new IsMoving(obj, direc);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(ismoving);
+		Program program = new Program(stat, map);
+		Buzam buzam = facade.createBuzam(0, 0, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		buzam.startJump();
+		assertTrue((Boolean) ismoving.evaluate(program));
+		buzam.endJump();
+		assertFalse((Boolean) ismoving.evaluate(program));
 	}
 	
 	@Test

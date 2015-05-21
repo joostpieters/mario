@@ -10,7 +10,7 @@ public class IsMoving extends UnaryExpression<Boolean, GameObject> {
 	
 	public IsMoving(Expression<GameObject> expr, Expression<Direction> direc) {
 		super(expr);
-		if (expr.getType() != Type.OBJECT && direc.getType() != Type.DIRECTION) {
+		if (expr.getType() != Type.OBJECT || direc.getType() != Type.DIRECTION) {
 			throw new IllegalArgumentException();
 		}
 		this.setType(Type.BOOLEAN);
@@ -44,7 +44,7 @@ public class IsMoving extends UnaryExpression<Boolean, GameObject> {
 		else if (this.getDirection().evaluate(program) == Direction.DOWN) {
 			return (this.getExpression1().evaluate(program).getYSpeed() < 0);
 		}
-		return false;		
+		return false;
 	}
 
 }
