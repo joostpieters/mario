@@ -67,7 +67,7 @@ public class Program {
 	}
 	
 	private boolean running = true;
-	private boolean isRunning() {
+	public boolean isRunning() {
 		return running;
 	}
 	private void stopRunning() {

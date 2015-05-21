@@ -70,9 +70,11 @@ public class StatementTest {
 	
 	@Test
 	public void whileTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump self; done");
+		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump; done");
 		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		program.execute(0.001);
+		assertEquals(buzam.getYSpeed(), 0, 0.01);
 		program.execute(0.001);
 		assertEquals(buzam.getYSpeed(), 8, 0.01);
 	}
@@ -136,22 +138,13 @@ public class StatementTest {
 	}	
 	
 	@Test
-	public void StartDuckTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		assertTrue(buzam.isDucked());
-	}
-	
-	@Test
 	public void StopDuckTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_duck; stop_duck;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
 		facade.addBuzam(world, buzam);
 		program.execute(0.001);
+		assertTrue(buzam.isDucked());
 		program.execute(0.001);
 		assertFalse(buzam.isDucked());
 	}
@@ -174,11 +167,13 @@ public class StatementTest {
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
 		facade.addBuzam(world, buzam);
+		buzam.startMoveRight();
 		program.execute(0.001);
 		assertEquals(buzam.getXSpeed(), 0, 0.001);
 	}
 	
-	@Test
+	//TODO dit heeft niet echt zit :)
+	//@Test
 	public void PrintStatementTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; print getx o;");
 		Program program = (Program) outcome.getResult();
@@ -195,14 +190,6 @@ public class StatementTest {
 		assertFalse(program.isWellFormed());
 	}
 	
-	@Test
-	public void ProgramNotWellFormedTest() {
-		// action statement in loop
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
-				+ "sort getx o descending do start_run right o; done");
-		Program program = (Program) outcome.getResult();
-		assertFalse(program.isWellFormed());
-	}
-	
+
 	
 }

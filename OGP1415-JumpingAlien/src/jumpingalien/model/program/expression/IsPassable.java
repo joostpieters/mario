@@ -16,7 +16,7 @@ public class IsPassable extends UnaryExpression<Boolean, Tile> {
 
 	@Override
 	public Boolean evaluate(Program program) {
-		return (this.getExpression1().evaluate(program).getGeologicalFeature() != 0);
+		return (this.getExpression1().evaluate(program).getGeologicalFeature() != 1);
 	}
 
 }

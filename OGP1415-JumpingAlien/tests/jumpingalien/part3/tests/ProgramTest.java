@@ -1,8 +1,12 @@
 package jumpingalien.part3.tests;
 
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
+import jumpingalien.model.Buzam;
+import jumpingalien.model.World;
+import jumpingalien.model.program.Program;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.ParseOutcome;
@@ -92,5 +96,17 @@ public class ProgramTest {
 		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
 	}	
 	
+	@Test
+	public void StopRunning() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; double a; double b; double c; a:= 2; b:= 2; o := gettile(a,b); c := gethp o;");
+		assumeTrue(outcome.isSuccess());
+		Program program = (Program) outcome.getResult();
+		World world = facade.createWorld(500, 5, 5, 5, 5, 1, 1);
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, spriteArrayForSize(3,3), program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.1);
+		assertFalse(program.isRunning());
+	}
 	
 }

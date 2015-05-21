@@ -16,7 +16,10 @@ public class Equals extends BinaryExpression<Boolean, Object> {
 
 	@Override
 	public Boolean evaluate(Program program) {
-		return this.getExpression1().evaluate(program) == this.getExpression2().evaluate(program);
+		if (getExpression1().evaluate(program) == null || getExpression2().evaluate(program) == null ) {
+			return false;
+		}
+		return this.getExpression1().evaluate(program).equals(this.getExpression2().evaluate(program));
 	}
 	
 }

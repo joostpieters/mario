@@ -1,7 +1,7 @@
 package jumpingalien.model.program.expression;
 
+import jumpingalien.model.Buzam;
 import jumpingalien.model.GameObject;
-import jumpingalien.model.Mazub;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Type;
 import jumpingalien.model.program.Program;
@@ -18,7 +18,7 @@ public class IsJumping extends UnaryExpression<Boolean, GameObject> {
 
 	@Override
 	public Boolean evaluate(Program program) {
-		if (this.getExpression1().evaluate(program) instanceof Mazub || 
+		if (this.getExpression1().evaluate(program) instanceof Buzam || 
 				this.getExpression1().evaluate(program) instanceof Shark) {
 			return this.getExpression1().evaluate(program).isJumping();
 		}

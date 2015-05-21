@@ -18,7 +18,9 @@ import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.exceptions.IllegalPositionException;
 import jumpingalien.model.exceptions.IllegalSchoolException;
+import jumpingalien.model.exceptions.IllegalSettingException;
 import jumpingalien.model.exceptions.IllegalSpriteException;
+import jumpingalien.model.exceptions.IllegalTileException;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.BoolFalse;
 import jumpingalien.model.program.expression.BoolTrue;
@@ -27,21 +29,28 @@ import jumpingalien.model.program.expression.DirectionExpression;
 import jumpingalien.model.program.expression.Expression;
 import jumpingalien.model.program.expression.GetHeightObject;
 import jumpingalien.model.program.expression.GetHpObject;
+import jumpingalien.model.program.expression.GetTileExpression;
+import jumpingalien.model.program.expression.GetWidthObject;
 import jumpingalien.model.program.expression.GetX;
 import jumpingalien.model.program.expression.GetY;
 import jumpingalien.model.program.expression.IsAir;
 import jumpingalien.model.program.expression.IsDead;
 import jumpingalien.model.program.expression.IsDucking;
 import jumpingalien.model.program.expression.IsJumping;
+import jumpingalien.model.program.expression.IsMagma;
 import jumpingalien.model.program.expression.IsMazub;
 import jumpingalien.model.program.expression.IsMoving;
+import jumpingalien.model.program.expression.IsPassable;
 import jumpingalien.model.program.expression.IsPlant;
 import jumpingalien.model.program.expression.IsShark;
 import jumpingalien.model.program.expression.IsSlime;
+import jumpingalien.model.program.expression.IsTerrain;
+import jumpingalien.model.program.expression.IsWater;
 import jumpingalien.model.program.expression.NotBool;
 import jumpingalien.model.program.expression.ObjectNull;
 import jumpingalien.model.program.expression.ObjectSelf;
 import jumpingalien.model.program.expression.RandomDouble;
+import jumpingalien.model.program.expression.ReadVariable;
 import jumpingalien.model.program.expression.SearchObject;
 import jumpingalien.model.program.expression.SqrtDouble;
 import jumpingalien.model.program.statement.PrintStatement;
@@ -49,6 +58,7 @@ import jumpingalien.model.program.statement.Statement;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
+import jumpingalien.util.ModelException;
 
 import org.junit.Test;
 
@@ -134,18 +144,17 @@ public class UnaryExpressionTest {
 	}
 	
 	@Test
-	public void testWidthtObject() throws IllegalPositionException, IllegalSpriteException {
+	public void testWidthObject() throws IllegalPositionException, IllegalSpriteException {
 		Expression obj = new ObjectSelf();
-		Expression getHeight = new GetHeightObject(obj);
+		Expression getWidth = new GetWidthObject(obj);
 		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(getHeight);
+		Statement stat = new PrintStatement(getWidth);
 		Program program = new Program(stat, map);
 		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
 		program.setGameObject(buzam);
-		assertEquals(getHeight.evaluate(program), (double) buzam.getXDim());	
+		assertEquals(getWidth.evaluate(program), (double) buzam.getXDim());	
 	}
 	
-	// TODO nadenken en fixen want werkt niet
 	@Test
 	public void testSearchObjectLeft() {
 		IFacadePart3 facade = new Facade();
@@ -255,7 +264,7 @@ public class UnaryExpressionTest {
 	}
 	
 	@Test
-	public void testIsJumping() throws IllegalPositionException, IllegalSpriteException {		
+	public void testIsBuzamJumping() throws IllegalPositionException, IllegalSpriteException {		
 		Expression obj = new ObjectSelf();
 		Expression isjumping = new IsJumping(obj);
 		Map<String, Type> map = new HashMap<String, Type>();
@@ -264,6 +273,30 @@ public class UnaryExpressionTest {
 		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
 		program.setGameObject(buzam);
 		assertEquals(isjumping.evaluate(program), buzam.isJumping());	
+	}
+	
+	@Test
+	public void testIsSharkJumping() throws IllegalPositionException, IllegalSpriteException {		
+		Expression obj = new ObjectSelf();
+		Expression isjumping = new IsJumping(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(isjumping);
+		Program program = new Program(stat, map);
+		Shark shark= new Shark(20, 30, spriteArrayForSize(3, 3, 2));
+		program.setGameObject(shark);
+		assertEquals(isjumping.evaluate(program), shark.isJumping());	
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testIsJumping() throws IllegalPositionException, IllegalSpriteException {
+		IFacadePart3 facade = new Facade();
+		Expression obj = new ObjectSelf();
+		Expression isjumping = new IsJumping(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(isjumping);
+		Program program = new Program(stat, map);
+		facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
+		isjumping.evaluate(program);
 	}
 	
 	@Test
@@ -332,7 +365,7 @@ public class UnaryExpressionTest {
 	}	
 	
 	@Test
-	public void testIsDead() throws IllegalPositionException, IllegalSpriteException {		
+	public void testIsNotDead() throws IllegalPositionException, IllegalSpriteException {		
 		Expression obj = new ObjectSelf();
 		Expression isdead = new IsDead(obj);
 		Map<String, Type> map = new HashMap<String, Type>();
@@ -417,19 +450,85 @@ public class UnaryExpressionTest {
 		assertEquals(isplant.evaluate(program), true);	
 	}
 	
-	// TODO nog fixen
-//	@Test
-//	public void testIsAir() throws IllegalPositionException, IllegalSpriteException {	
-//		World world = new World(500, 5, 15, 1, 1, 3, 3);
-//		Tile tile = new Tile(0,0, world);
-//		Expression isair = new IsAir(tile);
-//		Map<String, Type> map = new HashMap<String, Type>();
-//		Statement stat = new PrintStatement(isair);
-//		Program program = new Program(stat, map);
-//		Mazub alien = new Mazub(20, 30, spriteArrayForSize(3, 3));
-//		program.setGameObject(alien);
-//		assertEquals(isair.evaluate(program), world.getGeologicalFeature(...);	
-//	}
+	@Test
+	public void testIsAir() throws IllegalPositionException, IllegalSpriteException, IllegalSettingException, IllegalTileException {	
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 5, 15, 1, 1, 3, 3);
+		Expression double1 = new Constant(2);
+		Expression double2 = new Constant(2);
+		Expression tileExpr = new GetTileExpression(double1, double2);
+		Expression isair = new IsAir(tileExpr);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(isair);
+		Program program = new Program(stat, map);
+		Mazub alien = facade.createMazub(20, 30, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
+		facade.addPlant(world, plant);
+		assertTrue((Boolean) isair.evaluate(program));	
+		world.setGeologicalFeature(0, 0, 2);
+		assertFalse((Boolean) isair.evaluate(program));	
+	}
+	
+	@Test
+	public void testIsMagma() throws IllegalPositionException, IllegalSpriteException, IllegalSettingException, IllegalTileException {	
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 5, 15, 1, 1, 3, 3);
+		Expression double1 = new Constant(2);
+		Expression double2 = new Constant(2);
+		Expression tileExpr = new GetTileExpression(double1, double2);
+		Expression ismagma = new IsMagma(tileExpr);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(ismagma);
+		Program program = new Program(stat, map);
+		Mazub alien = facade.createMazub(20, 30, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
+		facade.addPlant(world, plant);
+		assertFalse((Boolean) ismagma.evaluate(program));	
+		world.setGeologicalFeature(0, 0, 3);
+		assertTrue((Boolean) ismagma.evaluate(program));	
+	}
+	
+	@Test
+	public void testIsWater() throws IllegalPositionException, IllegalSpriteException, IllegalSettingException, IllegalTileException {	
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 5, 15, 1, 1, 3, 3);
+		Expression double1 = new Constant(2);
+		Expression double2 = new Constant(2);
+		Expression tileExpr = new GetTileExpression(double1, double2);
+		Expression iswater = new IsWater(tileExpr);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(iswater);
+		Program program = new Program(stat, map);
+		Mazub alien = facade.createMazub(20, 30, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
+		facade.addPlant(world, plant);
+		assertFalse((Boolean) iswater.evaluate(program));	
+		world.setGeologicalFeature(0, 0, 2);
+		assertTrue((Boolean) iswater.evaluate(program));	
+	}
+	
+	@Test
+	public void testIsPassable() throws IllegalPositionException, IllegalSpriteException, IllegalSettingException, IllegalTileException {	
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 5, 15, 1, 1, 3, 3);
+		Expression double1 = new Constant(2);
+		Expression double2 = new Constant(2);
+		Expression tileExpr = new GetTileExpression(double1, double2);
+		Expression ispassable = new IsPassable(tileExpr);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(ispassable);
+		Program program = new Program(stat, map);
+		Mazub alien = facade.createMazub(20, 30, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
+		facade.addPlant(world, plant);
+		assertTrue((Boolean) ispassable.evaluate(program));	
+		world.setGeologicalFeature(0, 0, 1);
+		assertFalse((Boolean) ispassable.evaluate(program));	
+	}
 	
 	@Test
 	public void testNotBool() {
@@ -471,8 +570,52 @@ public class UnaryExpressionTest {
 		assertEquals(sqrt.evaluate(program), Math.sqrt(43));	
 	}
 	
+	@Test
+	public void testReadVariable() {
+		Expression readvar =  new ReadVariable("var", Type.BOOLEAN);
+		Map<String, Type> map = new HashMap<String, Type>();
+		map.put("var", Type.BOOLEAN);
+		Statement stat = new PrintStatement(readvar);
+		Program program = new Program(stat, map);
+		program.addToEnvironment("var", true);
+		assertEquals(true, readvar.evaluate(program));
+	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testIllegalReadVariable() {
+		Expression readvar =  new ReadVariable("var", Type.BOOLEAN);
+		Map<String, Type> map = new HashMap<String, Type>();
+		map.put("var", Type.DIRECTION);
+		Statement stat = new PrintStatement(readvar);
+		Program program = new Program(stat, map);
+		readvar.evaluate(program);
+	}
 	
+	@Test
+	public void isNoTerrain() {
+		Expression obj =  new ObjectSelf();
+		Expression isTerrain = new IsTerrain(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(obj);
+		Program program = new Program(stat, map);
+		assertFalse((Boolean) isTerrain.evaluate(program));
+	}
+	
+	@Test
+	public void isTerrain() {
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 5, 15, 1, 1, 3, 3);	
+		Expression double1 = new Constant(2);
+		Expression double2 = new Constant(2);
+		Expression tileExpr = new GetTileExpression(double1, double2);
+		Expression isTerrain = new IsTerrain(tileExpr);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(tileExpr);
+		Program program = new Program(stat, map);
+		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
+		facade.addPlant(world, plant);
+		assertTrue((Boolean) isTerrain.evaluate(program));
+	}
 	
 	
 	

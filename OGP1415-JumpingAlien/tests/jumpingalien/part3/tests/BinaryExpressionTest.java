@@ -1,10 +1,14 @@
 package jumpingalien.part3.tests;
-import static org.junit.Assert.assertEquals;
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import jumpingalien.model.Buzam;
 import jumpingalien.model.Type;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSpriteException;
 import jumpingalien.model.program.Program;
 import jumpingalien.model.program.expression.Addition;
 import jumpingalien.model.program.expression.AndBool;
@@ -20,6 +24,8 @@ import jumpingalien.model.program.expression.LessEquals;
 import jumpingalien.model.program.expression.LessThan;
 import jumpingalien.model.program.expression.Multiplication;
 import jumpingalien.model.program.expression.NotEquals;
+import jumpingalien.model.program.expression.ObjectNull;
+import jumpingalien.model.program.expression.ObjectSelf;
 import jumpingalien.model.program.expression.OrBool;
 import jumpingalien.model.program.expression.Subtraction;
 import jumpingalien.model.program.statement.PrintStatement;
@@ -143,6 +149,43 @@ public class BinaryExpressionTest {
 	}
 	
 	@Test
+	public void testEquals2() {
+		Expression expr1 = new Constant(3);
+		Expression expr2 = new Constant(3);
+		Expression<Boolean> equals = new Equals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(equals);
+		Program program = new Program(stat, map);
+		assertTrue(equals.evaluate(program));		
+	}
+	
+	@Test
+	public void testEquals3() throws IllegalPositionException, IllegalSpriteException {
+		Expression expr1 = new ObjectSelf();
+		Expression expr2 = new ObjectSelf();
+		Expression<Boolean> equals = new Equals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(equals);
+		Program program = new Program(stat, map);
+		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		assertTrue(equals.evaluate(program));		
+	}
+	
+	@Test
+	public void testEquals4() throws IllegalPositionException, IllegalSpriteException {
+		Expression expr1 = new ObjectNull();
+		Expression expr2 = new ObjectNull();
+		Expression<Boolean> equals = new Equals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(equals);
+		Program program = new Program(stat, map);
+		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		assertFalse(equals.evaluate(program));		
+	}
+	
+	@Test
 	public void testNotEquals() {
 		Expression expr1 = new Constant(5);
 		Expression expr2 = new Constant(3);
@@ -151,6 +194,43 @@ public class BinaryExpressionTest {
 		Statement stat = new PrintStatement(notEquals);
 		Program program = new Program(stat, map);
 		assertEquals(notEquals.evaluate(program), true);		
+	}
+	
+	@Test
+	public void testNotEquals2() {
+		Expression expr1 = new Constant(3);
+		Expression expr2 = new Constant(3);
+		Expression<Boolean> equals = new NotEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(equals);
+		Program program = new Program(stat, map);
+		assertFalse(equals.evaluate(program));		
+	}
+	
+	@Test
+	public void testNotEquals3() throws IllegalPositionException, IllegalSpriteException {
+		Expression expr1 = new ObjectSelf();
+		Expression expr2 = new ObjectSelf();
+		Expression<Boolean> equals = new NotEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(equals);
+		Program program = new Program(stat, map);
+		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		assertFalse(equals.evaluate(program));		
+	}
+	
+	@Test
+	public void testNotEquals4() throws IllegalPositionException, IllegalSpriteException {
+		Expression expr1 = new ObjectNull();
+		Expression expr2 = new ObjectNull();
+		Expression<Boolean> notEquals = new NotEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(notEquals);
+		Program program = new Program(stat, map);
+		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		assertTrue(notEquals.evaluate(program));		
 	}
 	
 	@Test
@@ -165,6 +245,17 @@ public class BinaryExpressionTest {
 	}
 	
 	@Test
+	public void testGreaterThan2() {
+		Expression expr1 = new Constant(3);
+		Expression expr2 = new Constant(5);
+		Expression<Boolean> greaterThan = new GreaterThan(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(greaterThan);
+		Program program = new Program(stat, map);
+		assertEquals(greaterThan.evaluate(program), false);			
+	}
+	
+	@Test
 	public void testLessThan() {
 		Expression expr1 = new Constant(5);
 		Expression expr2 = new Constant(3);
@@ -173,6 +264,17 @@ public class BinaryExpressionTest {
 		Statement stat = new PrintStatement(lessThan);
 		Program program = new Program(stat, map);
 		assertEquals(lessThan.evaluate(program), false);			
+	}
+	
+	@Test
+	public void testLessThan2() {
+		Expression expr1 = new Constant(3);
+		Expression expr2 = new Constant(5);
+		Expression<Boolean> lessThan = new LessThan(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(lessThan);
+		Program program = new Program(stat, map);
+		assertEquals(lessThan.evaluate(program), true);			
 	}
 	
 	@Test
@@ -187,6 +289,28 @@ public class BinaryExpressionTest {
 	}
 	
 	@Test
+	public void testGreaterEquals2() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(5);
+		Expression<Boolean> greaterEquals = new GreaterEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(greaterEquals);
+		Program program = new Program(stat, map);
+		assertEquals(greaterEquals.evaluate(program), true);			
+	}
+	
+	@Test
+	public void testGreaterEquals3() {
+		Expression expr1 = new Constant(3);
+		Expression expr2 = new Constant(5);
+		Expression<Boolean> greaterEquals = new GreaterEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(greaterEquals);
+		Program program = new Program(stat, map);
+		assertEquals(greaterEquals.evaluate(program), false);			
+	}
+	
+	@Test
 	public void testLessEquals() {
 		Expression expr1 = new Constant(5);
 		Expression expr2 = new Constant(3);
@@ -195,6 +319,28 @@ public class BinaryExpressionTest {
 		Statement stat = new PrintStatement(lessEquals);
 		Program program = new Program(stat, map);
 		assertEquals(lessEquals.evaluate(program), false);			
+	}
+	
+	@Test
+	public void testLessEquals2() {
+		Expression expr1 = new Constant(5);
+		Expression expr2 = new Constant(5);
+		Expression<Boolean> lessEquals = new LessEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(lessEquals);
+		Program program = new Program(stat, map);
+		assertEquals(lessEquals.evaluate(program), true);			
+	}
+	
+	@Test
+	public void testLessEquals3() {
+		Expression expr1 = new Constant(3);
+		Expression expr2 = new Constant(5);
+		Expression<Boolean> lessEquals = new LessEquals(expr1, expr2);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(lessEquals);
+		Program program = new Program(stat, map);
+		assertEquals(lessEquals.evaluate(program), true);			
 	}
 	
 	@Test
