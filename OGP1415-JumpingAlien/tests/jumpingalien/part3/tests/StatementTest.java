@@ -1,11 +1,9 @@
 package jumpingalien.part3.tests;
 
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Plant;
@@ -13,11 +11,6 @@ import jumpingalien.model.Shark;
 import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.program.Program;
-import jumpingalien.model.program.expression.Addition;
-import jumpingalien.model.program.expression.Constant;
-import jumpingalien.model.program.expression.Expression;
-import jumpingalien.model.program.expression.GetX;
-import jumpingalien.model.program.statement.PrintStatement;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.ParseOutcome;
@@ -55,7 +48,7 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void ForEach() {
+	public void forEach() {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
 				+ "sort getx o descending do print getx o; done");
 		Program program = (Program) outcome.getResult();
@@ -77,14 +70,5 @@ public class StatementTest {
 		program.execute(0.1);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void ForEachIllegalSort() {
-		try {
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where "
-				+ "5 sort getx o descending do print getx o; done");
-		System.out.println(outcome.getResult());
 
-	}
-	
-	
 }

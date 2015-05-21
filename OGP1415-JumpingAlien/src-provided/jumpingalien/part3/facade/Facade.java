@@ -393,13 +393,19 @@ public class Facade implements IFacadePart3 {
 	public ParseOutcome<?> parse(String text) {
 		IProgramFactory<Expression<?>, Statement, Type, Program> factory = (IProgramFactory<Expression<?>, Statement, Type, Program>) new ProgramFactory();
 		ProgramParser<Expression<?>, Statement, Type, Program> parser = new ProgramParser<>(factory);
-		Optional<Program> parseResult = parser.parseString(text);
-		if (parseResult.isPresent()) {
-			return ParseOutcome.success(parseResult.get());
+		try {
+			Optional<Program> parseResult = parser.parseString(text);
+			if (parseResult.isPresent()) {
+				return ParseOutcome.success(parseResult.get());
+			}
+			else {
+				return ParseOutcome.failure(parser.getErrors());
+			}
 		}
-		else {
-			return ParseOutcome.failure(parser.getErrors());
+		catch (IllegalArgumentException e) {
+			throw new ModelException(e.getMessage());
 		}
+		
 	}
 	@Override
 	public boolean isWellFormed(Program program) {

@@ -6,11 +6,12 @@ import jumpingalien.model.program.expression.Expression;
 
 
 public class Assignment extends Statement {
-	// TODO hier is variableType precies overbodig. Is dat normaal?
-	// Daarmee kunnen we wel checken of de expression/value van de juiste vorm is
 	public Assignment(String str, Type variableType, Expression<?> value) {
 		this.setString(str);
 		this.setExpression(value);
+		if (value.getType() != variableType) {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	private String string;
