@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
    StatementTest.class,
    UnaryExpressionTest.class,
    BinaryExpressionTest.class,
-   ProgramTest.class
+   ProgramTest.class,
+   TypeCheckingTest.class
 }) 
 public class JUnitTestSuitePart3 {
 

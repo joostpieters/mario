@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="StatementTest" project="OGP1415-JumpingAlien" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part3.tests.StatementTest" time="0.053">
+    <testcase name="ForEach" classname="jumpingalien.part3.tests.StatementTest" time="0.046"/>
+    <testcase name="ForEachIllegalSort" classname="jumpingalien.part3.tests.StatementTest" time="0.007"/>
+  </testsuite>
+</testrun>
