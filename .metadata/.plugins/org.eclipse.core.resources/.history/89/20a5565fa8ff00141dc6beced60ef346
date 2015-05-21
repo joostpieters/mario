@@ -77,7 +77,7 @@ public class StatementTest {
 		program.execute(0.1);
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void ForEachIllegalSort() {
 		try {
 		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where "
@@ -86,16 +86,8 @@ public class StatementTest {
 		} catch (IllegalArgumentException exc) {
 			assert true;
 		}
-	}
-	
-	@Test
-	public void IfStatementTest() {
-		ParseOutcome<?> outcome = facade.parse("object o:= plant; if (isPlant(o)) then start_run left; "
-				+ "else (start_run (right);))";
-		Program program = (Program) outcome.getResult();
-		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
-		facade.addPlant(world, plant);
-		program.execute(0.1);
+		 
+
 	}
 	
 	
