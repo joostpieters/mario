@@ -46,31 +46,7 @@ public class StatementTest {
 		facade.setMazub(world, alien);
 	}
 	
-	//TODO hier wordt niets getest
-	@Test
-	public void forEachTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
-				+ "sort getx o descending do print getx o; done");
-		Program program = (Program) outcome.getResult();
-		Plant plant1 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
-		Plant plant2 = facade.createPlant(10, 0, spriteArrayForSize(3, 3, 2));
-		Plant plant3 = facade.createPlant(20, 0, spriteArrayForSize(3, 3, 2));
-		Mazub mazub = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
-		Shark shark = facade.createShark(200, 0, spriteArrayForSize(3, 3, 2));
-		Shark shark2 = facade.createShark(250, 0, spriteArrayForSize(3, 3, 2));
-		Shark shark3 = facade.createShark(300, 0, spriteArrayForSize(3, 3, 2));
-		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
-		facade.addPlant(world, plant1);
-		facade.addPlant(world, plant2);
-		facade.addPlant(world, plant3);
-		facade.setMazub(world, mazub);
-		facade.addShark(world, shark3);
-		facade.addShark(world, shark2);
-		facade.addShark(world, shark);
-		program.execute(0.1);
-	}
-	
-	@Test
+		@Test
 	public void whileTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump; done");
 		Program program = (Program) outcome.getResult();
@@ -101,8 +77,8 @@ public class StatementTest {
 		assertTrue(shark.isJumping());
 	}
 	
-	// TODO waarom werkt dit?? :o slimes mogen niet kunnen jumpen
-	@Test(expected = IllegalArgumentException.class)
+	
+	@Test
 	public void InvalidStartJumpTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
 		Program program = (Program) outcome.getResult();
@@ -111,6 +87,7 @@ public class StatementTest {
 		Slime slime = facade.createSlimeWithProgram(500, 500, spriteArrayForSize(1, 1, 2), school, program);
 		facade.addSlime(world, slime);
 		program.execute(0.002);
+		assertFalse(program.isRunning());
 	}
 	
 	@Test
@@ -135,6 +112,16 @@ public class StatementTest {
 		assertTrue(shark.isJumping());
 		program.execute(0.001);
 		assertFalse(shark.isJumping());
+	}	
+	
+	@Test
+	public void StopJumpTestNoInstanceOfShark() {
+		ParseOutcome<?> outcome = facade.parse("object o; stop_jump;");
+		Program program = (Program) outcome.getResult();
+		Plant plant = facade.createPlantWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
+		facade.addPlant(world, plant);
+		program.execute(0.001);
+		assertFalse(program.isRunning());
 	}	
 	
 	@Test
@@ -196,23 +183,24 @@ public class StatementTest {
 		assertFalse(buzam.isDucked());
 	}
 	
-	// TODO een shark kan ducken
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void StartDuckNotInstanceOfMazubTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
 		Program program = (Program) outcome.getResult();
 		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
 		facade.addShark(world, shark);
 		program.execute(0.002);
+		assertFalse(program.isRunning());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void StopDuckNotInstanceOfMazubTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; stop_duck;");
 		Program program = (Program) outcome.getResult();
 		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
 		facade.addShark(world, shark);
 		program.execute(0.002);
+		assertFalse(program.isRunning());
 	}
 	
 	@Test
@@ -283,7 +271,7 @@ public class StatementTest {
 	
 	@Test
 	public void SequenceOfStatementsTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; {start_duck; stop_duck;}");
+		ParseOutcome<?> outcome = facade.parse("object o; start_duck; stop_duck;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
 		facade.addBuzam(world, buzam);
@@ -334,6 +322,124 @@ public class StatementTest {
 		program.execute(0.002);	
 		assertFalse(buzam.isJumping());
 	}
+	
+	@Test 
+	public void whileStatementTest() {
+		ParseOutcome<?> outcome = facade.parse("bool a; while ! a do a:= true; done start_jump;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		// evaluating the loop condition takes 0.001 seconds the assignment also, 
+		// then another evaluating of the loop condition. Buzam should not have jumped yet.
+		program.execute(0.003);
+		assertFalse(buzam.isJumping());
+		//Another execution and now Buzam should jump
+		program.execute(0.001);
+		assertTrue(buzam.isJumping());
+	}
+	
+	@Test
+	public void forEachTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
+				+ "sort getx o descending do print getx o; done start_jump;");
+		Program program = (Program) outcome.getResult();
+		Plant plant1 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
+		Plant plant2 = facade.createPlant(10, 0, spriteArrayForSize(3, 3, 2));
+		Plant plant3 = facade.createPlant(20, 0, spriteArrayForSize(3, 3, 2));
+		Mazub mazub = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
+		Buzam buzam = facade.createBuzam(0, 0, sprites);
+		Shark shark = facade.createShark(200, 0, spriteArrayForSize(3, 3, 2));
+		Shark shark2 = facade.createShark(250, 0, spriteArrayForSize(3, 3, 2));
+		Shark shark3 = facade.createShark(300, 0, spriteArrayForSize(3, 3, 2));
+		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.addPlant(world, plant1);
+		facade.addPlant(world, plant2);
+		facade.addPlant(world, plant3);
+		facade.setMazub(world, mazub);
+		facade.addBuzam(world, buzam);
+		facade.addShark(world, shark3);
+		facade.addShark(world, shark2);
+		facade.addShark(world, shark);
+		// Four executions (one for every shark + 1)
+		program.execute(0.004);
+		assertTrue(program.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program.execute(0.001);
+		assertFalse(program.isRunning());
+		// now a new plant with a new program checking only plants
+		ParseOutcome<?> outcome2 = facade.parse("object o; foreach (plant, o) "
+				+ "sort getx o ascending do print getx o; done start_jump;");
+		Program program2 = (Program) outcome2.getResult();
+		Plant plant4 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program2);
+		facade.addPlant(world, plant4);
+		// Five executions (one for every plant + 1)
+		program2.execute(0.005);
+		assertTrue(program2.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program2.execute(0.001);
+		assertFalse(program2.isRunning());
+		// now a new plant with a new program checking only sharks
+		ParseOutcome<?> outcome3 = facade.parse("object o; foreach (shark, o) "
+				+ " do print getx o; done start_jump;");
+		Program program3 = (Program) outcome3.getResult();
+		Plant plant5 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program3);
+		facade.addPlant(world, plant5);
+		// Four executions (one for every shark + 1)
+		program3.execute(0.004);
+		assertTrue(program3.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program3.execute(0.001);
+		assertFalse(program3.isRunning());
+		// now a new plant with a new program checking only slimes
+		ParseOutcome<?> outcome4 = facade.parse("object o; foreach (slime, o) "
+				+ " do print getx o; done start_jump;");
+		Program program4 = (Program) outcome4.getResult();
+		Plant plant6 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program4);
+		facade.addPlant(world, plant6);
+		// One execution, because there are no slimes
+		program4.execute(0.001);
+		assertTrue(program4.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program4.execute(0.001);
+		assertFalse(program4.isRunning());		
+		// now a new plant with a new program checking only buzam
+		ParseOutcome<?> outcome5 = facade.parse("object o; foreach (buzam, o) "
+				+ " do print getx o; done start_jump;");
+		Program program5 = (Program) outcome5.getResult();
+		Plant plant7 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program5);
+		facade.addPlant(world, plant7);
+		// Two executions, because there is one buzam
+		program5.execute(0.002);
+		assertTrue(program5.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program5.execute(0.001);
+		assertFalse(program5.isRunning());		
+		// now a new plant with a new program checking only terrain
+		facade.setGeologicalFeature(world, 0, 0, 2);
+		ParseOutcome<?> outcome6 = facade.parse("object o; foreach (terrain, o) "
+				+ "where iswater o do print getx o; done start_jump;");
+		Program program6 = (Program) outcome6.getResult();
+		Plant plant8 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program6);
+		facade.addPlant(world, plant8);
+		// Two executions, because there is only one waterTile
+		program6.execute(0.002);
+		assertTrue(program6.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program6.execute(0.001);
+		assertFalse(program6.isRunning());		
+		// now a new plant with a new program checking only mazub
+		ParseOutcome<?> outcome7 = facade.parse("object o; foreach (mazub, o) "
+				+ "do print getx o; done start_jump;");
+		Program program7 = (Program) outcome7.getResult();
+		Plant plant9 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program7);
+		facade.addPlant(world, plant9);
+		// Two executions, because there is only one mazub
+		program7.execute(0.002);
+		assertTrue(program7.isRunning());
+		// Another execution. Now a plant tries to jump, so the program stops
+		program7.execute(0.001);
+		assertFalse(program7.isRunning());		
+		}
 
 	
 }

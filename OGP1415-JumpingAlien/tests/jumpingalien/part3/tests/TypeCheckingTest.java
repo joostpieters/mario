@@ -280,4 +280,9 @@ public class TypeCheckingTest {
 		assertFalse(outcome.isSuccess());
 	}
 	
+	@Test
+	public void whileStatement() {
+		ParseOutcome<?> outcome = facade.parse("object o; o:= self; while o do start_duck; done");
+		assertFalse(outcome.isSuccess());
+	}
 }

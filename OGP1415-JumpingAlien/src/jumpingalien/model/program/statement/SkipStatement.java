@@ -18,7 +18,7 @@ public class SkipStatement extends Statement {
 		this.setNotReady();
 	}
 	
-	// TODO klopt dit?
+	// TODO klopt dit? Ik denk van wel
 	@Override
 	public boolean isWellFormed() {
 		if(this.getLoopStatement(this) instanceof ForEachStatement) {

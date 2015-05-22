@@ -558,14 +558,14 @@ public class World {
 	 * 			| let
 	 * 			| 	Collection<Tile> list = new ArrayList<Tile>()
 	 * 			| in
-	 * 			| for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY()))
+	 * 			| for(int[] tile: this.getTilePositionsIn(0,0,this.getX() - 1, this.getY() - 1))
 	 * 			| 			list.add(new Tile(tile[0], tile[1], this))
 	 * @return the Arraylist list
 	 * 			| return list
 	 */
 	public Collection<Tile> listAllTiles() {
 		Collection<Tile> list = new ArrayList<Tile>();
-		for(int[] tile: this.getTilePositionsIn(0,0,this.getX(), this.getY())) {
+		for(int[] tile: this.getTilePositionsIn(0,0,this.getX() - 1, this.getY() - 1)) {
 			list.add(new Tile(tile[0], tile[1], this));
 		}
 		return list;

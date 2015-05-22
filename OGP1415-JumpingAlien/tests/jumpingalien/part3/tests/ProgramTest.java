@@ -97,6 +97,23 @@ public class ProgramTest {
 	}	
 	
 	@Test
+	public void testWellformedActionStatementSkip() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then skip; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}	
+	
+	@Test
+	public void testWellformedActionStatementWait() {
+		IFacadePart3 facade = new Facade();
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any,o) do if random 2 <= 1 then wait 1; fi done");
+		assumeTrue(outcome.isSuccess());
+		assertFalse(facade.isWellFormed((jumpingalien.model.program.Program) outcome.getResult()));
+	}
+	
+	
+	@Test
 	public void StopRunning() {
 		IFacadePart3 facade = new Facade();
 		ParseOutcome<?> outcome = facade.parse("object o; double a; double b; double c; a:= 2; b:= 2; o := gettile(a,b); c := gethp o;");

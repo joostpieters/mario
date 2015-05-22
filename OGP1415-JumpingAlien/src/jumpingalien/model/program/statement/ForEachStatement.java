@@ -83,6 +83,8 @@ public class ForEachStatement extends LoopStatement {
 			break;
 		case PLANT:
 			list.addAll(program.getGameObject().getWorld().getPlants());
+			System.out.println("hier geraakt");
+			System.out.println(list.size());
 			break;
 		case SHARK:
 			list.addAll(program.getGameObject().getWorld().getSharks());
@@ -109,21 +111,18 @@ public class ForEachStatement extends LoopStatement {
 		return list;
 	}
 	
-	
-	
 	private List<SuperObject> listObjectWhereTrue(Program program) {
 		List<SuperObject> list = this.listObjectByKind(program);
-		List<SuperObject> newList = new ArrayList<SuperObject>();
 		if (this.getWhere() != null) {
+			List<SuperObject> newList = new ArrayList<SuperObject>();
 			list.stream()
 					.filter(
 					o -> {program.addToEnvironment(getVariableName(), o);
 					return (getWhere().evaluate(program));})
 					.forEach(o -> newList.add(o));
+			return newList;
 		}
-
-			
-	return newList;
+	return list;
 	}
 	
 	private List<SuperObject> listObjectWhereTrueSorted(Program program) {
