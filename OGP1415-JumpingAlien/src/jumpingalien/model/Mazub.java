@@ -334,8 +334,7 @@ public class Mazub extends GameObject {
 	 * @return INITHITPOINTS
 	 */
 	@Immutable
-	protected
-	static int getInitHitpoints() {
+	private static int getInitHitpoints() {
 		return INIT_HITPOINTS;
 	}
 	/**

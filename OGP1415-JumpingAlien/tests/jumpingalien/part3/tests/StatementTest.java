@@ -135,7 +135,17 @@ public class StatementTest {
 		program.execute(0.001);
 		// The next statement is executed
 		assertFalse(buzam.isJumping());		
-	}	
+	}		
+	
+	@Test
+	public void StartDuckTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isDucked());
+	}
 	
 	@Test
 	public void StopDuckTest() {
@@ -172,17 +182,6 @@ public class StatementTest {
 		assertEquals(buzam.getXSpeed(), 0, 0.001);
 	}
 	
-	//TODO dit heeft niet echt zit :)
-	//@Test
-	public void PrintStatementTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; print getx o;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		assertTrue(true);
-	}
-	
 	@Test
 	public void BreakStatementNotWellFormedTest() {
 		ParseOutcome<?> outcome = facade.parse("break;");
@@ -190,6 +189,30 @@ public class StatementTest {
 		assertFalse(program.isWellFormed());
 	}
 	
+	@Test
+	public void WaitTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; wait 0.001; start_duck;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// the buzam hasn't ducked yet because of the wait statement
+		assertFalse(buzam.isDucked());
+		program.execute(0.002);
+		assertTrue(buzam.isDucked());
+	}
+	
+	@Test
+	public void SequenceOfStatementsTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; {start_duck; stop_duck;}");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isDucked());
+		program.execute(0.001);
+		assertFalse(buzam.isDucked());
+	}
 
 	
 }

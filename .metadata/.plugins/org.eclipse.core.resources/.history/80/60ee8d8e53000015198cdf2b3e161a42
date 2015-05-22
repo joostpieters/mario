@@ -1,0 +1,121 @@
+package jumpingalien.part3.tests;
+import jumpingalien.model.Buzam;
+import jumpingalien.model.Mazub;
+import jumpingalien.model.World;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSettingException;
+import jumpingalien.model.program.Program;
+import jumpingalien.part3.facade.Facade;
+import jumpingalien.part3.facade.IFacadePart3;
+import jumpingalien.part3.programs.ParseOutcome;
+import jumpingalien.util.ModelException;
+import jumpingalien.util.Sprite;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static jumpingalien.tests.util.TestUtils.intArray;
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
+import static org.junit.Assert.*;
+
+public class BuzamTest {
+	
+	public static final int FEATURE_AIR = 0;
+	public static final int FEATURE_SOLID = 1;
+	public static final int FEATURE_WATER = 2;
+	public static final int FEATURE_MAGMA = 3;
+	
+	private IFacadePart3 facade;
+	private World world;
+	private Mazub alien;
+	Sprite[] sprites;
+	Sprite[] sprites2;
+	
+	
+	@Before
+	public void createFacadeAndWorld() {
+		facade = new Facade();
+		world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		sprites2 = spriteArrayForSize(2, 2, 2);
+		alien = facade.createMazub(0, 499, sprites);
+		facade.setMazub(world, alien);
+	}
+	
+	@Test
+	public void constructBuzam() {
+		Buzam buzam = facade.createBuzam(499, 50, sprites);
+		facade.addBuzam(world, buzam);
+		assertArrayEquals(intArray(499, 50), facade.getLocation(buzam));
+		assertEquals(world.getBuzam(), buzam);
+	}
+	
+	@Test(expected=ModelException.class)
+	public void TestIllegalDt() {
+		Buzam buzam = facade.createBuzam(499, 50, sprites);
+		facade.addBuzam(world, buzam);
+		facade.advanceTime(world, -0.1);
+		assertArrayEquals(intArray(499, 50), facade.getLocation(buzam));
+		assertEquals(world.getBuzam(), buzam);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void constructBadSpriteBuzam() {
+		Buzam buzam = facade.createBuzam(499, 50, sprites2);		
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = ModelException.class)
+	public void constructBadPosBuzam() {
+		Buzam buzam = facade.createBuzam(-50, 50, sprites);		
+	}
+	
+	@Test
+	public void ProgramMoveRight() {
+		ParseOutcome<?> outcome = facade.parse("start_jump;");
+		Program program = (Program) outcome.getResult();
+		facade.createBuzamWithProgram(0, 0, sprites, program);		
+	}
+	
+	@Test
+	public void TestStartMoveLeftCorrect() throws IllegalSettingException, IllegalPositionException {
+		Buzam buzam = facade.createBuzam(50, 499, sprites);	
+		world.setBuzam(buzam);
+		facade.startMoveLeft(buzam);
+		facade.advanceTime(world, 0.1);
+		assertArrayEquals(intArray(39, 499), facade.getLocation(buzam));
+	}
+	
+	@Test
+	public void TestColliding() throws IllegalSettingException, IllegalPositionException {
+		Buzam buzam = facade.createBuzam(40, 499, sprites);	
+		world.setBuzam(buzam);
+		Mazub alien = facade.createMazub(120, 499, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		facade.startMoveRight(buzam);
+		for (int i = 0; i < 9; i++) {
+			facade.advanceTime(world, 0.12);
+		}
+		// the buzam walks into the mazub and doesnt walk through mazub
+		assertArrayEquals(intArray(118, 499), facade.getLocation(buzam));
+	}
+	
+	@Test
+	public void TestDeath() throws IllegalSettingException, IllegalPositionException {
+		Buzam buzam = facade.createBuzam(50, 499, sprites);	
+		world.setBuzam(buzam);
+		// the mazub falls on top of buzam
+		Mazub alien = facade.createMazub(50, 600, spriteArrayForSize(3, 3));
+		facade.setMazub(world, alien);
+		for (int i = 0; i < 50; i++) {
+			facade.advanceTime(world, 0.12);
+		}
+		assertEquals(null, facade.getCurrentSprite(buzam));
+	}
+	
+
+}

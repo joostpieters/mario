@@ -43,7 +43,6 @@
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsDucking"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsDead"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsAir"/>
-<fullyQualifiedTypeName name="jumpingalien.model.Tile"/>
 <fullyQualifiedTypeName name="jumpingalien.model.World"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.IsShark"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Shark"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="jumpingalien.model.Slime"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Buzam"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Orientation"/>
+<fullyQualifiedTypeName name="jumpingalien.model.Tile"/>
 </qualifiedTypeNameHistroy>

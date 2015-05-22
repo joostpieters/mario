@@ -24,7 +24,8 @@ import org.junit.runners.Suite;
    UnaryExpressionTest.class,
    BinaryExpressionTest.class,
    ProgramTest.class,
-   TypeCheckingTest.class
+   TypeCheckingTest.class,
+   TileTest.class
 }) 
 public class JUnitTestSuitePart3 {
 

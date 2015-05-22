@@ -40,8 +40,7 @@ public class Buzam extends Mazub {
 	 * 			| ! isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
-	 * 			| ! isValidSprite(sprites) 
-	 * 
+	 * 			| ! isValidSprite(sprites) 	 * 
 	 */
 	public Buzam(int xPos, int yPos, Sprite[] sprites)
 			throws IllegalPositionException, IllegalSpriteException {
@@ -76,8 +75,7 @@ public class Buzam extends Mazub {
 	 * 			| ! isValidPosition(xPos,yPos)
 	 * @throws IllegalSpriteException
 	 * 			The given sprite is not valid
-	 * 			| ! isValidSprite(sprites) 
-	 * 
+	 * 			| ! isValidSprite(sprites)	 * 
 	 */
 	public Buzam(int xPos, int yPos, Sprite[] sprites, Program program)
 			throws IllegalPositionException, IllegalSpriteException {
@@ -244,12 +242,11 @@ public class Buzam extends Mazub {
 	@Raw
 	protected void remove() {
 		this.getWorld().removeBuzam(this);
-		this.setWorld(null);
-		
+		this.setWorld(null);		
 	}
 	
 	/**
-	 * GEEN formele documentatie nodig
+	 * no formal documentation needed
 	 */
 	@Raw @Override
 	public Sprite getCurrentSprite() {

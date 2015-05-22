@@ -1,0 +1,219 @@
+package jumpingalien.part3.tests;
+
+import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
+import static org.junit.Assert.*;
+import jumpingalien.model.Buzam;
+import jumpingalien.model.Mazub;
+import jumpingalien.model.Orientation;
+import jumpingalien.model.Plant;
+import jumpingalien.model.Shark;
+import jumpingalien.model.World;
+import jumpingalien.model.program.Program;
+import jumpingalien.part3.facade.Facade;
+import jumpingalien.part3.facade.IFacadePart3;
+import jumpingalien.part3.programs.ParseOutcome;
+import jumpingalien.util.Sprite;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class StatementTest {
+	
+	public static final int FEATURE_AIR = 0;
+	public static final int FEATURE_SOLID = 1;
+	public static final int FEATURE_WATER = 2;
+	public static final int FEATURE_MAGMA = 3;
+	
+	private IFacadePart3 facade;
+	private World world;
+	private Mazub alien;
+	Sprite[] sprites;
+	Sprite[] sprites2;
+	
+	
+	@Before
+	public void createFacadeAndWorld() {
+		facade = new Facade();
+		world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		sprites2 = spriteArrayForSize(2, 2, 2);
+		alien = facade.createMazub(0, 499, sprites);
+		facade.setMazub(world, alien);
+	}
+	
+	//TODO hier wordt niets getest
+	@Test
+	public void forEachTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; foreach (any, o) where (isshark o) "
+				+ "sort getx o descending do print getx o; done");
+		Program program = (Program) outcome.getResult();
+		Plant plant1 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program);
+		Plant plant2 = facade.createPlant(10, 0, spriteArrayForSize(3, 3, 2));
+		Plant plant3 = facade.createPlant(20, 0, spriteArrayForSize(3, 3, 2));
+		Mazub mazub = facade.createMazub(100, 100, spriteArrayForSize(3, 3));
+		Shark shark = facade.createShark(200, 0, spriteArrayForSize(3, 3, 2));
+		Shark shark2 = facade.createShark(250, 0, spriteArrayForSize(3, 3, 2));
+		Shark shark3 = facade.createShark(300, 0, spriteArrayForSize(3, 3, 2));
+		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.addPlant(world, plant1);
+		facade.addPlant(world, plant2);
+		facade.addPlant(world, plant3);
+		facade.setMazub(world, mazub);
+		facade.addShark(world, shark3);
+		facade.addShark(world, shark2);
+		facade.addShark(world, shark);
+		program.execute(0.1);
+	}
+	
+	@Test
+	public void whileTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; while true do start_jump; done");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		program.execute(0.001);
+		assertEquals(buzam.getYSpeed(), 0, 0.01);
+		program.execute(0.001);
+		assertEquals(buzam.getYSpeed(), 8, 0.01);
+	}
+	
+	@Test
+	public void StartJumpTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isJumping());
+	}
+	
+	@Test
+	public void StopJumpTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; stop_jump;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertFalse(buzam.isJumping());
+	}
+	
+	
+	@Test
+	public void IfStatementTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; o := self; if (ismazub o) then start_jump; fi");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// One execution, so self is assigned to o
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// Another execution, the condition is checked
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// The body is executed
+		assertTrue(buzam.isJumping());
+	}
+	
+	@Test
+	public void IfElseStatementTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; o := self; if (isplant o) then start_duck; else start_jump; fi stop_jump;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// One execution, so self is assigned to o
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// Another execution, the condition is checked
+		assertFalse(buzam.isJumping());
+		program.execute(0.001);
+		// The elsebody is executed
+		assertTrue(buzam.isJumping());
+		program.execute(0.001);
+		// The next statement is executed
+		assertFalse(buzam.isJumping());		
+	}		
+	
+	@Test
+	public void StartDuckTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isDucked());
+	}
+	
+	@Test
+	public void StopDuckTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_duck; stop_duck;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		assertTrue(buzam.isDucked());
+		program.execute(0.001);
+		assertFalse(buzam.isDucked());
+	}
+	
+	@Test
+	public void StartRunTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; start_run right;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// the start speed of buzam is 1m/s
+		assertEquals(buzam.getXSpeed(), 1, 0.01);
+		assertEquals(buzam.getOrientation(), Orientation.RIGHT);
+	}
+	
+	@Test
+	public void StopRunTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; stop_run right;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		buzam.startMoveRight();
+		program.execute(0.001);
+		assertEquals(buzam.getXSpeed(), 0, 0.001);
+	}
+	
+	@Test
+	public void BreakStatementNotWellFormedTest() {
+		ParseOutcome<?> outcome = facade.parse("break;");
+		Program program = (Program) outcome.getResult();
+		assertFalse(program.isWellFormed());
+	}
+	
+	@Test
+	public void WaitTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; wait 0.001; start_duck;");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// the buzam hasn't ducked yet because of the wait statement
+		assertFalse(buzam.isDucked());
+		program.execute(0.002);
+		assertTrue(buzam.isDucked());
+	}
+	
+	@Test
+	public void SequenceOfStatementsTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; {start_duck; stop_duck;}");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
+		facade.addBuzam(world, buzam);
+		program.execute(0.001);
+		// the buzam hasn't ducked yet because of the wait statement
+		assertFalse(buzam.isDucked());
+		program.execute(0.002);
+		assertTrue(buzam.isDucked());
+	}
+
+	
+}

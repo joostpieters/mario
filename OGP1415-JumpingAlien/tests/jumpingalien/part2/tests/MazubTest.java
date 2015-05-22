@@ -5,6 +5,7 @@ import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
@@ -12,6 +13,8 @@ import jumpingalien.model.School;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
+import jumpingalien.model.exceptions.IllegalPositionException;
+import jumpingalien.model.exceptions.IllegalSettingException;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;
@@ -854,6 +857,5 @@ public class MazubTest {
 		// 0.5 seconds in water, so the alien loses 2 * 2 hitpoints
 		assertEquals(alien.getHitpoints(), 96);
 	}
-	
 	
 }
