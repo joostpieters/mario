@@ -10,12 +10,14 @@ public class BreakStatement extends Statement {
 	}
 	
 	
+	// meer classy recursie
 	private void resetAllSuperStatTillLoop(Statement stat) {
 		if( ! (stat.getSuperStatement() instanceof LoopStatement)) {
 			stat.getSuperStatement().reset();
 			this.resetAllSuperStatTillLoop(stat.getSuperStatement());
 		}
-	}	
+	}
+	
 	
 	@Override
 	public void execute(Program program) {

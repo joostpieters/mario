@@ -196,25 +196,6 @@ public class StatementTest {
 		assertFalse(buzam.isDucked());
 	}
 	
-	// TODO een shark kan ducken
-	@Test(expected = IllegalArgumentException.class)
-	public void StartDuckNotInstanceOfMazubTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.002);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void StopDuckNotInstanceOfMazubTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; stop_duck;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.002);
-	}
-	
 	@Test
 	public void StartRunTestRight() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_run right;");

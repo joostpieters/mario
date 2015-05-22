@@ -6,9 +6,7 @@ import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
-import jumpingalien.model.School;
 import jumpingalien.model.Shark;
-import jumpingalien.model.Slime;
 import jumpingalien.model.World;
 import jumpingalien.model.program.Program;
 import jumpingalien.part3.facade.Facade;
@@ -82,7 +80,7 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void StartJumpTestInstanceOfMazub() {
+	public void StartJumpTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
@@ -92,50 +90,15 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void StartJumpTestInstanceOfShark() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.001);
-		assertTrue(shark.isJumping());
-	}
-	
-	// TODO waarom werkt dit?? :o slimes mogen niet kunnen jumpen
-	@Test(expected = IllegalArgumentException.class)
-	public void InvalidStartJumpTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_jump;");
-		Program program = (Program) outcome.getResult();
-		School school = facade.createSchool();
-		// a slime cannot jump
-		Slime slime = facade.createSlimeWithProgram(500, 500, spriteArrayForSize(1, 1, 2), school, program);
-		facade.addSlime(world, slime);
-		program.execute(0.002);
-	}
-	
-	@Test
-	public void StopJumpTestInstanceOfMazub() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_jump; stop_jump;");
+	public void StopJumpTest() {
+		ParseOutcome<?> outcome = facade.parse("object o; stop_jump;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
 		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		assertTrue(buzam.isJumping());
 		program.execute(0.001);
 		assertFalse(buzam.isJumping());
 	}
 	
-	@Test
-	public void StopJumpTestInstanceOfShark() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_jump; stop_jump;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(0, 0, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.001);
-		assertTrue(shark.isJumping());
-		program.execute(0.001);
-		assertFalse(shark.isJumping());
-	}	
 	
 	@Test
 	public void IfStatementTest() {
@@ -196,27 +159,8 @@ public class StatementTest {
 		assertFalse(buzam.isDucked());
 	}
 	
-	// TODO een shark kan ducken
-	@Test(expected = IllegalArgumentException.class)
-	public void StartDuckNotInstanceOfMazubTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.002);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void StopDuckNotInstanceOfMazubTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; stop_duck;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.002);
-	}
-	
 	@Test
-	public void StartRunTestRight() {
+	public void StartRunTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_run right;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
@@ -228,35 +172,12 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void StopRunTestRight() {
+	public void StopRunTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; stop_run right;");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
 		facade.addBuzam(world, buzam);
 		buzam.startMoveRight();
-		program.execute(0.001);
-		assertEquals(buzam.getXSpeed(), 0, 0.001);
-	}
-	
-	@Test
-	public void StartRunTestLeft() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_run left;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		// the start speed of buzam is 1m/s
-		assertEquals(buzam.getXSpeed(), 1, 0.01);
-		assertEquals(buzam.getOrientation(), Orientation.LEFT);
-	}
-	
-	@Test
-	public void StopRunTestLeft() {
-		ParseOutcome<?> outcome = facade.parse("object o; stop_run left;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
-		facade.addBuzam(world, buzam);
-		buzam.startMoveLeft();
 		program.execute(0.001);
 		assertEquals(buzam.getXSpeed(), 0, 0.001);
 	}
@@ -318,21 +239,6 @@ public class StatementTest {
 		// stop_duck is invoced
 		program.execute(0.001);	
 		assertFalse(buzam.isDucked());
-	}
-	
-	@Test
-	public void breakStatementTest() {
-		ParseOutcome<?> outcome = facade.parse("while true do start_jump; break; done stop_jump;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
-		facade.addBuzam(world, buzam);
-		// evaluating the loop condition takes 0.001 seconds and start_jump consumes
-		// another 0.001 seconds
-		program.execute(0.002);	
-		assertTrue(buzam.isJumping());
-		// break is invoced so the while loop ends, then stop_jump is invoced
-		program.execute(0.002);	
-		assertFalse(buzam.isJumping());
 	}
 
 	

@@ -15,7 +15,8 @@ public class BreakStatement extends Statement {
 			stat.getSuperStatement().reset();
 			this.resetAllSuperStatTillLoop(stat.getSuperStatement());
 		}
-	}	
+	}
+	
 	
 	@Override
 	public void execute(Program program) {

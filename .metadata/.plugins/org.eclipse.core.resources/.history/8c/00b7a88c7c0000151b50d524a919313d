@@ -196,25 +196,6 @@ public class StatementTest {
 		assertFalse(buzam.isDucked());
 	}
 	
-	// TODO een shark kan ducken
-	@Test(expected = IllegalArgumentException.class)
-	public void StartDuckNotInstanceOfMazubTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; start_duck;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.002);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void StopDuckNotInstanceOfMazubTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; stop_duck;");
-		Program program = (Program) outcome.getResult();
-		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
-		facade.addShark(world, shark);
-		program.execute(0.002);
-	}
-	
 	@Test
 	public void StartRunTestRight() {
 		ParseOutcome<?> outcome = facade.parse("object o; start_run right;");
@@ -322,17 +303,12 @@ public class StatementTest {
 	
 	@Test
 	public void breakStatementTest() {
-		ParseOutcome<?> outcome = facade.parse("while true do start_jump; break; done stop_jump;");
+		ParseOutcome<?> outcome = facade.parse("while true do start_jump; break; done");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(20, 499, sprites, program);
 		facade.addBuzam(world, buzam);
-		// evaluating the loop condition takes 0.001 seconds and start_jump consumes
-		// another 0.001 seconds
-		program.execute(0.002);	
+		program.execute(0.001);	
 		assertTrue(buzam.isJumping());
-		// break is invoced so the while loop ends, then stop_jump is invoced
-		program.execute(0.002);	
-		assertFalse(buzam.isJumping());
 	}
 
 	
