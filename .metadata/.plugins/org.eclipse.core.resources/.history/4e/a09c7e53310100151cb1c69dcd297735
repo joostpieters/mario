@@ -655,7 +655,7 @@ public class UnaryExpressionTest {
 		// testing a program with expressions: null, +, -, *, /, sqrt
 		ParseOutcome<?> outcome = facade.parse("object o;"
 				+ "if ((isslime self) || (isdead self) || (ismoving (self, left)) || (isducking self) || (isjumping self)"
-				+ " || (isterrain self) || (ispassable self) || (ismagma self) || (isair self))"
+				+ " || isterrain self || ispassable self || ismagma self || isair self))"
 				+ "then print gety self; fi");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);

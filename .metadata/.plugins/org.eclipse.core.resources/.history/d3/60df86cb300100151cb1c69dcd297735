@@ -450,5 +450,42 @@ public class BinaryExpressionTest {
 		program.execute(0.002);
 	}
 	
+	@Test
+	public void expressionsWithProgramTest2() {
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 499, sprites);
+		facade.setMazub(world, alien);
+		// testing a program with expressions: null, +, -, *, /, sqrt
+		ParseOutcome<?> outcome = facade.parse("object o; while (o != null) do "
+				+ "print gety self; print getwidth self; print getheight self; done");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		program.execute(0.004);
+	}
+	
+	@Test
+	public void expressionsWithProgramTest3() {
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(0, 499, sprites);
+		facade.setMazub(world, alien);
+		// testing a program with expressions: null, +, -, *, /, sqrt
+		ParseOutcome<?> outcome = facade.parse("object o;"
+				+ "if ((isslime self) || (isdead self) || (ismoving (self, left)) || (isducking self) || (isjumping self))"
+				+ "then print gety self; obj:= searchobj right; fi");
+		Program program = (Program) outcome.getResult();
+		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
+		program.execute(0.004);
+	}
+	
 	
 }

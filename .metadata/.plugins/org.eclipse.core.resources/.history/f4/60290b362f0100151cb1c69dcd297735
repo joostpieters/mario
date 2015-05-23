@@ -442,9 +442,7 @@ public class BinaryExpressionTest {
 		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
 		Mazub alien = facade.createMazub(0, 499, sprites);
 		facade.setMazub(world, alien);
-		// testing a program with expressions: null, +, -, *, /, sqrt
-		ParseOutcome<?> outcome = facade.parse("object o; while (( ! (o == null)) && ( 5 < 6) && (3 <= 3) && ( 5 > 4) && ((5 >= 2) || (2 == 2)))"
-				+ " do print ((5 - 2) + 3 * sqrt(25) / 1) ; done");
+		ParseOutcome<?> outcome = facade.parse("object o; while (o != null) do print ((5 - 2) + 3 * sqrt(25) / 1) ; done");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
 		program.execute(0.002);
