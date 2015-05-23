@@ -447,7 +447,8 @@ public class BinaryExpressionTest {
 				+ " do print ((5 - 2) + 3 * sqrt(25) / 1) ; done");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		program.execute(0.002);
+		program.execute(0.1);
+		assertTrue(program.isRunning());
 	}
 	
 	
