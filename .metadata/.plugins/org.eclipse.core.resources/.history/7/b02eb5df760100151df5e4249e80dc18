@@ -142,17 +142,6 @@ public class StatementTest {
 	}
 	
 	@Test
-	public void IfStatementNoElseTest() {
-		ParseOutcome<?> outcome = facade.parse("object o; o := self; if ( ! ( ismazub o)) then start_jump; fi");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		facade.addBuzam(world, buzam);
-		program.execute(0.001);
-		// the condition is false
-		assertFalse(buzam.isJumping());		
-	}
-	
-	@Test
 	public void IfElseStatementTest() {
 		ParseOutcome<?> outcome = facade.parse("object o; o := self; if (isplant o) then start_duck; else start_jump; fi stop_jump;");
 		Program program = (Program) outcome.getResult();

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="jumpingalien.model.Expression"/>
 <fullyQualifiedTypeName name="jumpingalien.model.GameObject"/>
 <fullyQualifiedTypeName name="jumpingalien.model.SuperObject"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="jumpingalien.model.Orientation"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Tile"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Type"/>
+<fullyQualifiedTypeName name="jumpingalien.util.Sprite"/>
 </qualifiedTypeNameHistroy>

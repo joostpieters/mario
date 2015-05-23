@@ -419,7 +419,7 @@ public class Facade implements IFacadePart3 {
 			throw new ModelException(f.getMessage());
 		} catch (IllegalPositionException e) {
 			throw new ModelException(e.getMessage());
-		}	
+		}		
 	}
 	@Override
 	public int[] getLocation(Buzam alien) {
