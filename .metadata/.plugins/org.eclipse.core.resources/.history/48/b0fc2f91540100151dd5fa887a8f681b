@@ -120,6 +120,7 @@ public class BuzamTest {
 		assertEquals(null, facade.getCurrentSprite(buzam));
 	}	
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void TestFacade() {
 		ParseOutcome<?> outcome = facade.parse("start_jump;");
@@ -131,27 +132,8 @@ public class BuzamTest {
 		assertEquals(facade.getAcceleration(buzam)[1], 0, 0.001);
 		assertEquals(facade.getVelocity(buzam)[0], 0, 0.001);
 		assertEquals(facade.getVelocity(buzam)[1], 0, 0.001);
+
 	}
 	
-	@SuppressWarnings("unused")
-	@Test(expected = ModelException.class)
-	public void TestFacadeIllegalAddBuzam() {
-		ParseOutcome<?> outcome = facade.parse("start_jump;");
-		Program program = (Program) outcome.getResult();
-		Buzam buzam = facade.createBuzamWithProgram(-20, 499, sprites, program);
-	}
-	
-	@SuppressWarnings("unused")
-	@Test(expected = ModelException.class)
-	public void TestFacadeIllegalAddBuzam2() {
-		Buzam buzam = facade.createBuzam(-20, 499, sprites);
-	}
-	
-	@Test
-	public void TestFacadeGetSize() {
-		Buzam buzam = facade.createBuzam(20, 499, sprites);
-		assertArrayEquals(intArray(2, 2), facade.getSize(buzam));
-	}	
-		
 
 }

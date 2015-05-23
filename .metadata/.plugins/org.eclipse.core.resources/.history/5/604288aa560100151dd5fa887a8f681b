@@ -120,6 +120,7 @@ public class BuzamTest {
 		assertEquals(null, facade.getCurrentSprite(buzam));
 	}	
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void TestFacade() {
 		ParseOutcome<?> outcome = facade.parse("start_jump;");
@@ -147,10 +148,10 @@ public class BuzamTest {
 		Buzam buzam = facade.createBuzam(-20, 499, sprites);
 	}
 	
-	@Test
+	@Test(expected = ModelException.class)
 	public void TestFacadeGetSize() {
 		Buzam buzam = facade.createBuzam(20, 499, sprites);
-		assertArrayEquals(intArray(2, 2), facade.getSize(buzam));
+		assertArrayEquals(intArray(2, 3), facade.getSize(buzam));
 	}	
 		
 

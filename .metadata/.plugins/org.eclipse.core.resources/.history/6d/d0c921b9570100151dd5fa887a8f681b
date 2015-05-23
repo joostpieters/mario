@@ -120,6 +120,7 @@ public class BuzamTest {
 		assertEquals(null, facade.getCurrentSprite(buzam));
 	}	
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void TestFacade() {
 		ParseOutcome<?> outcome = facade.parse("start_jump;");

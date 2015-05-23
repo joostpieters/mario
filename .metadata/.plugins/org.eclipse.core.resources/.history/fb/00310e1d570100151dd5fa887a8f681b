@@ -140,6 +140,7 @@ public class SlimeTest {
 		//0.1 second, so the slime does not lose hitpoints
 		assertEquals(slime.getHitpoints(), 100);
 		assertEquals(facade.getSchool(slime), school);
+		assertEquals(facade.getSlimes(world), null)
 	}
 	
 	@Test 
@@ -288,16 +289,5 @@ public class SlimeTest {
 		facade.setMazub(world, alien);
 		facade.addSlime(world, slime);
 	}
-	
-	@Test
-	public void testFacadeGetSlimes() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		assertEquals(facade.getSlimes(world).size(), 0);
-	}
-
 	
 }

@@ -289,7 +289,7 @@ public class SlimeTest {
 		facade.addSlime(world, slime);
 	}
 	
-	@Test
+	@Test(expected = ModelException.class)
 	public void testFacadeGetSlimes() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);

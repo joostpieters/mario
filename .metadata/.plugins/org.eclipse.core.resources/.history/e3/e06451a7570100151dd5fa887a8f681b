@@ -120,6 +120,7 @@ public class BuzamTest {
 		assertEquals(null, facade.getCurrentSprite(buzam));
 	}	
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void TestFacade() {
 		ParseOutcome<?> outcome = facade.parse("start_jump;");
@@ -128,6 +129,7 @@ public class BuzamTest {
 		assertEquals(facade.getNbHitPoints(buzam), 500);
 		assertEquals(facade.getNbHitPoints(alien), 100);
 		assertEquals(facade.getAcceleration(buzam)[0], 0, 0.001);
+		facade.getAcceleration(buzam);
 		assertEquals(facade.getAcceleration(buzam)[1], 0, 0.001);
 		assertEquals(facade.getVelocity(buzam)[0], 0, 0.001);
 		assertEquals(facade.getVelocity(buzam)[1], 0, 0.001);

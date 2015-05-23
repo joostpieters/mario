@@ -289,15 +289,4 @@ public class SlimeTest {
 		facade.addSlime(world, slime);
 	}
 	
-	@Test
-	public void testFacadeGetSlimes() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		assertEquals(facade.getSlimes(world).size(), 0);
-	}
-
-	
 }

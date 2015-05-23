@@ -953,5 +953,4 @@ public class MazubTest {
 		facade.advanceTime(world, 0.1);
 	}
 	
-	
 }
