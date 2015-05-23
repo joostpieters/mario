@@ -950,7 +950,6 @@ public class MazubTest {
 		facade.startDuck(alien);
 		facade.advanceTime(world, 0.1);
 		facade.endDuck(alien);
-		facade.advanceTime(world, 0.1);
 	}
 	
 }

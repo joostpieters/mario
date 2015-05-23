@@ -925,32 +925,4 @@ public class MazubTest {
 		facade.advanceTime(world, 0.1);
 	}
 	
-	@Test
-	public void createMazubTestFacade() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Sprite[] sprites = spriteArrayForSize(3, 3);
-		Mazub alien = facade.createMazub(500, 499, sprites, 2, 3);
-		facade.setMazub(world, alien);
-		facade.startMoveLeft(alien);
-		facade.advanceTime(world, 0.01);
-		assertEquals(facade.getCurrentSprite(alien), sprites[19]);
-		assertArrayEquals(intArray(497, 499), facade.getLocation(alien));
-		assertEquals(facade.getVelocity(alien)[0], 2.01, 0.01);
-		facade.startJump(alien);
-		facade.advanceTime(world, 0.1);
-		assertArrayEquals(doubleArray(0.9, -10), facade.getAcceleration(alien),
-				Util.DEFAULT_EPSILON);
-		assertArrayEquals(intArray(3, 3), facade.getSize(alien));
-		facade.endMoveLeft(alien);
-		facade.advanceTime(world, 0.1);
-		facade.startMoveRight(alien);
-		facade.advanceTime(world, 0.1);
-		facade.startDuck(alien);
-		facade.advanceTime(world, 0.1);
-		facade.endDuck(alien);
-		facade.advanceTime(world, 0.1);
-	}
-	
 }
