@@ -13,6 +13,7 @@ import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
+import jumpingalien.model.Tile;
 import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.exceptions.IllegalPositionException;
@@ -57,6 +58,8 @@ import jumpingalien.model.program.statement.Statement;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
+import jumpingalien.util.ModelException;
+import jumpingalien.util.Sprite;
 
 import org.junit.Test;
 
@@ -377,6 +380,35 @@ public class UnaryExpressionTest {
 		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
 		program.setGameObject(buzam);
 		assertEquals(isdead.evaluate(program), false);	
+	}
+	
+	@Test
+	public void testIsDead() throws IllegalPositionException, IllegalSpriteException {
+		Sprite[] sprites;
+		IFacadePart3 facade = new Facade();
+		World world = facade.createWorld(500, 2, 2, 2, 2, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(20, 700, sprites);
+		facade.setMazub(world, alien);
+		Expression obj = new ObjectSelf();
+		Expression isdead = new IsDead(obj);
+		Map<String, Type> map = new HashMap<String, Type>();
+		Statement stat = new PrintStatement(isdead);
+		Program program = new Program(stat, map);
+		Buzam buzam = new Buzam(20, 499, spriteArrayForSize(3, 3));
+		program.setGameObject(buzam);
+		private int count = 0;
+		for (int i = 0; i < 20; i++) {
+			facade.advanceTime(world, 0.2);
+			count += 0.2;
+			if (buzam.getHitpoints() <= 0) {
+				System.out.println(count);
+			}
+		}
+		assertEquals(isdead.evaluate(program), true);	
 	}
 	
 	@Test

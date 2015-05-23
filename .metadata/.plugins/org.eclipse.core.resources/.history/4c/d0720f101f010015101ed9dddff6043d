@@ -71,17 +71,6 @@ public class BinaryExpressionTest {
 		assertEquals(addition.evaluate(program), (Double) 8.0);			
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testException() {
-		Expression expr1 = new Constant(12);
-		Expression expr2 = new BoolTrue();
-		Expression<Double> add = new Addition(expr1, expr2);
-		Map<String, Type> map = new HashMap<String, Type>();
-		Statement stat = new PrintStatement(add);
-		Program program = new Program(stat, map);
-		add.evaluate(program);
-	}
-	
 	@Test
 	public void testMultiplication() {
 		Expression expr1 = new Constant(5);

@@ -384,7 +384,7 @@ public class StatementTest {
 		Program program3 = (Program) outcome3.getResult();
 		Plant plant5 = facade.createPlantWithProgram(0, 0, spriteArrayForSize(3, 3, 2), program3);
 		facade.addPlant(world, plant5);
-		// Four executions (one for every shark + 1 for the for each)
+		// Four executions (one for every shark + 1)
 		program3.execute(0.004);
 		assertTrue(program3.isRunning());
 		// Another execution. Now a plant tries to jump, so the program stops

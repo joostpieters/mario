@@ -110,7 +110,8 @@ public class ProgramFactory implements IProgramFactory<Expression<?>, Statement,
 
 	@Override
 	public Expression<Double> createAddition(Expression<?> left, Expression<?> right,
-			SourceLocation sourceLocation) {		
+			SourceLocation sourceLocation) {
+		
 		return new Addition((Expression<Double>) left, (Expression<Double>) right);
 	}
 

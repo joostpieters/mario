@@ -19,6 +19,7 @@ import org.junit.runners.Suite;
    SlimeTest.class,
    WorldTest.class,
    BuzamTest.class,
+   ExpressionTest.class,
    StatementTest.class,
    UnaryExpressionTest.class,
    BinaryExpressionTest.class,

@@ -13,6 +13,7 @@ import jumpingalien.model.Plant;
 import jumpingalien.model.School;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
+import jumpingalien.model.Tile;
 import jumpingalien.model.Type;
 import jumpingalien.model.World;
 import jumpingalien.model.exceptions.IllegalPositionException;
@@ -57,16 +58,12 @@ import jumpingalien.model.program.statement.Statement;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.IProgramFactory.Direction;
+import jumpingalien.util.ModelException;
 
 import org.junit.Test;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class UnaryExpressionTest {
-	
-	public static final int FEATURE_AIR = 0;
-	public static final int FEATURE_SOLID = 1;
-	public static final int FEATURE_WATER = 2;
-	public static final int FEATURE_MAGMA = 3;
 	
 	@Test
 	public void testRandomDouble() {
@@ -123,6 +120,8 @@ public class UnaryExpressionTest {
 		Statement stat = new PrintStatement(direc);
 		Program program = new Program(stat, map);
 		assertEquals(direc.evaluate(program), Direction.DOWN);
+		assertEquals(direc.getDirectionType(), Type.DIRECTION );
+
 	}
 	
 	@Test

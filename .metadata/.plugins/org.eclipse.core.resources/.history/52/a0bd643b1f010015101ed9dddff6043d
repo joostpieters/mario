@@ -1,0 +1,21 @@
+package jumpingalien.part3.tests;
+
+import java.util.HashMap;
+import java.util.Map;
+import jumpingalien.model.Type;
+import jumpingalien.model.program.Program;
+import jumpingalien.model.program.expression.Addition;
+import jumpingalien.model.program.expression.BoolTrue;
+import jumpingalien.model.program.expression.Constant;
+import jumpingalien.model.program.expression.Expression;
+import jumpingalien.model.program.statement.PrintStatement;
+import jumpingalien.model.program.statement.Statement;
+
+import org.junit.Test;
+
+public class ExpressionTest {
+	
+	
+	
+
+}
