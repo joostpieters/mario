@@ -638,7 +638,8 @@ public class UnaryExpressionTest {
 				+ "print gety self; print getwidth self; print getheight self; done");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		program.execute(0.004);
+		program.execute(0.1);
+		assertTrue(program.isRunning());
 	}
 	
 	@SuppressWarnings("unused")
@@ -659,7 +660,9 @@ public class UnaryExpressionTest {
 				+ "then print gety self; fi");
 		Program program = (Program) outcome.getResult();
 		Buzam buzam = facade.createBuzamWithProgram(0, 0, sprites, program);
-		program.execute(0.004);
+		program.execute(0.1);
+		assertFalse(program.isRunning());
+
 	}
 	
 	
