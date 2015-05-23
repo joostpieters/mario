@@ -1154,11 +1154,11 @@ public class World {
 	 * @param tileType
 	 * 			the type of geological feature this tile possesses
 	 * @return ((tileX < getNbTilesX()) && (tileY < getNbTilesY())
-				&& (tileType >= 0) && (tileType <= 4))
+				&& tileX >= 0 && tileY >= 0 && (tileType >= 0) && (tileType <= 4))
 	 */
 	private boolean isValidTile(int tileX, int tileY, int tileType) {
 		return (tileX < this.getNbTilesX()) && (tileY < this.getNbTilesY())
-				&& (tileType >= 0) && (tileType <= 4);
+				&& tileX >= 0 && tileY >= 0 && (tileType >= 0) && (tileType <= 4);
 	}	
 	/**
 	 * Checks if dt has a proper value between 0 and 0.2.

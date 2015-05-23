@@ -3,8 +3,7 @@ package jumpingalien.part2.tests;
 import static jumpingalien.tests.util.TestUtils.doubleArray;
 import static jumpingalien.tests.util.TestUtils.intArray;
 import static jumpingalien.tests.util.TestUtils.spriteArrayForSize;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import jumpingalien.model.Buzam;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
@@ -13,6 +12,7 @@ import jumpingalien.model.School;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.model.Slime;
+import jumpingalien.model.exceptions.IllegalDuckException;
 import jumpingalien.model.exceptions.IllegalPositionException;
 import jumpingalien.model.exceptions.IllegalSettingException;
 import jumpingalien.part2.facade.Facade;
@@ -187,6 +187,28 @@ public class MazubTest {
 		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(alien),
 				Util.DEFAULT_EPSILON);
 	}
+	
+	@Test
+	public void testVelocityDucking2() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
+		facade.setGeologicalFeature(world, 1, 0, FEATURE_SOLID);
+		int m = 10;
+		Sprite[] sprites = spriteArrayForSize(2, 2, 10 + 2 * m);
+		Mazub alien = facade.createMazub(2, 499, sprites);
+		facade.startDuck(alien);
+		facade.setMazub(world, alien);
+		facade.startMoveRight(alien);
+		// walking till maximum speed and then ducking
+		for (int i = 0; i < 100 ; i++) {
+			facade.advanceTime(world, 0.2/9);
+		}
+		facade.advanceTime(world, 0.005);
+		assertArrayEquals(doubleArray(1, 0), facade.getVelocity(alien),
+				Util.DEFAULT_EPSILON);
+	}
+	
 	@Test
 	public void testVelocityJumpHighestPoint() {
 		IFacadePart2 facade = new Facade();
@@ -953,5 +975,14 @@ public class MazubTest {
 		facade.advanceTime(world, 0.1);
 	}
 	
-	
+	@Test
+	public void didPlayerWin() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 200, 200, 0, 0);
+		Sprite[] sprites = spriteArrayForSize(3, 3);
+		Mazub alien = facade.createMazub(1400, 1400, sprites);
+		facade.setMazub(world, alien);
+		assertFalse(world.didPlayerWin());
+	}
+
 }

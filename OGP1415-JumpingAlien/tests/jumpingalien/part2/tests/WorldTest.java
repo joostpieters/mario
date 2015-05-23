@@ -584,6 +584,19 @@ public class WorldTest {
 	}
 	
 	@Test(expected = ModelException.class)
+	public void illegalAmountOfSlimes() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		School school = facade.createSchool();
+		//Add 101 slimes
+		for (int i = 0; i < 101; i++) {
+			facade.addSlime(world, facade.createSlime(0, 0, spriteArrayForSize(2,2,2), school));
+		}
+	}
+	
+	
+	
+	@Test(expected = ModelException.class)
 	public void illegalAmountOfCharacters() {
 		IFacadePart2 facade = new Facade();
 		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
@@ -604,4 +617,38 @@ public class WorldTest {
 		
 	}	
 	
+	@Test(expected = ModelException.class)
+	public void illegalSetGeologicalFeatureTileType() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 0, 5);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalSetGeologicalFeatureTileX() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, -1, 0, 1);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalSetGeologicalFeatureTileY() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, -2, 1);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalSetGeologicalFeaturWrongXTile() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 5, 0, 1);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void illegalSetGeologicalFeaturWrongYTile() {
+		IFacadePart2 facade = new Facade();
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		facade.setGeologicalFeature(world, 0, 4, 1);
+	}
 }

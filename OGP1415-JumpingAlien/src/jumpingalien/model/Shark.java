@@ -129,22 +129,7 @@ public class Shark extends GameObject {
 	private static final double getMoveAcc() {
 		return MOVE_ACC;
 	}
-	/**
-	 * the amount of hitpoints a shark loses when touching 
-	 * a mazub or a slime
-	 */
-	private static final int CONTACT_DAMAGE = 50;
-	/**
-	 * returns the amount of lost hitpoints when making contact
-	 * with mazub or a slime
-	 * @return the hitpoints to be deducted in case of contact
-	 * 			| CONTACT_DAMAGE
-	 */
-	@Basic @Immutable
-	public static final int getContactDamage() {
-		return CONTACT_DAMAGE;
-	}
-	/**
+		/**
 	 * the maximal amount of hitpoints a shark may posses
 	 */
 	private static final int MAX_HITPOINTS = 100;

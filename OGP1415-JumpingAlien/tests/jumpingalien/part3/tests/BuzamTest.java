@@ -5,6 +5,7 @@ import jumpingalien.model.World;
 import jumpingalien.model.exceptions.IllegalPositionException;
 import jumpingalien.model.exceptions.IllegalSettingException;
 import jumpingalien.model.program.Program;
+import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.part3.facade.Facade;
 import jumpingalien.part3.facade.IFacadePart3;
 import jumpingalien.part3.programs.ParseOutcome;
@@ -152,6 +153,26 @@ public class BuzamTest {
 		Buzam buzam = facade.createBuzam(20, 499, sprites);
 		assertArrayEquals(intArray(2, 2), facade.getSize(buzam));
 	}	
-		
+	
+	@Test(expected = ModelException.class)
+	public void testStartGameAddBuzam() {
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		Buzam buzam = facade.createBuzam(400, 400, sprites);
+		facade.addBuzam(world, buzam);
+	}
+	
+	@Test(expected = ModelException.class)
+	public void testAddBuzamIllegalPos() {
+		World world = facade.createWorld(500, 3, 3, 1, 1, 1, 1);
+		Mazub alien = facade.createMazub(499, 499, sprites);
+		Buzam buzam = facade.createBuzam(2000, 400, sprites);
+		facade.addBuzam(world, buzam);
+		facade.setMazub(world, alien);
+		facade.advanceTime(world, 0.1);
+		facade.addBuzam(world, buzam);
+	}
 
 }

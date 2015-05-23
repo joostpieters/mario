@@ -47,7 +47,7 @@ public class Facade implements IFacadePart3 {
 			throw new ModelException(f.getMessage());
 		}
 	}
-	//@Override
+	@Override
 	public Mazub createMazub(int pixelLeftX, int pixelBottomY, Sprite[] sprites,
 			int initStartSpeed, int maxSpeed) {
 		try {return new Mazub(pixelLeftX, pixelBottomY, sprites, initStartSpeed, maxSpeed);}
