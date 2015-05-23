@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PlantTest" project="OGP1415-JumpingAlien" tests="10" started="10" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.PlantTest" time="0.063">
+    <testcase name="testDie" classname="jumpingalien.part2.tests.PlantTest" time="0.016"/>
+    <testcase name="testFacadeGetPlants" classname="jumpingalien.part2.tests.PlantTest" time="0.0"/>
+    <testcase name="testAdvanceTimeCorrect" classname="jumpingalien.part2.tests.PlantTest" time="0.015"/>
+    <testcase name="testSpriteTooLong" classname="jumpingalien.part2.tests.PlantTest" time="0.0"/>
+    <testcase name="testNotWithinBoundaries" classname="jumpingalien.part2.tests.PlantTest" time="0.0"/>
+    <testcase name="testCorrectSpeed" classname="jumpingalien.part2.tests.PlantTest" time="0.0"/>
+    <testcase name="testSpriteTooShort" classname="jumpingalien.part2.tests.PlantTest" time="0.0"/>
+    <testcase name="testTooBigPosition" classname="jumpingalien.part2.tests.PlantTest" time="0.0"/>
+    <testcase name="testRemove" classname="jumpingalien.part2.tests.PlantTest" time="0.016"/>
+    <testcase name="testChangeOrientation" classname="jumpingalien.part2.tests.PlantTest" time="0.016"/>
+  </testsuite>
+</testrun>

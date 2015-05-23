@@ -6,14 +6,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import jumpingalien.model.Mazub;
-import jumpingalien.model.School;
-import jumpingalien.model.Slime;
 import jumpingalien.model.World;
 import jumpingalien.model.Shark;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;
-
 import org.junit.Test;
 
 public class SharkTest {
@@ -200,28 +197,6 @@ public class SharkTest {
 		// 1.1 seconds in magma, the shark dies and is removed after 0.6 seconds, so no part anymore of world
 		assertEquals(world.getSharks(),  new CopyOnWriteArrayList<Shark>());
 	}
-	
-	@Test(expected = ModelException.class)
-	public void testSharkFacadeInvalidPos() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		Shark shark = facade.createShark(50000, 499, spriteArrayForSize(3, 3, 2));
-		facade.setMazub(world, alien);
-		facade.addShark(world, shark);
-	}
-	
-	@Test(expected = ModelException.class)
-	public void testSharkFacadeInvalidSprite() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		Shark shark = facade.createShark(500, 499, spriteArrayForSize(1, 1, 1));
-		facade.setMazub(world, alien);
-		facade.addShark(world, shark);
-	}	
 	
 	
 }

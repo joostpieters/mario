@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SharkTest" project="OGP1415-JumpingAlien" tests="14" started="14" failures="2" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part2.tests.SharkTest" time="0.016">
+    <testcase name="testDie" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testLoseHitpoints" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testSpriteTooLong" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testLongInMagma" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testSpriteTooShort" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testShortInMagma" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testIsImmune" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testLongInAir" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testShortInAir" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testSharkFacadeInvalidPos" classname="jumpingalien.part2.tests.SharkTest" time="0.0">
+      <failure>java.lang.AssertionError: Expected exception: jumpingalien.util.ModelException&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testSharkFacadeInvalidSprite" classname="jumpingalien.part2.tests.SharkTest" time="0.0">
+      <failure>java.lang.AssertionError: Expected exception: jumpingalien.util.ModelException&#13;
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testNegativePosition" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testTooBigPosition" classname="jumpingalien.part2.tests.SharkTest" time="0.0"/>
+    <testcase name="testRemoveAfterDeath" classname="jumpingalien.part2.tests.SharkTest" time="0.016"/>
+  </testsuite>
+</testrun>

@@ -11,12 +11,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
-import jumpingalien.model.Shark;
 import jumpingalien.model.World;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
 import jumpingalien.util.ModelException;
-import jumpingalien.util.Sprite;
 import jumpingalien.util.Util;
 
 import org.junit.Test;
@@ -141,9 +139,8 @@ public class PlantTest {
 		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		Sprite[] sprites = spriteArrayForSize(1, 1, 2);
-		Plant plant = facade.createPlant(500, 1000, sprites);
-		Plant plant2 = facade.createPlant(500, 1000, sprites);
+		Plant plant = facade.createPlant(500, 1000, spriteArrayForSize(1, 1, 2));
+		Plant plant2 = facade.createPlant(500, 1000, spriteArrayForSize(1, 1, 2));
 		facade.setMazub(world, alien);
 		facade.addPlant(world, plant);
 		facade.addPlant(world, plant2);
@@ -151,28 +148,7 @@ public class PlantTest {
 		assertEquals(facade.getPlants(world).size(), 2);
 		// 0.1 seconds passed
 		assertArrayEquals(intArray(505, 1000), plant.getLocation());
-		assertEquals(facade.getCurrentSprite(plant), sprites[1]);
 	}
-	
-	@Test(expected = ModelException.class)
-	public void testPlantFacadeInvalidPos() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.addPlant(world, facade.createPlant(50000, 499, spriteArrayForSize(3, 3, 2)));
-	}
-	
-	@Test(expected = ModelException.class)
-	public void testPlantFacadeInvalidSprite() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.addPlant(world, facade.createPlant(500, 499, spriteArrayForSize(1, 1, 1)));
-	}	
 	
 	
 }

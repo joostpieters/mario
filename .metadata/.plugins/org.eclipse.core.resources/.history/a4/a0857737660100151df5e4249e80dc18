@@ -298,6 +298,6 @@ public class SlimeTest {
 		facade.setMazub(world, alien);
 		assertEquals(facade.getSlimes(world).size(), 0);
 	}
-	
+
 	
 }

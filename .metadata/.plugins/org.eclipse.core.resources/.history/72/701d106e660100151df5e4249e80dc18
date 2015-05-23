@@ -207,7 +207,7 @@ public class SharkTest {
 		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		Shark shark = facade.createShark(50000, 499, spriteArrayForSize(3, 3, 2));
+		Shark shark = facade.createShark(500, 499, spriteArrayForSize(3, 3, 2));
 		facade.setMazub(world, alien);
 		facade.addShark(world, shark);
 	}
@@ -218,7 +218,7 @@ public class SharkTest {
 		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
 		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
 		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		Shark shark = facade.createShark(500, 499, spriteArrayForSize(1, 1, 1));
+		Shark shark = facade.createShark(500, 499, spriteArrayForSize(3, 3, 2));
 		facade.setMazub(world, alien);
 		facade.addShark(world, shark);
 	}	

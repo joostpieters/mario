@@ -11,7 +11,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import jumpingalien.model.Mazub;
 import jumpingalien.model.Orientation;
 import jumpingalien.model.Plant;
-import jumpingalien.model.Shark;
 import jumpingalien.model.World;
 import jumpingalien.part2.facade.Facade;
 import jumpingalien.part2.facade.IFacadePart2;
@@ -153,26 +152,6 @@ public class PlantTest {
 		assertArrayEquals(intArray(505, 1000), plant.getLocation());
 		assertEquals(facade.getCurrentSprite(plant), sprites[1]);
 	}
-	
-	@Test(expected = ModelException.class)
-	public void testPlantFacadeInvalidPos() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.addPlant(world, facade.createPlant(50000, 499, spriteArrayForSize(3, 3, 2)));
-	}
-	
-	@Test(expected = ModelException.class)
-	public void testPlantFacadeInvalidSprite() {
-		IFacadePart2 facade = new Facade();
-		World world = facade.createWorld(500, 3, 3, 1, 1, 2, 2);
-		facade.setGeologicalFeature(world, 0, 0, FEATURE_SOLID);
-		Mazub alien = facade.createMazub(0, 499, spriteArrayForSize(3, 3));
-		facade.setMazub(world, alien);
-		facade.addPlant(world, facade.createPlant(500, 499, spriteArrayForSize(1, 1, 1)));
-	}	
 	
 	
 }

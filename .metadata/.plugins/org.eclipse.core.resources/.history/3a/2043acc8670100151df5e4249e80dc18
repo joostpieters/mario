@@ -152,6 +152,8 @@ public class PlantTest {
 		// 0.1 seconds passed
 		assertArrayEquals(intArray(505, 1000), plant.getLocation());
 		assertEquals(facade.getCurrentSprite(plant), sprites[1]);
+		int[] visibleWindow = facade.getVisibleWindow(world);
+		int[] bottomleftofTile = facade.getBottomLeftPixelOfTile(world, 0, 0);
 	}
 	
 	@Test(expected = ModelException.class)
