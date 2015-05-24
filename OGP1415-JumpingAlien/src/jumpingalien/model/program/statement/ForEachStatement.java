@@ -83,8 +83,6 @@ public class ForEachStatement extends LoopStatement {
 			break;
 		case PLANT:
 			list.addAll(program.getGameObject().getWorld().getPlants());
-			System.out.println("hier geraakt");
-			System.out.println(list.size());
 			break;
 		case SHARK:
 			list.addAll(program.getGameObject().getWorld().getSharks());

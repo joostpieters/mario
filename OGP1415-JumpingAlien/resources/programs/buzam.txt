@@ -17,15 +17,14 @@ object o;
 
 while true do
 
-
   currentxdir := up;
   if (ismoving (self, left)) then currentxdir := left; fi
   if (ismoving (self, right)) then currentxdir := right; fi
 
-
   if (nearestSS != null && distanceToNearestSS <= 100) then
     haveenemy := true;
     if (gety nearestSS > gety self) then
+  print nearestSS;
       newydir := up;
     fi
     if (gety nearestSS < gety self) then
@@ -34,8 +33,8 @@ while true do
     if (getx nearestSS > getx self) then
       newxdir := right;
     fi
-    if (getx nearestSS < gety self) then
-      newydir := left;
+    if (getx nearestSS < getx self) then
+      newxdir := left;
     fi
   else
     haveenemy := false;
@@ -43,11 +42,11 @@ while true do
 
 
   if (! isjumping self &&
-      ispassable(gettile(getx self, gety self))) then
+      ! ispassable(gettile(getx self, (gety self) + 1))) then
     newxdir := right;
   fi
   if (! isjumping self &&
-      ispassable(gettile((getx self) + (getwidth self) - 1, gety self))) then
+      ! ispassable(gettile((getx self) + (getwidth self) - 1, (gety self) + 1))) then
     newxdir := left;
   fi
 
@@ -93,7 +92,5 @@ while true do
       fi
     fi
   done
-
-
 done
 
