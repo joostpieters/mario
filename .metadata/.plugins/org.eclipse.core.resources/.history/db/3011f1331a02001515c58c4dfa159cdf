@@ -790,8 +790,13 @@ public class Shark extends GameObject {
 	 * 			| in
 	 * 			| allSlimesSharksMazubBuzam.addAll(world.getSharks())
 	 * 			| allSlimesSharksMazubBuzam.add(world.getAlien())
+<<<<<<< HEAD
+	 * 			| if (this.getWorld().getBuzam() != null)
+	 * 			| 	then allSlimesSharksMazubBuzam.add(this.getWorld().getBuzam())
+=======
 	 * 			| if (this.getWorld().getBuzam() != null) {
 	 * 			| 	then allSlimesSharksMazubBuzam.add(this.getWorld().getBuzam());
+>>>>>>> b86cb58ac4b226a6dbe286cce1fe0ebd53d15aec
 	 * 			| for each GameObject other: allSlimesSharksMazubBuzam :
 	 * 			| 	if (this != other)
 	 * 			| 		then newPos = collidesSomewhere(newPos[0], xDim1, newPos[1], yDim1, x2, xDim2, y2,yDim2)

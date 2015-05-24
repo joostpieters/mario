@@ -103,7 +103,7 @@ public class Mazub extends GameObject {
 		throws IllegalPositionException,IllegalSpriteException
 			, IllegalSpeedException {
 		super(xPos, yPos, sprites);
-		if ( !isValidSpeed(initStartSpeed, maxSpeed))
+		if( !isValidSpeed(initStartSpeed, maxSpeed))
 			throw new IllegalSpeedException(initStartSpeed, maxSpeed);
 		this.setInitStartSpeed(initStartSpeed);
 		this.setMaxSpeed(maxSpeed);

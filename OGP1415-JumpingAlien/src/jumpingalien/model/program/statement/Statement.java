@@ -34,7 +34,6 @@ public abstract class Statement {
 	}
 	
 	
-	// Classy recursie
 	public LoopStatement getLoopStatement(Statement stat) {
 		if(stat.getSuperStatement() instanceof LoopStatement) {
 			return (LoopStatement) stat.getSuperStatement();

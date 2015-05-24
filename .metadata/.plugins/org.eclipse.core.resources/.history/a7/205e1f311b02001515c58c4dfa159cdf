@@ -1659,7 +1659,7 @@ public abstract class GameObject extends SuperObject {
 	 * 			| if (getYSpeed() > 0)
 	 * 			|	then setYSpeed(0)
 	 */
-	protected void stopMovingUp() {
+	protected void stopMovingY() {
 		if (this.getYSpeed() > 0) {
 			this.setYSpeed(0);
 		}
@@ -1673,7 +1673,7 @@ public abstract class GameObject extends SuperObject {
 	 */
 	protected void stopMoving() {
 		this.stopMovingX();
-		this.stopMovingUp();
+		this.stopMovingY();
 	}
 	
 	/**

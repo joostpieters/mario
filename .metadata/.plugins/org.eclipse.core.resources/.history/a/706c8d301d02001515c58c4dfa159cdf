@@ -311,13 +311,7 @@ public class Slime extends GameObject {
 	protected boolean isValidSprite(Sprite[] sprites) {
 		return sprites.length == 2;
 	}
-	/**
-	 * returns true if the given school is valid (not null)
-	 * @param school
-	 * 			the given school to check
-	 * @return true if the school isn't null, false otherwise
-	 * 			| (school != null)
-	 */
+	// TODO commentarR
 	private boolean isValidSchool(School school) {
 		return school != null;
 	}

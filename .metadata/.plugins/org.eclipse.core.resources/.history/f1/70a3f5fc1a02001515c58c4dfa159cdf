@@ -1378,18 +1378,19 @@ public abstract class GameObject extends SuperObject {
 	 * Changes the speed of the given object with a given time interval dt
 	 * @param dt
 	 * 		time interval to calculate new speed
-	 * @effect Calculating and setting the horizontal speed (and acceleration if
-	 * 			the max speed is reached)
-	 * 			| if (this.getXSpeed() + dt * this.getXAcc() >= this.getMaxSpeed())
-	 * 			| 	then setXSpeed(this.getMaxSpeed())
-	 * 			| 		 setXAcc(0)
-	 * 			| else 
-	 * 			|	then setXSpeed(this.getXSpeed() + dt * this.getXAcc())
-	 * @effect setting vertical speed to an updated speed
-	 * 		| setYSpeed(this.getYSpeed() + dt * this.getYAcc())
+	 * @effect Calculating and setting the horizontal and vertical speed
+	 * 		| this.setXSpeed(this.getXSpeed() + dt * this.getXAcc())
+	 * 		| this.setYSpeed(this.getYSpeed() + dt * this.getYAcc())
+	 * @effect setting the acceleration to zero and speed to the maximum speed if the
+	 * 		new speed is higher than the maximum speed
+	 * 		| if (this.getXSpeed() >= this.getMaxSpeed())
+	 * 		| 	then this.setXSpeed(this.getMaxSpeed());
+	 * 		| 	then this.setXAcc(0)
 	 */
+	// TODO commentaar
 	@Raw
 	protected void setNewSpeed(double dt) {
+
 		if (this.getXSpeed() + dt * this.getXAcc() >= this.getMaxSpeed()){
 			this.setXSpeed(this.getMaxSpeed());
 			this.setXAcc(0);
@@ -1464,6 +1465,7 @@ public abstract class GameObject extends SuperObject {
 		boolean yStatement = ( (y2 + 1 >= y1 + 1) && (y2 + 1 <= y1 + yDim1 - 1) ) 
 				|| ( (y2 + yDim2 - 1>= y1 + 1) && (y2 + yDim2 -1 <= y1 + yDim1 - 1) )				
 				|| ((y1 > y2) && (y1 + 1 < y2 + yDim2 - 1 ));
+;
 		return ((xStatement) && (yStatement));
 	}
 	/**
@@ -1659,7 +1661,7 @@ public abstract class GameObject extends SuperObject {
 	 * 			| if (getYSpeed() > 0)
 	 * 			|	then setYSpeed(0)
 	 */
-	protected void stopMovingUp() {
+	protected void stopMovingY() {
 		if (this.getYSpeed() > 0) {
 			this.setYSpeed(0);
 		}
@@ -1673,7 +1675,7 @@ public abstract class GameObject extends SuperObject {
 	 */
 	protected void stopMoving() {
 		this.stopMovingX();
-		this.stopMovingUp();
+		this.stopMovingY();
 	}
 	
 	/**

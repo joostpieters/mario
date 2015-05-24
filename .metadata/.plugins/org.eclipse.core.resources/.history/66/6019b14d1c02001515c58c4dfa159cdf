@@ -47,7 +47,7 @@ public class BuzamTest {
 	}
 	
 	@Test
-	public void constructBuzamTest() {
+	public void constructBuzam() {
 		Buzam buzam = facade.createBuzam(499, 50, sprites);
 		facade.addBuzam(world, buzam);
 		assertArrayEquals(intArray(499, 50), facade.getLocation(buzam));
