@@ -200,7 +200,7 @@ public class StatementTest {
 		Program program = (Program) outcome.getResult();
 		Shark shark = facade.createSharkWithProgram(20, 499, spriteArrayForSize(1, 1, 2), program);
 		facade.addShark(world, shark);
-		program.execute(0.001);
+		program.execute(0.002);
 		assertFalse(program.isRunning());
 	}
 	

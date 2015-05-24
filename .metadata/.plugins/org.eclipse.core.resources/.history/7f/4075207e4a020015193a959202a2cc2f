@@ -253,7 +253,7 @@ public class BinaryExpressionTest {
 		Program program = new Program(stat, map);
 		Buzam buzam = new Buzam(20, 30, spriteArrayForSize(3, 3));
 		program.setGameObject(buzam);
-		assertFalse(notEquals.evaluate(program));		
+		assertTrue(notEquals.evaluate(program));		
 	}
 	
 	@Test

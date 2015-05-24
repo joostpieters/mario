@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="BinaryExpressionTest" project="OGP1415-JumpingAlien" tests="35" started="35" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part3.tests.BinaryExpressionTest" time="0.151">
+    <testcase name="testException" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testEquals2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testEquals3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.004"/>
+    <testcase name="testEquals4" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.002"/>
+    <testcase name="testOrBool1" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testOrBool2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testOrBool3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testLessThan" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+    <testcase name="testGreaterEquals2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testGreaterEquals3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testMultiplication2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testDivision2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testMultiplication" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testAddition" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testGreaterThan2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testAndBool1" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+    <testcase name="testAndBool2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testAndBool3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testGreaterThan" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testNotEquals2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testNotEquals3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+    <testcase name="testNotEquals4" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+    <testcase name="testLessThan2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testDivision" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+    <testcase name="testLessEquals" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testAddition2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testAddition3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testEquals" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testLessEquals2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testLessEquals3" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+    <testcase name="testGreaterEquals" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="expressionsWithProgramTest" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.137"/>
+    <testcase name="testNotEquals" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testSubtraction2" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.0"/>
+    <testcase name="testSubtraction" classname="jumpingalien.part3.tests.BinaryExpressionTest" time="0.001"/>
+  </testsuite>
+</testrun>

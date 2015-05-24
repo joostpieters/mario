@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="StatementTest" project="OGP1415-JumpingAlien" tests="26" started="26" failures="0" errors="0" ignored="0">
+  <testsuite name="jumpingalien.part3.tests.StatementTest" time="0.245">
+    <testcase name="whileTest" classname="jumpingalien.part3.tests.StatementTest" time="0.142"/>
+    <testcase name="IfElseStatementTest" classname="jumpingalien.part3.tests.StatementTest" time="0.007"/>
+    <testcase name="BreakStatementNotWellFormedTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StartDuckTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="IfStatementNoElseTest" classname="jumpingalien.part3.tests.StatementTest" time="0.003"/>
+    <testcase name="StartRunTestRight" classname="jumpingalien.part3.tests.StatementTest" time="0.002"/>
+    <testcase name="SkipStatementNotWellFormedTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StopRunTestRight" classname="jumpingalien.part3.tests.StatementTest" time="0.002"/>
+    <testcase name="SequenceOfStatementsTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="breakStatementTest" classname="jumpingalien.part3.tests.StatementTest" time="0.002"/>
+    <testcase name="IfStatementTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StartDuckNotInstanceOfMazubTest" classname="jumpingalien.part3.tests.StatementTest" time="0.003"/>
+    <testcase name="StartRunTestLeft" classname="jumpingalien.part3.tests.StatementTest" time="0.002"/>
+    <testcase name="StartJumpTestInstanceOfMazub" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StartJumpTestInstanceOfShark" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="whileStatementTest" classname="jumpingalien.part3.tests.StatementTest" time="0.002"/>
+    <testcase name="InvalidStartJumpTest" classname="jumpingalien.part3.tests.StatementTest" time="0.003"/>
+    <testcase name="forEachTest" classname="jumpingalien.part3.tests.StatementTest" time="0.059"/>
+    <testcase name="StopRunTestLeft" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="WaitTest" classname="jumpingalien.part3.tests.StatementTest" time="0.004"/>
+    <testcase name="StopJumpTestInstanceOfMazub" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StopJumpTestInstanceOfShark" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StopDuckTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="SkipStatementTest" classname="jumpingalien.part3.tests.StatementTest" time="0.0"/>
+    <testcase name="StopDuckNotInstanceOfMazubTest" classname="jumpingalien.part3.tests.StatementTest" time="0.001"/>
+    <testcase name="StopJumpTestNoInstanceOfShark" classname="jumpingalien.part3.tests.StatementTest" time="0.002"/>
+  </testsuite>
+</testrun>
