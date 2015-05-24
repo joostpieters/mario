@@ -16,7 +16,10 @@ public class NotEquals extends BinaryExpression<Boolean, Object> {
 
 	@Override
 	public Boolean evaluate(Program program) {
-		if (getExpression1().evaluate(program) == null || getExpression2().evaluate(program) == null ) {
+		if (getExpression1().evaluate(program) == null && getExpression2().evaluate(program) == null ) {
+			return false;
+		}
+		else if (getExpression1().evaluate(program) == null) {
 			return true;
 		}
 		return ! this.getExpression1().evaluate(program).equals(this.getExpression2().evaluate(program));	
