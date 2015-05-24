@@ -15,8 +15,6 @@ public class GetY extends UnaryExpression<Double, SuperObject> {
 		this.setType(Type.DOUBLE);
 	}
 	public Double evaluate(Program program) {
-		System.out.println(getExpression1().evaluate(program));
-		System.out.println(program);
 		return this.getExpression1().evaluate(program).getYPos();
 	}
 }
