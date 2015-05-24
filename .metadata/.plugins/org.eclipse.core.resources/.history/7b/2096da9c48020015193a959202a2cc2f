@@ -85,10 +85,10 @@ public class Program {
 					this.getMainStatement().execute(this);
 					this.execute(dt - 0.001);
 				}
-			} catch(ClassCastException | IllegalArgumentException e) {
-				stopRunning();
-				System.out.println("Program stopped");
-			}
+//			} catch(ClassCastException | IllegalArgumentException e) {
+//				stopRunning();
+//				System.out.println("Program stopped");
+//			}
 		}
 	}
 	

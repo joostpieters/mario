@@ -85,7 +85,8 @@ public class Program {
 					this.getMainStatement().execute(this);
 					this.execute(dt - 0.001);
 				}
-			} catch(ClassCastException | IllegalArgumentException e) {
+			} catch(ClassCastException | IllegalArgumentException
+						| NullPointerException e) {
 				stopRunning();
 				System.out.println("Program stopped");
 			}
