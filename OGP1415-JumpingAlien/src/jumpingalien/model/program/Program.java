@@ -6,6 +6,7 @@ import java.util.Map;
 import jumpingalien.model.GameObject;
 import jumpingalien.model.Type;
 import jumpingalien.model.program.statement.Statement;
+import jumpingalien.part3.programs.IProgramFactory.Direction;
 
 
 public class Program {
@@ -48,7 +49,7 @@ public class Program {
 		this.environment = new HashMap<String, Object>();
 		for (String key : map.keySet()) {
 			if (map.get(key) == Type.DOUBLE) {
-				this.environment.put(key, 0);
+				this.environment.put(key, 0.0);
 			}
 			else if (map.get(key) == Type.BOOLEAN) {
 				this.environment.put(key, false);
@@ -57,7 +58,7 @@ public class Program {
 				this.environment.put(key, null);
 			}
 			else if (map.get(key) == Type.DIRECTION) {
-				this.environment.put(key, false);
+				this.environment.put(key, Direction.RIGHT);
 			}
 		}
 	}
@@ -76,7 +77,7 @@ public class Program {
 	
 	public void execute(double dt) {
 		if(isRunning()) {
-			try{
+		//	try{
 				if(dt <= 0.001) {
 					this.getMainStatement().execute(this);
 				}
@@ -84,10 +85,10 @@ public class Program {
 					this.getMainStatement().execute(this);
 					this.execute(dt - 0.001);
 				}
-			} catch(ClassCastException | IllegalArgumentException e) {
-				stopRunning();
-				System.out.println("Program stopped");
-			}
+//			} catch(ClassCastException | IllegalArgumentException e) {
+//				stopRunning();
+//				System.out.println("Program stopped");
+//			}
 		}
 	}
 	
