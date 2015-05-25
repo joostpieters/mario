@@ -29,7 +29,6 @@
 <fullyQualifiedTypeName name="jumpingalien.model.Mazub"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.BoolFalse"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.DirectionExpression"/>
-<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.ObjectNull"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.GetHeightObject"/>
 <fullyQualifiedTypeName name="jumpingalien.model.program.expression.SearchObject"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="jumpingalien.model.Tile"/>
 <fullyQualifiedTypeName name="jumpingalien.model.Type"/>
 <fullyQualifiedTypeName name="jumpingalien.util.Sprite"/>
+<fullyQualifiedTypeName name="jumpingalien.part3.programs.IProgramFactory.Direction"/>
 </qualifiedTypeNameHistroy>
