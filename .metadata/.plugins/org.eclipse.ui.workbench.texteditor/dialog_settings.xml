@@ -8,14 +8,14 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="world"/>
+			<item value="getXPos"/>
+			<item value="getMaxHitpoints"/>
+			<item value="override"/>
 			<item value="buzam"/>
 			<item value="isDying()"/>
 			<item value="remove"/>
 			<item value="mazub"/>
-			<item value="XDim"/>
-			<item value="random"/>
-			<item value="mama"/>
-			<item value="piemel"/>
 		</list>
 		<list key="replacehistory">
 		</list>
